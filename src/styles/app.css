@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@theme {
+  --color-cream: #faf7f2;
+  --color-cream-dark: #f5f0eb;
+  --color-taupe: #a89b8c;
+  --color-beige: #c9b99a;
+  --color-terracotta: #c2784a;
+  --color-terracotta-dark: #a55e35;
+  --color-sage: #8a9a83;
+  --color-sage-dark: #6d7c67;
+  --color-warm-dark: #3d322c;
+  --color-warm-gray: #6b5e55;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-cream font-sans text-warm-dark antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-serif);
+  }
+}
+
+/* ── Editorial texture ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.015;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* ── Pinterest "Pin It" hover button ── */
+.pin-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.pin-image-wrapper::after {
+  content: "Save";
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #bd081c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  padding: 5px 10px;
+  border-radius: 4px;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  pointer-events: none;
+  z-index: 10;
+  letter-spacing: 0.3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.pin-image-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.05);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.pin-image-wrapper:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pin-image-wrapper:hover::before {
+  opacity: 1;
+}
+
+/* ── Editorial product card refinements ── */
+.product-card-image {
+  border-radius: 0.875rem 0.875rem 0 0;
+}
+
+/* ── Subtle card border for depth ── */
+.editorial-card {
+  border: 1px solid rgba(201, 185, 154, 0.15);
+}
+
+/* ── Warm hover glow on interactive elements ── */
+a[href]:not(.no-glow):hover {
+  transition: all 0.3s ease;
+}
