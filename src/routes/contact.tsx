@@ -2,39 +2,19 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 
-const SITE_URL = "https://0d599363fbd89e6841be5df43ade6f22.ctonew.app";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
+import { SITE_URL } from "~/lib/schema";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      {
-        title: "Contact Evergreen House",
-      },
-      {
-        name: "description",
-        content:
-          "Have a question or just want to say hello? We'd love to hear from you. Reach out to the Evergreen House team.",
-      },
-      { property: "og:title", content: "Contact Evergreen House" },
-      {
-        property: "og:description",
-        content:
-          "Have a question or just want to say hello? We'd love to hear from you. Reach out to the Evergreen House team.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/contact` },
-      { property: "og:site_name", content: "Evergreen House" },
-      { property: "og:locale", content: "en_US" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "Contact Evergreen House" },
-      {
-        name: "twitter:description",
-        content:
-          "Have a question or just want to say hello? We'd love to hear from you. Reach out to the Evergreen House team.",
-      },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/contact` }],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Contact Evergreen House",
+      "Have a question or just want to say hello? We'd love to hear from you. Reach out to the Evergreen House team.",
+      "/contact"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: Contact,
 });
 
@@ -43,6 +23,9 @@ function Contact() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={{ label: "Home", href: "/" }, { label: "Contact" }}
+        />
         {/* ── Hero ── */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />

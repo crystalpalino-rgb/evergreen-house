@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
+import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
 
 export const Route = createFileRoute("/collections")({
@@ -38,23 +40,14 @@ export const Route = createFileRoute("/collections")({
       };
     }
   },
-  head: () => ({
-    meta: [
-      { title: "Collections — Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Browse all Evergreen House collections — thoughtfully curated finds for every room, style, and season.",
-      },
-      { property: "og:title", content: "Collections — Evergreen House" },
-      {
-        property: "og:description",
-        content:
-          "Browse all Evergreen House collections — thoughtfully curated finds for every room, style, and season.",
-      },
-      { name: "twitter:card", content: "summary" },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Collections",
+      "Browse all Evergreen House collections — thoughtfully curated finds for every room, style, and season.",
+      "/collections"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: CollectionsPage,
 });
 
@@ -134,6 +127,12 @@ function CollectionsPage() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Collections" },
+          ]}
+        />
         {/* Hero */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />

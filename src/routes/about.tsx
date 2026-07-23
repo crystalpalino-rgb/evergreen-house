@@ -2,39 +2,19 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 
-const SITE_URL = "https://0d599363fbd89e6841be5df43ade6f22.ctonew.app";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
+import { SITE_URL } from "~/lib/schema";
 
 export const Route = createFileRoute("/about")({
-  head: () => ({
-    meta: [
-      {
-        title: "About Evergreen House",
-      },
-      {
-        name: "description",
-        content:
-          "After more than 15 years in ecommerce and merchandising, I created Evergreen House to share timeless home products that truly deserve a place in your home.",
-      },
-      { property: "og:title", content: "About Evergreen House" },
-      {
-        property: "og:description",
-        content:
-          "After more than 15 years in ecommerce and merchandising, I created Evergreen House to share timeless home products that truly deserve a place in your home.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: `${SITE_URL}/about` },
-      { property: "og:site_name", content: "Evergreen House" },
-      { property: "og:locale", content: "en_US" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "About Evergreen House" },
-      {
-        name: "twitter:description",
-        content:
-          "After more than 15 years in ecommerce and merchandising, I created Evergreen House to share timeless home products that truly deserve a place in your home.",
-      },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/about` }],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "About Evergreen House",
+      "After more than 15 years in ecommerce and merchandising, I created Evergreen House to share timeless home products that truly deserve a place in your home.",
+      "/about"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: About,
 });
 
@@ -43,6 +23,12 @@ function About() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "About" },
+          ]}
+        />
         {/* ── Hero ── */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />

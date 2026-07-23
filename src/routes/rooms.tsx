@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
 
 const roomCards = [
   {
@@ -42,16 +44,14 @@ const roomCards = [
 ];
 
 export const Route = createFileRoute("/rooms")({
-  head: () => ({
-    meta: [
-      { title: "Shop by Room, Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Browse curated home collections for every space in your home — living room, bedroom, kitchen, bathroom, and more.",
-      },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Shop by Room",
+      "Browse curated home collections for every space in your home — living room, bedroom, kitchen, bathroom, and more.",
+      "/rooms"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: RoomsPage,
 });
 
@@ -60,6 +60,14 @@ function RoomsPage() {
     <>
       <Header />
       <main>
+        {/* Breadcrumbs */}
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Rooms" },
+          ]}
+        />
+
         {/* Hero */}
         <section className="relative overflow-hidden">
           <div

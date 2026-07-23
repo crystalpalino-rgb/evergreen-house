@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
 
 const seasonalCollections = [
   {
@@ -34,16 +36,14 @@ const seasonalCollections = [
 ];
 
 export const Route = createFileRoute("/seasonal")({
-  head: () => ({
-    meta: [
-      { title: "Shop by Season, Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Curated seasonal collections throughout the year — spring refresh, summer living, autumn warmth, and winter nesting.",
-      },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Shop by Season",
+      "Curated seasonal collections throughout the year — spring refresh, summer living, autumn warmth, and winter nesting.",
+      "/seasonal"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: SeasonalPage,
 });
 
@@ -52,6 +52,9 @@ function SeasonalPage() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={{ label: "Home", href: "/" }, { label: "Seasons" }}
+        />
         {/* Hero */}
         <section className="relative overflow-hidden">
           <div

@@ -7,8 +7,8 @@ import {
 import type { ReactNode } from "react";
 
 import appCss from "~/styles/app.css?url";
+import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 
-const SITE_URL = "https://evergreenhouse.co";
 const SITE_NAME = "Evergreen House";
 const SITE_TAGLINE = "Beautiful Things That Never Go Out of Style";
 const SITE_DESCRIPTION =
@@ -16,36 +16,13 @@ const SITE_DESCRIPTION =
 const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
 
 // ── JSON-LD Structured Data ──
-const jsonLdWebsite = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: SITE_NAME,
-  url: SITE_URL,
-  description: SITE_DESCRIPTION,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE_URL}/?search={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
-};
-
-const jsonLdOrganization = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  name: SITE_NAME,
-  url: SITE_URL,
-  description: SITE_DESCRIPTION,
-  logo: `${SITE_URL}/logo.png`,
-  sameAs: [],
-};
-
 const jsonLdScript = JSON.stringify(
   {
     "@context": "https://schema.org",
-    "@graph": [jsonLdWebsite, jsonLdOrganization],
+    "@graph": [
+      getWebSiteSchema(`${SITE_URL}/search`),
+      getOrganizationSchema(),
+    ],
   },
   null,
   0,
@@ -85,15 +62,15 @@ export const Route = createRootRoute({
       },
       { name: "twitter:image", content: OG_IMAGE_URL },
       { name: "twitter:site", content: "@evergreenhouse" },
-      // Pinterest claim (replace with real verification code when setup)
+      // Pinterest claim
       {
         name: "p:domain_verify",
         content: "cc54cdb622bd077fb5700333599cbb92",
       },
-      // Canonical
-      { property: "og:see_also", content: SITE_URL },
     ],
     links: [
+      // NOTE: canonical is set per-route now. Each route should include its own
+      // canonical link in its head export. The root canonical is a fallback.
       { rel: "canonical", href: SITE_URL },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

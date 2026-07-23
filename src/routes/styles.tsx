@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
 
 const allStyles = [
   {
@@ -34,16 +36,14 @@ const allStyles = [
 ];
 
 export const Route = createFileRoute("/styles")({
-  head: () => ({
-    meta: [
-      { title: "Shop by Style, Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Browse by aesthetic — Organic Modern, Minimalist & Modern, Everyday Luxury, and Collected Neutrals. Find pieces that match your style.",
-      },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Shop by Style",
+      "Browse by aesthetic — Organic Modern, Minimalist & Modern, Everyday Luxury, and Collected Neutrals. Find pieces that match your style.",
+      "/styles"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: StylesPage,
 });
 
@@ -52,6 +52,12 @@ function StylesPage() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={[
+            { label: "Home", href: "/" },
+            { label: "Styles" },
+          ]}
+        />
         {/* Hero */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />

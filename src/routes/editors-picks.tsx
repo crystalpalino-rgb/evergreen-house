@@ -4,6 +4,8 @@ import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { getEditorsPicks, getAllProducts } from "~/lib/intelligence";
 import type { Product } from "~/lib/types";
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { generateStaticMetadata } from "~/lib/seo";
 
 const SEASONAL_ROOMS = new Set(["seasonal", "seasonal-finds"]);
 
@@ -37,16 +39,14 @@ export const Route = createFileRoute("/editors-picks")({
       return { products: [] as Product[], totalCount: 0 };
     }
   },
-  head: () => ({
-    meta: [
-      { title: "Crystal's Edit — Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Our editors' favorite home finds. Top-rated products thoughtfully curated for timeless, beautiful living — no trends, just pieces we love.",
-      },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Crystal's Edit",
+      "Our editors' favorite home finds. Top-rated products thoughtfully curated for timeless, beautiful living — no trends, just pieces we love.",
+      "/editors-picks"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: EditorsPicksPage,
 });
 
@@ -57,6 +57,9 @@ function EditorsPicksPage() {
     <>
       <Header />
       <main>
+        <Breadcrumbs
+          items={{ label: "Home", href: "/" }, { label: "Crystal's Edit" }}
+        />
         {/* ── Hero section ── */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />
