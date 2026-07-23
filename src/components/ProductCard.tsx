@@ -2,6 +2,15 @@ import type { Product } from "~/lib/types";
 
 export type { Product };
 
+function productNameToSlug(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .slice(0, 120);
+}
+
 function getPinDescription(product: Product): string {
   const p = product as any;
   const productRoom = p.room || "";
@@ -123,7 +132,14 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
         )}
         {/* Name */}
-        <h3 className="text-sm font-medium text-warm-dark line-clamp-2">{name}</h3>
+        <h3 className="text-sm font-medium text-warm-dark line-clamp-2">
+          <a
+            href={`/product/${productNameToSlug(name)}`}
+            className="transition-colors hover:text-terracotta"
+          >
+            {name}
+          </a>
+        </h3>
         {/* Editor note */}
         {editorNote && (
           <p className="mt-1.5 text-xs italic leading-relaxed text-taupe line-clamp-2">
