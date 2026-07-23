@@ -63,10 +63,10 @@ function Home() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: homeSchema }}
         />
-        <Hero trending={trending} />
-        <TrendingProducts products={trending} />
+        <Hero />
         <BrowseByRoom />
         <ShopTheLook products={products} collections={[]} />
+        <TrendingProducts products={trending} />
         <FeaturedStory />
         <EmailSignup />
       </main>
