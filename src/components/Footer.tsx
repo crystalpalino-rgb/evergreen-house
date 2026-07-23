@@ -82,7 +82,7 @@ export function Footer() {
         {/* Social */}
         <div className="mt-10 border-t border-beige/10 pt-6 flex items-center justify-center gap-5">
           <a
-            href="https://pinterest.com/evergreenhouseco"
+            href="https://www.pinterest.com/evergreenhouseco/?actingBusinessId=1123859419420447300"
             target="_blank"
             rel="noopener noreferrer"
             className="text-beige/60 transition-colors hover:text-cream"
