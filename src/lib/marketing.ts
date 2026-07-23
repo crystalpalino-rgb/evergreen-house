@@ -289,6 +289,19 @@ export const deleteDraft = createServerFn({ method: "POST" })
     return { success: true };
   });
 
+export const updateDraft = createServerFn({ method: "POST" })
+  .validator((data: { id: number; title?: string; content?: string }) => data)
+  .handler(async ({ data }) => {
+    await ensureMarketingTable();
+    const db = sql();
+    const result = await db.query(
+      "UPDATE marketing_tasks SET title = COALESCE($1, title), content = COALESCE($2, content), updated_at = NOW() WHERE id = $3 RETURNING *",
+      [data.title ?? null, data.content ?? null, data.id],
+    );
+    if (result.length === 0) throw new Error(`Draft ${data.id} not found`);
+    return formatTask(result[0]);
+  });
+
 // ── Agent ──
 
 export interface AgentSummary {

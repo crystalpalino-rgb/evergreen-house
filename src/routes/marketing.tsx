@@ -6,6 +6,7 @@ import {
   getDrafts,
   approveDraft,
   deleteDraft,
+  updateDraft,
   runAgent,
   getAgentSummary,
   ensureMarketingTable,
@@ -205,6 +206,19 @@ function MarketingDashboard() {
       setStatusMsg("Post published! It's now live on the blog.");
       refreshDashboard();
       refreshAgentSummary();
+    } catch (err: any) {
+      setStatusMsg("Error: " + err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleUpdate = async (id: number, updates: { title?: string; content?: string }) => {
+    setLoading(true);
+    try {
+      const updated = await updateDraft({ data: { id, ...updates } });
+      setDrafts((prev) => prev.map((d) => (d.id === id ? updated : d)));
+      setStatusMsg("Draft updated successfully.");
     } catch (err: any) {
       setStatusMsg("Error: " + err.message);
     } finally {
@@ -579,6 +593,7 @@ function MarketingDashboard() {
                       draft={draft}
                       onApprove={handleApprove}
                       onPublish={handlePublish}
+                      onUpdate={handleUpdate}
                       onDelete={handleDelete}
                       loading={loading}
                       channelColor={channelColors[draft.channel] ?? "bg-gray-100 text-gray-800"}
@@ -617,6 +632,7 @@ function DraftCard({
   draft,
   onApprove,
   onPublish,
+  onUpdate,
   onDelete,
   loading,
   channelColor,
@@ -625,6 +641,7 @@ function DraftCard({
   draft: MarketingTask;
   onApprove: (id: number) => void;
   onPublish: (id: number) => void;
+  onUpdate: (id: number, updates: { title?: string; content?: string }) => void;
   onDelete: (id: number) => void;
   loading: boolean;
   channelColor: string;
@@ -632,11 +649,39 @@ function DraftCard({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [editing, setEditing] = useState(false);
+  const [editTitle, setEditTitle] = useState("");
+  const [editContent, setEditContent] = useState("");
 
   const channelLabels: Record<string, string> = {
     blog: "Blog Post",
     pinterest: "Pinterest Pin",
     email: "Email Newsletter",
+  };
+
+  const handleStartEdit = () => {
+    setEditTitle(draft.title);
+    setEditContent(draft.content ?? "");
+    setEditing(true);
+    setExpanded(true);
+  };
+
+  const handleCancelEdit = () => {
+    setEditing(false);
+    setEditTitle("");
+    setEditContent("");
+  };
+
+  const handleSaveEdit = async () => {
+    const updates: { title?: string; content?: string } = {};
+    if (editTitle !== draft.title) updates.title = editTitle;
+    if (editContent !== (draft.content ?? "")) updates.content = editContent;
+    if (Object.keys(updates).length === 0) {
+      setEditing(false);
+      return;
+    }
+    await onUpdate(draft.id, updates);
+    setEditing(false);
   };
 
   const handleCopyLink = async () => {
@@ -677,13 +722,23 @@ function DraftCard({
               </span>
             )}
           </div>
-          <h3 className="font-serif text-base font-medium text-warm-dark">{draft.title}</h3>
-          {draft.rationale && (
+          {editing ? (
+            <input
+              type="text"
+              value={editTitle}
+              onChange={(e) => setEditTitle(e.target.value)}
+              className="w-full rounded-lg border border-sage/50 bg-cream px-3 py-1.5 font-serif text-base font-medium text-warm-dark focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage"
+              placeholder="Draft title..."
+            />
+          ) : (
+            <h3 className="font-serif text-base font-medium text-warm-dark">{draft.title}</h3>
+          )}
+          {draft.rationale && !editing && (
             <p className="mt-1 text-xs text-taupe italic">{draft.rationale}</p>
           )}
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          {draft.status !== "approved" && draft.status !== "published" && (
+          {!editing && draft.status !== "approved" && draft.status !== "published" && (
             <button
               onClick={() => onApprove(draft.id)}
               disabled={loading}
@@ -692,7 +747,7 @@ function DraftCard({
               Approve
             </button>
           )}
-          {draft.status === "approved" && draft.channel === "blog" && (
+          {!editing && draft.status === "approved" && draft.channel === "blog" && (
             <button
               onClick={() => onPublish(draft.id)}
               disabled={loading}
@@ -701,28 +756,58 @@ function DraftCard({
               Publish
             </button>
           )}
-          {draft.status === "published" && (
+          {!editing && draft.status === "published" && (
             <span className="rounded-lg bg-blue-100 px-3 py-1.5 text-xs font-medium text-blue-800">
               Published
             </span>
           )}
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="rounded-lg border border-beige/40 px-3 py-1.5 text-xs text-warm-dark transition hover:bg-cream-dark"
-          >
-            {expanded ? "Collapse" : "Preview"}
-          </button>
-          <button
-            onClick={() => onDelete(draft.id)}
-            disabled={loading}
-            className="rounded-lg border border-red-200 px-3 py-1.5 text-xs text-red-600 transition hover:bg-red-50 disabled:opacity-50"
-          >
-            Delete
-          </button>
+          {!editing && (
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="rounded-lg border border-beige/40 px-3 py-1.5 text-xs text-warm-dark transition hover:bg-cream-dark"
+            >
+              {expanded ? "Collapse" : "Preview"}
+            </button>
+          )}
+          {!editing && draft.status !== "published" && (
+            <button
+              onClick={handleStartEdit}
+              disabled={loading}
+              className="rounded-lg border border-blue-300 px-3 py-1.5 text-xs font-medium text-blue-600 transition hover:bg-blue-50 disabled:opacity-50"
+            >
+              Edit
+            </button>
+          )}
+          {editing ? (
+            <>
+              <button
+                onClick={handleSaveEdit}
+                disabled={loading}
+                className="rounded-lg bg-sage px-3 py-1.5 text-xs font-medium text-white transition hover:bg-sage-dark disabled:opacity-50"
+              >
+                {loading ? "Saving..." : "Save"}
+              </button>
+              <button
+                onClick={handleCancelEdit}
+                disabled={loading}
+                className="rounded-lg border border-beige/40 px-3 py-1.5 text-xs text-warm-dark transition hover:bg-cream-dark disabled:opacity-50"
+              >
+                Cancel
+              </button>
+            </>
+          ) : (
+            <button
+              onClick={() => onDelete(draft.id)}
+              disabled={loading}
+              className="rounded-lg border border-red-200 px-3 py-1.5 text-xs text-red-600 transition hover:bg-red-50 disabled:opacity-50"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
 
-      {expanded && draft.content && (
+      {expanded && draft.content && !editing && (
         <div className="mt-4 border-t border-beige/20 pt-4">
           <pre className="whitespace-pre-wrap font-sans text-sm leading-relaxed text-warm-dark">
             {draft.content}
@@ -753,6 +838,24 @@ function DraftCard({
           <p className="mt-3 text-xs text-warm-gray">
             Created: {new Date(draft.created_at).toLocaleDateString()}
           </p>
+        </div>
+      )}
+
+      {editing && (
+        <div className="mt-4 border-t border-sage/30 pt-4">
+          <label className="mb-1 block text-xs font-medium text-warm-gray">Content</label>
+          <textarea
+            value={editContent}
+            onChange={(e) => setEditContent(e.target.value)}
+            rows={10}
+            className="w-full rounded-lg border border-sage/50 bg-cream px-3 py-2 font-sans text-sm leading-relaxed text-warm-dark focus:border-sage focus:outline-none focus:ring-1 focus:ring-sage"
+            placeholder="Draft content..."
+          />
+          {draft.product_ids && draft.product_ids.length > 0 && (
+            <p className="mt-2 text-xs text-taupe">
+              Products referenced: {draft.product_ids.length}
+            </p>
+          )}
         </div>
       )}
     </div>
