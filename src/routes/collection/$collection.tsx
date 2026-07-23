@@ -145,24 +145,6 @@ function CollectionPage() {
           </div>
         </section>
 
-        {/* Editorial content section */}
-        {description && (
-          <section aria-labelledby="about-collection-heading" className="border-b border-beige/20 bg-white py-6 sm:py-10">
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-              <h2 id="about-collection-heading" className="font-serif text-xl font-semibold text-warm-dark">
-                About This Collection
-              </h2>
-              <div className="mt-4 space-y-4 text-sm leading-relaxed text-warm-gray">
-                <p>{description}</p>
-                <p>
-                  Every piece in the {label.toLowerCase()} collection has been chosen by our editors
-                  with one question in mind: <em>will this still be beautiful five years from now?</em>{" "}
-                  We believe the best homes aren't decorated — they're collected, one thoughtful find at a time.
-                </p>
-              </div>
-            </div>
-          </section>
-        )}
 
         {/* Product grid */}
         <section className="py-8 sm:py-12">
