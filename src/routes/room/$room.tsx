@@ -43,6 +43,7 @@ const roomPhotos: Record<string, string> = {
   storage: "/images/organization.jpg",
   entryway: "/images/living-room.jpg",
   laundry: "/images/organization.jpg",
+  pantry: "/images/kitchen.jpg",
 };
 
 export const Route = createFileRoute("/room/$room")({
