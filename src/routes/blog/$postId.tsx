@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Header } from "~/components/Header";
-import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateBlogMetadata } from "~/lib/seo";
 import { getArticleSchema, SITE_URL } from "~/lib/schema";
@@ -52,7 +50,6 @@ function BlogPostPage() {
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post?.title || "Post" }];
   return (
     <>
-      <Header />
       <main>
         <Breadcrumbs items={breadcrumbItems} />
         <article className="bg-cream py-8 sm:py-12">
@@ -71,7 +68,6 @@ function BlogPostPage() {
           </div>
         </article>
       </main>
-      <Footer />
     </>
   );
 }

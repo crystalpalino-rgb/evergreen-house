@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Header } from "~/components/Header";
-import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { SITE_URL } from "~/lib/schema";
@@ -51,7 +49,6 @@ function BlogIndex() {
   const { posts } = Route.useLoaderData();
   return (
     <>
-      <Header />
       <main>
         <Breadcrumbs
           items={[
@@ -73,7 +70,7 @@ function BlogIndex() {
           <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
-                The Journal
+                Curated Inspiration
               </p>
               <h1 className="mt-6 font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">
                 The Journal
@@ -121,7 +118,6 @@ function BlogIndex() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

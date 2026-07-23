@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "~/components/Header";
-import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { getProductsByRoom } from "~/lib/intelligence";
 import type { Product } from "~/lib/types";

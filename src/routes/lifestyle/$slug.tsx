@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Header } from "~/components/Header";
-import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
@@ -46,7 +44,6 @@ function LifestyleSlugPage() {
 
   return (
     <>
-      <Header />
       <main>
         <Breadcrumbs items={breadcrumbItems} />
         <section className="relative overflow-hidden">
@@ -65,7 +62,6 @@ function LifestyleSlugPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
