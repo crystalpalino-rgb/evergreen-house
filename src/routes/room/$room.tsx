@@ -9,6 +9,7 @@ import {
   getCollectionPageSchema,
   SITE_URL,
 } from "~/lib/schema";
+import { getRelatedRooms, ROOM_LABELS } from "~/lib/related";
 import type { Product } from "~/lib/types";
 
 const roomLabels: Record<string, string> = {
@@ -20,8 +21,15 @@ const roomLabels: Record<string, string> = {
   storage: "Organization",
   laundry: "Laundry",
   entryway: "Entryway",
-  office: "Office",
+  organization: "Organization",
+  office: "Home Office",
   "dining-room": "Dining Room",
+  pantry: "Pantry",
+  holiday: "Holiday",
+  summer: "Summer",
+  fall: "Fall",
+  spring: "Spring",
+  nursery: "Nursery",
 };
 
 const roomPhotos: Record<string, string> = {
@@ -66,17 +74,16 @@ function RoomPage() {
     roomLabels[room] ||
     room.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   const roomPhoto = roomPhotos[room] || null;
-
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Rooms", href: "/rooms" },
     { label: roomName },
   ];
-
   const collectionSchema = getCollectionPageSchema(
     { name: roomName, display_name: roomName },
     `${SITE_URL}/room/${room}`
   );
+  const relatedRooms = getRelatedRooms(room);
 
   return (
     <>
@@ -124,6 +131,43 @@ function RoomPage() {
             )}
           </div>
         </section>
+
+        {/* Browse More Rooms */}
+        {relatedRooms.length > 0 && (
+          <section aria-labelledby="more-rooms-heading" className="border-t border-beige/20 bg-cream/30 py-12 sm:py-16">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h2
+                id="more-rooms-heading"
+                className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl"
+              >
+                Browse More Rooms
+              </h2>
+              <p className="mt-2 text-warm-gray">
+                If you love {roomName.toLowerCase()} finds, you'll feel right at home in these spaces too.
+              </p>
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedRooms.map((related) => (
+                  <a
+                    key={related.slug}
+                    href={`/room/${related.slug}`}
+                    className="group relative overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  >
+                    <div className="absolute inset-0 bg-cream-dark" />
+                    <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+                    <div className="relative flex h-40 flex-col justify-end p-6">
+                      <h3 className="font-serif text-lg font-semibold leading-snug text-warm-dark">
+                        {related.label}
+                      </h3>
+                      <p className="mt-1 text-sm text-taupe transition-colors group-hover:text-terracotta">
+                        Explore {related.label.toLowerCase()} →
+                      </p>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>

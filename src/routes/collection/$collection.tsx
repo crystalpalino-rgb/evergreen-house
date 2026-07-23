@@ -3,22 +3,79 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
-import { getCollection, getCollectionProducts } from "~/lib/intelligence";
+import { getCollection, getCollectionProducts, getAllCollections } from "~/lib/intelligence";
 import { generateCollectionMetadata } from "~/lib/seo";
 import { getCollectionPageSchema, getFAQSchema, SITE_URL } from "~/lib/schema";
-import type { Product } from "~/lib/types";
+import type { Product, Collection } from "~/lib/types";
+
+/** Generate collection-specific FAQ pairs based on the collection theme */
+function getCollectionFAQs(
+  collectionName: string,
+  collectionType: string,
+  description: string | null,
+): { question: string; answer: string }[] {
+  const name = collectionName.toLowerCase();
+
+  // Base FAQs every collection gets
+  const faqs: { question: string; answer: string }[] = [
+    {
+      question: `What defines ${name} home decor?`,
+      answer: description
+        ? `${description} Every piece in this collection reflects that philosophy — chosen for quality, longevity, and the way it makes a space feel.`
+        : `${collectionName} design emphasizes intentional choices — pieces that are beautiful, functional, and built to last. Our editors select each item for its ability to elevate everyday living without feeling precious or untouchable.`,
+    },
+  ];
+
+  // Collection-type-specific Q&A
+  if (collectionType === "room") {
+    faqs.push({
+      question: `How do I style my ${name}?`,
+      answer: `Start with a foundation piece — a well-made rug, a comfortable sofa, or beautiful storage — and layer in texture through pillows, throws, and natural materials. The best ${name.toLowerCase()} feel collected over time, not decorated in a weekend. Mix vintage finds with new pieces, keep the palette calm, and let the room breathe.`,
+    });
+  } else if (collectionType === "style") {
+    faqs.push({
+      question: `How do I bring ${name} style into my home?`,
+      answer: `${collectionName} style is about a feeling more than a rigid set of rules. Start small: swap in a few key pieces that embody the aesthetic — a textural throw, a sculptural vase, or a piece of art that speaks to you. Pay attention to materials and finishes; they do more to define a style than any single color or pattern.`,
+    });
+  }
+
+  // Universal curation question
+  faqs.push({
+    question: `How are products chosen for the ${collectionName} collection?`,
+    answer: `Every product is hand-selected by our editorial team. We look for pieces that score highly on quality, design, durability, and value — the kind of things we'd recommend to a friend. No algorithm, no trending churn. Just thoughtful curation from people who love home.`,
+  });
+
+  return faqs;
+}
 
 export const Route = createFileRoute("/collection/$collection")({
   loader: async ({ params }) => {
     const slug = params.collection;
     try {
-      const [collection, products] = await Promise.all([getCollection(slug), getCollectionProducts(slug)]);
+      const [collection, products, allCollections] = await Promise.all([
+        getCollection(slug),
+        getCollectionProducts(slug),
+        getAllCollections(),
+      ]);
       const label = collection?.display_name || collection?.name || slug;
       const description = collection?.description || null;
-      return { products, collection: slug, label, description };
+      const collectionType = collection?.type || "room";
+
+      // Get 3 related collections (different slugs, same type preferred)
+      const relatedCollections = allCollections
+        .filter((c) => c.slug !== slug && c.is_active)
+        .sort((a, b) => {
+          // Prefer same type
+          if (a.type === collectionType && b.type !== collectionType) return -1;
+          if (a.type !== collectionType && b.type === collectionType) return 1;
+          return a.sort_order - b.sort_order;
+        })
+        .slice(0, 3);
+
+      return { products, collection: slug, label, description, collectionType, relatedCollections };
     } catch (err) {
       console.error("Collection loader error:", err);
-      return { products: [] as Product[], collection: slug, label: slug, description: null };
+      return { products: [] as Product[], collection: slug, label: slug, description: null, collectionType: "room", relatedCollections: [] as Collection[] };
     }
   },
   head: ({ loaderData }) => {
@@ -31,14 +88,12 @@ export const Route = createFileRoute("/collection/$collection")({
 });
 
 function CollectionPage() {
-  const { products, label, description } = Route.useLoaderData();
+  const { products, label, description, collectionType, relatedCollections } = Route.useLoaderData();
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Collections", href: "/collections" }, { label }];
   const collectionUrl = `${SITE_URL}/collection/${Route.useLoaderData().collection}`;
   const collectionSchema = getCollectionPageSchema({ name: label, display_name: label, description }, collectionUrl);
-  const faqSchema = getFAQSchema([
-    { question: `What is the ${label} collection?`, answer: `The ${label} collection is a thoughtfully curated selection of home products selected by Evergreen House editors for quality, longevity, and timeless style.${description ? " " + description : ""}` },
-    { question: `How are products chosen for the ${label} collection?`, answer: `Every product is hand-selected by our editorial team based on quality, design, durability, and value.` },
-  ]);
+  const faqItems = getCollectionFAQs(label, collectionType || "room", description);
+  const faqSchema = getFAQSchema(faqItems);
 
   return (
     <>
@@ -46,6 +101,8 @@ function CollectionPage() {
       <main>
         <Breadcrumbs items={breadcrumbItems} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [collectionSchema, faqSchema] }) }} />
+
+        {/* Hero */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
@@ -59,6 +116,27 @@ function CollectionPage() {
             <p className="mt-2 text-sm text-taupe">{products.length} {products.length === 1 ? "product" : "products"} in this curated collection</p>
           </div>
         </section>
+
+        {/* Editorial content section */}
+        {description && (
+          <section aria-labelledby="about-collection-heading" className="border-b border-beige/20 bg-white py-10 sm:py-14">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+              <h2 id="about-collection-heading" className="font-serif text-xl font-semibold text-warm-dark">
+                About This Collection
+              </h2>
+              <div className="mt-4 space-y-4 text-sm leading-relaxed text-warm-gray">
+                <p>{description}</p>
+                <p>
+                  Every piece in the {label.toLowerCase()} collection has been chosen by our editors
+                  with one question in mind: <em>will this still be beautiful five years from now?</em>{" "}
+                  We believe the best homes aren't decorated — they're collected, one thoughtful find at a time.
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Product grid */}
         <section className="py-12 sm:py-16">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {products.length > 0 ? (
@@ -68,6 +146,72 @@ function CollectionPage() {
             )}
           </div>
         </section>
+
+        {/* FAQ Section */}
+        <section aria-labelledby="faq-heading" className="border-t border-beige/20 bg-cream/30 py-12 sm:py-16">
+          <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+            <h2 id="faq-heading" className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+              Frequently Asked Questions
+            </h2>
+            <p className="mt-2 text-warm-gray">
+              Everything you need to know about the {label.toLowerCase()} collection.
+            </p>
+            <dl className="mt-8 space-y-6">
+              {faqItems.map((faq, i) => (
+                <div key={i} className="rounded-xl border border-beige/20 bg-white p-5 shadow-sm">
+                  <dt className="font-serif text-base font-semibold text-warm-dark">
+                    {faq.question}
+                  </dt>
+                  <dd className="mt-2 text-sm leading-relaxed text-warm-gray">
+                    {faq.answer}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </section>
+
+        {/* More Collections */}
+        {relatedCollections.length > 0 && (
+          <section aria-labelledby="more-collections-heading" className="border-t border-beige/20 py-12 sm:py-16">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h2
+                id="more-collections-heading"
+                className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl"
+              >
+                More Collections to Explore
+              </h2>
+              <p className="mt-2 text-warm-gray">
+                If you love this collection, you'll find more inspiration in these curated edits.
+              </p>
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedCollections.map((col) => (
+                  <a
+                    key={col.slug}
+                    href={`/collection/${col.slug}`}
+                    className="group rounded-2xl border border-beige/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  >
+                    <h3 className="font-serif text-lg font-semibold text-warm-dark transition-colors group-hover:text-terracotta">
+                      {col.display_name || col.name}
+                    </h3>
+                    {col.description && (
+                      <p className="mt-2 text-sm leading-relaxed text-warm-gray line-clamp-2">
+                        {col.description}
+                      </p>
+                    )}
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-taupe transition-colors group-hover:text-terracotta">
+                      View collection
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>

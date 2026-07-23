@@ -9,6 +9,18 @@ import { getCollectionPageSchema, SITE_URL } from "~/lib/schema";
 
 const styleLabels: Record<string, string> = { modern: "Modern", cozy: "Cozy", minimalist: "Minimalist", farmhouse: "Farmhouse", coastal: "Coastal", boho: "Bohemian", glam: "Everyday Luxury", traditional: "Traditional" };
 
+/** Define related styles for cross-linking */
+const STYLE_RELATIONSHIPS: Record<string, string[]> = {
+  modern: ["minimalist", "coastal"],
+  minimalist: ["modern", "cozy"],
+  cozy: ["farmhouse", "traditional", "boho"],
+  farmhouse: ["cozy", "traditional", "coastal"],
+  coastal: ["boho", "modern", "farmhouse"],
+  boho: ["coastal", "cozy", "farmhouse"],
+  glam: ["modern", "traditional"],
+  traditional: ["farmhouse", "glam", "cozy"],
+};
+
 export const Route = createFileRoute("/style/$style")({
   loader: async ({ params }) => {
     try { const products = await getProductsByStyle(params.style); return { products, style: params.style }; }
@@ -27,6 +39,12 @@ function StylePage() {
   const styleName = styleLabels[style] || style.charAt(0).toUpperCase() + style.slice(1);
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Styles", href: "/styles" }, { label: styleName }];
   const collectionSchema = getCollectionPageSchema({ name: styleName, display_name: styleName }, `${SITE_URL}/style/${style}`);
+
+  const relatedStyleSlugs = STYLE_RELATIONSHIPS[style] || [];
+  const relatedStyles = relatedStyleSlugs
+    .filter((s) => s !== style)
+    .slice(0, 3)
+    .map((s) => ({ slug: s, label: styleLabels[s] || s.charAt(0).toUpperCase() + s.slice(1) }));
 
   return (
     <>
@@ -55,6 +73,43 @@ function StylePage() {
             )}
           </div>
         </section>
+
+        {/* Explore More Styles */}
+        {relatedStyles.length > 0 && (
+          <section aria-labelledby="more-styles-heading" className="border-t border-beige/20 bg-cream/30 py-12 sm:py-16">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h2
+                id="more-styles-heading"
+                className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl"
+              >
+                Explore More Styles
+              </h2>
+              <p className="mt-2 text-warm-gray">
+                If {styleName.toLowerCase()} speaks to you, you might also love these complementary aesthetics.
+              </p>
+              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedStyles.map((related) => (
+                  <a
+                    key={related.slug}
+                    href={`/style/${related.slug}`}
+                    className="group rounded-2xl border border-beige/20 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                  >
+                    <h3 className="font-serif text-lg font-semibold text-warm-dark transition-colors group-hover:text-terracotta">
+                      {related.label}
+                    </h3>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-taupe transition-colors group-hover:text-terracotta">
+                      Browse {related.label.toLowerCase()} finds
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>
