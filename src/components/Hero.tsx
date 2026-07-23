@@ -1,6 +1,4 @@
-import type { Product } from "~/lib/types";
-
-export function Hero({ trending }: { trending: Product[] }) {
+export function Hero() {
   return (
     <section className="relative overflow-hidden">
       {/* Editorial lifestyle hero image — LCP: explicit dimensions prevent CLS */}
@@ -61,59 +59,6 @@ export function Hero({ trending }: { trending: Product[] }) {
           </div>
         </div>
       </div>
-
-      {/* Product teaser strip — first 3 trending products overlaid at bottom */}
-      {trending.length > 0 && (
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className="bg-white/70 backdrop-blur-sm">
-            <div className="mx-auto max-w-7xl px-4 py-3 sm:px-6 lg:px-8">
-              <div className="grid grid-cols-3 gap-3 sm:gap-4">
-                {trending.slice(0, 3).map((product) => (
-                  <a
-                    key={product.id}
-                    href={product.amazon_url || "#"}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group flex items-center gap-2 rounded-lg bg-white/80 px-2 py-2 shadow-sm ring-1 ring-beige/20 transition-all hover:bg-white hover:shadow-md sm:gap-3 sm:px-3"
-                  >
-                    {/* Thumbnail */}
-                    <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-md bg-cream sm:h-14 sm:w-14">
-                      {product.image_url ? (
-                        <img
-                          src={product.image_url}
-                          alt={product.image_alt || product.name}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="flex h-full w-full items-center justify-center">
-                          <span className="font-serif text-lg text-beige/50 italic">
-                            {product.name.charAt(0)}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                    {/* Info */}
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-xs font-medium text-warm-dark group-hover:text-terracotta sm:text-sm">
-                        {product.name}
-                      </p>
-                      {product.price && (
-                        <p className="text-xs font-semibold text-terracotta">
-                          {new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          }).format(product.price)}
-                        </p>
-                      )}
-                    </div>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
