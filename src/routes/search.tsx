@@ -139,7 +139,7 @@ function SearchPage() {
         {/* Search hero */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />
-          <div className="relative mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16">
+          <div className="relative mx-auto max-w-7xl px-4 py-8 sm:px-6 sm:py-10">
             <a href="/" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" />
@@ -171,7 +171,7 @@ function SearchPage() {
           </div>
         </section>
 
-        <section className="py-8 sm:py-12">
+        <section className="py-4 sm:py-8">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col lg:flex-row gap-8">
               {/* Filter sidebar */}
@@ -190,7 +190,7 @@ function SearchPage() {
               {/* Results */}
               <div className="flex-1 min-w-0">
                 {loading ? (
-                  <div className="py-16 text-center">
+                  <div className="py-10 text-center">
                     <div className="mx-auto h-8 w-8 animate-spin rounded-full border-2 border-beige border-t-terracotta" />
                     <p className="mt-4 text-warm-gray">Loading...</p>
                   </div>
@@ -224,7 +224,7 @@ function SearchPage() {
                     )}
                   </>
                 ) : (
-                  <div className="py-16 text-center">
+                  <div className="py-10 text-center">
                     <p className="text-lg text-warm-gray">
                       {query ? `No results found for "${query}".` : "No products match your filters."}
                     </p>

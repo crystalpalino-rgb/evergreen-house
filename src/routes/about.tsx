@@ -41,7 +41,7 @@ function About() {
               backgroundSize: "60px 60px",
             }}
           />
-          <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
+          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
                 Our Story
@@ -57,7 +57,7 @@ function About() {
         </section>
 
         {/* ── Founder Story ── */}
-        <section className="bg-cream py-16 sm:py-24">
+        <section className="bg-cream py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid items-center gap-12 lg:grid-cols-5">
               {/* Founder photo  left column on desktop */}
@@ -126,7 +126,7 @@ function About() {
         </section>
 
         {/* ── Values ── */}
-        <section className="bg-cream-dark py-16 sm:py-20">
+        <section className="bg-cream-dark py-8 sm:py-12">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <h2 className="text-center font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
               What We Stand For
@@ -241,7 +241,7 @@ function About() {
         </section>
 
         {/* ── Footer CTA ── */}
-        <section className="bg-beige/15 py-16 sm:py-20">
+        <section className="bg-beige/15 py-8 sm:py-12">
           <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
             <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
               Want the best finds in your inbox?

@@ -106,7 +106,7 @@ function CollectionPage() {
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-cream-dark" />
           <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <a href="/collections" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
               All Collections
@@ -119,7 +119,7 @@ function CollectionPage() {
 
         {/* Editorial content section */}
         {description && (
-          <section aria-labelledby="about-collection-heading" className="border-b border-beige/20 bg-white py-10 sm:py-14">
+          <section aria-labelledby="about-collection-heading" className="border-b border-beige/20 bg-white py-6 sm:py-10">
             <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
               <h2 id="about-collection-heading" className="font-serif text-xl font-semibold text-warm-dark">
                 About This Collection
@@ -137,18 +137,18 @@ function CollectionPage() {
         )}
 
         {/* Product grid */}
-        <section className="py-12 sm:py-16">
+        <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {products.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div>
             ) : (
-              <div className="py-16 text-center"><p className="text-lg text-warm-gray">No products found for this collection yet.</p><a href="/collections" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all collections →</a></div>
+              <div className="py-10 text-center"><p className="text-lg text-warm-gray">No products found for this collection yet.</p><a href="/collections" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all collections →</a></div>
             )}
           </div>
         </section>
 
         {/* FAQ Section */}
-        <section aria-labelledby="faq-heading" className="border-t border-beige/20 bg-cream/30 py-12 sm:py-16">
+        <section aria-labelledby="faq-heading" className="border-t border-beige/20 bg-cream/30 py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <h2 id="faq-heading" className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
               Frequently Asked Questions
@@ -173,7 +173,7 @@ function CollectionPage() {
 
         {/* More Collections */}
         {relatedCollections.length > 0 && (
-          <section aria-labelledby="more-collections-heading" className="border-t border-beige/20 py-12 sm:py-16">
+          <section aria-labelledby="more-collections-heading" className="border-t border-beige/20 py-8 sm:py-12">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h2
                 id="more-collections-heading"

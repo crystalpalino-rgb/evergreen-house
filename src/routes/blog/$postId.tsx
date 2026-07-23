@@ -55,11 +55,11 @@ function BlogPostPage() {
       <Header />
       <main>
         <Breadcrumbs items={breadcrumbItems} />
-        <article className="bg-cream py-12 sm:py-20">
+        <article className="bg-cream py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
             <Link to="/blog" className="inline-flex items-center gap-1.5 text-sm font-medium text-taupe transition-colors hover:text-terracotta"><BackArrow />Back to Blog</Link>
             {!post ? (
-              <div className="mt-12 rounded-2xl border border-beige/30 bg-white px-8 py-16 text-center shadow-sm"><h1 className="font-serif text-2xl font-semibold text-warm-dark">Post Not Found</h1><p className="mt-3 text-warm-gray">This post may not be published yet or doesn't exist.</p><Link to="/blog" className="mt-6 inline-block rounded-full bg-terracotta px-6 py-2.5 text-sm font-medium text-white transition hover:bg-terracotta-dark">Browse all posts</Link></div>
+              <div className="mt-12 rounded-2xl border border-beige/30 bg-white px-8 py-10 text-center shadow-sm"><h1 className="font-serif text-2xl font-semibold text-warm-dark">Post Not Found</h1><p className="mt-3 text-warm-gray">This post may not be published yet or doesn't exist.</p><Link to="/blog" className="mt-6 inline-block rounded-full bg-terracotta px-6 py-2.5 text-sm font-medium text-white transition hover:bg-terracotta-dark">Browse all posts</Link></div>
             ) : (
               <>
                 <header className="mb-10"><h1 className="font-serif text-3xl font-bold leading-tight text-warm-dark sm:text-4xl lg:text-5xl">{post.title}</h1><p className="mt-4 text-sm font-medium uppercase tracking-wide text-taupe">{formatDate(post.created_at)}</p></header>

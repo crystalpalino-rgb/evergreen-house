@@ -144,7 +144,7 @@ function CollectionsPage() {
               backgroundSize: "60px 60px",
             }}
           />
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <a
               href="/"
               className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6"
@@ -176,7 +176,7 @@ function CollectionsPage() {
           </div>
         </section>
 
-        <section className="py-12 sm:py-16">
+        <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Room collections */}
             {roomCollections.length > 0 && (
@@ -224,7 +224,7 @@ function CollectionsPage() {
             {roomCollections.length === 0 &&
               styleCollections.length === 0 &&
               otherCollections.length === 0 && (
-                <div className="py-16 text-center">
+                <div className="py-10 text-center">
                   <p className="text-lg text-warm-gray">No collections yet.</p>
                   <a
                     href="/"

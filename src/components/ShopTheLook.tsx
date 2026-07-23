@@ -67,7 +67,7 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
   const hasDbData = dbProducts && dbProducts.length > 0;
 
   return (
-    <section className="py-16 sm:py-20">
+    <section className="py-8 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <h2 className="text-center font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
           Inspired Spaces
