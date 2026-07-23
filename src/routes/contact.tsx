@@ -24,7 +24,7 @@ function Contact() {
       <Header />
       <main>
         <Breadcrumbs
-          items={{ label: "Home", href: "/" }, { label: "Contact" }}
+          items={[{ label: "Home", href: "/" }, { label: "Contact" }]}
         />
         {/* ── Hero ── */}
         <section className="relative overflow-hidden">
