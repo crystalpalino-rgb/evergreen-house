@@ -4,7 +4,7 @@ import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
-import { sql } from "~/lib/intelligence";
+import { sql } from "~/db";
 
 const lifestyleMappings: Record<string, { label: string; rooms: string[] }> = {
   "small-spaces": { label: "Small Space Living", rooms: ["living-room", "bedroom", "kitchen", "bathroom", "entryway"] },
