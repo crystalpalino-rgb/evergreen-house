@@ -71,7 +71,7 @@ function EditorsPicksPage() {
               backgroundSize: "60px 60px",
             }}
           />
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <a
               href="/"
               className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6"
@@ -110,7 +110,7 @@ function EditorsPicksPage() {
         </section>
 
         {/* ── Product grid ── */}
-        <section className="py-12 sm:py-16">
+        <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {products.length > 0 ? (
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -119,7 +119,7 @@ function EditorsPicksPage() {
                 ))}
               </div>
             ) : (
-              <div className="py-16 text-center">
+              <div className="py-10 text-center">
                 <p className="text-lg text-warm-gray">
                   No editor picks available right now. Please check back soon.
                 </p>
@@ -135,7 +135,7 @@ function EditorsPicksPage() {
         </section>
 
         {/* ── Bottom CTA ── */}
-        <section className="border-t border-beige/20 py-12 sm:py-16">
+        <section className="border-t border-beige/20 py-8 sm:py-12">
           <div className="mx-auto max-w-3xl px-4 text-center sm:px-6">
             <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
               Looking for something specific?

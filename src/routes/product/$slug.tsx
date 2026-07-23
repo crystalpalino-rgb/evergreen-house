@@ -77,7 +77,7 @@ function ProductPage() {
       <>
         <Header />
         <main>
-          <div className="mx-auto max-w-7xl px-4 py-24 text-center sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8">
             <h1 className="font-serif text-3xl font-bold text-warm-dark">Product Not Found</h1>
             <p className="mt-4 text-warm-gray">The product you're looking for isn't available or may have been removed.</p>
             <a href="/" className="mt-6 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">
@@ -288,7 +288,7 @@ function ProductPage() {
 
         {/* You Might Also Love */}
         {related.length > 0 && (
-          <section aria-labelledby="related-heading" className="border-t border-beige/20 py-12 sm:py-16">
+          <section aria-labelledby="related-heading" className="border-t border-beige/20 py-8 sm:py-12">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <h2
                 id="related-heading"
@@ -321,7 +321,7 @@ function ProductPage() {
         )}
 
         {/* Browse by Room */}
-        <section aria-labelledby="browse-room-heading" className="border-t border-beige/20 bg-cream/30 py-12 sm:py-16">
+        <section aria-labelledby="browse-room-heading" className="border-t border-beige/20 bg-cream/30 py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2
               id="browse-room-heading"

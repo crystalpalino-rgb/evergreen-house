@@ -49,7 +49,7 @@ export function EmailSignup() {
   }
 
   return (
-    <section id="signup" className="bg-beige/15 py-16 sm:py-20">
+    <section id="signup" className="bg-beige/15 py-8 sm:py-12">
       <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
         {status === "success" ? (
           <div className="rounded-2xl bg-white p-10 shadow-sm">

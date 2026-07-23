@@ -70,7 +70,7 @@ function BlogIndex() {
             }}
           />
           <div className="absolute inset-0 bg-white/50" />
-          <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
+          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <div className="mx-auto max-w-3xl text-center">
               <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
                 The Journal
@@ -85,10 +85,10 @@ function BlogIndex() {
           </div>
         </section>
         {/* Posts Grid */}
-        <section className="bg-cream py-12 sm:py-16">
+        <section className="bg-cream py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {posts.length === 0 ? (
-              <div className="rounded-2xl border border-beige/30 bg-white px-8 py-16 text-center shadow-sm">
+              <div className="rounded-2xl border border-beige/30 bg-white px-8 py-10 text-center shadow-sm">
                 <p className="text-lg text-warm-gray">No posts yet.</p>
                 <p className="mt-2 text-sm text-taupe">
                   Check back soon for curated home inspiration and editor finds.

@@ -25,7 +25,7 @@ export function Hero() {
         }}
       />
 
-      <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:px-8 lg:py-16">
         <div className="mx-auto max-w-3xl text-center">
           {/* Editorial eyebrow */}
           <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
