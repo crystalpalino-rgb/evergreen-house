@@ -16,6 +16,46 @@ const fetchHandler = handler as {
   fetch: (request: Request) => Response | Promise<Response>;
 };
 
+// ── API middleware (mirrors serve.ts for Vercel) ──
+async function handleApiRoutes(req: Request): Promise<Response | null> {
+  const { pathname } = new URL(req.url);
+
+  // POST /api/subscribe
+  if (pathname === "/api/subscribe" && req.method === "POST") {
+    try {
+      const body = await req.json();
+      const { handleSubscribe } = await import("./src/lib/subscribers");
+      const result = await handleSubscribe(body);
+      return new Response(JSON.stringify(result), {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (err: any) {
+      return new Response(
+        JSON.stringify({ success: false, error: err.message }),
+        { status: 500, headers: { "Content-Type": "application/json" } },
+      );
+    }
+  }
+
+  // GET /api/subscribers (admin)
+  if (pathname === "/api/subscribers" && req.method === "GET") {
+    try {
+      const { handleGetSubscribers } = await import("./src/lib/subscribers");
+      const subscribers = await handleGetSubscribers();
+      return new Response(JSON.stringify(subscribers), {
+        headers: { "Content-Type": "application/json" },
+      });
+    } catch (err: any) {
+      return new Response(JSON.stringify({ error: err.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+  }
+
+  return null;
+}
+
 const toWebRequest = (req: IncomingMessage): Request => {
   const host = req.headers.host ?? "localhost";
   const proto =
@@ -42,7 +82,10 @@ export default async function vercelHandler(
   res: ServerResponse,
 ): Promise<void> {
   try {
-    const webRes = await fetchHandler.fetch(toWebRequest(req));
+    const webReq = toWebRequest(req);
+    // Check API routes before SSR
+    const apiRes = await handleApiRoutes(webReq);
+    const webRes = apiRes ?? (await fetchHandler.fetch(webReq));
     res.statusCode = webRes.status;
     webRes.headers.forEach((value, key) => res.setHeader(key, value));
     if (webRes.body) {
