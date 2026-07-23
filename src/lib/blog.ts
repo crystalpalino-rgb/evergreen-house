@@ -58,3 +58,25 @@ export const getBlogPost = createServerFn({ method: "GET" })
       return null;
     }
   });
+
+export const deleteBlogPost = createServerFn({ method: "DELETE" })
+  .validator((id: number) => id)
+  .handler(async ({ data: id }): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const db = sql();
+      // Verify the post exists and is a blog post
+      const rows = await db`
+        SELECT id FROM marketing_tasks
+        WHERE id = ${id} AND channel = 'blog'
+        LIMIT 1
+      `;
+      if (rows.length === 0) {
+        return { success: false, error: "Post not found" };
+      }
+      await db`DELETE FROM marketing_tasks WHERE id = ${id} AND channel = 'blog'`;
+      return { success: true };
+    } catch (err: any) {
+      console.error("deleteBlogPost error:", err);
+      return { success: false, error: err.message };
+    }
+  });
