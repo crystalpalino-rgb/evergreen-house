@@ -27,6 +27,8 @@ export function Header() {
         { label: "Home Office", href: "/room/office" },
         { label: "Entryway", href: "/room/entryway" },
         { label: "Outdoor", href: "/room/patio" },
+        { label: "Laundry Room", href: "/room/laundry" },
+        { label: "Pantry", href: "/room/pantry" },
       ],
     },
     {
