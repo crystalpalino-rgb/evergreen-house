@@ -51,19 +51,25 @@ cat > .vercel/output/config.json <<'JSON'
       ]
     },
     {
-      "source": "/(.*\\.(jpg|jpeg|png|webp|avif|gif|svg|ico))",
+      "source": "/(.*).js",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/(.*\\.(js|css|woff2?))",
+      "source": "/(.*).css",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/sitemap(.*)\\.xml",
+      "source": "/images/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/sitemap(.*).xml",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
