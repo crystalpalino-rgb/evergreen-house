@@ -7,6 +7,7 @@ import {
 import type { ReactNode } from "react";
 
 import appCss from "~/styles/app.css?url";
+import { ThirdPartyScripts } from "~/components/ThirdPartyScripts";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 
 const SITE_NAME = "Evergreen House";
@@ -110,35 +111,12 @@ function RootDocument({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        {/* Google Tag Manager */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WCVMWDLG');`,
-          }}
-        />
-        {/* End Google Tag Manager */}
-        {/* JSON-LD structured data — rendered inline in <head> */}
+        {/* JSON-LD structured data — rendered inline in <head> for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript }}
         />
-        {/* Pinterest Tag — base code for all pages */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `!function(e){if(!window.pintrk){window.pintrk = function () {
-window.pintrk.queue.push(Array.prototype.slice.call(arguments))};var
-  n=window.pintrk;n.queue=[],n.version="3.0";var
-  t=document.createElement("script");t.async=!0,t.src=e;var
-  r=document.getElementsByTagName("script")[0];
-  r.parentNode.insertBefore(t,r)}}("https://s.pinimg.com/ct/core.js");
-pintrk('load', '2612894533915');
-pintrk('page');`,
-          }}
-        />
+        {/* Pinterest noscript fallback — stays in <head> for non-JS users */}
         <noscript>
           <img
             height="1"
@@ -148,7 +126,6 @@ pintrk('page');`,
             src="https://ct.pinterest.com/v3/?event=init&tid=2612894533915&noscript=1"
           />
         </noscript>
-        {/* end Pinterest Tag */}
       </head>
       <body className="min-h-screen bg-cream">
         {/* Google Tag Manager (noscript) */}
@@ -161,6 +138,8 @@ pintrk('page');`,
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
+        {/* Third-party scripts (GTM + Pinterest) loaded client-side after hydration */}
+        <ThirdPartyScripts />
         {children}
         <Scripts />
       </body>

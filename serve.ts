@@ -20,6 +20,55 @@ const PORT = 3000;
 const HOST = "0.0.0.0";
 const CLIENT_DIR = `${import.meta.dir}/dist/client`;
 
+// ── Content-Security-Policy ──
+const CSP_HEADER = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://s.pinimg.com https://ct.pinterest.com",
+  "img-src 'self' data: https:",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://ct.pinterest.com https://*.pinterest.com",
+  "frame-src https://www.googletagmanager.com",
+].join("; ");
+
+// ── Cache-Control helpers ──
+// Content-hashed assets (JS, CSS bundles) → immutable 1-year cache
+const IMMUTABLE_EXTS = new Set([
+  ".js", ".mjs", ".css",
+]);
+// Binary media assets → long cache (1 year)
+const STATIC_MEDIA_EXTS = new Set([
+  ".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".ico",
+  ".woff", ".woff2", ".ttf", ".eot", ".otf",
+  ".avif",
+]);
+const HTML_CONTENT_TYPES = new Set(["text/html", "text/html; charset=utf-8"]);
+
+function cacheHeaderFor(path: string, contentType: string): string {
+  const ext = path.slice(path.lastIndexOf(".")).toLowerCase();
+  if (IMMUTABLE_EXTS.has(ext) || STATIC_MEDIA_EXTS.has(ext)) {
+    return "public, max-age=31536000, immutable";
+  }
+  // HTML pages (SSR): never cache stale content
+  if (HTML_CONTENT_TYPES.has(contentType) || path === "/" || !path.includes(".")) {
+    return "public, max-age=0, must-revalidate";
+  }
+  // Other static files: short cache
+  return "public, max-age=3600";
+}
+
+function applyHeaders(response: Response, pathname: string): Response {
+  const headers = new Headers(response.headers);
+  const ct = headers.get("content-type") || "";
+  headers.set("Cache-Control", cacheHeaderFor(pathname, ct));
+  headers.set("Content-Security-Policy", CSP_HEADER);
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 // ── Admin API middleware ──
 async function handleAdminApi(req: Request): Promise<Response | null> {
   const { pathname } = new URL(req.url);
@@ -367,7 +416,7 @@ for (let attempt = 1; ; attempt++) {
         // Static files
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
-          if (await file.exists()) return new Response(file);
+          if (await file.exists()) return applyHeaders(new Response(file), pathname);
         }
 
         // Admin API routes
@@ -598,9 +647,10 @@ for (let attempt = 1; ; attempt++) {
           }
         }
 
-        return (
+        const ssrResponse = await (
           handler as { fetch: (r: Request) => Response | Promise<Response> }
         ).fetch(req);
+        return applyHeaders(ssrResponse, pathname);
       },
     });
     break;
