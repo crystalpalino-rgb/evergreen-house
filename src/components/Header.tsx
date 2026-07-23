@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
 
 interface ShopSubItem {
   label: string;
@@ -11,9 +12,20 @@ interface ShopCategory {
 }
 
 export function Header() {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+
+  const handleSearchSubmit = () => {
+    const q = searchValue.trim();
+    if (q) {
+      navigate({ to: "/search", search: { q } });
+      setSearchOpen(false);
+      setSearchValue("");
+    }
+  };
 
   const shopCategories: ShopCategory[] = [
     {
@@ -153,16 +165,41 @@ export function Header() {
           {/* Search */}
           <div className="relative">
             {searchOpen ? (
-              <input
-                type="text"
-                placeholder="Search..."
-                className="w-36 rounded-full border border-beige/50 bg-white px-3 py-1.5 text-sm text-warm-dark placeholder-warm-gray/60 outline-none transition-all focus:w-48 focus:border-beige sm:w-48 sm:focus:w-64"
-                autoFocus
-                onBlur={() => setSearchOpen(false)}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") setSearchOpen(false);
-                }}
-              />
+              <div className="flex items-center">
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchValue}
+                  onChange={(e) => setSearchValue(e.target.value)}
+                  className="w-36 rounded-full border border-beige/50 bg-white px-3 py-1.5 text-sm text-warm-dark placeholder-warm-gray/60 outline-none transition-all focus:w-48 focus:border-beige sm:w-48 sm:focus:w-64"
+                  autoFocus
+                  onBlur={() => setSearchOpen(false)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") setSearchOpen(false);
+                    if (e.key === "Enter") handleSearchSubmit();
+                  }}
+                />
+                <button
+                  onClick={handleSearchSubmit}
+                  className="ml-1 rounded-full p-2 text-warm-gray transition-colors hover:text-terracotta"
+                  aria-label="Submit search"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                  </svg>
+                </button>
+              </div>
             ) : (
               <button
                 onClick={() => setSearchOpen(true)}
