@@ -59,6 +59,7 @@ export const Route = createFileRoute("/collection/$collection")({
       ]);
       const label = collection?.display_name || collection?.name || slug;
       const description = collection?.description || null;
+      const imageUrl = collection?.image_url || null;
       const collectionType = collection?.type || "room";
 
       // Get 3 related collections (different slugs, same type preferred)
@@ -72,23 +73,32 @@ export const Route = createFileRoute("/collection/$collection")({
         })
         .slice(0, 3);
 
-      return { products, collection: slug, label, description, collectionType, relatedCollections };
+      return { products, collection: slug, label, description, imageUrl, collectionType, relatedCollections };
     } catch (err) {
       console.error("Collection loader error:", err);
-      return { products: [] as Product[], collection: slug, label: slug, description: null, collectionType: "room", relatedCollections: [] as Collection[] };
+      return { products: [] as Product[], collection: slug, label: slug, description: null, imageUrl: null, collectionType: "room", relatedCollections: [] as Collection[] };
     }
   },
   head: ({ loaderData }) => {
     const name = loaderData?.label || "Collection";
     const desc = loaderData?.description;
     const seo = generateCollectionMetadata(name, desc);
-    return { meta: seo.meta, links: seo.links };
+    const links = [...seo.links];
+    if (loaderData?.imageUrl) {
+      links.push({
+        rel: "preload",
+        as: "image",
+        href: loaderData.imageUrl,
+        fetchpriority: "high",
+      });
+    }
+    return { meta: seo.meta, links };
   },
   component: CollectionPage,
 });
 
 function CollectionPage() {
-  const { products, label, description, collectionType, relatedCollections } = Route.useLoaderData();
+  const { products, label, description, imageUrl, collectionType, relatedCollections } = Route.useLoaderData();
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Collections", href: "/collections" }, { label }];
   const collectionUrl = `${SITE_URL}/collection/${Route.useLoaderData().collection}`;
   const collectionSchema = getCollectionPageSchema({ name: label, display_name: label, description }, collectionUrl);
@@ -104,8 +114,26 @@ function CollectionPage() {
 
         {/* Hero */}
         <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-cream-dark" />
-          <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+          {imageUrl ? (
+            <>
+              <img
+                src={imageUrl}
+                alt={`${label} — Evergreen House`}
+                width={1200}
+                height={800}
+                fetchpriority="high"
+                loading="eager"
+                decoding="sync"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+              <div className="absolute inset-0 bg-white/50" />
+            </>
+          ) : (
+            <>
+              <div className="absolute inset-0 bg-cream-dark" />
+              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+            </>
+          )}
           <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
             <a href="/collections" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
