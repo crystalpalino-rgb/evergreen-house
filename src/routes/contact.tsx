@@ -26,54 +26,27 @@ function Contact() {
         <Breadcrumbs
           items={[{ label: "Home", href: "/" }, { label: "Contact" }]}
         />
-        {/* ── Hero ── */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-cream-dark" />
-          {/* Subtle dot texture */}
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
-            <div className="mx-auto max-w-3xl text-center">
-              <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
-                Get in Touch
-              </p>
-              <h1 className="mt-6 font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">
-                Contact Us
-              </h1>
-              <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-warm-gray sm:text-xl">
-                We'd love to hear from you.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Contact Content ── */}
-        <section className="bg-cream py-16 sm:py-24">
+        {/* ── Contact ── */}
+        <section className="bg-cream py-8 sm:py-12">
           <div className="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
-            <div className="rounded-2xl bg-white p-8 shadow-sm sm:p-12">
-              <div className="space-y-8 text-center">
+            <div className="rounded-2xl bg-white p-8 shadow-sm sm:p-10">
+              <div className="space-y-6 text-center">
                 <div>
-                  <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
-                    Let's Talk
-                  </h2>
-                  <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-warm-gray">
-                    Whether you have a question about a product, a suggestion for a collection, or just want to say hello, we're always happy to hear from you.
+                  <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe">
+                    Get in Touch
                   </p>
-                  <p className="mt-3 text-lg leading-relaxed text-warm-gray">
-                    Drop us a note and we'll get back to you as soon as we can.
+                  <h1 className="mt-2 font-serif text-3xl font-bold text-warm-dark sm:text-4xl">
+                    Contact Us
+                  </h1>
+                  <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-warm-gray">
+                    Questions about a product? A suggestion for a collection? Just want to say hello? We'd love to hear from you.
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center gap-4 pt-4">
+                <div className="flex flex-col items-center gap-3">
                   <a
                     href="mailto:hello@evergreenhouse.co"
-                    className="inline-flex items-center gap-3 rounded-full bg-terracotta px-8 py-4 font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg"
+                    className="inline-flex items-center gap-3 rounded-full bg-terracotta px-8 py-3.5 font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -96,7 +69,7 @@ function Contact() {
                   </p>
                 </div>
 
-                <div className="border-t border-beige/20 pt-8">
+                <div className="border-t border-beige/20 pt-5">
                   <p className="text-sm leading-relaxed text-warm-gray/60">
                     We read every message and typically respond within 1–2 business days. In the meantime, you might find what you're looking for in our{" "}
                     <a
@@ -117,25 +90,6 @@ function Contact() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* ── Footer CTA ── */}
-        <section className="bg-beige/15 py-16 sm:py-20">
-          <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
-            <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
-              Want the best finds in your inbox?
-            </h2>
-            <p className="mt-3 text-warm-gray">
-              Join our newsletter for curated home picks, styling tips, and
-              editor-approved favorites.
-            </p>
-            <a
-              href="/#signup"
-              className="mt-6 inline-block rounded-full bg-terracotta px-8 py-3.5 text-center font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg"
-            >
-              Sign Up for Free
-            </a>
           </div>
         </section>
       </main>
