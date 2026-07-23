@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 
 interface ShopSubItem {
   label: string;
@@ -13,22 +13,7 @@ interface ShopCategory {
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
-  const [shopOpen, setShopOpen] = useState(false);
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
-  const shopRef = useRef<HTMLDivElement>(null);
-
-  // Close shop dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (shopRef.current && !shopRef.current.contains(e.target as Node)) {
-        setShopOpen(false);
-      }
-    }
-    if (shopOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [shopOpen]);
 
   const shopCategories: ShopCategory[] = [
     {
@@ -104,13 +89,9 @@ export function Header() {
             Home
           </a>
 
-          {/* Shop dropdown — click to open */}
-          <div className="relative" ref={shopRef}>
-            <button
-              onClick={() => setShopOpen(!shopOpen)}
-              className="flex items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-              aria-expanded={shopOpen}
-            >
+          {/* Shop dropdown — native <details> works without JS hydration */}
+          <details className="group relative">
+            <summary className="flex cursor-pointer items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta list-none select-none">
               Shop
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -122,39 +103,36 @@ export function Header() {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className={`transition-transform duration-200 ${shopOpen ? "rotate-180" : ""}`}
+                className="transition-transform duration-200 group-open:rotate-180"
               >
                 <polyline points="6 9 12 15 18 9" />
               </svg>
-            </button>
+            </summary>
 
-            {shopOpen && (
-              <div className="absolute left-0 top-full mt-2 w-[640px] rounded-xl border border-beige/20 bg-white py-6 shadow-lg">
-                <div className="grid grid-cols-4 gap-x-6 px-6">
-                  {shopCategories.map((cat) => (
-                    <div key={cat.category}>
-                      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-taupe">
-                        {cat.category}
-                      </h4>
-                      <ul className="space-y-1">
-                        {cat.items.map((item) => (
-                          <li key={item.label}>
-                            <a
-                              href={item.href}
-                              onClick={() => setShopOpen(false)}
-                              className="block py-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-                            >
-                              {item.label}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
+            <div className="absolute left-0 top-full mt-2 w-[640px] rounded-xl border border-beige/20 bg-white py-6 shadow-lg">
+              <div className="grid grid-cols-4 gap-x-6 px-6">
+                {shopCategories.map((cat) => (
+                  <div key={cat.category}>
+                    <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-taupe">
+                      {cat.category}
+                    </h4>
+                    <ul className="space-y-1">
+                      {cat.items.map((item) => (
+                        <li key={item.label}>
+                          <a
+                            href={item.href}
+                            className="block py-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
+                          >
+                            {item.label}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          </details>
 
           {/* Remaining nav links (Blog, About, Journal) */}
           {navLinks.slice(1).map((link) => (
