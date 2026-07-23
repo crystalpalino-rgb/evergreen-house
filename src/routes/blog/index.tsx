@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { SITE_URL } from "~/lib/schema";
-import { getBlogPosts, type BlogPost } from "~/lib/blog";
+import { getBlogPosts, deleteBlogPost, type BlogPost } from "~/lib/blog";
 
 export const Route = createFileRoute("/blog/")({
   head: () => {
@@ -46,7 +47,25 @@ function formatDate(dateStr: string): string {
 }
 
 function BlogIndex() {
-  const { posts } = Route.useLoaderData();
+  const { posts: initialPosts } = Route.useLoaderData();
+  const [posts, setPosts] = useState(initialPosts);
+  const [deleting, setDeleting] = useState<number | null>(null);
+  const isAdmin =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("admin") === "true";
+
+  const handleDelete = async (postId: number, title: string) => {
+    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
+    setDeleting(postId);
+    const result = await deleteBlogPost({ data: postId });
+    setDeleting(null);
+    if (result.success) {
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+    } else {
+      alert(result.error || "Failed to delete post");
+    }
+  };
+
   return (
     <>
       <main>
@@ -94,24 +113,56 @@ function BlogIndex() {
             ) : (
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {posts.map((post) => (
-                  <Link
-                    key={post.id}
-                    to="/blog/$postId"
-                    params={{ postId: String(post.id) }}
-                    className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-md block"
-                  >
-                    <div className="p-6 sm:p-7">
-                      <h2 className="font-serif text-lg font-semibold leading-snug text-warm-dark group-hover:text-terracotta transition-colors">
-                        {post.title}
-                      </h2>
-                      <p className="mt-3 text-sm leading-relaxed text-warm-gray line-clamp-3">
-                        {excerpt(post.content)}
-                      </p>
-                      <p className="mt-4 text-xs font-medium uppercase tracking-wide text-taupe">
-                        {formatDate(post.created_at)}
-                      </p>
-                    </div>
-                  </Link>
+                  <div key={post.id} className="relative">
+                    <Link
+                      to="/blog/$postId"
+                      params={{ postId: String(post.id) }}
+                      className="group overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-md block"
+                    >
+                      <div className="p-6 sm:p-7">
+                        <h2 className="font-serif text-lg font-semibold leading-snug text-warm-dark group-hover:text-terracotta transition-colors">
+                          {post.title}
+                        </h2>
+                        <p className="mt-3 text-sm leading-relaxed text-warm-gray line-clamp-3">
+                          {excerpt(post.content)}
+                        </p>
+                        <p className="mt-4 text-xs font-medium uppercase tracking-wide text-taupe">
+                          {formatDate(post.created_at)}
+                        </p>
+                      </div>
+                    </Link>
+                    {isAdmin && (
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleDelete(post.id, post.title);
+                        }}
+                        disabled={deleting === post.id}
+                        className="absolute top-2 right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/80 text-rose-400 opacity-0 transition-opacity hover:bg-rose-50 hover:text-rose-600 group-hover:opacity-100 disabled:opacity-50"
+                        title="Delete post"
+                        aria-label={`Delete "${post.title}"`}
+                      >
+                        {deleting === post.id ? (
+                          <span className="text-xs">\u2026</span>
+                        ) : (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                          </svg>
+                        )}
+                      </button>
+                    )}
+                  </div>
                 ))}
               </div>
             )}
