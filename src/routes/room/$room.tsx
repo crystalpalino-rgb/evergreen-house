@@ -55,16 +55,26 @@ export const Route = createFileRoute("/room/$room")({
       return { products: [] as Product[], room: params.room };
     }
   },
-  head: ({ loaderData }) => {
-    const roomName =
-      roomLabels[loaderData?.room] || loaderData?.room || "Room";
-    const products = loaderData?.products || [];
-    const seo = generateRoomMetadata(roomName, products.length);
-    return {
-      meta: seo.meta,
-      links: seo.links,
-    };
-  },
+    head: ({ loaderData }) => {
+      const roomName =
+        roomLabels[loaderData?.room] || loaderData?.room || "Room";
+      const products = loaderData?.products || [];
+      const seo = generateRoomMetadata(roomName, products.length);
+      const roomPhoto = roomPhotos[loaderData?.room] || null;
+      const links = [...seo.links];
+      if (roomPhoto) {
+        links.push({
+          rel: "preload",
+          as: "image",
+          href: roomPhoto,
+          fetchpriority: "high",
+        });
+      }
+      return {
+        meta: seo.meta,
+        links,
+      };
+    },
   component: RoomPage,
 });
 
@@ -97,14 +107,23 @@ function RoomPage() {
           }}
         />
         <section className="relative overflow-hidden">
-          {roomPhoto ? (
-            <>
-              <div className="absolute inset-0" style={{ backgroundImage: `url(${roomPhoto})`, backgroundSize: "cover", backgroundPosition: "center" }} />
-              <div className="absolute inset-0 bg-white/50" />
-            </>
-          ) : (
-            <div className="absolute inset-0 bg-cream" />
-          )}
+            {roomPhoto ? (
+              <>
+                <img
+                  src={roomPhoto}
+                  alt={`${roomName} — Evergreen House`}
+                  width={1200}
+                  height={800}
+                  fetchpriority="high"
+                  loading="eager"
+                  decoding="sync"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-white/50" />
+              </>
+            ) : (
+              <div className="absolute inset-0 bg-cream" />
+            )}
           <div className="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:py-24">
             <a href="/" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

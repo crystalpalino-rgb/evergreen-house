@@ -1,14 +1,16 @@
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Editorial lifestyle background image */}
-      <div
-        className="absolute inset-0"
-        style={{
-          backgroundImage: "url(/images/living-room.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+      {/* Editorial lifestyle hero image — LCP: explicit dimensions prevent CLS */}
+      <img
+        src="/images/living-room.jpg"
+        alt="Beautiful living room with timeless decor"
+        width={1200}
+        height={800}
+        fetchpriority="high"
+        loading="eager"
+        decoding="sync"
+        className="absolute inset-0 h-full w-full object-cover"
       />
 
       {/* Warm overlay for text readability */}

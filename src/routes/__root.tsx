@@ -73,6 +73,7 @@ export const Route = createRootRoute({
       // canonical link in its head export. The root canonical is a fallback.
       { rel: "canonical", href: SITE_URL },
       { rel: "stylesheet", href: appCss },
+      // Preconnect for Google Fonts (before the stylesheet)
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       {
         rel: "preconnect",
@@ -82,6 +83,13 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
+      },
+      // Preload LCP hero image for homepage (above-the-fold background image)
+      {
+        rel: "preload",
+        as: "image",
+        href: "/images/living-room.jpg",
+        fetchpriority: "high",
       },
     ],
   }),

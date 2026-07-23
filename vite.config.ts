@@ -21,4 +21,20 @@ export default defineConfig({
     tanstackStart(),
     viteReact(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        // Split all third-party code into a single vendor chunk.
+        // TanStack Router already code-splits routes automatically.
+        // This keeps the main entry chunk small and makes vendor code
+        // highly cacheable across deployments.
+        manualChunks(id) {
+          if (id.includes("node_modules/")) {
+            return "vendor";
+          }
+        },
+      },
+    },
+    chunkSizeWarningLimit: 500,
+  },
 });
