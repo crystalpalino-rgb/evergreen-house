@@ -4,16 +4,7 @@ import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateBlogMetadata } from "~/lib/seo";
 import { getArticleSchema, SITE_URL } from "~/lib/schema";
-
-interface BlogPost {
-  id: number;
-  title: string;
-  content: string | null;
-  channel: string;
-  status: string;
-  created_at: string;
-  updated_at: string;
-}
+import { getBlogPost, type BlogPost } from "~/lib/blog";
 
 export const Route = createFileRoute("/blog/$postId")({
   head: ({ loaderData }) => {
@@ -30,10 +21,8 @@ export const Route = createFileRoute("/blog/$postId")({
     try {
       const id = parseInt(params.postId, 10);
       if (isNaN(id)) return { post: null };
-      const baseUrl = typeof window !== "undefined" ? "" : "http://localhost:3000";
-      const resp = await fetch(`${baseUrl}/api/blog-post?id=${id}`);
-      const data = await resp.json();
-      return { post: data.post as BlogPost | null };
+      const post = await getBlogPost({ data: id });
+      return { post };
     } catch (err) {
       console.error("Blog post loader error:", err);
       return { post: null };
@@ -50,21 +39,17 @@ function renderContent(content: string): string {
   html = html.split(/\n\n+/).map((block) => { const trimmed = block.trim(); if (!trimmed) return ""; return `<p class="mb-5 leading-relaxed">${trimmed.replace(/\n/g, "<br />")}</p>`; }).join("\n");
   return html;
 }
-
 function formatDate(dateStr: string): string {
   const date = new Date(dateStr);
   return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
-
 function BackArrow() {
   return (<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>);
 }
-
 function BlogPostPage() {
   const { post } = Route.useLoaderData();
   const articleSchema = post ? getArticleSchema({ title: post.title, content: post.content, created_at: post.created_at, updated_at: post.updated_at, id: post.id }, `${SITE_URL}/blog/${post.id}`, "Evergreen House") : null;
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Blog", href: "/blog" }, { label: post?.title || "Post" }];
-
   return (
     <>
       <Header />

@@ -4,16 +4,7 @@ import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { SITE_URL } from "~/lib/schema";
-
-// ── Types ──
-interface PublishedPost {
-  id: number;
-  title: string;
-  content: string | null;
-  status: string;
-  created_at: string;
-  updated_at: string;
-}
+import { getBlogPosts, type BlogPost } from "~/lib/blog";
 
 export const Route = createFileRoute("/blog/")({
   head: () => {
@@ -26,14 +17,11 @@ export const Route = createFileRoute("/blog/")({
   },
   loader: async () => {
     try {
-      const baseUrl =
-        typeof window !== "undefined" ? "" : "http://localhost:3000";
-      const resp = await fetch(`${baseUrl}/api/blog-posts`);
-      const data = await resp.json();
-      return { posts: data.posts as PublishedPost[] };
+      const posts = await getBlogPosts();
+      return { posts };
     } catch (err) {
       console.error("Blog loader error:", err);
-      return { posts: [] as PublishedPost[] };
+      return { posts: [] as BlogPost[] };
     }
   },
   component: BlogIndex,
@@ -103,14 +91,7 @@ function BlogIndex() {
               <div className="rounded-2xl border border-beige/30 bg-white px-8 py-16 text-center shadow-sm">
                 <p className="text-lg text-warm-gray">No posts yet.</p>
                 <p className="mt-2 text-sm text-taupe">
-                  Generate some in the{" "}
-                  <a
-                    href="/marketing"
-                    className="font-medium text-terracotta underline hover:text-terracotta-dark"
-                  >
-                    Marketing Dashboard
-                  </a>
-                  .
+                  Check back soon for curated home inspiration and editor finds.
                 </p>
               </div>
             ) : (
