@@ -4,26 +4,8 @@ import { useEffect } from "react";
  * Third-party tracking scripts loaded client-side after hydration.
  * GTM loads immediately; Pinterest is deferred via requestIdleCallback
  * so it never blocks page render.
- *
- * Skipped entirely when:
- * - URL contains ?admin=true (internal admin/testing traffic)
- * - Hostname is localhost (local development)
- * - Hostname includes vercel.app (staging/preview deployments)
  */
 export function ThirdPartyScripts() {
-  // ── Internal traffic filter ──
-  // Skip all third-party tracking for team testing, local dev, and
-  // staging/preview URLs so those sessions don't pollute GA / Pinterest.
-  if (typeof window !== "undefined") {
-    if (window.location.search.includes("admin=true")) {
-      return null;
-    }
-    const hostname = window.location.hostname;
-    if (hostname === "localhost" || hostname.includes("vercel.app")) {
-      return null;
-    }
-  }
-
   useEffect(() => {
     // ── Google Tag Manager ──
     // GTM's own snippet already creates an async <script> for the external
