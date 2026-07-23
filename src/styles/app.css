@@ -23,6 +23,7 @@
   body {
     @apply bg-cream font-sans text-warm-dark antialiased;
     font-family: var(--font-sans);
+    font-display: swap;
   }
 
   h1,
@@ -30,6 +31,7 @@
   h3,
   h4 {
     font-family: var(--font-serif);
+    font-display: swap;
   }
 }
 
