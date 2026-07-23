@@ -45,6 +45,8 @@ export function ProductCard({ product }: { product: Product }) {
   const imageUrl = p.image_url || p.imageUrl || "";
   const name = p.name;
   const room = p.room || "";
+  // Use existing image_alt from DB if available, otherwise generate a descriptive alt
+  const imageAlt = p.image_alt || `${name} — Evergreen House`;
 
   const formattedPrice = price
     ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price)
@@ -52,6 +54,30 @@ export function ProductCard({ product }: { product: Product }) {
 
   const pinDescription = getPinDescription(product);
   const hasRealUrl = amazonUrl && amazonUrl !== "#" && amazonUrl.startsWith("http");
+
+  // Build srcset for Amazon images (they support size parameters)
+  function getImageSrcSet(url: string): { srcSet?: string; sizes?: string } {
+    if (!url) return {};
+    // Amazon media images support size parameters
+    if (url.includes("media-amazon.com") || url.includes("images-amazon.com") || url.includes("ssl-images-amazon.com")) {
+      // Most Amazon product images end with ._AC_SL1500_.jpg or similar
+      // Build srcset with multiple widths
+      const base = url.replace(/\._[A-Z]+[_0-9]+_\./, ".");
+      const sizes = [320, 480, 640, 800, 1080];
+      const srcSet = sizes
+        .map((w) => {
+          // Construct Amazon-style resized URL
+          const ext = url.lastIndexOf(".") > -1 ? url.slice(url.lastIndexOf(".")) : ".jpg";
+          const nameWithoutExt = base.slice(0, base.lastIndexOf("."));
+          return `${nameWithoutExt}._AC_UL${w}_${ext} ${w}w`;
+        })
+        .join(", ");
+      return { srcSet, sizes: "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" };
+    }
+    return {};
+  }
+
+  const { srcSet, sizes } = getImageSrcSet(imageUrl);
 
   function trackAmazonClick() {
     if (typeof window !== "undefined" && "pintrk" in window) {
@@ -79,9 +105,12 @@ export function ProductCard({ product }: { product: Product }) {
             {imageUrl ? (
               <img
                 src={imageUrl}
-                alt={`${name}, ${room.replace(/-/g, " ")}`}
+                srcSet={srcSet}
+                sizes={sizes}
+                alt={imageAlt}
                 className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
+                decoding="async"
                 data-pin-description={pinDescription}
                 data-pin-url={amazonUrl}
               />
@@ -95,9 +124,12 @@ export function ProductCard({ product }: { product: Product }) {
           imageUrl ? (
             <img
               src={imageUrl}
-              alt={`${name}, ${room.replace(/-/g, " ")}`}
+              srcSet={srcSet}
+              sizes={sizes}
+              alt={imageAlt}
               className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
+              decoding="async"
               data-pin-description={pinDescription}
             />
           ) : (

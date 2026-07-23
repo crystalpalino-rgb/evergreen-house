@@ -9,7 +9,8 @@
     "start": "bun run serve.ts",
     "publish": "bash ./publish.sh",
     "go-live": "bash ./go-live.sh",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "generate-sitemaps": "bun run scripts/generate-sitemaps.ts"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",

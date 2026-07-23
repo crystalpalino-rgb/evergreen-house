@@ -145,9 +145,10 @@ function ProductPage() {
                 {imageUrl ? (
                   <img
                     src={imageUrl}
-                    alt={p.name}
+                    alt={`${p.name} — Evergreen House`}
                     className="h-full w-full object-contain p-6"
                     loading="eager"
+                    decoding="async"
                   />
                 ) : (
                   <div className="flex aspect-square items-center justify-center">
