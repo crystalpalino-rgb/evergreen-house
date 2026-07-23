@@ -72,7 +72,7 @@ function Contact() {
 
                 <div className="flex flex-col items-center gap-4 pt-4">
                   <a
-                    href="mailto:hello@evergreenhouse.com"
+                    href="mailto:the-cozy-edit-47141fd2@ctomail.io"
                     className="inline-flex items-center gap-3 rounded-full bg-terracotta px-8 py-4 font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg"
                   >
                     <svg
@@ -92,7 +92,7 @@ function Contact() {
                     Email Us
                   </a>
                   <p className="text-sm text-warm-gray/70">
-                    hello@evergreenhouse.co
+                    the-cozy-edit-47141fd2@ctomail.io
                   </p>
                 </div>
 
