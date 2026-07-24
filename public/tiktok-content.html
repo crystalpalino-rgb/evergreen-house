@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TikTok Content Batches — Evergreen House</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --cream-dark: #f5f0eb;
+    --taupe: #a89b8c;
+    --beige: #c9b99a;
+    --terracotta: #c2784a;
+    --sage: #8a9a83;
+    --warm-dark: #3d322c;
+    --warm-gray: #6b5e55;
+    --font-serif: "Playfair Display", Georgia, serif;
+    --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--cream); color: var(--warm-dark); font-family: var(--font-sans); line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  h1, h2, h3, h4, h5 { font-family: var(--font-serif); font-weight: 600; line-height: 1.3; }
+  .container { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+  .page-header { text-align: center; padding: 3rem 0 2rem; border-bottom: 1px solid var(--beige); margin-bottom: 2.5rem; }
+  .page-header h1 { font-size: 2.4rem; color: var(--warm-dark); margin-bottom: 0.5rem; }
+  .page-header p { color: var(--warm-gray); font-size: 1.05rem; }
+  .batch-card { background: white; border-radius: 12px; padding: 2rem 2.2rem; margin-bottom: 2rem; box-shadow: 0 2px 12px rgba(61,50,44,0.06); border: 1px solid var(--cream-dark); }
+  .batch-card h2 { font-size: 1.55rem; color: var(--warm-dark); margin-bottom: 0.35rem; }
+  .batch-meta { color: var(--taupe); font-size: 0.875rem; margin-bottom: 1.25rem; }
+  .batch-card h3 { font-size: 1.15rem; color: var(--terracotta); margin: 1.5rem 0 0.5rem; padding-top: 0.5rem; }
+  .batch-card h3:first-of-type { margin-top: 0; padding-top: 0; }
+  .hook-block { background: var(--cream-dark); border-left: 3px solid var(--terracotta); padding: 0.8rem 1.2rem; margin: 1rem 0; border-radius: 0 8px 8px 0; font-style: italic; color: var(--warm-dark); }
+  .video-section { border-bottom: 1px solid var(--cream-dark); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+  .video-section:last-of-type { border-bottom: none; margin-bottom: 0; }
+  .meta-row { display: flex; gap: 1.5rem; flex-wrap: wrap; margin: 0.5rem 0; font-size: 0.9rem; color: var(--warm-gray); }
+  .meta-row span { display: flex; align-items: center; gap: 0.3rem; }
+  .meta-label { font-weight: 600; color: var(--warm-dark); }
+  .product-item { display: flex; gap: 1.25rem; padding: 1rem 0; border-bottom: 1px solid var(--cream-dark); align-items: flex-start; }
+  .product-item:last-child { border-bottom: none; }
+  .product-num { min-width: 28px; height: 28px; background: var(--terracotta); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; flex-shrink: 0; margin-top: 0.15rem; }
+  .product-img { width: 100px; height: 100px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: var(--cream-dark); }
+  .product-info { flex: 1; min-width: 0; }
+  .product-info strong { display: block; font-size: 0.95rem; margin-bottom: 0.15rem; }
+  .product-info .caption { color: var(--warm-gray); font-size: 0.875rem; margin-bottom: 0.3rem; }
+  .product-info a { color: var(--sage); font-size: 0.8rem; text-decoration: none; word-break: break-all; }
+  .product-info a:hover { text-decoration: underline; color: var(--terracotta); }
+  .closing { font-style: italic; color: var(--taupe); text-align: center; margin-top: 1rem; font-size: 0.9rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; margin: 0.75rem 0; }
+  th, td { padding: 0.45rem 0.6rem; text-align: left; border-bottom: 1px solid var(--cream-dark); }
+  th { background: var(--cream-dark); font-weight: 600; font-size: 0.78rem; color: var(--warm-dark); white-space: nowrap; }
+  td { color: var(--warm-gray); }
+  .prod-notes { margin: 0.75rem 0; padding: 0; list-style: none; }
+  .prod-notes li { padding: 0.2rem 0; font-size: 0.85rem; color: var(--warm-gray); }
+  .prod-notes li::before { content: "— "; color: var(--taupe); }
+  .editor-note { background: var(--cream); padding: 0.6rem 1rem; border-radius: 8px; margin: 0.4rem 0; font-size: 0.85rem; color: var(--warm-gray); font-style: italic; }
+  .amzn-link { display: inline-block; font-size: 0.8rem; color: var(--sage); margin-top: 0.25rem; }
+  .back-link { display: inline-block; margin-top: 2rem; color: var(--sage); text-decoration: none; font-size: 0.9rem; }
+  .back-link:hover { color: var(--terracotta); }
+  @media (max-width: 600px) {
+    .container { padding: 1rem; }
+    .batch-card { padding: 1.25rem; }
+    .product-item { flex-direction: column; }
+    .product-img { width: 100%; height: auto; max-height: 220px; }
+    .page-header h1 { font-size: 1.8rem; }
+    .meta-row { flex-direction: column; gap: 0.3rem; }
+    table { font-size: 0.75rem; }
+    th, td { padding: 0.3rem 0.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <h1>TikTok Content Batches</h1>
+    <p>All faceless video scripts — products sourced from the live Evergreen House database</p>
+  </div>
+
+  <!-- ========== BATCH 1 ========== -->
+  <div class="batch-card" id="batch-1">
+    <h2>Batch #1 — Three Kitchen &amp; Living Room Videos</h2>
+    <p class="batch-meta">Created 2026-07-23 · 3 faceless video scripts · 15 products</p>
+
+    <!-- Video 1 -->
+    <div class="video-section">
+      <h3>Video 1: A Beautifully Layered Bedroom</h3>
+      <div class="hook-block">Pieces that turn a bedroom into a place you want to linger a little longer.</div>
+      <div class="meta-row">
+        <span><span class="meta-label">Music:</span> Soft piano, slow tempo — "peaceful morning" instrumental</span>
+        <span><span class="meta-label">Visual:</span> Wide → detail → texture → finish → close</span>
+      </div>
+      <div class="product-item">
+        <span class="product-num">1</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/71+B-QgK4fL._AC_SL1500_.jpg" alt="Linen Duvet Cover" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Linen Duvet Cover</strong>
+          <p class="caption">French linen that only gets softer with every wash.</p>
+          <a href="https://amzn.to/3Raxu2t" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">2</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/71Ca6piZfPL._AC_SL1500_.jpg" alt="Upholstered Bench" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Upholstered Bench</strong>
+          <p class="caption">A linen bench that makes the bed feel finished.</p>
+          <a href="https://amzn.to/4pq8uRc" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">3</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/81iSCjC9l1L._AC_SL1500_.jpg" alt="Chunky Knit Throw" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Chunky Knit Throw</strong>
+          <p class="caption">A chunky knit throw for evenings worth slowing down.</p>
+          <a href="https://amzn.to/4w9z1VA" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">4</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/81qGBlrpuML._AC_SL1500_.jpg" alt="Lumbar Pillow Cover" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Lumbar Pillow Cover</strong>
+          <p class="caption">The lumbar pillow that layers a bed effortlessly.</p>
+          <a href="https://amzn.to/4fq9ro7" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">5</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/816IeEq0eDL._AC_SL1500_.jpg" alt="Boucle Pillow Covers" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Boucle Pillow Covers</strong>
+          <p class="caption">Boucle texture that adds warmth without busy patterns.</p>
+          <a href="https://amzn.to/45dsKw7" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+    </div>
+
+    <!-- Video 2 -->
+    <div class="video-section">
+      <h3>Video 2: Kitchen Pieces Worth Keeping</h3>
+      <div class="hook-block">Simple pieces that make everyday rituals feel a little more special.</div>
+      <div class="meta-row">
+        <span><span class="meta-label">Music:</span> Light acoustic guitar, warm and unhurried — Sunday morning coffee</span>
+        <span><span class="meta-label">Visual:</span> Statement piece → everyday beauty → detail → organization → function</span>
+      </div>
+      <div class="product-item">
+        <span class="product-num">1</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/41H7vZTF4hL._AC_SL1300_.jpg" alt="Retro Toaster" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Retro Toaster</strong>
+          <p class="caption">A toaster designed to stay out, not hide away.</p>
+          <a href="https://amzn.to/4ysERmq" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">2</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/71Vpa1fOn+L._AC_SL1500_.jpg" alt="Stoneware Dinnerware Set" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Stoneware Dinnerware Set</strong>
+          <p class="caption">Stoneware beautiful enough to live on open shelving.</p>
+          <a href="https://amzn.to/4b4YabF" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">3</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/61IjBRi3qQL._AC_SL1500_.jpg" alt="Stoneware Butter Dish" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Stoneware Butter Dish</strong>
+          <p class="caption">A butter dish that earns its place on the counter.</p>
+          <a href="https://amzn.to/3T068N5" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">4</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/81hElModSLL._AC_SL1500_.jpg" alt="Glass Food Storage Jars" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Glass Food Storage Jars</strong>
+          <p class="caption">Glass jars that turn pantry staples into something beautiful.</p>
+          <a href="https://amzn.to/4wbacbP" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">5</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/61fAmxOKIjL._AC_SL1500_.jpg" alt="Acacia Wood Lazy Susan" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Acacia Wood Lazy Susan</strong>
+          <p class="caption">Acacia wood that makes an everyday reach feel intentional.</p>
+          <a href="https://amzn.to/4pz1zpe" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+    </div>
+
+    <!-- Video 3 -->
+    <div class="video-section">
+      <h3>Video 3: Living Room Finds That Feel Collected</h3>
+      <div class="hook-block">Amazon finds that don't look like they came from Amazon.</div>
+      <div class="meta-row">
+        <span><span class="meta-label">Music:</span> Warm ambient instrumental, gentle pulse — golden hour at home</span>
+        <span><span class="meta-label">Visual:</span> Warmth → texture → styling → glow → layer</span>
+      </div>
+      <div class="product-item">
+        <span class="product-num">1</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/71vNoDzZzQL._AC_SL1500_.jpg" alt="Terracotta Vase" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Terracotta Vase</strong>
+          <p class="caption">A terracotta vase with the warmth of something collected over time.</p>
+          <a href="https://amzn.to/4wPnMl0" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">2</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/710qCEQUwoL._AC_SL1500_.jpg" alt="Ribbed Glass Vase" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Ribbed Glass Vase</strong>
+          <p class="caption">Ribbed glass that looks beautiful with or without flowers.</p>
+          <a href="https://amzn.to/3R7BOQ5" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">3</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/71sQBIQzY6L._AC_SL1500_.jpg" alt="Rattan &amp; Pearl Tray" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Rattan &amp; Pearl Tray</strong>
+          <p class="caption">A rattan tray that pulls any vignette together effortlessly.</p>
+          <a href="https://amzn.to/4puKf4s" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">4</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/61oc2hLdwHL._AC_SL1500_.jpg" alt="Candle Warmer Lamp" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Candle Warmer Lamp</strong>
+          <p class="caption">Soft candlelight without the flame — warm glow, always.</p>
+          <a href="https://amzn.to/4frtpid" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <div class="product-item">
+        <span class="product-num">5</span>
+        <img class="product-img" src="https://m.media-amazon.com/images/I/81FmNQzuGfL._AC_SL1500_.jpg" alt="Botanical Pillow Covers" loading="lazy" onerror="this.style.display='none'">
+        <div class="product-info">
+          <strong>Botanical Pillow Covers</strong>
+          <p class="caption">Botanical pattern that adds interest without losing the calm.</p>
+          <a href="https://amzn.to/3Rl5SYv" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+        </div>
+      </div>
+      <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+    </div>
+
+    <!-- Scoring Table -->
+    <h3>Product Scoring — Batch #1</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Rating</th><th>Price</th><th>Timelessness</th><th>Visual</th><th>Style Fit</th></tr></thead>
+        <tbody>
+          <tr><td>Linen Duvet Cover</td><td>4.5</td><td>$142.99</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Upholstered Bench</td><td>4.6</td><td>$179.99</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Chunky Knit Throw</td><td>4.6</td><td>$37.99</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Lumbar Pillow Cover</td><td>4.5</td><td>$19.99</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Boucle Pillow Covers</td><td>4.6</td><td>$15.27</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Retro Toaster</td><td>4.4</td><td>$229.00</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Stoneware Dinnerware</td><td>4.5</td><td>$81.00</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Stoneware Butter Dish</td><td>4.8</td><td>$16.36</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Glass Storage Jars</td><td>4.7</td><td>$26.99</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Acacia Lazy Susan</td><td>4.7</td><td>$13.99</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Terracotta Vase</td><td>4.7</td><td>$24.69</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Ribbed Glass Vase</td><td>4.7</td><td>$29.99</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Rattan &amp; Pearl Tray</td><td>4.7</td><td>$27.99</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Candle Warmer Lamp</td><td>4.8</td><td>$29.98</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Botanical Pillow Covers</td><td>4.8</td><td>$21.99</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Production Notes</h3>
+    <ul class="prod-notes">
+      <li><strong>Format:</strong> 9:16 vertical, ideal for TikTok + Reels + Shorts</li>
+      <li><strong>Pacing:</strong> 3–4 seconds per product, slow zooms or gentle panning on still images</li>
+      <li><strong>Text overlay:</strong> One caption per product, centered lower-third, serif or clean sans-serif font</li>
+      <li><strong>No talking heads:</strong> All b-roll or still-image slideshow with music</li>
+      <li><strong>Affiliate disclosure:</strong> Include "#affiliate" or "commission earned" per platform guidelines</li>
+    </ul>
+  </div>
+
+  <!-- ========== BATCH 2 ========== -->
+  <div class="batch-card" id="batch-2">
+    <h2>Batch #2 — Living Room Discovery</h2>
+    <p class="batch-meta">Generated 2026-07-23 · Hook style: discovery · Room: Living Room · Season: summer</p>
+    <div class="hook-block">Well-made pieces hiding in plain sight.</div>
+
+    <div class="product-item">
+      <span class="product-num">1</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81cmfTpo5TL._AC_SL1500_.jpg" alt="ONEVOG Velvet Pouf Ottoman Olive Green" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>ONEVOG Velvet Pouf Ottoman Olive Green</strong>
+        <p class="caption">These cute velvet ottomans make such a stylish and comfy addition.</p>
+        <div class="editor-note">Editor: These cute velvet ottomans make such a stylish and comfy addition to my living room.</div>
+        <span style="font-size:0.8rem;color:var(--taupe);">Price: $200 · Rating: 4.5/5 · Score: <strong>87/100</strong></span><br>
+        <a href="https://amzn.to/4pMRoxr" target="_blank" rel="nofollow noopener" class="amzn-link">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">2</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/91Na4ueXD3L._AC_SL1500_.jpg" alt="Loloi Darby Collection DAR 06 Sand/Dk." loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Loloi Darby Collection DAR 06 Sand/Dk.</strong>
+        <p class="caption">This rug really ties the living room together. It's perfect for cozy evenings.</p>
+        <div class="editor-note">Editor: This rug really ties the living room together. It's perfect for cozy evenings.</div>
+        <span style="font-size:0.8rem;color:var(--taupe);">Price: $131 · Rating: 4.5/5 · Score: <strong>86/100</strong></span><br>
+        <a href="https://amzn.to/4hlw6o4" target="_blank" rel="nofollow noopener" class="amzn-link">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">3</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81xO8rol2dL._AC_SL1500_.jpg" alt="Yaheetech Accent Chairs Large PU Leather" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Yaheetech Accent Chairs Large PU Leather</strong>
+        <p class="caption">A comfy leather chair is a must-have! This camel armchair is both stylish and cozy.</p>
+        <div class="editor-note">Editor: A comfy leather chair is a must-have! This camel armchair is both stylish and cozy.</div>
+        <span style="font-size:0.8rem;color:var(--taupe);">Price: $150 · Rating: 4.6/5 · Score: <strong>86/100</strong></span><br>
+        <a href="https://amzn.to/4w73Lqh" target="_blank" rel="nofollow noopener" class="amzn-link">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">4</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/91lYI8KSh6L._AC_SL1500_.jpg" alt="Rugshop Bohemian Stripe Stain Resistant High" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Rugshop Bohemian Stripe Stain Resistant High</strong>
+        <p class="caption">I love this living room rug! It's perfect for the kids and pets.</p>
+        <div class="editor-note">Editor: I love this living room rug! It's perfect for the kids and pets.</div>
+        <span style="font-size:0.8rem;color:var(--taupe);">Price: $246 · Rating: 4.6/5 · Score: <strong>88/100</strong></span><br>
+        <a href="https://amzn.to/4wgK7YY" target="_blank" rel="nofollow noopener" class="amzn-link">Shop on Amazon →</a>
+      </div>
+    </div>
+
+    <!-- Scoring -->
+    <h3>Product Scoring — Batch #2</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Price</th><th>Rating</th><th>Score</th><th>Timeless</th><th>Visual</th><th>Material</th><th>Lifestyle</th><th>Photo</th></tr></thead>
+        <tbody>
+          <tr><td>ONEVOG Velvet Pouf</td><td>$200</td><td>4.5</td><td><strong>87</strong></td><td>69</td><td>90</td><td>92</td><td>98</td><td>90</td></tr>
+          <tr><td>Loloi Darby DAR 06</td><td>$131</td><td>4.5</td><td><strong>86</strong></td><td>74</td><td>90</td><td>83</td><td>100</td><td>90</td></tr>
+          <tr><td>Yaheetech Accent Chair</td><td>$150</td><td>4.6</td><td><strong>86</strong></td><td>69</td><td>90</td><td>87</td><td>98</td><td>90</td></tr>
+          <tr><td>Rugshop Bohemian Stripe</td><td>$246</td><td>4.6</td><td><strong>88</strong></td><td>74</td><td>90</td><td>88</td><td>100</td><td>90</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== BATCH 3 ========== -->
+  <div class="batch-card" id="batch-3">
+    <h2>Batch #3 — Kitchen Pieces Worth Keeping</h2>
+    <p class="batch-meta">Created 2026-07-24 · Faceless video script · 5 products</p>
+    <div class="hook-block">Small changes with an outsized impact on how a room feels.</div>
+    <div class="meta-row">
+      <span><span class="meta-label">Music:</span> Light acoustic guitar, warm and unhurried — Sunday morning coffee</span>
+      <span><span class="meta-label">Visual:</span> Statement piece → everyday beauty → detail → organization → function</span>
+    </div>
+    <div class="product-item">
+      <span class="product-num">1</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/61IjBRi3qQL._AC_SL1500_.jpg" alt="Creative Co Op Stoneware Butter Dish" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Creative Co Op Stoneware Butter Dish</strong>
+        <p class="caption">Ceramic butter dish beautiful enough to live on open shelving.</p>
+        <a href="https://amzn.to/3T068N5" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">2</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/618xRSGzmhL._SL1293_.jpg" alt="Trader Joe's 5 Items or Less" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Trader Joe's 5 Items or Less</strong>
+        <p class="caption">A timeless piece for a beautiful kitchen.</p>
+        <a href="https://amzn.to/4fcnQFO" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">3</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/61fAmxOKIjL._AC_SL1500_.jpg" alt="10 Acacia Wood Lazy Susan Organizer" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>10" Acacia Wood Lazy Susan Organizer</strong>
+        <p class="caption">Solid wood lazy susan that keeps everything in its place, beautifully.</p>
+        <a href="https://amzn.to/4pz1zpe?tag=organization" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">4</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/61URPwf47tL._AC_SL1500_.jpg" alt="MALACASA Plates and Bowls Sets" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>MALACASA Plates and Bowls Sets</strong>
+        <p class="caption">A dinnerware beautiful enough to live on open shelving.</p>
+        <a href="https://amzn.to/4b0FF88" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">5</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/51tIYozqFWL._AC_SL1500_.jpg" alt="YETI Rambler 18 oz Bottle" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>YETI Rambler 18 oz Bottle</strong>
+        <p class="caption">A bottle that makes hydration feel like a ritual.</p>
+        <a href="https://amzn.to/4hiGHAb" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+
+    <h3>Product Scoring — Batch #3</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Rating</th><th>Price</th><th>Timeless</th><th>Visual</th><th>Material</th><th>Lifestyle</th><th>Photo</th></tr></thead>
+        <tbody>
+          <tr><td>Creative Co Op Butter Dish</td><td>4.8</td><td>$16.36</td><td>★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Trader Joe's 5 Items or Less</td><td>4.6</td><td>$18.75</td><td>★★</td><td>★★★★★</td><td>★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Acacia Wood Lazy Susan</td><td>4.7</td><td>$13.99</td><td>★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>MALACASA Plates &amp; Bowls</td><td>4.6</td><td>$123.49</td><td>★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>YETI Rambler 18 oz</td><td>4.8</td><td>$39.95</td><td>★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Production Notes</h3>
+    <ul class="prod-notes">
+      <li><strong>Format:</strong> 9:16 vertical, ideal for TikTok + Reels + Shorts</li>
+      <li><strong>Pacing:</strong> 3–4 seconds per product, slow zooms or gentle panning on still images</li>
+      <li><strong>Text overlay:</strong> One caption per product, centered lower-third</li>
+      <li><strong>No talking heads:</strong> All b-roll or still-image slideshow with music</li>
+    </ul>
+  </div>
+
+  <!-- ========== BATCH 4 ========== -->
+  <div class="batch-card" id="batch-4">
+    <h2>Batch #4 — Living Room Pieces Worth Keeping</h2>
+    <p class="batch-meta">Created 2026-07-24 · Faceless video script · 5 products</p>
+    <div class="hook-block">Simple pieces that make a home feel finished.</div>
+    <div class="meta-row">
+      <span><span class="meta-label">Music:</span> Warm ambient instrumental, gentle pulse — golden hour at home</span>
+      <span><span class="meta-label">Visual:</span> Warmth → texture → styling → glow → layer</span>
+    </div>
+    <div class="product-item">
+      <span class="product-num">1</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81cmfTpo5TL._AC_SL1500_.jpg" alt="ONEVOG Velvet Pouf Ottoman Olive Green" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>ONEVOG Velvet Pouf Ottoman Olive Green</strong>
+        <p class="caption">Velvet seating that makes the room feel finished.</p>
+        <a href="https://amzn.to/4pMRoxr" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">2</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/91Na4ueXD3L._AC_SL1500_.jpg" alt="Loloi Darby Collection DAR 06 Sand/Dk." loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Loloi Darby Collection DAR 06 Sand/Dk.</strong>
+        <p class="caption">A timeless dar sand/dk. for a beautiful living room.</p>
+        <a href="https://amzn.to/4hlw6o4" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">3</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81xO8rol2dL._AC_SL1500_.jpg" alt="Yaheetech Accent Chairs Large PU Leather" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Yaheetech Accent Chairs Large PU Leather</strong>
+        <p class="caption">A comfy leather chair is a must-have.</p>
+        <a href="https://amzn.to/4w73Lqh" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">4</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/91lYI8KSh6L._AC_SL1500_.jpg" alt="Rugshop Bohemian Stripe Stain Resistant High" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Rugshop Bohemian Stripe Stain Resistant High</strong>
+        <p class="caption">A resistant high that grounds the room in texture.</p>
+        <a href="https://amzn.to/4wgK7YY" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">5</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81hbSg5ZpYL._AC_SL1500_.jpg" alt="WS Game Company Monopoly Vintage Bookshelf" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>WS Game Company Monopoly Vintage Bookshelf</strong>
+        <p class="caption">A vintage bookshelf that adds warmth without losing wall space.</p>
+        <a href="https://amzn.to/4bOaGwg" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+
+    <h3>Product Scoring — Batch #4</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Rating</th><th>Price</th><th>Timeless</th><th>Visual</th><th>Material</th><th>Lifestyle</th><th>Photo</th></tr></thead>
+        <tbody>
+          <tr><td>ONEVOG Velvet Pouf</td><td>4.5</td><td>$199.99</td><td>★★</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Loloi Darby DAR 06</td><td>4.5</td><td>$130.87</td><td>★★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Yaheetech Accent Chair</td><td>4.6</td><td>$149.99</td><td>★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Rugshop Bohemian Stripe</td><td>4.6</td><td>$245.69</td><td>★★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>WS Game Monopoly Bookshelf</td><td>4.8</td><td>$44.99</td><td>★★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Production Notes</h3>
+    <ul class="prod-notes">
+      <li><strong>Format:</strong> 9:16 vertical, ideal for TikTok + Reels + Shorts</li>
+      <li><strong>Pacing:</strong> 3–4 seconds per product, slow zooms or gentle panning</li>
+      <li><strong>No talking heads:</strong> All b-roll or still-image slideshow with music</li>
+    </ul>
+  </div>
+
+  <!-- ========== BATCH 5 ========== -->
+  <div class="batch-card" id="batch-5">
+    <h2>Batch #5 — Bathroom Pieces Worth Keeping</h2>
+    <p class="batch-meta">Created 2026-07-24 · Faceless video script · 5 products</p>
+    <div class="hook-block">Timeless home upgrades worth buying once.</div>
+    <div class="meta-row">
+      <span><span class="meta-label">Music:</span> Spa-like ambient, soft and calming — candlelit soak</span>
+      <span><span class="meta-label">Visual:</span> Stillness → detail → texture → light → close</span>
+    </div>
+    <div class="product-item">
+      <span class="product-num">1</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/716fsirczPL._AC_SL1500_.jpg" alt="LOAAO 40X36 Gold Bathroom Mirror" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>LOAAO 40"×36" Gold Bathroom Mirror</strong>
+        <p class="caption">Rounded rectangle gold frame mirror, brushed gold, anti-rust tempered glass.</p>
+        <a href="https://amzn.to/4pvZDxH" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">2</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/71uftD+dECL._AC_SL1500_.jpg" alt="Bathroom Arched Wall Cabinet" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Bathroom Arched Wall Cabinet</strong>
+        <p class="caption">Solid wood — smart storage can completely change how a bathroom functions.</p>
+        <a href="https://amzn.to/3ThuDFs" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">3</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/61WKUGmlqxL._AC_SL1500_.jpg" alt="SAMEAT Heated Towel Warmers" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>SAMEAT Heated Towel Warmers</strong>
+        <p class="caption">A towel warmer that feels like a small luxury every morning.</p>
+        <a href="https://amzn.to/45alBg5" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">4</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/61LJj74Qz1L._AC_SL1500_.jpg" alt="Real Natural Travertine Tray" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Real Natural Travertine Tray</strong>
+        <p class="caption">Natural stone organizer that keeps everything in its place, beautifully.</p>
+        <a href="https://amzn.to/3RJiett" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">5</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/71n0B3UybdL._AC_SL1500_.jpg" alt="Luxury Shampoo and Conditioner Dispenser" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Luxury Shampoo &amp; Conditioner Dispenser</strong>
+        <p class="caption">A dispenser that makes the everyday feel elevated.</p>
+        <a href="https://amzn.to/4hkhlSr" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+
+    <h3>Product Scoring — Batch #5</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Rating</th><th>Price</th><th>Timeless</th><th>Visual</th><th>Material</th><th>Lifestyle</th><th>Photo</th></tr></thead>
+        <tbody>
+          <tr><td>LOAAO Gold Mirror</td><td>4.6</td><td>$179.99</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td><td>★★★★</td></tr>
+          <tr><td>Bathroom Arched Cabinet</td><td>4.6</td><td>$129.99</td><td>★★★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★</td></tr>
+          <tr><td>SAMEAT Towel Warmer</td><td>4.6</td><td>$89.99</td><td>★★</td><td>★★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Travertine Tray</td><td>4.8</td><td>$34.99</td><td>★★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Shampoo Dispenser</td><td>4.6</td><td>$39.97</td><td>★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Production Notes</h3>
+    <ul class="prod-notes">
+      <li><strong>Format:</strong> 9:16 vertical, ideal for TikTok + Reels + Shorts</li>
+      <li><strong>Pacing:</strong> 3–4 seconds per product, slow zooms</li>
+      <li><strong>No talking heads:</strong> All b-roll or still-image slideshow with music</li>
+    </ul>
+  </div>
+
+  <!-- ========== BATCH 6 ========== -->
+  <div class="batch-card" id="batch-6">
+    <h2>Batch #6 — Bedroom Pieces Worth Keeping</h2>
+    <p class="batch-meta">Created 2026-07-24 · Faceless video script · 5 products</p>
+    <div class="hook-block">A collected home starts with pieces like these.</div>
+    <div class="meta-row">
+      <span><span class="meta-label">Music:</span> Soft piano, slow tempo — peaceful morning instrumental</span>
+      <span><span class="meta-label">Visual:</span> Wide → detail → texture → finish → close</span>
+    </div>
+    <div class="product-item">
+      <span class="product-num">1</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/8167xAJl5-L._AC_SL1500_.jpg" alt="Bedsure Duvet Cover Oversized Queen" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Bedsure Duvet Cover Oversized Queen</strong>
+        <p class="caption">A duvet cover that only gets softer with every wash.</p>
+        <a href="https://amzn.to/4vHQXFU" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">2</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/71hVLNG35FL._AC_SL1500_.jpg" alt="Knot Pillow Ball Soft Home Decorative" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Knot Pillow Ball Soft Home Decorative</strong>
+        <p class="caption">A pillow that layers this space effortlessly.</p>
+        <a href="https://amzn.to/3RJCRFZ" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">3</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/81ftxS+z5kL._AC_SL1500_.jpg" alt="Nathan James Mina Rattan Wood" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Nathan James Mina Rattan Wood</strong>
+        <p class="caption">Solid wood that feels at home in any bedroom.</p>
+        <a href="https://amzn.to/4wJHEWK" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">4</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/71UMsb6UYKL._AC_SL1500_.jpg" alt="Utopia Bedding Queen Fitted Sheet" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>Utopia Bedding Queen Fitted Sheet</strong>
+        <p class="caption">A fitted sheet that only gets softer with every wash.</p>
+        <a href="https://amzn.to/4yqwPL3" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <div class="product-item">
+      <span class="product-num">5</span>
+      <img class="product-img" src="https://m.media-amazon.com/images/I/71clKaivRIL._AC_SL1500_.jpg" alt="MIULEE Set of 2 Throw Pillow" loading="lazy" onerror="this.style.display='none'">
+      <div class="product-info">
+        <strong>MIULEE Set of 2 Throw Pillow</strong>
+        <p class="caption">Soft, cozy, and perfect for my living room.</p>
+        <a href="https://amzn.to/4fmBvsp" target="_blank" rel="nofollow noopener">Shop on Amazon →</a>
+      </div>
+    </div>
+    <p class="closing">Evergreen House — Browse the full curated collection at EvergreenHouse.co</p>
+
+    <h3>Product Scoring — Batch #6</h3>
+    <div style="overflow-x:auto;">
+      <table>
+        <thead><tr><th>Product</th><th>Rating</th><th>Price</th><th>Timeless</th><th>Visual</th><th>Material</th><th>Lifestyle</th><th>Photo</th></tr></thead>
+        <tbody>
+          <tr><td>Bedsure Duvet Cover Queen</td><td>4.5</td><td>$29.99</td><td>★★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Knot Pillow Ball</td><td>4.5</td><td>$35.14</td><td>★★★</td><td>★★★★★</td><td>★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Nathan James Mina Rattan</td><td>4.4</td><td>$69.99</td><td>★★★★</td><td>★★★★</td><td>★★★★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>Utopia Fitted Sheet</td><td>4.6</td><td>$9.99</td><td>★★★</td><td>★★★★★</td><td>★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+          <tr><td>MIULEE Throw Pillows</td><td>4.5</td><td>$22.99</td><td>★★★</td><td>★★★★★</td><td>★★</td><td>★★★★★</td><td>★★★★★</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h3>Production Notes</h3>
+    <ul class="prod-notes">
+      <li><strong>Format:</strong> 9:16 vertical, ideal for TikTok + Reels + Shorts</li>
+      <li><strong>Pacing:</strong> 3–4 seconds per product, slow zooms or gentle panning</li>
+      <li><strong>No talking heads:</strong> All b-roll or still-image slideshow with music</li>
+    </ul>
+  </div>
+
+  <a href="/" class="back-link">← Back to Evergreen House</a>
+</div>
+</body>
+</html>
