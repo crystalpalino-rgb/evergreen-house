@@ -71,7 +71,7 @@ export function getBreadcrumbSchema(
       "@type": "ListItem",
       position: index + 1,
       name: item.name,
-      item: item.url || undefined,
+      item: item.url ? { "@id": item.url, name: item.name } : undefined,
     })),
   };
 }
