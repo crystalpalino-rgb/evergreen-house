@@ -18,10 +18,8 @@ import { generateContentFromProducts } from "../src/lib/content-engine/generator
 import { validateContent } from "../src/lib/content-engine/brand-guardian";
 import { markProductsUsed } from "../src/lib/content-engine/diversity";
 import { HOOKS, type HookStyle } from "../src/lib/content-engine/hooks";
-import { getCurrentSeason } from "../src/lib/content-engine/seasonal";
 import type { Product } from "../src/lib/types";
 import * as fs from "node:fs";
-import * as path from "node:path";
 
 // ─── CLI argument parsing ───────────────────────────────────────────────────
 
@@ -150,50 +148,69 @@ function rowToProduct(row: ProductRow): Product {
   };
 }
 
-// ─── Output formatting ──────────────────────────────────────────────────────
+// ─── Star rating helper ─────────────────────────────────────────────────────
 
-function formatContentPackage(pkg: ReturnType<typeof generateContentFromProducts>): string {
-  const season = getCurrentSeason();
+function starRating(score: number): string {
+  if (score >= 90) return "★★★★★";
+  if (score >= 80) return "★★★★";
+  if (score >= 70) return "★★★";
+  if (score >= 60) return "★★";
+  return "★";
+}
+
+// ─── Output formatting (TikTok-ready, matching batch 1) ─────────────────────
+
+function formatTikTokContent(
+  pkg: ReturnType<typeof generateContentFromProducts>,
+  batchNum: number,
+): string {
   const roomDisplay = pkg.room.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   let out = "";
-  out += `# Evergreen House — Content Package\n\n`;
-  out += `**Room:** ${roomDisplay}\n`;
-  out += `**Season:** ${season}\n`;
-  out += `**Generated:** ${new Date(pkg.generatedAt).toLocaleString()}\n`;
-  out += `**Hook Style:** ${pkg.hookStyle}\n\n`;
+  out += `# Evergreen House — TikTok Content Batch #${batchNum}\n`;
+  out += `*Created ${new Date(pkg.generatedAt).toISOString().split("T")[0]} | Faceless video script | All products sourced from live database*\n\n`;
   out += `---\n\n`;
-  out += `## Hook\n\n`;
-  out += `> ${pkg.hook}\n\n`;
-  out += `---\n\n`;
-  out += `## Products (${pkg.products.length})\n\n`;
+
+  // ── Single video section ──
+  out += `## Video 1: ${roomDisplay} Pieces Worth Keeping\n`;
+  out += `**Hook:** ${pkg.hook}\n`;
+  out += `**Music vibe:** ${pkg.musicVibe}\n\n`;
+  out += `**Visual sequence:** ${pkg.visualSequence}\n\n`;
 
   for (let i = 0; i < pkg.products.length; i++) {
-    const { product, score, caption } = pkg.products[i];
-    const price = product.price ? `$${Math.round(product.price)}` : "N/A";
-    const rating = product.rating ? `${product.rating}/5 ★` : "N/A";
-
-    out += `### ${i + 1}. ${product.name}\n\n`;
-    out += `| Field | Value |\n`;
-    out += `|-------|-------|\n`;
-    out += `| Price | ${price} |\n`;
-    out += `| Rating | ${rating} |\n`;
-    out += `| Room | ${product.room} |\n`;
-    out += `| Overall Score | **${score.overall}/100** |\n`;
-    out += `| Timelessness | ${score.timelessness} |\n`;
-    out += `| Visual Quality | ${score.visualQuality} |\n`;
-    out += `| Material Quality | ${score.materialQuality} |\n`;
-    out += `| Lifestyle Appeal | ${score.lifestyleAppeal} |\n`;
-    out += `| Photography | ${score.photography} |\n\n`;
-    out += `**Caption:** ${caption}\n\n`;
-    out += `**Amazon:** ${product.amazon_url}\n\n`;
-
-    if (product.editor_note) {
-      out += `**Editor Note:** ${product.editor_note}\n\n`;
+    const { product, caption } = pkg.products[i];
+    out += `${i + 1}. **${product.name}** — ${caption}\n`;
+    if (product.image_url) {
+      out += `   Image: ${product.image_url}\n`;
     }
-
-    out += `---\n\n`;
+    out += `   Link: ${product.amazon_url}\n\n`;
   }
+
+  out += `**Closing:** Evergreen House — Browse the full curated collection at EvergreenHouse.co\n\n`;
+  out += `---\n\n`;
+
+  // ── Scoring summary table ──
+  out += `## Product Scoring Summary\n`;
+  out += `All products scored on timelessness, visual quality, material quality, lifestyle appeal, and photography before selection.\n\n`;
+  out += `| Product | Rating | Price | Timelessness | Visual | Material | Lifestyle | Photo |\n`;
+  out += `|---------|--------|-------|:---:|:---:|:---:|:---:|:---:|\n`;
+
+  for (const { product, score } of pkg.products) {
+    const rating = product.rating ? product.rating.toFixed(1) : "—";
+    const price = product.price ? `$${product.price.toFixed(2)}` : "—";
+    out += `| ${product.name} | ${rating} | ${price} | ${starRating(score.timelessness)} | ${starRating(score.visualQuality)} | ${starRating(score.materialQuality)} | ${starRating(score.lifestyleAppeal)} | ${starRating(score.photography)} |\n`;
+  }
+
+  out += `\n`;
+
+  // ── Production notes ──
+  out += `## Production Notes\n\n`;
+  out += `- **Format:** 9:16 vertical, ideal for TikTok + Reels + Shorts\n`;
+  out += `- **Pacing:** 3–4 seconds per product, slow zooms or gentle panning on still images\n`;
+  out += `- **Text overlay:** One caption per product, centered lower-third, serif or clean sans-serif font\n`;
+  out += `- **No talking heads:** All b-roll or still-image slideshow with music\n`;
+  out += `- **Product images:** Amazon-hosted URLs above — download and crop to 9:16 for best results\n`;
+  out += `- **Affiliate disclosure:** Include "#affiliate" or "commission earned" per platform guidelines\n`;
 
   return out;
 }
@@ -266,6 +283,8 @@ async function main() {
   });
 
   console.log(`   Hook: "${pkg.hook}"`);
+  console.log(`   Music vibe: ${pkg.musicVibe}`);
+  console.log(`   Visual sequence: ${pkg.visualSequence}`);
   console.log(`   Selected: ${pkg.products.length} products\n`);
 
   if (pkg.products.length === 0) {
@@ -302,6 +321,9 @@ async function main() {
     );
     console.log(`      "${caption}"`);
     console.log(`      ${product.amazon_url}`);
+    if (product.image_url) {
+      console.log(`      Image: ${product.image_url.slice(0, 60)}...`);
+    }
     console.log("");
   }
 
@@ -313,7 +335,7 @@ async function main() {
   // Write output file
   const batchNum = getNextBatchNumber();
   const outputPath = `/home/team/shared/tiktok-batch-${batchNum}.md`;
-  const markdown = formatContentPackage(pkg);
+  const markdown = formatTikTokContent(pkg, batchNum);
 
   fs.writeFileSync(outputPath, markdown, "utf-8");
   console.log(`📄 Output written to: ${outputPath}`);
