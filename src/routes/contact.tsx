@@ -43,7 +43,7 @@ function Contact() {
                   </p>
                 </div>
 
-                <div className="flex flex-col items-center gap-3">
+                <div className="flex flex-col items-center gap-4">
                   <a
                     href="mailto:hello@evergreenhouse.co"
                     className="inline-flex items-center gap-3 rounded-full bg-terracotta px-8 py-3.5 font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg"
@@ -64,9 +64,16 @@ function Contact() {
                     </svg>
                     Email Us
                   </a>
-                  <p className="text-sm text-warm-gray/70">
-                    hello@evergreenhouse.co
-                  </p>
+                  <div className="text-center">
+                    <p className="text-sm text-warm-gray/60">Or write to us directly at</p>
+                    <button
+                      onClick={() => { navigator.clipboard.writeText("hello@evergreenhouse.co"); }}
+                      className="mt-1 text-base font-medium text-warm-dark underline decoration-beige/40 underline-offset-4 transition-colors hover:text-terracotta"
+                      title="Click to copy"
+                    >
+                      hello@evergreenhouse.co
+                    </button>
+                  </div>
                 </div>
 
                 <div className="border-t border-beige/20 pt-5">
