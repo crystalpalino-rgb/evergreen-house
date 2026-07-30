@@ -70,9 +70,9 @@ export const Route = createRootRoute({
       },
     ],
     links: [
-      // NOTE: canonical is set per-route now. Each route should include its own
-      // canonical link in its head export. The root canonical is a fallback.
-      { rel: "canonical", href: SITE_URL },
+      // NOTE: canonical is set per-route in each route's head export.
+      // No global fallback — a conflicting root canonical causes duplicate
+      // canonical tags, which makes Google reject pages as duplicates.
       { rel: "stylesheet", href: appCss },
       // Preconnect for Google Fonts (before the stylesheet)
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

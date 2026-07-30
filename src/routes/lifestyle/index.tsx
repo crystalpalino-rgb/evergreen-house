@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductCard } from "~/components/ProductCard";
 import { getProductsByRoom } from "~/lib/intelligence";
+import { generateStaticMetadata } from "~/lib/seo";
 import type { Product } from "~/lib/types";
 
 export const Route = createFileRoute("/lifestyle/")({
@@ -22,16 +23,14 @@ export const Route = createFileRoute("/lifestyle/")({
       return { products: [] as Product[] };
     }
   },
-  head: () => ({
-    meta: [
-      { title: "Shop by Lifestyle — Evergreen House" },
-      {
-        name: "description",
-        content:
-          "Curated home finds for real life — Small Space Living, Organization, Hosting, and Work From Home.",
-      },
-    ],
-  }),
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Shop by Lifestyle",
+      "Curated home finds for real life — Small Space Living, Organization, Hosting, and Work From Home.",
+      "/lifestyle"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: LifestylePage,
 });
 
