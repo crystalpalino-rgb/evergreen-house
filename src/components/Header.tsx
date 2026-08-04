@@ -44,21 +44,21 @@ export function Header() {
       ],
     },
     {
+      category: "By Season",
+      items: [
+        { label: "Fall", href: "/collection/fall" },
+        { label: "Spring", href: "/collection/spring" },
+        { label: "Summer", href: "/collection/summer" },
+        { label: "Holiday", href: "/collection/holiday" },
+      ],
+    },
+    {
       category: "By Style",
       items: [
         { label: "Organic Modern", href: "/style/modern" },
         { label: "Minimalist & Modern", href: "/style/minimalist" },
         { label: "Everyday Luxury", href: "/style/glam" },
         { label: "Cozy Style", href: "/style/cozy" },
-      ],
-    },
-    {
-      category: "By Season",
-      items: [
-        { label: "Spring", href: "/collection/spring" },
-        { label: "Summer", href: "/collection/summer" },
-        { label: "Fall", href: "/collection/fall" },
-        { label: "Holiday", href: "/collection/holiday" },
       ],
     },
     {
