@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -30,13 +30,14 @@ export const Route = createFileRoute("/product/$slug")({
       });
 
       if (!product) {
-        return { product: null, related: [], slug };
+        throw notFound();
       }
 
       const related = await getRelatedProducts(product.id, 6);
 
       return { product, related, slug };
     } catch (err) {
+      if (isNotFound(err)) throw err;
       console.error("Product loader error:", err);
       return { product: null, related: [], slug };
     }
@@ -49,12 +50,15 @@ export const Route = createFileRoute("/product/$slug")({
         links: [],
       };
     }
-    const seo = generateProductMetadata({
-      name: product.name,
-      editor_note: product.editor_note,
-      room: product.room,
-      brand: product.brand,
-    });
+    const seo = generateProductMetadata(
+      {
+        name: product.name,
+        editor_note: product.editor_note,
+        room: product.room,
+        brand: product.brand,
+      },
+      product.seo_slug || productNameToSlug(product.name)
+    );
     return { meta: seo.meta, links: seo.links };
   },
   component: ProductPage,
