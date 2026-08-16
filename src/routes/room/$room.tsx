@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -143,8 +143,12 @@ export const Route = createFileRoute("/room/$room")({
   loader: async ({ params }) => {
     try {
       const products = await getProductsByRoom(params.room);
+      if (!roomLabels[params.room] && products.length === 0) {
+        throw notFound();
+      }
       return { products, room: params.room };
     } catch (err) {
+      if (isNotFound(err)) throw err;
       console.error("Loader error:", err);
       return { products: [] as Product[], room: params.room };
     }
@@ -153,7 +157,7 @@ export const Route = createFileRoute("/room/$room")({
       const roomName =
         roomLabels[loaderData?.room] || loaderData?.room || "Room";
       const products = loaderData?.products || [];
-      const seo = generateRoomMetadata(roomName, products.length);
+      const seo = generateRoomMetadata(roomName, products.length, loaderData?.room);
       const roomPhoto = roomPhotos[loaderData?.room] || null;
       const links = [...seo.links];
       if (roomPhoto) {

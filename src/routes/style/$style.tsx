@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -23,12 +23,21 @@ const STYLE_RELATIONSHIPS: Record<string, string[]> = {
 
 export const Route = createFileRoute("/style/$style")({
   loader: async ({ params }) => {
-    try { const products = await getProductsByStyle(params.style); return { products, style: params.style }; }
-    catch (err) { console.error("Loader error:", err); return { products: [], style: params.style }; }
+    try {
+      const products = await getProductsByStyle(params.style);
+      if (!styleLabels[params.style] && products.length === 0) {
+        throw notFound();
+      }
+      return { products, style: params.style };
+    } catch (err) {
+      if (isNotFound(err)) throw err;
+      console.error("Loader error:", err);
+      return { products: [], style: params.style };
+    }
   },
   head: ({ loaderData }) => {
     const styleName = styleLabels[loaderData?.style] || (loaderData?.style ? loaderData.style.charAt(0).toUpperCase() + loaderData.style.slice(1) : "Style");
-    const seo = generateStyleMetadata(styleName);
+    const seo = generateStyleMetadata(styleName, loaderData?.style);
     return { meta: seo.meta, links: seo.links };
   },
   component: StylePage,

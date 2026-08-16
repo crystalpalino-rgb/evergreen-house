@@ -49,21 +49,34 @@ function baseMeta(overrides: {
   };
 }
 
-/** Generate metadata for a room page (e.g. /room/living-room) */
-export function generateRoomMetadata(roomName: string, productCount: number) {
+/**
+ * Generate metadata for a room page (e.g. /room/living-room).
+ * When `slug` (the actual URL path segment) is provided it is used verbatim
+ * for the canonical/og:url; otherwise it falls back to slugifying the display
+ * name so existing callers keep working.
+ */
+export function generateRoomMetadata(roomName: string, productCount: number, slug?: string) {
   const title = `Timeless ${roomName} Ideas & Decor | Evergreen House`;
   const description = `Shop timeless ${roomName.toLowerCase()} furniture, decor, and organization ideas curated by Evergreen House. ${productCount} editor-approved finds.`;
   return baseMeta({
     title,
     description,
-    ogUrl: `${SITE_URL}/room/${roomName.toLowerCase().replace(/\s+/g, "-")}`,
+    ogUrl: slug
+      ? `${SITE_URL}/room/${slug}`
+      : `${SITE_URL}/room/${roomName.toLowerCase().replace(/\s+/g, "-")}`,
   });
 }
 
-/** Generate metadata for a collection page (e.g. /collection/cozy-bedroom) */
+/**
+ * Generate metadata for a collection page (e.g. /collection/cozy-bedroom).
+ * When `slug` (the actual URL path segment) is provided it is used verbatim
+ * for the canonical/og:url; otherwise it falls back to slugifying the display
+ * name so existing callers keep working.
+ */
 export function generateCollectionMetadata(
   collectionName: string,
-  description?: string | null
+  description?: string | null,
+  slug?: string
 ) {
   const title = `${collectionName} — Curated Finds | Evergreen House`;
   const desc =
@@ -77,17 +90,27 @@ export function generateCollectionMetadata(
     description: desc,
     ogTitle: `${collectionName} — Evergreen House`,
     ogDescription: desc,
-    ogUrl: `${SITE_URL}/collection/${collectionName.toLowerCase().replace(/\s+/g, "-")}`,
+    ogUrl: slug
+      ? `${SITE_URL}/collection/${slug}`
+      : `${SITE_URL}/collection/${collectionName.toLowerCase().replace(/\s+/g, "-")}`,
   });
 }
 
-/** Generate metadata for a standalone product page */
-export function generateProductMetadata(product: {
-  name: string;
-  editor_note?: string | null;
-  room?: string;
-  brand?: string | null;
-}) {
+/**
+ * Generate metadata for a standalone product page.
+ * When `slug` (the actual URL path segment) is provided it is used verbatim
+ * for the canonical/og:url; otherwise it falls back to slugifying the display
+ * name so existing callers keep working.
+ */
+export function generateProductMetadata(
+  product: {
+    name: string;
+    editor_note?: string | null;
+    room?: string;
+    brand?: string | null;
+  },
+  slug?: string
+) {
   const title = `${product.name} | Evergreen House`;
   const description =
     product.editor_note ||
@@ -97,7 +120,9 @@ export function generateProductMetadata(product: {
   return baseMeta({
     title,
     description: description.slice(0, 160),
-    ogUrl: `${SITE_URL}/product/${product.name.toLowerCase().replace(/\s+/g, "-")}`,
+    ogUrl: slug
+      ? `${SITE_URL}/product/${slug}`
+      : `${SITE_URL}/product/${product.name.toLowerCase().replace(/\s+/g, "-")}`,
   });
 }
 
@@ -126,14 +151,19 @@ export function generateBlogMetadata(post: {
   });
 }
 
-/** Generate metadata for a style page (e.g. /style/modern) */
-export function generateStyleMetadata(styleName: string) {
+/**
+ * Generate metadata for a style page (e.g. /style/modern).
+ * When `slug` (the actual URL path segment) is provided it is used verbatim
+ * for the canonical/og:url; otherwise it falls back to lowercasing the display
+ * name so existing callers keep working.
+ */
+export function generateStyleMetadata(styleName: string, slug?: string) {
   const title = `${styleName} Home Decor & Inspiration | Evergreen House`;
   const description = `Explore ${styleName.toLowerCase()} home decor and design inspiration — curated finds that embody the ${styleName.toLowerCase()} aesthetic. Editor-approved picks from Evergreen House.`;
   return baseMeta({
     title,
     description,
-    ogUrl: `${SITE_URL}/style/${styleName.toLowerCase()}`,
+    ogUrl: slug ? `${SITE_URL}/style/${slug}` : `${SITE_URL}/style/${styleName.toLowerCase()}`,
   });
 }
 

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -57,6 +57,9 @@ export const Route = createFileRoute("/collection/$collection")({
         getCollectionProducts(slug),
         getAllCollections(),
       ]);
+      if (!collection) {
+        throw notFound();
+      }
       const label = collection?.display_name || collection?.name || slug;
       const description = collection?.description || null;
       const imageUrl = collection?.image_url || null;
@@ -75,6 +78,7 @@ export const Route = createFileRoute("/collection/$collection")({
 
       return { products, collection: slug, label, description, imageUrl, collectionType, relatedCollections };
     } catch (err) {
+      if (isNotFound(err)) throw err;
       console.error("Collection loader error:", err);
       return { products: [] as Product[], collection: slug, label: slug, description: null, imageUrl: null, collectionType: "room", relatedCollections: [] as Collection[] };
     }
@@ -82,7 +86,7 @@ export const Route = createFileRoute("/collection/$collection")({
   head: ({ loaderData }) => {
     const name = loaderData?.label || "Collection";
     const desc = loaderData?.description;
-    const seo = generateCollectionMetadata(name, desc);
+    const seo = generateCollectionMetadata(name, desc, loaderData?.collection);
     const links = [...seo.links];
     if (loaderData?.imageUrl) {
       links.push({
