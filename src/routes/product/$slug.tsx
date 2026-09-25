@@ -1,4 +1,10 @@
-import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
+import {
+  createFileRoute,
+  notFound,
+  isNotFound,
+  isRedirect,
+  redirect,
+} from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -23,13 +29,41 @@ export const Route = createFileRoute("/product/$slug")({
       `;
       const allProducts = rows as unknown as Product[];
 
+      const canonicalSlugOf = (p: Product) =>
+        p.seo_slug || productNameToSlug(p.name);
+
       // Match by generated slug since seo_slug is mostly null
-      const product = allProducts.find((p) => {
-        const generated = p.seo_slug || productNameToSlug(p.name);
-        return generated === slug;
-      });
+      const product = allProducts.find((p) => canonicalSlugOf(p) === slug);
 
       if (!product) {
+        // ── Legacy URL rescue: 301 instead of 404 so old indexed links keep working ──
+        // 1. Legacy numeric product IDs, e.g. /product/233 -> canonical slug URL.
+        if (/^\d+$/.test(slug)) {
+          const byNumericId = allProducts.find((p) => String(p.id) === slug);
+          if (byNumericId) {
+            throw redirect({
+              href: `/product/${canonicalSlugOf(byNumericId)}`,
+              statusCode: 301,
+            });
+          }
+        }
+
+        // 2. Normalized slug variants (case, doubled dashes, stray separators).
+        //    Only redirect when EXACTLY ONE product matches — no fuzzy/prefix
+        //    matching, which would misdirect on shared 120-char prefixes.
+        const normalizedIncoming = normalizeSlug(slug);
+        if (normalizedIncoming) {
+          const candidates = allProducts.filter(
+            (p) => normalizeSlug(canonicalSlugOf(p)) === normalizedIncoming
+          );
+          if (candidates.length === 1) {
+            throw redirect({
+              href: `/product/${canonicalSlugOf(candidates[0])}`,
+              statusCode: 301,
+            });
+          }
+        }
+
         throw notFound();
       }
 
@@ -37,7 +71,9 @@ export const Route = createFileRoute("/product/$slug")({
 
       return { product, related, slug };
     } catch (err) {
+      // Never swallow router control-flow signals (404 or 301 redirect).
       if (isNotFound(err)) throw err;
+      if (isRedirect(err)) throw err;
       console.error("Product loader error:", err);
       return { product: null, related: [], slug };
     }
@@ -71,6 +107,15 @@ function productNameToSlug(name: string): string {
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")
     .slice(0, 120);
+}
+
+/**
+ * Canonical form of a slug for comparison purposes: lowercase, separators
+ * collapsed to single dashes, leading/trailing dashes trimmed. Reuses
+ * productNameToSlug so legacy variants resolve to the same URL the site links.
+ */
+function normalizeSlug(slug: string): string {
+  return productNameToSlug(slug || "");
 }
 
 function ProductPage() {
