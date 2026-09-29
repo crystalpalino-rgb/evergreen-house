@@ -256,6 +256,18 @@ function About() {
             >
               Sign Up for Free
             </a>
+            <p className="mt-5 text-sm text-warm-gray">
+              Prefer scrolling?{" "}
+              <a
+                href="https://www.pinterest.com/evergreenhouseco/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-terracotta underline-offset-4 hover:underline"
+              >
+                Follow us on Pinterest
+              </a>{" "}
+              for daily home inspiration.
+            </p>
           </div>
         </section>
       </main>
