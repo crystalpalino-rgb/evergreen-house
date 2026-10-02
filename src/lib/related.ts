@@ -52,7 +52,12 @@ export async function getRelatedProducts(
 
   // Room-based collections
   const roomRules =
-    await db`SELECT collection_slug FROM collection_rules WHERE rule_type = 'room' AND rule_operator = 'equals' AND rule_value = ${sourceRoom}`;
+    // collection_rules.rule_value is JSONB, so the text room slug must be
+    // wrapped with to_jsonb() — comparing it directly makes Postgres infer the
+    // parameter as jsonb and reject the bare string ("invalid input syntax for
+    // type json"), which threw inside the product loader and blanked every
+    // product page to "Product Not Found".
+    await db`SELECT collection_slug FROM collection_rules WHERE rule_type = 'room' AND rule_operator = 'equals' AND rule_value = to_jsonb(${sourceRoom}::text)`;
   for (const r of roomRules as any[]) {
     matchedCollections.push(r.collection_slug);
   }
