@@ -132,6 +132,11 @@ async function main() {
     { loc: "/about", priority: "0.6", changefreq: "monthly" },
     { loc: "/contact", priority: "0.5", changefreq: "monthly" },
     { loc: "/blog", priority: "0.8", changefreq: "weekly" },
+    {
+      loc: "/blog/cheap-things-that-make-your-home-look-expensive",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
 
