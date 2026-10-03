@@ -141,7 +141,7 @@ function ProductPage() {
 
   const p = product as any;
   const roomLabel = roomLabels[p.room] || p.room?.replace(/-/g, " ")?.replace(/\b\w/g, (c: string) => c.toUpperCase()) || "";
-  const productUrl = `${SITE_URL}/product/${productNameToSlug(p.name)}`;
+  const productUrl = `${SITE_URL}/product/${p.seo_slug || productNameToSlug(p.name)}`;
   const price = p.price ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(p.price) : null;
   const imageUrl = p.image_url || "";
   const hasAmazonUrl = p.amazon_url && p.amazon_url.startsWith("http");
