@@ -44,6 +44,9 @@ export function ProductCard({ product }: { product: Product }) {
   const amazonUrl = p.amazon_url || p.amazonUrl || "";
   const imageUrl = p.image_url || p.imageUrl || "";
   const name = p.name;
+  // Canonical URL slug, mirroring the route resolver in src/routes/product/$slug.tsx:
+  // an explicit seo_slug wins, otherwise fall back to the name-derived slug.
+  const productSlug = p.seo_slug || productNameToSlug(name);
   const room = p.room || "";
   // Use existing image_alt from DB if available, otherwise generate a descriptive alt
   const imageAlt = p.image_alt || `${name} — Evergreen House`;
@@ -166,7 +169,7 @@ export function ProductCard({ product }: { product: Product }) {
         {/* Name */}
         <h3 className="text-sm font-medium text-warm-dark line-clamp-2">
           <a
-            href={`/product/${productNameToSlug(name)}`}
+            href={`/product/${productSlug}`}
             className="transition-colors hover:text-terracotta"
           >
             {name}
