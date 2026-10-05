@@ -103,7 +103,7 @@ export function Header() {
             Home
           </a>
 
-          {/* Shop dropdown — native <details> works without JS hydration */}
+          {/* Shop dropdown - native <details> works without JS hydration */}
           <details className="group relative">
             <summary className="flex cursor-pointer items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta list-none select-none">
               Shop

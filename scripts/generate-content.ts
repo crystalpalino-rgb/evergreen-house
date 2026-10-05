@@ -167,7 +167,7 @@ function formatTikTokContent(
   const roomDisplay = pkg.room.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   let out = "";
-  out += `# Evergreen House — TikTok Content Batch #${batchNum}\n`;
+  out += `# Evergreen House - TikTok Content Batch #${batchNum}\n`;
   out += `*Created ${new Date(pkg.generatedAt).toISOString().split("T")[0]} | Faceless video script | All products sourced from live database*\n\n`;
   out += `---\n\n`;
 
@@ -179,14 +179,14 @@ function formatTikTokContent(
 
   for (let i = 0; i < pkg.products.length; i++) {
     const { product, caption } = pkg.products[i];
-    out += `${i + 1}. **${product.name}** — ${caption}\n`;
+    out += `${i + 1}. **${product.name}** - ${caption}\n`;
     if (product.image_url) {
       out += `   Image: ${product.image_url}\n`;
     }
     out += `   Link: ${product.amazon_url}\n\n`;
   }
 
-  out += `**Closing:** Evergreen House — Browse the full curated collection at EvergreenHouse.co\n\n`;
+  out += `**Closing:** Evergreen House - Browse the full curated collection at EvergreenHouse.co\n\n`;
   out += `---\n\n`;
 
   // ── Scoring summary table ──
@@ -196,8 +196,8 @@ function formatTikTokContent(
   out += `|---------|--------|-------|:---:|:---:|:---:|:---:|:---:|\n`;
 
   for (const { product, score } of pkg.products) {
-    const rating = product.rating ? product.rating.toFixed(1) : "—";
-    const price = product.price ? `$${product.price.toFixed(2)}` : "—";
+    const rating = product.rating ? product.rating.toFixed(1) : "-";
+    const price = product.price ? `$${product.price.toFixed(2)}` : "-";
     out += `| ${product.name} | ${rating} | ${price} | ${starRating(score.timelessness)} | ${starRating(score.visualQuality)} | ${starRating(score.materialQuality)} | ${starRating(score.lifestyleAppeal)} | ${starRating(score.photography)} |\n`;
   }
 
@@ -209,7 +209,7 @@ function formatTikTokContent(
   out += `- **Pacing:** 3–4 seconds per product, slow zooms or gentle panning on still images\n`;
   out += `- **Text overlay:** One caption per product, centered lower-third, serif or clean sans-serif font\n`;
   out += `- **No talking heads:** All b-roll or still-image slideshow with music\n`;
-  out += `- **Product images:** Amazon-hosted URLs above — download and crop to 9:16 for best results\n`;
+  out += `- **Product images:** Amazon-hosted URLs above - download and crop to 9:16 for best results\n`;
   out += `- **Affiliate disclosure:** Include "#affiliate" or "commission earned" per platform guidelines\n`;
 
   return out;
@@ -240,7 +240,7 @@ function getNextBatchNumber(): number {
 async function main() {
   const { room, count, style, minScore, dryRun } = parseArgs();
 
-  console.log("🌿 Evergreen House — Content Generator");
+  console.log("🌿 Evergreen House - Content Generator");
   console.log(`   Room: ${room}`);
   console.log(`   Count: ${count}`);
   console.log(`   Mode: ${dryRun ? "DRY RUN" : "LIVE"}`);
@@ -303,9 +303,9 @@ async function main() {
   }
 
   if (!validation.passed) {
-    console.log("\n❌ Validation failed — fix errors before publishing.");
+    console.log("\n❌ Validation failed - fix errors before publishing.");
     if (dryRun) {
-      console.log("   (Dry run — content was NOT saved)");
+      console.log("   (Dry run - content was NOT saved)");
     }
     process.exit(1);
   }
@@ -328,7 +328,7 @@ async function main() {
   }
 
   if (dryRun) {
-    console.log("🏁 Dry run complete — content was NOT saved.");
+    console.log("🏁 Dry run complete - content was NOT saved.");
     return;
   }
 

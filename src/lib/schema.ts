@@ -8,7 +8,7 @@ const SITE_NAME = "Evergreen House";
 const SITE_DESCRIPTION =
   "Thoughtfully curated home collections to help you create a timeless home.";
 
-/** Organization schema — used in __root.tsx */
+/** Organization schema - used in __root.tsx */
 export function getOrganizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -21,7 +21,7 @@ export function getOrganizationSchema() {
   };
 }
 
-/** WebSite schema with SearchAction — used in __root.tsx */
+/** WebSite schema with SearchAction - used in __root.tsx */
 export function getWebSiteSchema(searchUrl: string = `${SITE_URL}/search`) {
   return {
     "@context": "https://schema.org",
@@ -40,7 +40,7 @@ export function getWebSiteSchema(searchUrl: string = `${SITE_URL}/search`) {
   };
 }
 
-/** CollectionPage schema — for collections, rooms, styles */
+/** CollectionPage schema - for collections, rooms, styles */
 export function getCollectionPageSchema(
   collection: { name?: string; display_name?: string | null; description?: string | null },
   url: string
@@ -76,7 +76,7 @@ export function getBreadcrumbSchema(
   };
 }
 
-/** Product schema — for standalone product pages */
+/** Product schema - for standalone product pages */
 export function getProductSchema(
   product: {
     name: string;
@@ -127,7 +127,7 @@ export function getProductSchema(
   return schema;
 }
 
-/** Article (BlogPosting) schema — for blog posts */
+/** Article (BlogPosting) schema - for blog posts */
 export function getArticleSchema(
   post: {
     title: string;
@@ -171,7 +171,7 @@ export function getArticleSchema(
   };
 }
 
-/** FAQ schema — for collection/room pages with FAQ content */
+/** FAQ schema - for collection/room pages with FAQ content */
 export function getFAQSchema(
   questions: { question: string; answer: string }[]
 ) {

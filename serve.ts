@@ -1,6 +1,6 @@
 // Production server for the built site. The TanStack Start build emits a portable
 // fetch handler (dist/server/server.js) plus static client assets (dist/client);
-// this wraps them in a Bun server on port 3000 — static files first, API routes
+// this wraps them in a Bun server on port 3000 - static files first, API routes
 // next, SSR for the rest. Run `bun run build` before starting.
 // Restart it with `bun run publish`.
 //
@@ -431,7 +431,7 @@ for (let attempt = 1; ; attempt++) {
           if (apiResp) return apiResp;
         }
 
-        // Blog posts API — returns all published blog posts
+        // Blog posts API - returns all published blog posts
         if (pathname === "/api/blog-posts" && req.method === "GET") {
           try {
             const { sql: getSql } = await import("./src/db");
@@ -461,7 +461,7 @@ for (let attempt = 1; ; attempt++) {
           }
         }
 
-        // Blog post API — returns a single published post by ID
+        // Blog post API - returns a single published post by ID
         if (pathname === "/api/blog-post" && req.method === "GET") {
           const url = new URL(req.url);
           const id = parseInt(url.searchParams.get("id") || "", 10);
@@ -506,7 +506,7 @@ for (let attempt = 1; ; attempt++) {
           }
         }
 
-        // Room products API — works around TanStack SSR loader DB issue
+        // Room products API - works around TanStack SSR loader DB issue
         if (pathname === "/api/room-products") {
           const url = new URL(req.url);
           const room = url.searchParams.get("room") || "";

@@ -21,8 +21,8 @@ function getCollectionFAQs(
     {
       question: `What defines ${name} home decor?`,
       answer: description
-        ? `${description} Every piece in this collection reflects that philosophy — chosen for quality, longevity, and the way it makes a space feel.`
-        : `${collectionName} design emphasizes intentional choices — pieces that are beautiful, functional, and built to last. Our editors select each item for its ability to elevate everyday living without feeling precious or untouchable.`,
+        ? `${description} Every piece in this collection reflects that philosophy - chosen for quality, longevity, and the way it makes a space feel.`
+        : `${collectionName} design emphasizes intentional choices - pieces that are beautiful, functional, and built to last. Our editors select each item for its ability to elevate everyday living without feeling precious or untouchable.`,
     },
   ];
 
@@ -30,19 +30,19 @@ function getCollectionFAQs(
   if (collectionType === "room") {
     faqs.push({
       question: `How do I style my ${name}?`,
-      answer: `Start with a foundation piece — a well-made rug, a comfortable sofa, or beautiful storage — and layer in texture through pillows, throws, and natural materials. The best ${name.toLowerCase()} feel collected over time, not decorated in a weekend. Mix vintage finds with new pieces, keep the palette calm, and let the room breathe.`,
+      answer: `Start with a foundation piece - a well-made rug, a comfortable sofa, or beautiful storage - and layer in texture through pillows, throws, and natural materials. The best ${name.toLowerCase()} feel collected over time, not decorated in a weekend. Mix vintage finds with new pieces, keep the palette calm, and let the room breathe.`,
     });
   } else if (collectionType === "style") {
     faqs.push({
       question: `How do I bring ${name} style into my home?`,
-      answer: `${collectionName} style is about a feeling more than a rigid set of rules. Start small: swap in a few key pieces that embody the aesthetic — a textural throw, a sculptural vase, or a piece of art that speaks to you. Pay attention to materials and finishes; they do more to define a style than any single color or pattern.`,
+      answer: `${collectionName} style is about a feeling more than a rigid set of rules. Start small: swap in a few key pieces that embody the aesthetic - a textural throw, a sculptural vase, or a piece of art that speaks to you. Pay attention to materials and finishes; they do more to define a style than any single color or pattern.`,
     });
   }
 
   // Universal curation question
   faqs.push({
     question: `How are products chosen for the ${collectionName} collection?`,
-    answer: `Every product is hand-selected by our editorial team. We look for pieces that score highly on quality, design, durability, and value — the kind of things we'd recommend to a friend. No algorithm, no trending churn. Just thoughtful curation from people who love home.`,
+    answer: `Every product is hand-selected by our editorial team. We look for pieces that score highly on quality, design, durability, and value - the kind of things we'd recommend to a friend. No algorithm, no trending churn. Just thoughtful curation from people who love home.`,
   });
 
   return faqs;
@@ -122,7 +122,7 @@ function CollectionPage() {
             <>
               <img
                 src={imageUrl}
-                alt={`${label} — Evergreen House`}
+                alt={`${label} - Evergreen House`}
                 width={1200}
                 height={800}
                 fetchpriority="high"

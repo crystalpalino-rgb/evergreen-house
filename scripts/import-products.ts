@@ -85,7 +85,7 @@ function mapRoom(room: string): string {
 // ── Shorten product name (first 3-5 meaningful words) ──
 function shortenName(fullName: string): string {
   if (!fullName) return "Product";
-  const cleaned = fullName.replace(/[|,\-–—]/g, " ").replace(/\s+/g, " ").trim();
+  const cleaned = fullName.replace(/[|,\-–-]/g, " ").replace(/\s+/g, " ").trim();
   const words = cleaned.split(" ");
   // Take enough words to form a readable name (typically 3-5)
   if (words.length <= 5) return cleaned;

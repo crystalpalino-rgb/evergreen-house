@@ -1,5 +1,5 @@
 /**
- * Seasonal Intelligence — detect current season and compute seasonal relevance
+ * Seasonal Intelligence - detect current season and compute seasonal relevance
  * boosts for products. Used by the scorer to give time-appropriate bonuses.
  */
 
@@ -30,7 +30,7 @@ export function getCurrentSeason(): Season {
 }
 
 /**
- * Seasonal room affinity — how strongly each room aligns with each season.
+ * Seasonal room affinity - how strongly each room aligns with each season.
  * Score is 0-10 representing the seasonal boost potential.
  */
 const ROOM_SEASON_AFFINITY: Record<string, Partial<Record<Season, number>>> = {
@@ -49,7 +49,7 @@ const ROOM_SEASON_AFFINITY: Record<string, Partial<Record<Season, number>>> = {
 };
 
 /**
- * Material seasonal associations — some materials feel more appropriate
+ * Material seasonal associations - some materials feel more appropriate
  * in certain seasons. Returns a boost factor.
  */
 const SEASONAL_MATERIALS: Record<Season, string[]> = {
@@ -98,7 +98,7 @@ export function getSeasonalBoost(season: Season, product: Product): number {
   );
   boost += Math.min(2, moodMatches.length * 0.5);
 
-  // 4. Color-based boost (0-2 points) — warm tones in fall/winter, light tones in spring/summer
+  // 4. Color-based boost (0-2 points) - warm tones in fall/winter, light tones in spring/summer
   const warmColors = ["cream", "beige", "taupe", "brown", "terracotta", "rust", "bronze", "gold", "warm"];
   const coolColors = ["white", "light", "sage", "pale", "blue", "green", "sand"];
   const productColors = (product.colors || []).map((c) => c.toLowerCase());
@@ -115,7 +115,7 @@ export function getSeasonalBoost(season: Season, product: Product): number {
     boost += Math.min(2, coolMatches.length * 0.5);
   }
 
-  // 5. Seasonal tag matching — if the product explicitly has this season tagged
+  // 5. Seasonal tag matching - if the product explicitly has this season tagged
   if (product.seasons && product.seasons.includes(season)) {
     boost += 2;
   }

@@ -87,7 +87,7 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                   .map((id) => dbProducts.find((p) => p.id === id))
                   .filter(Boolean) as Product[];
               } else if (collection.room === "all") {
-                // "Apartment Must Haves" — best-rated across rooms
+                // "Apartment Must Haves" - best-rated across rooms
                 collectionProducts = [...dbProducts]
                   .filter((p) => p.rating && p.rating >= 4.4)
                   .sort((a, b) => (b.rating || 0) - (a.rating || 0))

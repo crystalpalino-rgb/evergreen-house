@@ -1,6 +1,6 @@
 /**
  * Phase A database migrations for the Evergreen Intelligence Layer.
- * All additive-only — uses IF NOT EXISTS / IF NOT EXISTS everywhere. Idempotent.
+ * All additive-only - uses IF NOT EXISTS / IF NOT EXISTS everywhere. Idempotent.
  *
  * Usage: DATABASE_URL="<url>" bun run scripts/run-migrations.ts
  */
@@ -12,7 +12,7 @@ async function main() {
   console.log("=== Phase A: Evergreen Intelligence Layer Migrations ===\n");
 
   // ── Migration 001: Extend products table ──
-  console.log("Migration 001 — Extending products table...");
+  console.log("Migration 001 - Extending products table...");
 
   // Classification
   await db`ALTER TABLE products ADD COLUMN IF NOT EXISTS brand TEXT`;
@@ -125,7 +125,7 @@ async function main() {
   console.log("Migration 001 complete.\n");
 
   // ── Migration 002: New tables ──
-  console.log("Migration 002 — Creating new tables...");
+  console.log("Migration 002 - Creating new tables...");
 
   await db`CREATE TABLE IF NOT EXISTS collection_rules (
     id SERIAL PRIMARY KEY,
@@ -173,7 +173,7 @@ async function main() {
   console.log("Migration 002 complete.\n");
 
   // ── Migration 003: Indexes ──
-  console.log("Migration 003 — Creating indexes...");
+  console.log("Migration 003 - Creating indexes...");
 
   await db`CREATE INDEX IF NOT EXISTS idx_products_style ON products USING GIN (style)`;
   console.log("  ✓ style (GIN)");

@@ -1,5 +1,5 @@
 /**
- * Unified Product interface — the single type that replaces both DBProduct and StaticProduct.
+ * Unified Product interface - the single type that replaces both DBProduct and StaticProduct.
  * Maps 1:1 to the products table schema (snake_case column names).
  */
 export interface Product {
@@ -104,7 +104,7 @@ export interface CollectionRule {
   collection_slug: string;
   rule_type: string; // "room" | "style" | "material" | etc.
   rule_operator: string; // "equals" | "contains" | etc.
-  rule_value: unknown; // JSONB — the value to match against
+  rule_value: unknown; // JSONB - the value to match against
   priority: number;
 }
 

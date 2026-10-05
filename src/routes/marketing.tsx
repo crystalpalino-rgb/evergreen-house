@@ -87,7 +87,7 @@ function MarketingDashboard() {
       const summary = await getAgentSummary();
       setAgentSummary(summary);
     } catch (_) {
-      // Silently fail — summary is informational
+      // Silently fail - summary is informational
     }
   };
 
@@ -360,18 +360,18 @@ function MarketingDashboard() {
               />
               <AgentStat
                 label="Drafts This Week"
-                value={String(agentSummary?.draftsThisWeek ?? "—")}
+                value={String(agentSummary?.draftsThisWeek ?? "-")}
               />
               <AgentStat
                 label="Approval Rate"
-                value={agentSummary ? `${agentSummary.approvalRate}%` : "—"}
+                value={agentSummary ? `${agentSummary.approvalRate}%` : "-"}
               />
               <AgentStat
                 label="Last Focus"
                 value={
                   agentSummary?.lastRunRooms?.length
                     ? formatRoomList(agentSummary.lastRunRooms)
-                    : "—"
+                    : "-"
                 }
               />
             </div>
@@ -544,7 +544,7 @@ function MarketingDashboard() {
                 </div>
                 <p className="mt-3 text-xs text-warm-gray">
                   Drafts use real product data from the database. They appear in the review queue
-                  below — they are never auto-published.
+                  below - they are never auto-published.
                 </p>
               </div>
             </section>

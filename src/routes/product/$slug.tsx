@@ -49,7 +49,7 @@ export const Route = createFileRoute("/product/$slug")({
         }
 
         // 2. Normalized slug variants (case, doubled dashes, stray separators).
-        //    Only redirect when EXACTLY ONE product matches — no fuzzy/prefix
+        //    Only redirect when EXACTLY ONE product matches - no fuzzy/prefix
         //    matching, which would misdirect on shared 120-char prefixes.
         const normalizedIncoming = normalizeSlug(slug);
         if (normalizedIncoming) {
@@ -194,7 +194,7 @@ function ProductPage() {
                 {imageUrl ? (
                   <img
                     src={imageUrl}
-                    alt={`${p.name} — Evergreen House`}
+                    alt={`${p.name} - Evergreen House`}
                     className="h-full w-full object-contain p-6"
                     loading="eager"
                     decoding="async"
@@ -346,7 +346,7 @@ function ProductPage() {
                 You Might Also Love
               </h2>
               <p className="mt-2 text-warm-gray">
-                Pieces that pair beautifully with this {roomLabel.toLowerCase()} find — chosen by our editors for the same timeless aesthetic.
+                Pieces that pair beautifully with this {roomLabel.toLowerCase()} find - chosen by our editors for the same timeless aesthetic.
               </p>
               <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                 {related.slice(0, 4).map((item) => (
@@ -379,7 +379,7 @@ function ProductPage() {
               Explore More {roomLabel} Finds
             </h2>
             <p className="mt-2 text-warm-gray">
-              Browse our full {roomLabel.toLowerCase()} collection — every piece editor-approved for quality and timeless style.
+              Browse our full {roomLabel.toLowerCase()} collection - every piece editor-approved for quality and timeless style.
             </p>
             <a
               href={`/room/${p.room}`}

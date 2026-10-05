@@ -13,7 +13,7 @@ function mapRoom(r: string): string {
 
 function shortName(fn: string): string {
   if (!fn) return "Product";
-  const cl = fn.replace(/[|,\-–—]/g, " ").replace(/\s+/g, " ").trim();
+  const cl = fn.replace(/[|,\-–-]/g, " ").replace(/\s+/g, " ").trim();
   const w = cl.split(" ");
   if (w.length <= 5) return cl;
   const sw = new Set(["with","for","and","set","of","in","to","the","a","an","no","or","by","from","no.","inch","inches","ft","pack","pcs","piece","pieces","size","large","small","extra","up","2","3","4","5","6","7","8","9","10","12","14","16","18","20","22","24","26","28","30"]);
@@ -85,7 +85,7 @@ export async function runImport(): Promise<{ inserted: number; skipped: number; 
         ON CONFLICT (amazon_url) DO NOTHING`;
       log.push(`OK: ${name} → ${room} | $${price} | ${rating}★`);
       ins++;
-    } catch(e: any) { log.push(`ERR: ${name} — ${e.message}`); er++; }
+    } catch(e: any) { log.push(`ERR: ${name} - ${e.message}`); er++; }
   }
   const cnt = await sql()`SELECT count(*) as c FROM products`;
   log.push(`Done. Inserted=${ins} Skipped=${sk} Errors=${er} Total=${cnt[0].c}`);

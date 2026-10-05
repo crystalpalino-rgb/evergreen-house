@@ -31,7 +31,7 @@ export const Route = createFileRoute("/lifestyle/$slug")({
   },
   head: ({ loaderData }) => {
     const label = loaderData?.label || "Lifestyle";
-    const seo = generateStaticMetadata(label, `Curated home finds for ${label.toLowerCase()} \u2014 editor-approved picks that work the way you do.`, `/lifestyle/${loaderData?.slug || ""}`);
+    const seo = generateStaticMetadata(label, `Curated home finds for ${label.toLowerCase()} - editor-approved picks that work the way you do.`, `/lifestyle/${loaderData?.slug || ""}`);
     return { meta: seo.meta, links: seo.links };
   },
   component: LifestyleSlugPage,

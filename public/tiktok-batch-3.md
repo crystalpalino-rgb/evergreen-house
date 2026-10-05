@@ -1,35 +1,35 @@
-# Evergreen House — TikTok Content Batch #3
+# Evergreen House - TikTok Content Batch #3
 *Created 2026-07-24 | Faceless video script | All products sourced from live database*
 
 ---
 
 ## Video 1: Kitchen Pieces Worth Keeping
 **Hook:** Small changes with an outsized impact on how a room feels.
-**Music vibe:** Light acoustic guitar, warm and unhurried — think Sunday morning coffee
+**Music vibe:** Light acoustic guitar, warm and unhurried - think Sunday morning coffee
 
 **Visual sequence:** Statement piece → everyday beauty → detail → organization → function
 
-1. **Creative Co Op Stoneware Butter Dish** — Ceramic butter dish beautiful enough to live on open shelving.
+1. **Creative Co Op Stoneware Butter Dish** - Ceramic butter dish beautiful enough to live on open shelving.
    Image: https://m.media-amazon.com/images/I/61IjBRi3qQL._AC_SL1500_.jpg
    Link: https://amzn.to/3T068N5
 
-2. **Trader Joe's 5 Items or Less** — A timeless piece for a beautiful kitchen.
+2. **Trader Joe's 5 Items or Less** - A timeless piece for a beautiful kitchen.
    Image: https://m.media-amazon.com/images/I/618xRSGzmhL._SL1293_.jpg
    Link: https://amzn.to/4fcnQFO
 
-3. **10" Acacia Wood Lazy Susan Organizer** — Solid wood lazy susan that keeps everything in its place, beautifully.
+3. **10" Acacia Wood Lazy Susan Organizer** - Solid wood lazy susan that keeps everything in its place, beautifully.
    Image: https://m.media-amazon.com/images/I/61fAmxOKIjL._AC_SL1500_.jpg
    Link: https://amzn.to/4pz1zpe?tag=organization
 
-4. **MALACASA Plates and Bowls Sets** — A dinnerware beautiful enough to live on open shelving.
+4. **MALACASA Plates and Bowls Sets** - A dinnerware beautiful enough to live on open shelving.
    Image: https://m.media-amazon.com/images/I/61URPwf47tL._AC_SL1500_.jpg
    Link: https://amzn.to/4b0FF88
 
-5. **YETI Rambler 18 oz Bottle Vacuum** — A bottle that makes hydration feel like a ritual.
+5. **YETI Rambler 18 oz Bottle Vacuum** - A bottle that makes hydration feel like a ritual.
    Image: https://m.media-amazon.com/images/I/51tIYozqFWL._AC_SL1500_.jpg
    Link: https://amzn.to/4hiGHAb
 
-**Closing:** Evergreen House — Browse the full curated collection at EvergreenHouse.co
+**Closing:** Evergreen House - Browse the full curated collection at EvergreenHouse.co
 
 ---
 
@@ -50,5 +50,5 @@ All products scored on timelessness, visual quality, material quality, lifestyle
 - **Pacing:** 3–4 seconds per product, slow zooms or gentle panning on still images
 - **Text overlay:** One caption per product, centered lower-third, serif or clean sans-serif font
 - **No talking heads:** All b-roll or still-image slideshow with music
-- **Product images:** Amazon-hosted URLs above — download and crop to 9:16 for best results
+- **Product images:** Amazon-hosted URLs above - download and crop to 9:16 for best results
 - **Affiliate disclosure:** Include "#affiliate" or "commission earned" per platform guidelines

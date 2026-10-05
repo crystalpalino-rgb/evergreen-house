@@ -42,7 +42,7 @@ function buildFiltersFromParams(params: Record<string, string>): { filters: PFil
 export const Route = createFileRoute("/search")({
   head: () => ({
     meta: [
-      { title: "Search — Evergreen House" },
+      { title: "Search - Evergreen House" },
       { name: "description", content: "Search our curated collection of timeless home finds." },
     ],
   }),

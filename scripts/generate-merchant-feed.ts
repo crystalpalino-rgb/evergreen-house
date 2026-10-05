@@ -68,7 +68,7 @@ interface ProductRow {
 async function main() {
   const dbUrl = (process.env.DATABASE_URL || "").replace(/^["']|["']$/g, "");
   if (!dbUrl) {
-    console.error("DATABASE_URL not set — skipping merchant feed generation");
+    console.error("DATABASE_URL not set - skipping merchant feed generation");
     process.exit(0);
   }
   const db = neon(dbUrl);
@@ -122,7 +122,7 @@ async function main() {
   const feed = `<?xml version="1.0" encoding="UTF-8"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
   <channel>
-    <title>Evergreen House — Curated Home Finds</title>
+    <title>Evergreen House - Curated Home Finds</title>
     <link>${SITE_URL}</link>
     <description>Timeless, beautiful home products thoughtfully selected for quality, longevity, and everyday living.</description>
     <lastBuildDate>${now}</lastBuildDate>

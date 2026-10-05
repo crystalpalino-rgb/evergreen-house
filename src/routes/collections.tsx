@@ -43,7 +43,7 @@ export const Route = createFileRoute("/collections")({
   head: () => {
     const seo = generateStaticMetadata(
       "Collections",
-      "Browse all Evergreen House collections — thoughtfully curated finds for every room, style, and season.",
+      "Browse all Evergreen House collections - thoughtfully curated finds for every room, style, and season.",
       "/collections"
     );
     return { meta: seo.meta, links: seo.links };
@@ -170,7 +170,7 @@ function CollectionsPage() {
             </h1>
             <p className="mt-4 text-lg text-warm-gray max-w-2xl">
               Thoughtfully curated collections for every room, style, and season.
-              Each piece is editor-approved — chosen for quality, longevity, and
+              Each piece is editor-approved - chosen for quality, longevity, and
               the way it makes a space feel.
             </p>
           </div>

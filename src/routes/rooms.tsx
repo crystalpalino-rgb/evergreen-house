@@ -8,7 +8,7 @@ const roomCards = [
   {
     name: "Living Room",
     slug: "living-room",
-    description: "The heart of the home — comfortable seating, warm lighting, and pieces that invite conversation",
+    description: "The heart of the home - comfortable seating, warm lighting, and pieces that invite conversation",
     image: "/images/living-room.jpg",
   },
   {
@@ -20,7 +20,7 @@ const roomCards = [
   {
     name: "Kitchen",
     slug: "kitchen",
-    description: "Beautiful and functional — tools, serveware, and decor that earn their place",
+    description: "Beautiful and functional - tools, serveware, and decor that earn their place",
     image: "/images/kitchen.jpg",
   },
   {
@@ -47,7 +47,7 @@ export const Route = createFileRoute("/rooms")({
   head: () => {
     const seo = generateStaticMetadata(
       "Shop by Room",
-      "Browse curated home collections for every space in your home — living room, bedroom, kitchen, bathroom, and more.",
+      "Browse curated home collections for every space in your home - living room, bedroom, kitchen, bathroom, and more.",
       "/rooms"
     );
     return { meta: seo.meta, links: seo.links };

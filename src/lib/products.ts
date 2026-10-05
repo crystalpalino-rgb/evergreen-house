@@ -58,7 +58,7 @@ function toProduct(row: DBProduct): Product {
   };
 }
 
-// Virtual rooms — curated product ID lists (no keyword bleed)
+// Virtual rooms - curated product ID lists (no keyword bleed)
 async function getVirtualRoomProducts(room: string): Promise<Product[]> {
   const curated: Record<string, number[]> = {
     "seasonal-finds": [
@@ -140,7 +140,7 @@ export const getAllProducts = createServerFn({ method: "GET" }).handler(async ()
 export const getProductsByRoom = createServerFn({ method: "GET" })
   .validator((room: string) => room)
   .handler(async ({ data: room }) => {
-    // Virtual rooms — keyword matching
+    // Virtual rooms - keyword matching
     const virtualProducts = await getVirtualRoomProducts(room);
     if (virtualProducts.length > 0) {
       // Sort by rating descending
@@ -312,7 +312,7 @@ function mapRoom(room: string): string {
 
 function shortenName(fullName: string): string {
   if (!fullName) return "Product";
-  const cleaned = fullName.replace(/[|,\-–—]/g, " ").replace(/\s+/g, " ").trim();
+  const cleaned = fullName.replace(/[|,\-–-]/g, " ").replace(/\s+/g, " ").trim();
   const words = cleaned.split(" ");
   if (words.length <= 5) return cleaned;
   const stopWords = new Set(["with", "for", "and", "set", "of", "in", "to", "the", "a", "an", "no", "or", "by", "from", "no.", "inch", "inches", "ft", "pack", "pcs", "piece", "pieces", "size", "large", "small", "extra", "up", "2", "3", "4", "5", "6", "7", "8", "9", "10", "12", "14", "16", "18", "20", "22", "24", "26", "28", "30"]);

@@ -1,6 +1,6 @@
 #!/usr/bin/env bun
 /**
- * Batch Content Generation Script — Phase D
+ * Batch Content Generation Script - Phase D
  * Runs against all products: generates SEO, Pinterest, AI summaries,
  * buying guides, FAQs, pros/cons, and recalculates scores.
  *
@@ -103,7 +103,7 @@ function rowToProduct(row: ProductRow): Product {
 }
 
 async function main() {
-  console.log("🌿 Evergreen House — Batch Content Generation");
+  console.log("🌿 Evergreen House - Batch Content Generation");
   console.log(`   Mode: ${FORCE ? "FORCE (regenerating all)" : "idempotent (skipping existing)"}`);
   console.log("");
 
@@ -133,7 +133,7 @@ async function main() {
     const needsSEO =
       FORCE ||
       !product.seo_title ||
-      product.seo_title === `${product.name} — Evergreen House` ||
+      product.seo_title === `${product.name} - Evergreen House` ||
       !product.seo_description ||
       product.seo_description.startsWith("Shop the") ||
       !product.image_alt;
@@ -200,7 +200,7 @@ async function main() {
     // ── 4. Buying Guide ──
     // Store buying guide in ai_summary if no dedicated column exists
     if (FORCE || !product.ai_summary || product.ai_summary.length < 200) {
-      // Buying guide is generated but stored separately — we might store it in a
+      // Buying guide is generated but stored separately - we might store it in a
       // dedicated column later. For now, ensure AI summary exists.
       updatedBuyingGuides++;
     }
@@ -270,7 +270,7 @@ async function main() {
   const verify = (await db`
     SELECT
       COUNT(*)::int as total,
-      COUNT(CASE WHEN seo_title IS NOT NULL AND seo_title != name || ' — Evergreen House' THEN 1 END)::int as custom_seo_title,
+      COUNT(CASE WHEN seo_title IS NOT NULL AND seo_title != name || ' - Evergreen House' THEN 1 END)::int as custom_seo_title,
       COUNT(CASE WHEN pinterest_description IS NOT NULL THEN 1 END)::int as has_pin_desc,
       COUNT(CASE WHEN ai_summary IS NOT NULL THEN 1 END)::int as has_ai_summary,
       COUNT(CASE WHEN pros IS NOT NULL AND array_length(pros, 1) > 0 THEN 1 END)::int as has_pros,

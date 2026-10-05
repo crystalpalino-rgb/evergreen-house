@@ -1,5 +1,5 @@
 /**
- * Content Generation Engine — Phase D
+ * Content Generation Engine - Phase D
  * Template-driven editorial content generation for SEO, Pinterest, and AI enrichment.
  * Evergreen House voice: editorial, warm, trustworthy, timeless, intentional.
  */
@@ -73,19 +73,19 @@ const SEO_TITLE_TEMPLATES: Record<string, (p: Product) => string> = {
   seating: (p) =>
     `${p.name} | ${primaryStyle(p)} ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
   lighting: (p) =>
-    `${p.name} — ${primaryMaterial(p)} ${fmtType(p.product_type)} | ${fmtRoom(p.room)} Lighting | Evergreen House`,
+    `${p.name} - ${primaryMaterial(p)} ${fmtType(p.product_type)} | ${fmtRoom(p.room)} Lighting | Evergreen House`,
   decor: (p) =>
-    `${p.name} — ${primaryStyle(p)} ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
+    `${p.name} - ${primaryStyle(p)} ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
   textile: (p) =>
-    `${p.name} — ${primaryMaterial(p)} ${fmtType(p.product_type)} | ${fmtRoom(p.room)} Essentials | Evergreen House`,
+    `${p.name} - ${primaryMaterial(p)} ${fmtType(p.product_type)} | ${fmtRoom(p.room)} Essentials | Evergreen House`,
   table: (p) =>
-    `${p.name} — ${primaryMaterial(p)} ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
+    `${p.name} - ${primaryMaterial(p)} ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
   kitchenware: (p) =>
-    `${p.name} — ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
+    `${p.name} - ${fmtType(p.product_type)} for ${fmtRoom(p.room)} | Evergreen House`,
   storage: (p) =>
-    `${p.name} — ${fmtRoom(p.room)} Organization | Evergreen House`,
+    `${p.name} - ${fmtRoom(p.room)} Organization | Evergreen House`,
   default: (p) =>
-    `${p.name} — Editor-Approved ${fmtRoom(p.room)} Find | Evergreen House`,
+    `${p.name} - Editor-Approved ${fmtRoom(p.room)} Find | Evergreen House`,
 };
 
 export function generateSEOTitle(product: Product): string {
@@ -94,7 +94,7 @@ export function generateSEOTitle(product: Product): string {
   return template(product);
 }
 
-/** Generate meta description (150-160 chars) — warm, editorial voice */
+/** Generate meta description (150-160 chars) - warm, editorial voice */
 export function generateSEODescription(product: Product): string {
   const room = readableRoom(product.room);
   const pt = fmtType(product.product_type);
@@ -124,7 +124,7 @@ export function generateSEODescription(product: Product): string {
       return `${editorPick}The ${product.name} brings quiet order to your ${room}. ${rating}Shop this organization find ${price} at Evergreen House.`;
     }
     // decor and default
-    return `${editorPick}The ${product.name} — a ${style.toLowerCase()} ${pt.toLowerCase()} that feels right at home in any ${room}. ${rating}Shop ${price} at Evergreen House.`;
+    return `${editorPick}The ${product.name} - a ${style.toLowerCase()} ${pt.toLowerCase()} that feels right at home in any ${room}. ${rating}Shop ${price} at Evergreen House.`;
   };
 
   let desc = base();
@@ -147,15 +147,15 @@ export function generateImageAlt(product: Product): string {
   const colors = (product.colors || []).slice(0, 2).join(" and ") || "neutral";
 
   if (product.product_type === "seating") {
-    return `${style} ${pt.toLowerCase()} in ${colors} tones — ${product.name} styled in a ${room}`;
+    return `${style} ${pt.toLowerCase()} in ${colors} tones - ${product.name} styled in a ${room}`;
   }
   if (product.product_type === "lighting") {
-    return `${material} ${pt.toLowerCase()} — ${product.name} illuminating a ${style.toLowerCase()} ${room}`;
+    return `${material} ${pt.toLowerCase()} - ${product.name} illuminating a ${style.toLowerCase()} ${room}`;
   }
   if (product.product_type === "textile") {
-    return `${style} ${colors} ${pt.toLowerCase()} — ${product.name} draped in a cozy ${room} setting`;
+    return `${style} ${colors} ${pt.toLowerCase()} - ${product.name} draped in a cozy ${room} setting`;
   }
-  return `${style} ${pt.toLowerCase()} in ${colors} — ${product.name} styled in a ${room} at Evergreen House`;
+  return `${style} ${pt.toLowerCase()} in ${colors} - ${product.name} styled in a ${room} at Evergreen House`;
 }
 
 // ─── Part 2: Pinterest Engine ─────────────────────────────────────────────────
@@ -295,9 +295,9 @@ export function generateAISummary(product: Product): string {
 
   // Sentence 3: Value proposition
   const s3 = product.editor_pick
-    ? `An editor favorite ${price} — a piece that earns its place.`
+    ? `An editor favorite ${price} - a piece that earns its place.`
     : product.is_trending
-      ? `Trending now ${price} — a timely addition to your collection.`
+      ? `Trending now ${price} - a timely addition to your collection.`
       : `Thoughtfully selected ${price} for those who believe in buying better, not more.`;
 
   return `${s1} ${s2} ${s3}`;
@@ -315,23 +315,23 @@ export function generateBuyingGuide(product: Product): string {
 
   // Material & quality paragraph
   const material = primaryMaterial(product);
-  const matPara = `Material matters. ${material} construction offers durability and a natural presence that synthetic alternatives can't match. Look for solid craftsmanship — smooth seams, even finishes, and materials that develop character over time rather than showing wear. The best ${type.toLowerCase()}s feel substantial without being heavy, refined without feeling precious.`;
+  const matPara = `Material matters. ${material} construction offers durability and a natural presence that synthetic alternatives can't match. Look for solid craftsmanship - smooth seams, even finishes, and materials that develop character over time rather than showing wear. The best ${type.toLowerCase()}s feel substantial without being heavy, refined without feeling precious.`;
 
   // Style & fit paragraph
-  const stylePara = `Consider how the piece fits into your existing space. A ${style.toLowerCase()} ${type.toLowerCase()} like the ${product.name} works beautifully in ${room}s that lean warm and collected rather than stark and showroom-perfect. Scale is everything — measure your space before committing, and remember that one well-chosen piece makes more impact than several forgettable ones.`;
+  const stylePara = `Consider how the piece fits into your existing space. A ${style.toLowerCase()} ${type.toLowerCase()} like the ${product.name} works beautifully in ${room}s that lean warm and collected rather than stark and showroom-perfect. Scale is everything - measure your space before committing, and remember that one well-chosen piece makes more impact than several forgettable ones.`;
 
   // Practical usage paragraph
   const usagePara = product.editor_tip
     ? `A note from our editors: ${product.editor_tip}`
     : product.editor_note
       ? `Our editors note: ${product.editor_note}`
-      : `The ${product.name} is designed for real life — morning light, evening gatherings, quiet Sunday afternoons. It's the kind of ${type.toLowerCase()} that quietly improves your day without demanding attention.`;
+      : `The ${product.name} is designed for real life - morning light, evening gatherings, quiet Sunday afternoons. It's the kind of ${type.toLowerCase()} that quietly improves your day without demanding attention.`;
 
   // Closing
   const closing =
     product.price != null && product.price < 100
       ? `At under $${Math.round(product.price!)}, the ${product.name} is an accessible way to elevate your ${room} without a full redesign.`
-      : `The ${product.name} ${price} — an investment in a home that feels considered, comfortable, and entirely yours.`;
+      : `The ${product.name} ${price} - an investment in a home that feels considered, comfortable, and entirely yours.`;
 
   return `${intro}\n\n${matPara}\n\n${stylePara}\n\n${usagePara}\n\n${closing}`;
 }
@@ -352,7 +352,7 @@ export function generateFAQ(product: Product): { question: string; answer: strin
     },
     {
       question: `What style is the ${product.name}?`,
-      answer: `The ${product.name} leans ${style.toLowerCase()}. It pairs well with ${room} decor that favors clean lines, natural materials, and a warm, lived-in feel — think linen textures, wood tones, and soft lighting rather than stark minimalism.`,
+      answer: `The ${product.name} leans ${style.toLowerCase()}. It pairs well with ${room} decor that favors clean lines, natural materials, and a warm, lived-in feel - think linen textures, wood tones, and soft lighting rather than stark minimalism.`,
     },
     {
       question: `How do I care for this ${typeLower}?`,
@@ -435,7 +435,7 @@ export function generateProsCons(product: Product): { pros: string[]; cons: stri
   }
 
   if (product.product_type === "decor" && !product.materials?.length) {
-    cons.push(`Decorative item — prioritize styling over utility`);
+    cons.push(`Decorative item - prioritize styling over utility`);
   }
 
   if (product.product_type === "textile") {
@@ -444,7 +444,7 @@ export function generateProsCons(product: Product): { pros: string[]; cons: stri
 
   // Always add at least one minor con for balance
   if (cons.length === 0) {
-    cons.push(`Limited availability — popular items can sell out quickly`);
+    cons.push(`Limited availability - popular items can sell out quickly`);
   }
 
   return { pros: pros.slice(0, 5), cons: cons.slice(0, 3) };
@@ -495,7 +495,7 @@ export function calculateContentScores(product: Product): {
 
   // seo_score: based on SEO field presence
   let seoScore = 0;
-  if (product.seo_title && product.seo_title !== `${product.name} — Evergreen House`) seoScore += 50;
+  if (product.seo_title && product.seo_title !== `${product.name} - Evergreen House`) seoScore += 50;
   else if (product.seo_title) seoScore += 25;
   if (product.seo_description && product.seo_description.length >= 120) seoScore += 35;
   else if (product.seo_description) seoScore += 15;

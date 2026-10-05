@@ -1,5 +1,5 @@
 /**
- * Content Generator — the core engine that produces complete TikTok/social
+ * Content Generator - the core engine that produces complete TikTok/social
  * content packages for a given room.
  *
  * Pipeline:
@@ -54,20 +54,20 @@ export interface GenerateOptions {
 // ─── Music vibe by room ─────────────────────────────────────────────────────
 
 const MUSIC_VIBE: Record<string, string> = {
-  "bedroom": "Soft piano, slow tempo — think peaceful morning instrumental",
-  "kitchen": "Light acoustic guitar, warm and unhurried — think Sunday morning coffee",
-  "living-room": "Warm ambient instrumental, gentle pulse — think golden hour at home",
-  "bathroom": "Spa-like ambient, soft and calming — think candlelit soak",
-  "office": "Lo-fi instrumental, gentle focus — think quiet afternoon at the desk",
-  "patio": "Acoustic folk, breezy and relaxed — think golden hour outdoors",
-  "entryway": "Warm strings, welcoming — think coming home after a long day",
-  "dining-room": "Soft jazz, intimate — think dinner with close friends",
-  "laundry": "Light instrumental, fresh and clean — think Sunday morning reset",
-  "pantry": "Mellow acoustic, understated — think slow weekend organizing",
+  "bedroom": "Soft piano, slow tempo - think peaceful morning instrumental",
+  "kitchen": "Light acoustic guitar, warm and unhurried - think Sunday morning coffee",
+  "living-room": "Warm ambient instrumental, gentle pulse - think golden hour at home",
+  "bathroom": "Spa-like ambient, soft and calming - think candlelit soak",
+  "office": "Lo-fi instrumental, gentle focus - think quiet afternoon at the desk",
+  "patio": "Acoustic folk, breezy and relaxed - think golden hour outdoors",
+  "entryway": "Warm strings, welcoming - think coming home after a long day",
+  "dining-room": "Soft jazz, intimate - think dinner with close friends",
+  "laundry": "Light instrumental, fresh and clean - think Sunday morning reset",
+  "pantry": "Mellow acoustic, understated - think slow weekend organizing",
 };
 
 function getMusicVibe(room: string): string {
-  return MUSIC_VIBE[room] ?? "Calm instrumental, unhurried — think quiet moments at home";
+  return MUSIC_VIBE[room] ?? "Calm instrumental, unhurried - think quiet moments at home";
 }
 
 // ─── Visual sequence by room ────────────────────────────────────────────────
@@ -256,7 +256,7 @@ function isRawProductCopy(text: string): boolean {
 }
 
 /**
- * Benefit phrases — editorial descriptions of what a product does for a space.
+ * Benefit phrases - editorial descriptions of what a product does for a space.
  * Organized by product type keywords so we can match intelligently.
  */
 const BENEFIT_PATTERNS: Array<{ match: string[]; phrase: string }> = [
@@ -315,7 +315,7 @@ function findBenefitPhrase(product: Product): string | null {
  * Requires minimum word count to avoid fragments like "with this bottle."
  */
 function extractBenefitFromText(text: string): string | null {
-  // Look for "that" clauses (preferred — they're usually benefits)
+  // Look for "that" clauses (preferred - they're usually benefits)
   const thatMatch = text.match(/\bthat\s+[a-z].{5,70}?[.!]?$/i);
   if (thatMatch) {
     const snippet = thatMatch[0].replace(/[.!]$/, "").trim();
@@ -323,7 +323,7 @@ function extractBenefitFromText(text: string): string | null {
     if (words.length >= 4 && words.length <= 14) return snippet;
   }
 
-  // Look for "with" clauses (secondary — check they're substantial)
+  // Look for "with" clauses (secondary - check they're substantial)
   const withMatch = text.match(/\bwith\s+(the\s+)?[a-z].{8,70}?[.!]?$/i);
   if (withMatch) {
     const snippet = withMatch[0].replace(/[.!]$/, "").trim();
