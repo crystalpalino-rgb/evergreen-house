@@ -4,7 +4,7 @@
     <title>Evergreen House — Curated Home Finds</title>
     <link>https://evergreenhouse.co</link>
     <description>Timeless, beautiful home products thoughtfully selected for quality, longevity, and everyday living.</description>
-    <lastBuildDate>2026-10-05T00:12:38.928Z</lastBuildDate>
+    <lastBuildDate>2026-10-05T00:18:21.007Z</lastBuildDate>
   <item>
     <g:id>bedsure-duvet-cover-oversized-queen</g:id>
     <g:title>Bedsure Duvet Cover Oversized Queen</g:title>
@@ -3663,6 +3663,18 @@
     <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>Bare Home</g:brand>
+    <g:google_product_category>Home &amp; Garden</g:google_product_category>
+  </item>
+  <item>
+    <g:id>bedsure-linen-duvet-cover-king-charcoal-gray</g:id>
+    <g:title>Bedsure Linen Duvet Cover — King, Charcoal Gray</g:title>
+    <g:description>Pre-washed linen and cotton give this duvet cover a soft, breathable hand — the easy, uncluttered layer that makes a bed feel calm and quietly hotel-like.</g:description>
+    <g:link>https://evergreenhouse.co/product/bedsure-linen-duvet-cover-king-charcoal-gray</g:link>
+    <g:image_link>https://m.media-amazon.com/images/I/81Eh0Ns13rL._AC_SL1500_.jpg</g:image_link>
+    <g:price>129.99 USD</g:price>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>Bedsure</g:brand>
     <g:google_product_category>Home &amp; Garden</g:google_product_category>
   </item>
   </channel>
