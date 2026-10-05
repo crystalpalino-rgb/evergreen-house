@@ -4,7 +4,7 @@
     <title>Evergreen House - Curated Home Finds</title>
     <link>https://evergreenhouse.co</link>
     <description>Timeless, beautiful home products thoughtfully selected for quality, longevity, and everyday living.</description>
-    <lastBuildDate>2026-10-05T00:40:01.508Z</lastBuildDate>
+    <lastBuildDate>2026-10-05T23:52:56.507Z</lastBuildDate>
   <item>
     <g:id>bedsure-duvet-cover-oversized-queen</g:id>
     <g:title>Bedsure Duvet Cover Oversized Queen</g:title>
@@ -3675,6 +3675,18 @@
     <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>Bedsure</g:brand>
+    <g:google_product_category>Home &amp; Garden</g:google_product_category>
+  </item>
+  <item>
+    <g:id>bunnikins-clover-waffle-knit-throw-blanket-tan</g:id>
+    <g:title>Bunnikins Clover Waffle Knit Throw Blanket - Tan</g:title>
+    <g:description>A nubby waffle knit in warm tan - the layer that makes a bed look hotel-layered and softens the foot of a sofa or reading chair.</g:description>
+    <g:link>https://evergreenhouse.co/product/bunnikins-clover-waffle-knit-throw-blanket-tan</g:link>
+    <g:image_link>https://m.media-amazon.com/images/I/81vkHUoXM+L._AC_SL1500_.jpg</g:image_link>
+    <g:price>46.99 USD</g:price>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>Bunnikins</g:brand>
     <g:google_product_category>Home &amp; Garden</g:google_product_category>
   </item>
   </channel>
