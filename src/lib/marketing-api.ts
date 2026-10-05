@@ -517,7 +517,7 @@ function pinterestTemplate(products: any[], topic?: string) {
   const primary = picks[0];
 
   const title = topic
-    ? `${topic} — The ${roomName} Staple You'll Use Every Day`
+    ? `${topic} - The ${roomName} Staple You'll Use Every Day`
     : `${primary.name}, The ${roomName} Piece That Changed Everything`;
 
   const description = [
@@ -560,7 +560,7 @@ function emailTemplate(products: any[], topic?: string) {
     "",
     `**A few more worth your time:**`,
     ...restPicks.map((p: any) =>
-      `• **${p.name}** — ${p.editor_note ?? `${p.rating}★ and worth it`} [Shop →](${p.amazon_url})`
+      `• **${p.name}** - ${p.editor_note ?? `${p.rating}★ and worth it`} [Shop →](${p.amazon_url})`
     ),
     "",
     `That's it for this week. Thanks for letting me pop into your inbox.`,

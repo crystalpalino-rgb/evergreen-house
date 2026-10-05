@@ -14,12 +14,12 @@ cd "$(dirname "$0")"
 umask 002
 
 echo "[1/5] generate sitemaps from database"
-# Load env vars for DB access — Bun auto-loads .env but we need it for the generation script
+# Load env vars for DB access - Bun auto-loads .env but we need it for the generation script
 set -a; source .env 2>/dev/null; set +a
 bun run scripts/generate-sitemaps.ts || echo "⚠ sitemap generation skipped (DB may not be available)"
 echo "[2/5] generate Google Merchant Center feed"
 bun run scripts/generate-merchant-feed.ts || echo "⚠ merchant feed generation skipped (DB may not be available)"
-echo "[3/5] vite build (light — safe under the sandbox memory cap)"
+echo "[3/5] vite build (light - safe under the sandbox memory cap)"
 # The workspace starts as sources only (deps live with the image's pre-built
 # placeholder copy); no-op once node_modules is current.
 bun install

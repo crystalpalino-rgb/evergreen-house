@@ -1,5 +1,5 @@
 /**
- * Product Backfill Script — Evergreen Intelligence Layer
+ * Product Backfill Script - Evergreen Intelligence Layer
  *
  * For each existing product without seo_slug, infers and populates:
  *   SEO fields, Pinterest fields, product_type, materials, colors, moods, scores.
@@ -244,7 +244,7 @@ async function main() {
   console.log(`Found ${products.length} products to backfill.\n`);
 
   if (products.length === 0) {
-    console.log("Nothing to do — all products already have seo_slug.");
+    console.log("Nothing to do - all products already have seo_slug.");
     return;
   }
 
@@ -264,10 +264,10 @@ async function main() {
       const seoSlug = slugify(name);
 
       // SEO
-      const seoTitle = `${name} — Evergreen House`;
+      const seoTitle = `${name} - Evergreen House`;
       const roomDisplay = roomLabel(room);
       const priceDisplay = formatPrice(price);
-      const seoDescription = `Shop the ${name} — editor-approved ${roomDisplay} find at ${priceDisplay}. Free delivery with Prime.`;
+      const seoDescription = `Shop the ${name} - editor-approved ${roomDisplay} find at ${priceDisplay}. Free delivery with Prime.`;
       const canonicalUrl = `https://evergreenhouse.co/product/${seoSlug}`;
 
       // Pinterest

@@ -49,7 +49,7 @@ export function ProductCard({ product }: { product: Product }) {
   const productSlug = p.seo_slug || productNameToSlug(name);
   const room = p.room || "";
   // Use existing image_alt from DB if available, otherwise generate a descriptive alt
-  const imageAlt = p.image_alt || `${name} — Evergreen House`;
+  const imageAlt = p.image_alt || `${name} - Evergreen House`;
 
   const formattedPrice = price
     ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price)

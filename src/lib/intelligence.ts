@@ -1,5 +1,5 @@
 /**
- * Evergreen Intelligence Layer — Single resolver library.
+ * Evergreen Intelligence Layer - Single resolver library.
  *
  * All resolvers use the shared `sql()` factory from `~/db`.
  * Import `Product` and `ProductFilters` from `~/lib/types`.
@@ -243,7 +243,7 @@ export async function getCollectionProducts(slug: string): Promise<Product[]> {
   const vals: unknown[] = [];
   let idx = 1;
 
-  // Group rules by type — same-type rules are OR'd, different types AND'd
+  // Group rules by type - same-type rules are OR'd, different types AND'd
   const rulesByType = new Map<string, CollectionRule[]>();
   for (const rule of typedRules) {
     const existing = rulesByType.get(rule.rule_type) || [];
@@ -318,7 +318,7 @@ export async function searchProducts(
   const trimmed = query.trim();
 
   if (!trimmed) {
-    // No query — return filtered products
+    // No query - return filtered products
     const { clauses, vals } = buildFilterClauses({ ...filters, isActive: true });
     const where = clauses.length > 0 ? `WHERE ${clauses.join(" AND ")}` : "";
     const countQuery = `SELECT count(*)::int as total FROM products ${where}`;

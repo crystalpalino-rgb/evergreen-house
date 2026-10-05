@@ -1,5 +1,5 @@
 /**
- * Content Diversity Tracker — prevents content repetition by tracking
+ * Content Diversity Tracker - prevents content repetition by tracking
  * which products and hooks have been used recently.
  *
  * Stores history in a JSON file at the project root.
@@ -41,7 +41,7 @@ function loadHistory(): HistoryData {
       return purgeOldEntries(data);
     }
   } catch {
-    // Corrupt file — start fresh
+    // Corrupt file - start fresh
     console.warn(
       "Content diversity tracker: could not read history file, starting fresh.",
     );

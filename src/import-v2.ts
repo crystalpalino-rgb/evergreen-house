@@ -66,7 +66,7 @@ function mapRoom(room: string): string {
 function shortenName(fullName: string): string {
   if (!fullName) return "Product";
   const cleaned = fullName
-    .replace(/[|,\-–—]/g, " ")
+    .replace(/[|,\-–-]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
   const words = cleaned.split(" ");

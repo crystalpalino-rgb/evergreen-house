@@ -29,7 +29,7 @@ function PrivacyPolicy() {
           <section>
             <h2 className="font-medium text-lg">2. How We Use Your Information</h2>
             <p className="mt-2">
-              Your email is used solely to send you the Evergreen House newsletter — curated home
+              Your email is used solely to send you the Evergreen House newsletter - curated home
               finds, editorial content, and product recommendations. We do not sell, rent, or share
               your email with third parties.
             </p>

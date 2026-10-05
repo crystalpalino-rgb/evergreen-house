@@ -26,7 +26,7 @@ export const Route = createFileRoute("/lifestyle/")({
   head: () => {
     const seo = generateStaticMetadata(
       "Shop by Lifestyle",
-      "Curated home finds for real life — Small Space Living, Organization, Hosting, and Work From Home.",
+      "Curated home finds for real life - Small Space Living, Organization, Hosting, and Work From Home.",
       "/lifestyle"
     );
     return { meta: seo.meta, links: seo.links };
@@ -76,7 +76,7 @@ function LifestylePage() {
           </h1>
           <p className="mt-4 text-lg text-warm-gray">
             {products.length} {products.length === 1 ? "product" : "products"}{" "}
-            curated for real life — small spaces, organization, hosting &amp;
+            curated for real life - small spaces, organization, hosting &amp;
             working from home
           </p>
 

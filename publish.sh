@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Rebuild the site and (re)start the production server on port 3000.
 # Build runs in the foreground so errors surface; the server is launched in a new
-# session (setsid) so it keeps running after this script — and your shell — exits.
+# session (setsid) so it keeps running after this script - and your shell - exits.
 # serve.ts frees the port (across user boundaries, retrying on races) before
 # binding, so this is safe to re-run no matter who started the current server.
 set -euo pipefail
@@ -29,5 +29,5 @@ for _ in $(seq 1 50); do
   fi
   sleep 0.2
 done
-echo "warning: published, but the server isn't responding — check .run/server.log" >&2
+echo "warning: published, but the server isn't responding - check .run/server.log" >&2
 exit 1

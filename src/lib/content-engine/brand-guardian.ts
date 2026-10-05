@@ -1,5 +1,5 @@
 /**
- * Brand Guardian — validates content packages before publishing.
+ * Brand Guardian - validates content packages before publishing.
  * Ensures every piece of content meets Evergreen House editorial standards.
  *
  * Checks:
@@ -186,7 +186,7 @@ export function validateContent(pkg: ContentPackage): ValidationResult {
       issues.push({
         type: "error",
         field: "score",
-        message: `Product "${product.name}" scored ${score.overall} — below minimum ${MIN_PRODUCT_SCORE}`,
+        message: `Product "${product.name}" scored ${score.overall} - below minimum ${MIN_PRODUCT_SCORE}`,
         productIndex: i,
       });
     }
@@ -197,7 +197,7 @@ export function validateContent(pkg: ContentPackage): ValidationResult {
       issues.push({
         type: "warning",
         field: "caption",
-        message: `Caption for "${product.name}" is ${wc} words — should be ${MAX_CAPTION_WORDS} or fewer`,
+        message: `Caption for "${product.name}" is ${wc} words - should be ${MAX_CAPTION_WORDS} or fewer`,
         productIndex: i,
       });
     }

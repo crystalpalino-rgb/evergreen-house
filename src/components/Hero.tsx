@@ -1,7 +1,7 @@
 export function Hero() {
   return (
     <section className="relative overflow-hidden">
-      {/* Editorial lifestyle hero image — LCP: explicit dimensions prevent CLS */}
+      {/* Editorial lifestyle hero image - LCP: explicit dimensions prevent CLS */}
       <img
         src="/images/living-room.jpg"
         alt="Beautiful living room with timeless decor"

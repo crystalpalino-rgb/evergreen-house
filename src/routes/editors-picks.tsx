@@ -42,7 +42,7 @@ export const Route = createFileRoute("/editors-picks")({
   head: () => {
     const seo = generateStaticMetadata(
       "Crystal's Edit",
-      "Our editors' favorite home finds. Top-rated products thoughtfully curated for timeless, beautiful living — no trends, just pieces we love.",
+      "Our editors' favorite home finds. Top-rated products thoughtfully curated for timeless, beautiful living - no trends, just pieces we love.",
       "/editors-picks"
     );
     return { meta: seo.meta, links: seo.links };
@@ -96,7 +96,7 @@ function EditorsPicksPage() {
               Crystal's Edit
             </h1>
             <p className="mt-4 max-w-2xl text-lg leading-relaxed text-warm-gray">
-              The pieces we keep coming back to — our editors' most-loved home
+              The pieces we keep coming back to - our editors' most-loved home
               finds across every room. Each one earns its place through
               thoughtful design, lasting quality, and that quiet feeling of
               "just right."

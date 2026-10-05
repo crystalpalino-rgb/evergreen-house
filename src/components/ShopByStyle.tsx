@@ -8,7 +8,7 @@ const collections = [
   },
   {
     name: "Shop by Style",
-    description: "Browse by aesthetic — Organic Modern, Minimalist, Everyday Luxury, Collected Neutrals",
+    description: "Browse by aesthetic - Organic Modern, Minimalist, Everyday Luxury, Collected Neutrals",
     href: "/styles",
     gradient: "linear-gradient(135deg, #c9cbb5 0%, #a8b89a 50%, #8a9a83 100%)",
     light: true,
@@ -22,7 +22,7 @@ const collections = [
   },
   {
     name: "Shop by Lifestyle",
-    description: "Solutions for real life — Small Space Living, Organization, Reading Nooks, Hosting, Family, WFH",
+    description: "Solutions for real life - Small Space Living, Organization, Reading Nooks, Hosting, Family, WFH",
     href: "/lifestyle",
     gradient: "linear-gradient(135deg, #d4c1a5 0%, #c9b99a 50%, #a89b8c 100%)",
     light: true,

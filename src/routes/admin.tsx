@@ -61,7 +61,7 @@ function roomLabel(room: string): string {
 }
 
 function formatPrice(price: number | null): string {
-  if (price == null) return "—";
+  if (price == null) return "-";
   return `$${price.toFixed(0)}`;
 }
 

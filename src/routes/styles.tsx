@@ -8,28 +8,28 @@ const allStyles = [
   {
     name: "Organic Modern",
     slug: "modern",
-    description: "Clean lines meet natural materials — warm woods, stone, linen, and shapes that feel both grounded and fresh",
+    description: "Clean lines meet natural materials - warm woods, stone, linen, and shapes that feel both grounded and fresh",
     gradient: "linear-gradient(135deg, #e2d4c0 0%, #d4c1a5 50%, #c5ad8a 100%)",
     light: false,
   },
   {
     name: "Minimalist & Modern",
     slug: "minimalist",
-    description: "Less but better — calm, uncluttered spaces where every piece earns its place through purpose and beauty",
+    description: "Less but better - calm, uncluttered spaces where every piece earns its place through purpose and beauty",
     gradient: "linear-gradient(135deg, #f8f7f5 0%, #f1efec 50%, #e9e7e3 100%)",
     light: false,
   },
   {
     name: "Everyday Luxury",
     slug: "glam",
-    description: "High-end looks without the high-end price — marble, brass, velvet, and pieces that feel indulgent every day",
+    description: "High-end looks without the high-end price - marble, brass, velvet, and pieces that feel indulgent every day",
     gradient: "linear-gradient(135deg, #3d322c 0%, #4a3d35 50%, #5c4d44 100%)",
     light: true,
   },
   {
     name: "Collected Neutrals",
     slug: "cozy",
-    description: "Layered creams, beiges, taupes, and warm whites — a palette that never feels boring, always feels intentional",
+    description: "Layered creams, beiges, taupes, and warm whites - a palette that never feels boring, always feels intentional",
     gradient: "linear-gradient(135deg, #f2ece4 0%, #e8dfd2 50%, #ded2c0 100%)",
     light: false,
   },
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/styles")({
   head: () => {
     const seo = generateStaticMetadata(
       "Shop by Style",
-      "Browse by aesthetic — Organic Modern, Minimalist & Modern, Everyday Luxury, and Collected Neutrals. Find pieces that match your style.",
+      "Browse by aesthetic - Organic Modern, Minimalist & Modern, Everyday Luxury, and Collected Neutrals. Find pieces that match your style.",
       "/styles"
     );
     return { meta: seo.meta, links: seo.links };
@@ -94,7 +94,7 @@ function StylesPage() {
               Shop by Style
             </h1>
             <p className="mt-4 text-lg text-warm-gray">
-              Browse by aesthetic — find pieces that match your style
+              Browse by aesthetic - find pieces that match your style
             </p>
           </div>
         </section>

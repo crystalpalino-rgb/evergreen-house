@@ -59,7 +59,7 @@ interface CollectionRow {
 async function main() {
   const dbUrl = (process.env.DATABASE_URL || "").replace(/^["']|["']$/g, "");
   if (!dbUrl) {
-    console.error("DATABASE_URL not set — skipping sitemap generation");
+    console.error("DATABASE_URL not set - skipping sitemap generation");
     process.exit(0);
   }
 

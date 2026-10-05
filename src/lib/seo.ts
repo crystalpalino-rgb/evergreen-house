@@ -78,17 +78,17 @@ export function generateCollectionMetadata(
   description?: string | null,
   slug?: string
 ) {
-  const title = `${collectionName} — Curated Finds | Evergreen House`;
+  const title = `${collectionName} - Curated Finds | Evergreen House`;
   const desc =
     description && description.length >= 140 && description.length <= 160
       ? description
       : description && description.length > 0
         ? `${description.slice(0, 157)}...`
-        : `Explore our ${collectionName.toLowerCase()} collection — thoughtfully curated home finds that stand the test of time.`;
+        : `Explore our ${collectionName.toLowerCase()} collection - thoughtfully curated home finds that stand the test of time.`;
   return baseMeta({
     title,
     description: desc,
-    ogTitle: `${collectionName} — Evergreen House`,
+    ogTitle: `${collectionName} - Evergreen House`,
     ogDescription: desc,
     ogUrl: slug
       ? `${SITE_URL}/collection/${slug}`
@@ -115,8 +115,8 @@ export function generateProductMetadata(
   const description =
     product.editor_note ||
     (product.room
-      ? `Discover the ${product.name}${product.brand ? ` by ${product.brand}` : ""} — a timeless ${product.room} essential curated by Evergreen House.`
-      : `Discover the ${product.name} — a timeless home essential curated by Evergreen House.`);
+      ? `Discover the ${product.name}${product.brand ? ` by ${product.brand}` : ""} - a timeless ${product.room} essential curated by Evergreen House.`
+      : `Discover the ${product.name} - a timeless home essential curated by Evergreen House.`);
   return baseMeta({
     title,
     description: description.slice(0, 160),
@@ -159,7 +159,7 @@ export function generateBlogMetadata(post: {
  */
 export function generateStyleMetadata(styleName: string, slug?: string) {
   const title = `${styleName} Home Decor & Inspiration | Evergreen House`;
-  const description = `Explore ${styleName.toLowerCase()} home decor and design inspiration — curated finds that embody the ${styleName.toLowerCase()} aesthetic. Editor-approved picks from Evergreen House.`;
+  const description = `Explore ${styleName.toLowerCase()} home decor and design inspiration - curated finds that embody the ${styleName.toLowerCase()} aesthetic. Editor-approved picks from Evergreen House.`;
   return baseMeta({
     title,
     description,
@@ -184,7 +184,7 @@ export function generateStaticMetadata(
 /** Homepage metadata */
 export function generateHomeMetadata() {
   return baseMeta({
-    title: `${SITE_NAME} — Beautiful Things That Never Go Out of Style`,
+    title: `${SITE_NAME} - Beautiful Things That Never Go Out of Style`,
     description:
       "Thoughtfully curated home collections to help you create a timeless home. Editor-approved furniture, decor, and organization finds.",
   });

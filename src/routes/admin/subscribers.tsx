@@ -127,7 +127,7 @@ function SubscriberList() {
                     </td>
                     <td className="whitespace-nowrap px-6 py-3 text-sm text-warm-dark">
                       {sub.name || (
-                        <span className="italic text-taupe">—</span>
+                        <span className="italic text-taupe">-</span>
                       )}
                     </td>
                     <td className="whitespace-nowrap px-6 py-3 text-sm text-warm-gray">

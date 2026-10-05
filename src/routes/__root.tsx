@@ -71,7 +71,7 @@ export const Route = createRootRoute({
     ],
     links: [
       // NOTE: canonical is set per-route in each route's head export.
-      // No global fallback — a conflicting root canonical causes duplicate
+      // No global fallback - a conflicting root canonical causes duplicate
       // canonical tags, which makes Google reject pages as duplicates.
       { rel: "stylesheet", href: appCss },
       // Preconnect for Google Fonts (before the stylesheet)
@@ -111,12 +111,12 @@ function RootDocument({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
-        {/* JSON-LD structured data — rendered inline in <head> for SEO */}
+        {/* JSON-LD structured data - rendered inline in <head> for SEO */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: jsonLdScript }}
         />
-        {/* Pinterest noscript fallback — stays in <head> for non-JS users */}
+        {/* Pinterest noscript fallback - stays in <head> for non-JS users */}
         <noscript>
           <img
             height="1"

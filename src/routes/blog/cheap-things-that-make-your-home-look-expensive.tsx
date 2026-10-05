@@ -18,12 +18,12 @@ const BLOG_PATH = `/blog/${BLOG_SLUG}`;
 const BLOG_TITLE = "Cheap Things That Make Your Home Look Expensive";
 const BLOG_H1 = "15 Cheap Things That Make Your Home Look Expensive";
 const BLOG_DESCRIPTION =
-  "Fifteen budget home decor finds — mirrors, lamps, trays, candlelight — that make a room look considered, not costly. Editor-picked, all under $85.";
+  "Fifteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.";
 const DATE_PUBLISHED = "2026-10-03";
 const DATE_PUBLISHED_LABEL = "October 3, 2026";
 
 const INTRO =
-  "There's a particular kind of room that reads expensive without a single expensive thing in it. It's usually the light — a mirror placed where the window light lands, a lamp at the right height, the weight of wood and linen and stone doing work that a bigger budget normally does. Here are fifteen pieces we'd buy again, all under $85, chosen because each one changes how a room feels rather than how much it cost.";
+  "There's a particular kind of room that reads expensive without a single expensive thing in it. It's usually the light - a mirror placed where the window light lands, a lamp at the right height, the weight of wood and linen and stone doing work that a bigger budget normally does. Here are fifteen pieces we'd buy again, all under $85, chosen because each one changes how a room feels rather than how much it cost.";
 
 const CLOSING =
   "None of this is about buying more. Pick the room you use most, fix the light and the surface first, and the rest of it starts to take care of itself.";
@@ -37,7 +37,7 @@ type BlogProduct = {
   name: string;
   price: number;
   rating: number;
-  /** Internal product page — keeps readers on-site. */
+  /** Internal product page - keeps readers on-site. */
   productUrl: string;
   /** Affiliate link, tag=crystalcost09-20. */
   amazonUrl: string;
@@ -82,7 +82,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/sunmory-floor-lamps-for-living-room-hn4g",
         amazonUrl: "https://www.amazon.com/dp/B0DSBVYSZV?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/71Cy12mRz5L._AC_SL1500_.jpg",
-        note: "The cheapest way to make a dark corner look intentional is to put a lamp in it, and this arc lamp does it without eating floor space. Two interchangeable shades — rattan for warmth, fabric for something more tailored — a slim wooden stem with a small built-in shelf, and a 12W LED bulb with three colour temperatures in the box. Warm light in the evening, brighter for reading, no rewiring, no ceiling work.",
+        note: "The cheapest way to make a dark corner look intentional is to put a lamp in it, and this arc lamp does it without eating floor space. Two interchangeable shades - rattan for warmth, fabric for something more tailored - a slim wooden stem with a small built-in shelf, and a 12W LED bulb with three colour temperatures in the box. Warm light in the evening, brighter for reading, no rewiring, no ceiling work.",
       },
       {
         id: 52,
@@ -92,7 +92,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/industrial-table-lamp-for-bedroom",
         amazonUrl: "https://www.amazon.com/dp/B0CYSJVJB7?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/61-wRkKYyyL._AC_SL1500_.jpg",
-        note: "Two matching bedside lamps with clear glass shades and gold-toned bases are the fastest way to make a bedroom look finished — mismatched lamps are what make a room look improvised. These dim fully, and each base hides a USB port and an outlet so the charging-cable tangle disappears. Under $25 a lamp, and they read like proper lighting.",
+        note: "Two matching bedside lamps with clear glass shades and gold-toned bases are the fastest way to make a bedroom look finished - mismatched lamps are what make a room look improvised. These dim fully, and each base hides a USB port and an outlet so the charging-cable tangle disappears. Under $25 a lamp, and they read like proper lighting.",
       },
     ],
   },
@@ -143,7 +143,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/storageworks-scalloped-wicker-basket-woven-baskets",
         amazonUrl: "https://www.amazon.com/dp/B0CM9F8171?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/71nW-MRvloL._AC_SL1500_.jpg",
-        note: "Open shelving full of packaging is what makes a kitchen look busy. Two woven water-hyacinth baskets with cut-out handles hide the clutter and add the warm natural texture that makes a shelf feel styled instead of full. The scalloped edge is the detail that lifts them above plain storage — these are the ones we'd leave in sight.",
+        note: "Open shelving full of packaging is what makes a kitchen look busy. Two woven water-hyacinth baskets with cut-out handles hide the clutter and add the warm natural texture that makes a shelf feel styled instead of full. The scalloped edge is the detail that lifts them above plain storage - these are the ones we'd leave in sight.",
       },
       {
         id: 419,
@@ -179,7 +179,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/umbra-sticks-wall-mounted-coat-rack",
         amazonUrl: "https://www.amazon.com/dp/B005M8YWOK?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/61d71NuvLTL._AC_SL1500_.jpg",
-        note: "An entryway with nowhere to put a coat becomes a pile on the floor within a day. Umbra's Sticks rail solves it with five pegs that fold flat when they're empty, so the wall stays clean and you rarely need to think about it. Black, sculptural and narrow enough for a hallway — the practical piece that also happens to look designed.",
+        note: "An entryway with nowhere to put a coat becomes a pile on the floor within a day. Umbra's Sticks rail solves it with five pegs that fold flat when they're empty, so the wall stays clean and you rarely need to think about it. Black, sculptural and narrow enough for a hallway - the practical piece that also happens to look designed.",
       },
       {
         id: 64,
@@ -210,7 +210,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/homesphere-acacia-wood-cake-stand",
         amazonUrl: "https://www.amazon.com/dp/B0BQNCXSRX?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/91QM5EfD+1L._AC_SL1500_.jpg",
-        note: "One acacia board with a clear acrylic dome works as a cake stand, and the base flips over as a charcuterie platter — two serving pieces in one. On a dining table or a kitchen island it makes a spread look styled rather than assembled, and it keeps whatever's under the dome fresh. A wooden board is the fastest way to warm up a table of white plates.",
+        note: "One acacia board with a clear acrylic dome works as a cake stand, and the base flips over as a charcuterie platter - two serving pieces in one. On a dining table or a kitchen island it makes a spread look styled rather than assembled, and it keeps whatever's under the dome fresh. A wooden board is the fastest way to warm up a table of white plates.",
       },
       {
         id: 302,
@@ -270,7 +270,7 @@ function formatPrice(price: number): string {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
 }
 
-/** Pinterest tracking on affiliate clicks — mirrors ProductCard's pintrk call. */
+/** Pinterest tracking on affiliate clicks - mirrors ProductCard's pintrk call. */
 function trackAmazonClick(product: BlogProduct) {
   if (typeof window !== "undefined" && "pintrk" in window) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -288,7 +288,7 @@ function trackAmazonClick(product: BlogProduct) {
   }
 }
 
-/** Rating stars — same markup/styling as ProductCard. */
+/** Rating stars - same markup/styling as ProductCard. */
 function RatingStars({ rating }: { rating: number }) {
   return (
     <div className="flex items-center gap-1">
@@ -330,7 +330,7 @@ function ProductEntry({ product, index }: { product: BlogProduct; index: number 
         >
           <img
             src={product.imageUrl}
-            alt={`${product.name} — Evergreen House`}
+            alt={`${product.name} - Evergreen House`}
             className="aspect-square w-full rounded-xl object-contain p-2"
             loading="lazy"
             decoding="async"

@@ -569,11 +569,11 @@ function generatePinterestDraft(products: any[], topic?: string, roomHint?: stri
     ? keywords.split("\n").map((k) => k.trim()).filter(Boolean).slice(0, 2)
     : [];
   const keywordSuffix = keywordList.length > 0
-    ? ` — ${keywordList.join(", ")}`
+    ? ` - ${keywordList.join(", ")}`
     : "";
 
   const title = topic
-    ? `${topic} — The ${roomName} Staple You'll Use Every Day${keywordSuffix}`
+    ? `${topic} - The ${roomName} Staple You'll Use Every Day${keywordSuffix}`
     : `${primary.name}, The ${roomName} Piece That Changed Everything${keywordSuffix}`;
 
   const keywordIntro = keywordList.length > 0
@@ -620,7 +620,7 @@ function generateEmailDraft(products: any[], topic?: string, roomHint?: string, 
     "",
     `**A few more worth your time:**`,
     ...restPicks.map((p) => [
-      `• **${p.name}** — ${p.editor_note ?? `${p.rating}★ and worth it`} [Shop →](${p.amazon_url})`,
+      `• **${p.name}** - ${p.editor_note ?? `${p.rating}★ and worth it`} [Shop →](${p.amazon_url})`,
     ]).flat(),
     "",
     `That's it for this week. Thanks for letting me pop into your inbox.`,

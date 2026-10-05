@@ -2,10 +2,10 @@
 # Publish this site live to Vercel and print the live URL.
 #
 # Contract:
-#   VERCEL_TOKEN   (required) — collected from the owner via the go-live flow.
-#   DATABASE_URL   (optional) — passed as a runtime env var when the site uses a DB.
-#   VERCEL_SCOPE   (optional) — team slug; auto-resolved from the token if unset.
-#   VERCEL_TEAM_ID (optional) — team id; auto-resolved from the token if unset.
+#   VERCEL_TOKEN   (required) - collected from the owner via the go-live flow.
+#   DATABASE_URL   (optional) - passed as a runtime env var when the site uses a DB.
+#   VERCEL_SCOPE   (optional) - team slug; auto-resolved from the token if unset.
+#   VERCEL_TEAM_ID (optional) - team id; auto-resolved from the token if unset.
 #
 # Scope + team id are auto-resolved from the token (personal tokens have neither;
 # team tokens report their default team), so the owner only ever pastes the token.
@@ -54,7 +54,7 @@ DEPLOY_OUT="$($VERCEL deploy --prebuilt --yes --token "$VERCEL_TOKEN" \
 LIVE_URL="$(printf '%s\n' "$DEPLOY_OUT" | grep -oE 'https://[a-zA-Z0-9._-]+\.vercel\.app' | tail -1)"
 
 if [ -z "$LIVE_URL" ]; then
-  echo "deploy finished but no live URL was parsed — output above" >&2
+  echo "deploy finished but no live URL was parsed - output above" >&2
   printf '%s\n' "$DEPLOY_OUT" >&2
   exit 1
 fi

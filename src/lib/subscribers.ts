@@ -66,7 +66,7 @@ export async function handleSubscribe(body: { email: string; name?: string }): P
     await sql()`INSERT INTO subscribers (email, name) VALUES (${email}, ${name})`;
     return { success: true };
   } catch (err: any) {
-    // Unique constraint violation — treat as success (already subscribed)
+    // Unique constraint violation - treat as success (already subscribed)
     if (err.code === "23505" || err.message?.includes("duplicate key")) {
       return { success: true, duplicate: true };
     }

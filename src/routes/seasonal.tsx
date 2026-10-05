@@ -39,7 +39,7 @@ export const Route = createFileRoute("/seasonal")({
   head: () => {
     const seo = generateStaticMetadata(
       "Shop by Season",
-      "Curated seasonal collections throughout the year — spring refresh, summer living, autumn warmth, and winter nesting.",
+      "Curated seasonal collections throughout the year - spring refresh, summer living, autumn warmth, and winter nesting.",
       "/seasonal"
     );
     return { meta: seo.meta, links: seo.links };

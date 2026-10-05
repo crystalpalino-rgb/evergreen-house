@@ -1,13 +1,13 @@
 /**
- * Human Taste Engine — scores every product on a 1-100 scale across
+ * Human Taste Engine - scores every product on a 1-100 scale across
  * 5 dimensions reflecting the Evergreen House editorial point of view.
  *
  * Dimensions:
- *   1. Timelessness    — classic vs. trendy
- *   2. Visual Quality  — product image appeal
- *   3. Material Quality — premium materials, solid construction
- *   4. Lifestyle Appeal — Evergreen House aesthetic fit
- *   5. Photography      — resolution, lighting, composition
+ *   1. Timelessness    - classic vs. trendy
+ *   2. Visual Quality  - product image appeal
+ *   3. Material Quality - premium materials, solid construction
+ *   4. Lifestyle Appeal - Evergreen House aesthetic fit
+ *   5. Photography      - resolution, lighting, composition
  *
  * Overall = weighted average (configurable weights).
  */
@@ -195,7 +195,7 @@ function inferMoodsFromText(name: string, editorNote: string | null): string[] {
 
 /** Score timelessness: higher = more classic, lower = trendy */
 function scoreTimelessness(product: Product): number {
-  let score = 72; // neutral baseline — Evergreen House products trend classic by default
+  let score = 72; // neutral baseline - Evergreen House products trend classic by default
 
   const name = (product.name || "").toLowerCase();
   const desc = (product.ai_summary || product.editor_note || "").toLowerCase();
@@ -314,7 +314,7 @@ function scoreMaterialQuality(product: Product): number {
   return clamp(score);
 }
 
-/** Score lifestyle appeal — how well the product fits the Evergreen House aesthetic */
+/** Score lifestyle appeal - how well the product fits the Evergreen House aesthetic */
 function scoreLifestyleAppeal(product: Product): number {
   let score = 68;
 

@@ -1,7 +1,7 @@
 // Vercel Build Output API function entry.
 //
 // The Build Output Node launcher invokes the default export as a classic Node
-// `(req, res)` handler — NOT a web handler. TanStack Start emits a portable web
+// `(req, res)` handler - NOT a web handler. TanStack Start emits a portable web
 // fetch handler (dist/server/server.js), so we adapt: Node IncomingMessage → web
 // Request, run the fetch handler, stream the web Response back onto ServerResponse.
 // Node 22 has global Request/Response/Headers/ReadableStream.

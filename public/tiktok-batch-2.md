@@ -1,4 +1,4 @@
-# Evergreen House — Content Package
+# Evergreen House - Content Package
 
 **Room:** Living Room
 **Season:** summer

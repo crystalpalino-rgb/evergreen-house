@@ -1,5 +1,5 @@
 /**
- * Hook Library — curated TikTok/social hooks for Evergreen House content.
+ * Hook Library - curated TikTok/social hooks for Evergreen House content.
  * Organized by style. Never salesy, never trend-chasing.
  *
  * BANNED PHRASES (never use):
@@ -85,7 +85,7 @@ export const HOOKS: Hook[] = [
     style: "timeless",
   },
   {
-    text: "Things worth investing in — and things worth saving on.",
+    text: "Things worth investing in - and things worth saving on.",
     style: "timeless",
   },
   {
@@ -117,7 +117,7 @@ export const HOOKS: Hook[] = [
     style: "classic",
   },
   {
-    text: "Neutral doesn't have to mean boring — here's proof.",
+    text: "Neutral doesn't have to mean boring - here's proof.",
     style: "classic",
   },
   {
