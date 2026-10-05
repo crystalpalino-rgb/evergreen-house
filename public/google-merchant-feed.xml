@@ -4,7 +4,7 @@
     <title>Evergreen House — Curated Home Finds</title>
     <link>https://evergreenhouse.co</link>
     <description>Timeless, beautiful home products thoughtfully selected for quality, longevity, and everyday living.</description>
-    <lastBuildDate>2026-10-03T15:10:47.155Z</lastBuildDate>
+    <lastBuildDate>2026-10-05T00:12:38.928Z</lastBuildDate>
   <item>
     <g:id>bedsure-duvet-cover-oversized-queen</g:id>
     <g:title>Bedsure Duvet Cover Oversized Queen</g:title>
@@ -3651,6 +3651,18 @@
     <g:availability>in stock</g:availability>
     <g:condition>new</g:condition>
     <g:brand>Evergreen House</g:brand>
+    <g:google_product_category>Home &amp; Garden</g:google_product_category>
+  </item>
+  <item>
+    <g:id>bare-home-flannel-duvet-cover-charcoal-gray-washed-cotton</g:id>
+    <g:title>Bare Home Flannel Duvet Cover — Charcoal Gray Washed Cotton</g:title>
+    <g:description>Washed cotton flannel gives this duvet cover the soft, lived-in feel of a favorite blanket — the quiet texture that makes a bedroom feel instantly cozy.</g:description>
+    <g:link>https://evergreenhouse.co/product/bare-home-flannel-duvet-cover-charcoal-gray-washed-cotton</g:link>
+    <g:image_link>https://m.media-amazon.com/images/I/816oCUYjTBL._AC_SL1500_.jpg</g:image_link>
+    <g:price>62.99 USD</g:price>
+    <g:availability>in stock</g:availability>
+    <g:condition>new</g:condition>
+    <g:brand>Bare Home</g:brand>
     <g:google_product_category>Home &amp; Garden</g:google_product_category>
   </item>
   </channel>
