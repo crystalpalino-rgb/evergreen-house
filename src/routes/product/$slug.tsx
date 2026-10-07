@@ -11,7 +11,13 @@ import { ProductCard } from "~/components/ProductCard";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getRelatedProducts } from "~/lib/related";
 import { generateProductMetadata } from "~/lib/seo";
-import { getProductSchema, getBreadcrumbSchema, SITE_URL } from "~/lib/schema";
+import {
+  getProductSchema,
+  getBreadcrumbSchema,
+  SITE_URL,
+  merchantListingName,
+  amazonAsin,
+} from "~/lib/schema";
 import { sql } from "~/db";
 import type { Product } from "~/lib/types";
 
@@ -140,6 +146,10 @@ function ProductPage() {
   }
 
   const p = product as any;
+  // Google's Merchant listings validation caps the product name at 150
+  // characters and compares the marked up name against the visible title, so the
+  // schema name and the H1 render the identical trimmed string.
+  const displayName = merchantListingName(p.name);
   const roomLabel = roomLabels[p.room] || p.room?.replace(/-/g, " ")?.replace(/\b\w/g, (c: string) => c.toUpperCase()) || "";
   const productUrl = `${SITE_URL}/product/${p.seo_slug || productNameToSlug(p.name)}`;
   const price = p.price ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(p.price) : null;
@@ -148,13 +158,14 @@ function ProductPage() {
 
   const productSchema = getProductSchema(
     {
-      name: p.name,
+      name: displayName,
       description: p.editor_note,
       image_url: imageUrl,
       price: p.price,
       brand: p.brand,
       rating: p.rating,
       review_count: p.review_count,
+      sku: amazonAsin(p.amazon_url),
     },
     productUrl,
   );
@@ -163,7 +174,7 @@ function ProductPage() {
     { label: "Home", href: "/" },
     { label: "Rooms", href: "/rooms" },
     { label: roomLabel, href: `/room/${p.room}` },
-    { label: p.name.length > 40 ? p.name.slice(0, 40) + "..." : p.name },
+    { label: displayName.length > 40 ? displayName.slice(0, 40) + "..." : displayName },
   ];
 
   const breadcrumbSchema = getBreadcrumbSchema(
@@ -194,7 +205,7 @@ function ProductPage() {
                 {imageUrl ? (
                   <img
                     src={imageUrl}
-                    alt={`${p.name} - Evergreen House`}
+                    alt={`${displayName} - Evergreen House`}
                     className="h-full w-full object-contain p-6"
                     loading="eager"
                     decoding="async"
@@ -216,7 +227,7 @@ function ProductPage() {
                   </p>
                 )}
                 <h1 className="mt-2 font-serif text-2xl font-bold leading-tight text-warm-dark sm:text-3xl">
-                  {p.name}
+                  {displayName}
                 </h1>
 
                 {/* Rating */}
@@ -326,9 +337,16 @@ function ProductPage() {
 
                 {/* Amazon disclosure */}
                 {hasAmazonUrl && (
-                  <p className="mt-3 text-xs text-taupe/70">
-                    As an Amazon Associate, Evergreen House earns from qualifying purchases.
-                  </p>
+                  <>
+                    <p className="mt-3 text-xs text-taupe/70">
+                      As an Amazon Associate, Evergreen House earns from qualifying purchases.
+                    </p>
+                    <p className="mt-2 text-xs text-taupe/70">
+                      Shipping and returns are handled by Amazon. Standard US shipping usually
+                      arrives in 3 to 7 days, and most items can be returned within 30 days at no
+                      cost.
+                    </p>
+                  </>
                 )}
               </div>
             </div>
