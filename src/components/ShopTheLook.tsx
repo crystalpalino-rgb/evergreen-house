@@ -6,8 +6,47 @@ interface ShopTheLookProps {
   collections: { collection: string; count: number }[];
 }
 
+interface CuratedCollection {
+  id: string;
+  name: string;
+  subtitle: string;
+  description: string;
+  imageUrl?: string;
+  /** Rendered in place of the hero image when no imageUrl is set (seasonal blocks). */
+  gradient?: string;
+  /** Explicit CTA target; defaults to /collection/<id without -look>. */
+  href?: string;
+  ctaLabel?: string;
+  room: string;
+  curatedProductIds?: number[];
+}
+
 // Curated collection definitions
-const curatedCollections = [
+const curatedCollections: CuratedCollection[] = [
+  {
+    id: "holiday-edit",
+    name: "The Holiday Edit",
+    subtitle:
+      "Warm gatherings, cozy nights, and thoughtful details for the season.",
+    description:
+      "From candlelit tables to plush throws, this edit is everything we reach for when the house feels festive and calm at once.",
+    gradient: "linear-gradient(135deg, #1f3a2c 0%, #2f5540 55%, #e6dcc6 100%)",
+    href: "/collection/holiday",
+    ctaLabel: "Shop Holiday",
+    room: "holiday",
+  },
+  {
+    id: "fall-finds",
+    name: "Fall Finds",
+    subtitle:
+      "Cozy layers, amber tones, and textures that invite you to slow down.",
+    description:
+      "The best of our fall shop: warm throws, rich ceramics, and quiet pieces made for longer evenings at home.",
+    gradient: "linear-gradient(135deg, #d4b896 0%, #c49a6c 50%, #c2784a 100%)",
+    href: "/collection/fall",
+    ctaLabel: "Shop Fall",
+    room: "fall",
+  },
   {
     id: "living-room-look",
     name: "Sunday Morning Living",
@@ -81,7 +120,7 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
             let collectionProducts: Product[];
 
             if (hasDbData) {
-              if ("curatedProductIds" in collection && collection.curatedProductIds) {
+              if (collection.curatedProductIds) {
                 // Use specific curated product IDs
                 collectionProducts = collection.curatedProductIds
                   .map((id) => dbProducts.find((p) => p.id === id))
@@ -94,7 +133,9 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                   .slice(0, 4);
               } else {
                 collectionProducts = dbProducts
-                  .filter((p) => p.room === collection.room)
+                  .filter(
+                    (p) => p.room === collection.room && p.is_active !== false,
+                  )
                   .sort((a, b) => (b.rating || 0) - (a.rating || 0))
                   .slice(0, 4);
               }
@@ -110,16 +151,34 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                 className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-beige/10"
               >
                 <div className="grid lg:grid-cols-5">
-                  {/* Hero image */}
+                  {/* Hero image, or a gradient panel for the seasonal blocks */}
                   <div className="lg:col-span-2">
                     <div className="pin-image-wrapper h-48 sm:h-64 lg:h-full">
-                      <img
-                        src={collection.imageUrl}
-                        alt={`${collection.name}, ${collection.subtitle}`}
-                        className="h-full w-full object-cover"
-                        loading="lazy"
-                        data-pin-description={`${collection.name}: ${collection.subtitle}. Save this pin!`}
-                      />
+                      {collection.imageUrl ? (
+                        <img
+                          src={collection.imageUrl}
+                          alt={`${collection.name}, ${collection.subtitle}`}
+                          className="h-full w-full object-cover"
+                          loading="lazy"
+                          data-pin-description={`${collection.name}: ${collection.subtitle}. Save this pin!`}
+                        />
+                      ) : (
+                        <div
+                          className="relative h-full w-full"
+                          style={{ background: collection.gradient }}
+                          data-pin-description={`${collection.name}: ${collection.subtitle}. Save this pin!`}
+                        >
+                          <div
+                            className="absolute inset-0 opacity-[0.06]"
+                            style={{
+                              backgroundImage:
+                                "radial-gradient(circle at 30% 40%, #ffffff 1px, transparent 1px)",
+                              backgroundSize: "30px 30px",
+                            }}
+                            aria-hidden="true"
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                   {/* Content */}
@@ -139,10 +198,13 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                       ))}
                     </div>
                     <a
-                      href={`/collection/${collection.id.replace(/-look$/, "")}`}
+                      href={
+                        collection.href ??
+                        `/collection/${collection.id.replace(/-look$/, "")}`
+                      }
                       className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark"
                     >
-                      View full collection
+                      {collection.ctaLabel ?? "View full collection"}
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="14"

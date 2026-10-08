@@ -6,6 +6,20 @@ import { generateStaticMetadata } from "~/lib/seo";
 
 const seasonalCollections = [
   {
+    name: "Holiday",
+    slug: "holiday",
+    description: "Plush throws, candlelight, and pieces that make home feel like a sanctuary",
+    gradient: "linear-gradient(135deg, #8a8a8a 0%, #6b5e55 50%, #3d322c 100%)",
+    light: true,
+  },
+  {
+    name: "Fall",
+    slug: "fall",
+    description: "Cozy layers, warm amber tones, and textures that invite you to slow down",
+    gradient: "linear-gradient(135deg, #d4b896 0%, #c49a6c 50%, #c2784a 100%)",
+    light: true,
+  },
+  {
     name: "Spring",
     slug: "spring",
     description: "Light layers, fresh greenery, and pieces that welcome the new season",
@@ -18,20 +32,6 @@ const seasonalCollections = [
     description: "Breezy textures, outdoor entertaining, and sun-washed tones",
     gradient: "linear-gradient(135deg, #f5ecd7 0%, #ecd9a2 50%, #e0c370 100%)",
     light: false,
-  },
-  {
-    name: "Fall",
-    slug: "fall",
-    description: "Cozy layers, warm amber tones, and textures that invite you to slow down",
-    gradient: "linear-gradient(135deg, #d4b896 0%, #c49a6c 50%, #c2784a 100%)",
-    light: true,
-  },
-  {
-    name: "Holiday",
-    slug: "holiday",
-    description: "Plush throws, candlelight, and pieces that make home feel like a sanctuary",
-    gradient: "linear-gradient(135deg, #8a8a8a 0%, #6b5e55 50%, #3d322c 100%)",
-    light: true,
   },
 ];
 
@@ -53,7 +53,7 @@ function SeasonalPage() {
       <Header />
       <main>
         <Breadcrumbs
-          items={{ label: "Home", href: "/" }, { label: "Seasons" }}
+          items={[{ label: "Home", href: "/" }, { label: "Seasons" }]}
         />
         {/* Hero */}
         <section className="relative overflow-hidden">
