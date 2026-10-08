@@ -46,6 +46,40 @@ function formatDate(dateStr: string): string {
   });
 }
 
+/**
+ * Hand-authored editorial posts. These pages are static route files under
+ * src/routes/blog/, not rows in the blog database, so they are listed here
+ * explicitly to keep them reachable from the Journal index.
+ */
+const EDITOR_PICKS: Array<{
+  title: string;
+  description: string;
+  href: string;
+  date: string;
+}> = [
+  {
+    title: "Cozy Fall Decor Finds That Feel Like Autumn",
+    description:
+      "Thirteen cozy fall decor finds - knit textures, felt pumpkins, terracotta and warm light - that make a home feel like autumn without one plastic prop.",
+    href: "/blog/cozy-fall-decor-finds",
+    date: "October 8, 2026",
+  },
+  {
+    title: "Cozy Neutral Holiday Decor Finds for a Calm Home",
+    description:
+      "Fourteen neutral holiday decor finds - a knit tree skirt, cedar garland, ceramic trees, pearl ornaments - for a warm Christmas without the tinsel.",
+    href: "/blog/cozy-neutral-holiday-decor-finds",
+    date: "October 8, 2026",
+  },
+  {
+    title: "Cheap Things That Make Your Home Look Expensive",
+    description:
+      "Fifteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.",
+    href: "/blog/cheap-things-that-make-your-home-look-expensive",
+    date: "October 3, 2026",
+  },
+];
+
 function BlogIndex() {
   const { posts: initialPosts } = Route.useLoaderData();
   const [posts, setPosts] = useState(initialPosts);
@@ -97,6 +131,35 @@ function BlogIndex() {
               <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-warm-gray sm:text-xl">
                 Curated home inspiration, styling guides, and editor finds.
               </p>
+            </div>
+          </div>
+        </section>
+        {/* Editor picks - hand-authored editorial posts */}
+        <section className="bg-cream pt-8 sm:pt-12">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+              Editor picks
+            </h2>
+            <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {EDITOR_PICKS.map((post) => (
+                <a
+                  key={post.href}
+                  href={post.href}
+                  className="group block overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
+                >
+                  <div className="p-6 sm:p-7">
+                    <h3 className="font-serif text-lg font-semibold leading-snug text-warm-dark transition-colors group-hover:text-terracotta">
+                      {post.title}
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-warm-gray line-clamp-3">
+                      {post.description}
+                    </p>
+                    <p className="mt-4 text-xs font-medium uppercase tracking-wide text-taupe">
+                      {post.date}
+                    </p>
+                  </div>
+                </a>
+              ))}
             </div>
           </div>
         </section>
