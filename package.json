@@ -15,8 +15,8 @@
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
-    "@tanstack/react-router": "^1.158.1",
-    "@tanstack/react-start": "^1.158.3",
+    "@tanstack/react-router": "^1.170.41",
+    "@tanstack/react-start": "^1.168.60",
     "@types/xlsx": "^0.0.36",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
