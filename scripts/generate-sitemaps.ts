@@ -10,6 +10,8 @@ import { join } from "node:path";
 
 const SITE_URL = "https://evergreenhouse.co";
 
+// Canonical product URL slug: seo_slug wins when set, exactly as
+// src/routes/product/$slug.tsx resolves it (p.seo_slug || productNameToSlug(p.name)).
 function slugify(name: string): string {
   return name
     .toLowerCase()
@@ -46,6 +48,7 @@ function xmlEscape(s: string): string {
 interface ProductRow {
   id: number;
   name: string;
+  seo_slug: string | null;
   image_url: string | null;
   room: string;
   updated_at: string;
@@ -72,7 +75,7 @@ async function main() {
   // ── Fetch data ──
   console.log("Fetching products...");
   const productRows = await db`
-    SELECT id, name, image_url, room, updated_at 
+    SELECT id, name, seo_slug, image_url, room, updated_at 
     FROM products 
     WHERE is_active = true 
     ORDER BY id
@@ -157,7 +160,7 @@ ${staticPages.map((p) => `  <url>
   const productsXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${productRows.map((p) => {
-    const slug = slugify(p.name);
+    const slug = p.seo_slug || slugify(p.name);
     const lastmod = formatDate(p.updated_at);
     return `  <url>
     <loc>${SITE_URL}/product/${xmlEscape(slug)}</loc>
@@ -208,7 +211,7 @@ ${collectionRows.map((c) => {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${withImages.map((p) => {
-    const slug = slugify(p.name);
+    const slug = p.seo_slug || slugify(p.name);
     return `  <url>
     <loc>${SITE_URL}/product/${xmlEscape(slug)}</loc>
     <image:image>
