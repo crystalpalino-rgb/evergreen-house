@@ -46,6 +46,7 @@ const curatedCollections: CuratedCollection[] = [
     href: "/collection/fall",
     ctaLabel: "Shop Fall",
     room: "fall",
+    curatedProductIds: [415, 342, 410, 236],
   },
   {
     id: "living-room-look",
