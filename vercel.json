@@ -1,4 +1,6 @@
 {
+  "buildCommand": "bash build-vercel.sh",
+  "framework": null,
   "headers": [
     {
       "source": "/assets/(.*)",
