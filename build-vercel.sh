@@ -14,8 +14,12 @@ cd "$(dirname "$0")"
 umask 002
 
 echo "[1/5] generate sitemaps from database"
-# Load env vars for DB access - Bun auto-loads .env but we need it for the generation script
-set -a; source .env 2>/dev/null; set +a
+# Load env vars for DB access - Bun auto-loads .env but we need it for the generation script.
+# .env is gitignored, so it is absent on Vercel build machines (there the vars come
+# from the project environment); the guard keeps "set -e" from aborting the build.
+if [ -f .env ]; then
+  set -a; source .env; set +a
+fi
 bun run scripts/generate-sitemaps.ts || echo "⚠ sitemap generation skipped (DB may not be available)"
 echo "[2/5] generate Google Merchant Center feed"
 bun run scripts/generate-merchant-feed.ts || echo "⚠ merchant feed generation skipped (DB may not be available)"
