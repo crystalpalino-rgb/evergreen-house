@@ -30,6 +30,7 @@ const curatedCollections: CuratedCollection[] = [
       "Warm gatherings, cozy nights, and thoughtful details for the season.",
     description:
       "From candlelit tables to plush throws, this edit is everything we reach for when the house feels festive and calm at once.",
+    imageUrl: "/images/seasonal.jpg",
     gradient: "linear-gradient(135deg, #1f3a2c 0%, #2f5540 55%, #e6dcc6 100%)",
     href: "/collection/holiday",
     ctaLabel: "Shop Holiday",
