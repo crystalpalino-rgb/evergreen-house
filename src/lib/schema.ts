@@ -76,26 +76,95 @@ export function getBreadcrumbSchema(
   };
 }
 
+/**
+ * Google's Merchant listings report reads the Product name field as a Merchant
+ * Center product title, which is capped at 150 characters
+ * (https://support.google.com/merchants/answer/6324415). Longer values are
+ * reported as "Invalid string length", so a longer name is trimmed at a word
+ * boundary. The product page H1 renders this same helper: Google compares the
+ * marked up name against the visible title, so both must be identical.
+ */
+export const MERCHANT_LISTING_NAME_MAX = 150;
+
+export function merchantListingName(name: string | null | undefined): string {
+  const value = (name || "").replace(/\s+/g, " ").trim();
+  if (value.length <= MERCHANT_LISTING_NAME_MAX) {
+    return value;
+  }
+  const clipped = value.slice(0, MERCHANT_LISTING_NAME_MAX);
+  const lastSpace = clipped.lastIndexOf(" ");
+  const cut = lastSpace > 0 ? clipped.slice(0, lastSpace) : clipped;
+  // Drop separators left dangling by the cut so the trimmed name reads cleanly.
+  return cut.replace(/[,;:&|/+-]+$/, "").trim();
+}
+
+/**
+ * ASIN from a normalized Amazon affiliate URL
+ * (https://www.amazon.com/dp/<ASIN>?tag=...). It is the strongest identifier we
+ * hold, so it is emitted as Product.sku and Offer.sku. It is not a global
+ * identifier, so Google's missing gtin/mpn recommendation stays open by design.
+ */
+export function amazonAsin(amazonUrl: string | null | undefined): string | null {
+  const match = /\/dp\/([A-Za-z0-9]{10})(?=[/?]|$)/.exec(amazonUrl || "");
+  return match ? match[1].toUpperCase() : null;
+}
+
+/**
+ * Shipping and return terms belong to the merchant the buyer actually transacts
+ * with (Amazon), so they are identical on every product page:
+ * - US delivery, standard transit time quoted conservatively as 3 to 7 days.
+ * - No shippingRate is published. Amazon's cost varies by order (free above its
+ *   free-shipping threshold, free with Prime, otherwise priced) and we hold no
+ *   honest per-item rate, so we do not invent one. Google lists shippingRate as
+ *   required only for the optional shipping details enhancement.
+ * - Amazon's published standard return window: 30 days, free, by mail.
+ */
+const MERCHANT_SHIPPING_DETAILS = {
+  "@type": "OfferShippingDetails",
+  shippingDestination: {
+    "@type": "DefinedRegion",
+    addressCountry: "US",
+  },
+  deliveryTime: {
+    "@type": "ShippingDeliveryTime",
+    transitTime: {
+      "@type": "QuantitativeValue",
+      minValue: 3,
+      maxValue: 7,
+      unitCode: "DAY",
+    },
+  },
+};
+
+const MERCHANT_RETURN_POLICY = {
+  "@type": "MerchantReturnPolicy",
+  applicableCountry: "US",
+  returnPolicyCategory: "https://schema.org/MerchantReturnFiniteReturnWindow",
+  merchantReturnDays: 30,
+  returnMethod: "https://schema.org/ReturnByMail",
+  returnFees: "https://schema.org/FreeReturn",
+};
+
 /** Product schema - for standalone product pages */
 export function getProductSchema(
   product: {
     name: string;
     description?: string | null;
     image_url?: string | null;
-    price?: number | null;
+    price?: number | string | null;
     brand?: string | null;
     rating?: number | null;
     review_count?: number | null;
+    sku?: string | null;
   },
   url: string
 ) {
   const schema: any = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: product.name,
+    name: merchantListingName(product.name),
     url,
   };
-
   if (product.description) {
     schema.description = product.description;
   }
@@ -108,13 +177,21 @@ export function getProductSchema(
       name: product.brand,
     };
   }
+  if (product.sku) {
+    schema.sku = product.sku;
+  }
   if (product.price) {
     schema.offers = {
       "@type": "Offer",
-      price: product.price,
+      price: Number(product.price),
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
+      shippingDetails: MERCHANT_SHIPPING_DETAILS,
+      hasMerchantReturnPolicy: MERCHANT_RETURN_POLICY,
     };
+    if (product.sku) {
+      schema.offers.sku = product.sku;
+    }
   }
   if (product.rating) {
     schema.aggregateRating = {
@@ -123,7 +200,6 @@ export function getProductSchema(
       reviewCount: product.review_count || 0,
     };
   }
-
   return schema;
 }
 
