@@ -43,6 +43,7 @@ const curatedCollections: CuratedCollection[] = [
       "Cozy layers, amber tones, and textures that invite you to slow down.",
     description:
       "The best of our fall shop: warm throws, rich ceramics, and quiet pieces made for longer evenings at home.",
+    imageUrl: "/images/fall.jpg",
     gradient: "linear-gradient(135deg, #d4b896 0%, #c49a6c 50%, #c2784a 100%)",
     href: "/collection/fall",
     ctaLabel: "Shop Fall",
