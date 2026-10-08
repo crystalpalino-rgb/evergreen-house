@@ -140,6 +140,16 @@ async function main() {
       priority: "0.7",
       changefreq: "monthly",
     },
+    {
+      loc: "/blog/cozy-fall-decor-finds",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/cozy-neutral-holiday-decor-finds",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
 

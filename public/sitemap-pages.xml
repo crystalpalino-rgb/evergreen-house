@@ -61,6 +61,18 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://evergreenhouse.co/blog/cozy-fall-decor-finds</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://evergreenhouse.co/blog/cozy-neutral-holiday-decor-finds</loc>
+    <lastmod>2026-10-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://evergreenhouse.co/seasonal</loc>
     <lastmod>2026-10-08</lastmod>
     <changefreq>weekly</changefreq>
