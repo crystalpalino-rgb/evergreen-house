@@ -18,6 +18,7 @@ export interface DBProduct {
   blog_category: string | null;
   collection: string | null;
   is_trending: boolean;
+  seo_slug: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -37,6 +38,7 @@ export interface Product {
   blogCategory: string | null;
   collection: string | null;
   isTrending: boolean;
+  seoSlug: string | null;
 }
 
 function toProduct(row: DBProduct): Product {
@@ -55,6 +57,7 @@ function toProduct(row: DBProduct): Product {
     blogCategory: row.blog_category,
     collection: row.collection,
     isTrending: row.is_trending,
+    seoSlug: row.seo_slug ?? null,
   };
 }
 

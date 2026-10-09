@@ -11,10 +11,10 @@ const lifestyleMappings: Record<string, { label: string; rooms: string[] }> = {
   "work-from-home": { label: "Work From Home", rooms: ["office", "living-room", "bedroom"] },
 };
 
-interface ProductItem { id: number; name: string; fullName: string; room: string; style: string[]; amazonUrl: string; price: number | null; rating: number | null; editorNote: string | null; imageUrl: string | null; pinterestTitle: string | null; blogCategory: string | null; collection: string | null; isTrending: boolean; }
+interface ProductItem { id: number; name: string; seoSlug: string | null; fullName: string; room: string; style: string[]; amazonUrl: string; price: number | null; rating: number | null; editorNote: string | null; imageUrl: string | null; pinterestTitle: string | null; blogCategory: string | null; collection: string | null; isTrending: boolean; }
 
 function mapRow(row: any): ProductItem {
-  return { id: row.id, name: row.name, fullName: row.full_name || row.name, room: row.room, style: typeof row.style === "string" ? JSON.parse(row.style) : row.style || [], amazonUrl: row.amazon_url, price: row.price, rating: row.rating, editorNote: row.editor_note, imageUrl: row.image_url, pinterestTitle: row.pinterest_title, blogCategory: row.blog_category, collection: row.collection, isTrending: row.is_trending ?? false };
+  return { id: row.id, name: row.name, seoSlug: row.seo_slug, fullName: row.full_name || row.name, room: row.room, style: typeof row.style === "string" ? JSON.parse(row.style) : row.style || [], amazonUrl: row.amazon_url, price: row.price, rating: row.rating, editorNote: row.editor_note, imageUrl: row.image_url, pinterestTitle: row.pinterest_title, blogCategory: row.blog_category, collection: row.collection, isTrending: row.is_trending ?? false };
 }
 
 export const Route = createFileRoute("/lifestyle/$slug")({
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/lifestyle/$slug")({
     const mapping = lifestyleMappings[params.slug];
     if (!mapping) return { products: [] as ProductItem[], label: params.slug, slug: params.slug };
     try {
-      const allRows = await Promise.all(mapping.rooms.map((room) => { const db = sql(); return db`SELECT * FROM products WHERE room = ${room} ORDER BY rating DESC NULLS LAST`; }));
+      const allRows = await Promise.all(mapping.rooms.map((room) => { const db = sql(); return db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY rating DESC NULLS LAST`; }));
       const seen = new Set<number>();
       const products: ProductItem[] = [];
       for (const rows of allRows) { for (const row of rows as any[]) { if (!seen.has(row.id)) { seen.add(row.id); products.push(mapRow(row)); } } }

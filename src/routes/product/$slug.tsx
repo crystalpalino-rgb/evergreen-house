@@ -20,6 +20,7 @@ import {
 } from "~/lib/schema";
 import { sql } from "~/db";
 import type { Product } from "~/lib/types";
+import { canonicalProductSlug, productNameToSlug } from "~/lib/product-slug";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: async ({ params }) => {
@@ -35,8 +36,8 @@ export const Route = createFileRoute("/product/$slug")({
       `;
       const allProducts = rows as unknown as Product[];
 
-      const canonicalSlugOf = (p: Product) =>
-        p.seo_slug || productNameToSlug(p.name);
+      // Single source of truth: the same helper every ProductCard link uses.
+      const canonicalSlugOf = (p: Product) => canonicalProductSlug(p);
 
       // Match by generated slug since seo_slug is mostly null
       const product = allProducts.find((p) => canonicalSlugOf(p) === slug);
@@ -101,21 +102,12 @@ export const Route = createFileRoute("/product/$slug")({
         seo_title: product.seo_title,
         seo_description: product.seo_description,
       },
-      product.seo_slug || productNameToSlug(product.name)
+      canonicalProductSlug(product)
     );
     return { meta: seo.meta, links: seo.links };
   },
   component: ProductPage,
 });
-
-function productNameToSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .slice(0, 120);
-}
 
 /**
  * Canonical form of a slug for comparison purposes: lowercase, separators
@@ -153,7 +145,7 @@ function ProductPage() {
   // schema name and the H1 render the identical trimmed string.
   const displayName = merchantListingName(p.name);
   const roomLabel = roomLabels[p.room] || p.room?.replace(/-/g, " ")?.replace(/\b\w/g, (c: string) => c.toUpperCase()) || "";
-  const productUrl = `${SITE_URL}/product/${p.seo_slug || productNameToSlug(p.name)}`;
+  const productUrl = `${SITE_URL}/product/${canonicalProductSlug(p)}`;
   const price = p.price ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(p.price) : null;
   const imageUrl = p.image_url || "";
   const hasAmazonUrl = p.amazon_url && p.amazon_url.startsWith("http");
@@ -375,6 +367,7 @@ function ProductPage() {
                     product={{
                       id: item.id,
                       name: item.name,
+                      seo_slug: item.seo_slug,
                       image_url: item.image_url,
                       price: item.price,
                       room: item.room,
