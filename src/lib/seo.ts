@@ -97,6 +97,16 @@ export function generateCollectionMetadata(
 }
 
 /**
+ * Normalize an optional stored text column: trims surrounding whitespace and
+ * treats an empty or whitespace-only value as absent, so callers can fall back
+ * with `||` instead of rendering a blank title or description.
+ */
+function storedText(value?: string | null): string | null {
+  if (typeof value !== "string") return null;
+  const trimmed = value.trim();
+  return trimmed.length > 0 ? trimmed : null;
+}
+/**
  * Generate metadata for a standalone product page.
  * When `slug` (the actual URL path segment) is provided it is used verbatim
  * for the canonical/og:url; otherwise it falls back to slugifying the display
@@ -108,18 +118,25 @@ export function generateProductMetadata(
     editor_note?: string | null;
     room?: string;
     brand?: string | null;
+    seo_title?: string | null;
+    seo_description?: string | null;
   },
   slug?: string
 ) {
-  const title = `${product.name} | Evergreen House`;
-  const description =
-    product.editor_note ||
-    (product.room
-      ? `Discover the ${product.name}${product.brand ? ` by ${product.brand}` : ""} - a timeless ${product.room} essential curated by Evergreen House.`
-      : `Discover the ${product.name} - a timeless home essential curated by Evergreen House.`);
+  const fallbackDescription = product.room
+    ? `Discover the ${product.name}${product.brand ? ` by ${product.brand}` : ""} - a timeless ${product.room} essential curated by Evergreen House.`
+    : `Discover the ${product.name} - a timeless home essential curated by Evergreen House.`;
+  // Editor-authored SEO copy wins over the templated default; the visible
+  // description (editor_note) is the next fallback so nothing regresses.
+  const title = storedText(product.seo_title) || `${product.name} | Evergreen House`;
+  const description = (
+    storedText(product.seo_description) ||
+    storedText(product.editor_note) ||
+    fallbackDescription
+  ).slice(0, 160);
   return baseMeta({
     title,
-    description: description.slice(0, 160),
+    description,
     ogUrl: slug
       ? `${SITE_URL}/product/${slug}`
       : `${SITE_URL}/product/${product.name.toLowerCase().replace(/\s+/g, "-")}`,

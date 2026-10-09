@@ -98,6 +98,8 @@ export const Route = createFileRoute("/product/$slug")({
         editor_note: product.editor_note,
         room: product.room,
         brand: product.brand,
+        seo_title: product.seo_title,
+        seo_description: product.seo_description,
       },
       product.seo_slug || productNameToSlug(product.name)
     );
