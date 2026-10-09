@@ -58,7 +58,7 @@ function EditorsPicksPage() {
       <Header />
       <main>
         <Breadcrumbs
-          items={{ label: "Home", href: "/" }, { label: "Crystal's Edit" }}
+          items={[{ label: "Home", href: "/" }, { label: "Crystal's Edit" }]}
         />
         {/* ── Hero section ── */}
         <section className="relative overflow-hidden">

@@ -1,15 +1,7 @@
 import type { Product } from "~/lib/types";
+import { canonicalProductSlug } from "~/lib/product-slug";
 
 export type { Product };
-
-function productNameToSlug(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/-+/g, "-")
-    .replace(/^-|-$/g, "")
-    .slice(0, 120);
-}
 
 function getPinDescription(product: Product): string {
   const p = product as any;
@@ -44,9 +36,10 @@ export function ProductCard({ product }: { product: Product }) {
   const amazonUrl = p.amazon_url || p.amazonUrl || "";
   const imageUrl = p.image_url || p.imageUrl || "";
   const name = p.name;
-  // Canonical URL slug, mirroring the route resolver in src/routes/product/$slug.tsx:
-  // an explicit seo_slug wins, otherwise fall back to the name-derived slug.
-  const productSlug = p.seo_slug || productNameToSlug(name);
+  // Canonical URL slug. Built with the SAME helper the product route resolves
+  // with (src/lib/product-slug.ts), so a card link can never drift from the URL
+  // the route actually serves: a stored seo_slug wins, name-derived otherwise.
+  const productSlug = canonicalProductSlug(p);
   const room = p.room || "";
   // Use existing image_alt from DB if available, otherwise generate a descriptive alt
   const imageAlt = p.image_alt || `${name} - Evergreen House`;
