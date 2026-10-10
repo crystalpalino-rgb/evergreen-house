@@ -58,6 +58,13 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title: "13 Things That Make Your Bed Look Expensive",
+    description:
+      "Thirteen bedroom finds - deep pocket sheets, an oversized duvet, layered pillows and a knit throw - that make a bed look expensive without a new mattress.",
+    href: "/blog/how-to-make-your-bed-look-expensive",
+    date: "October 10, 2026",
+  },
+  {
     title: "Cozy Fall Decor Finds That Feel Like Autumn",
     description:
       "Thirteen cozy fall decor finds - knit textures, felt pumpkins, terracotta and warm light - that make a home feel like autumn without one plastic prop.",
