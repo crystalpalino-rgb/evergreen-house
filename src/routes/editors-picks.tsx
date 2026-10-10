@@ -17,11 +17,12 @@ export const Route = createFileRoute("/editors-picks")({
         getAllProducts(),
       ]);
 
-      // If editor_pick column has data, use those; otherwise fall back to top-rated non-seasonal
-      let products: Product[];
-      if (editorPicks.length > 0) {
-        products = editorPicks;
-      } else {
+      // getEditorsPicks(20) returns the curated editor_pick rows first and tops
+      // the list up to 20 with the highest quality-scored evergreen products.
+      // The fallback below only runs if that query comes back completely empty,
+      // so the page can never render a single card again.
+      let products: Product[] = editorPicks;
+      if (products.length === 0) {
         const nonSeasonal = allProducts.filter(
           (p) => !SEASONAL_ROOMS.has(p.room)
         );

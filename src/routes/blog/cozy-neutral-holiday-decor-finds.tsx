@@ -388,7 +388,7 @@ function ProductEntry({
           <a
             href={product.amazonUrl}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer sponsored"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sage transition-colors hover:text-sage-dark"
             onClick={() => trackAmazonClick(product)}
           >

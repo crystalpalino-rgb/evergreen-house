@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate, notFound, isNotFound } from "@tanstack/react-router";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateBlogMetadata } from "~/lib/seo";
 import { getArticleSchema, SITE_URL } from "~/lib/schema";
@@ -18,17 +18,48 @@ export const Route = createFileRoute("/blog/$postId")({
   },
   loader: async ({ params }) => {
     try {
+      // This route serves numeric post ids only. Anything else, including the
+      // slug URLs of posts that were never wired up, is a real 404 instead of a
+      // 200 page that says "Post Not Found".
+      if (!/^\d+$/.test(params.postId)) throw notFound();
       const id = parseInt(params.postId, 10);
-      if (isNaN(id)) return { post: null };
       const post = await getBlogPost({ data: id });
+      if (!post) throw notFound();
       return { post };
     } catch (err) {
+      if (isNotFound(err)) throw err;
       console.error("Blog post loader error:", err);
-      return { post: null };
+      throw notFound();
     }
   },
+  notFoundComponent: BlogPostNotFound,
   component: BlogPostPage,
 });
+
+/**
+ * Rendered in place of the post when the loader throws notFound(). The response
+ * carries HTTP 404, so unknown or unpublished ids are never served as soft 404s.
+ */
+function BlogPostNotFound() {
+  return (
+    <main>
+      <div className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6 lg:px-8">
+        <h1 className="font-serif text-2xl font-semibold text-warm-dark">
+          Post Not Found
+        </h1>
+        <p className="mt-3 text-warm-gray">
+          This post may not be published yet or doesn&apos;t exist.
+        </p>
+        <Link
+          to="/blog"
+          className="mt-6 inline-block rounded-full bg-terracotta px-6 py-2.5 text-sm font-medium text-white transition hover:bg-terracotta-dark"
+        >
+          Browse all posts
+        </Link>
+      </div>
+    </main>
+  );
+}
 
 function renderContent(content: string): string {
   let html = content

@@ -256,6 +256,36 @@ function ProductPage() {
                   </p>
                 )}
 
+                {/* Amazon CTA */}
+                {hasAmazonUrl && (
+                  <a
+                    href={p.amazon_url}
+                    target="_blank"
+                    rel="noopener noreferrer sponsored"
+                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-terracotta-dark self-start"
+                  >
+                    View on Amazon
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="5" y1="12" x2="19" y2="12" />
+                      <polyline points="12 5 19 12 12 19" />
+                    </svg>
+                  </a>
+                )}
+
+                {/* Amazon disclosure */}
+                {hasAmazonUrl && (
+                  <>
+                    <p className="mt-3 text-xs text-taupe/70">
+                      As an Amazon Associate, Evergreen House earns from qualifying purchases.
+                    </p>
+                    <p className="mt-2 text-xs text-taupe/70">
+                      Shipping and returns are handled by Amazon. Standard US shipping usually
+                      arrives in 3 to 7 days, and most items can be returned within 30 days at no
+                      cost.
+                    </p>
+                  </>
+                )}
+
                 {/* Room & style tags */}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {p.room && (
@@ -313,35 +343,6 @@ function ProductPage() {
                   </div>
                 )}
 
-                {/* Amazon CTA */}
-                {hasAmazonUrl && (
-                  <a
-                    href={p.amazon_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-terracotta-dark self-start"
-                  >
-                    View on Amazon
-                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                      <polyline points="12 5 19 12 12 19" />
-                    </svg>
-                  </a>
-                )}
-
-                {/* Amazon disclosure */}
-                {hasAmazonUrl && (
-                  <>
-                    <p className="mt-3 text-xs text-taupe/70">
-                      As an Amazon Associate, Evergreen House earns from qualifying purchases.
-                    </p>
-                    <p className="mt-2 text-xs text-taupe/70">
-                      Shipping and returns are handled by Amazon. Standard US shipping usually
-                      arrives in 3 to 7 days, and most items can be returned within 30 days at no
-                      cost.
-                    </p>
-                  </>
-                )}
               </div>
             </div>
           </div>
