@@ -56,6 +56,8 @@ export function Footer() {
                 { label: "About", href: "/about" },
                 { label: "Contact", href: "/contact" },
                 { label: "Privacy", href: "/evergreen-house/privacy" },
+                { label: "Terms", href: "/terms" },
+                { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
               ].map((link) => (
                 <li key={link.label}>
                   <a
@@ -77,7 +79,13 @@ export function Footer() {
             <p className="mt-3 text-xs leading-relaxed text-soft-white/60">
               As an Amazon Associate we earn from qualifying purchases. We
               carefully curate every product we recommend, our editorial
-              integrity matters more than commissions.
+              integrity matters more than commissions.{" "}
+              <a
+                href="/affiliate-disclosure"
+                className="underline decoration-soft-white/30 underline-offset-2 transition-colors hover:text-antique-gold"
+              >
+                How our links work
+              </a>
             </p>
           </div>
         </div>
