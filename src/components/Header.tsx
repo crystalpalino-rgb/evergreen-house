@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import { APPAREL_BUCKETS } from "~/lib/apparel";
 
 interface ShopSubItem {
   label: string;
@@ -78,6 +79,18 @@ export function Header() {
     { label: "Journal", href: "/blog" },
   ];
 
+  // Apparel is a top level nav item of its own, with the /apparel groups as its
+  // dropdown. The bucket ids come from ~/lib/apparel, which is also what the
+  // /apparel page renders its sections from, so the menu can never drift from
+  // the anchors that exist on the page.
+  const apparelLinks: ShopSubItem[] = [
+    { label: "All Apparel", href: "/apparel" },
+    ...APPAREL_BUCKETS.map((bucket) => ({
+      label: bucket.label,
+      href: `/apparel#${bucket.id}`,
+    })),
+  ];
+
   const toggleCategory = (cat: string) => {
     setExpandedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
   };
@@ -145,6 +158,45 @@ export function Header() {
                   </div>
                 ))}
               </div>
+            </div>
+          </details>
+
+          {/* Apparel dropdown */}
+          <details className="group relative">
+            <summary className="flex cursor-pointer items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta list-none select-none">
+              Apparel
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="transition-transform duration-200 group-open:rotate-180"
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </summary>
+
+            <div className="absolute left-0 top-full mt-2 w-[280px] rounded-xl border border-beige/20 bg-white py-4 shadow-lg">
+              <h4 className="mb-2 px-6 text-xs font-semibold uppercase tracking-wider text-taupe">
+                Apparel
+              </h4>
+              <ul className="space-y-1 px-2">
+                {apparelLinks.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.href}
+                      className="block rounded-lg px-4 py-1.5 text-sm font-medium text-warm-gray transition-colors hover:bg-cream/60 hover:text-terracotta"
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </details>
 
@@ -314,6 +366,45 @@ export function Header() {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* Apparel accordion */}
+          <div className="border-t border-beige/20 pt-1">
+            <button
+              onClick={() => toggleCategory("Apparel")}
+              className="flex w-full items-center justify-between py-2 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
+              aria-expanded={expandedCategories["Apparel"] || false}
+            >
+              <span>Apparel</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`transition-transform duration-200 ${expandedCategories["Apparel"] ? "rotate-180" : ""}`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            {expandedCategories["Apparel"] && (
+              <div className="ml-4 space-y-0.5 pb-1">
+                {apparelLinks.map((item) => (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-1.5 text-sm text-warm-gray/80 transition-colors hover:text-terracotta"
+                  >
+                    {item.label}
+                  </a>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Remaining links (Blog, About, Journal) */}
