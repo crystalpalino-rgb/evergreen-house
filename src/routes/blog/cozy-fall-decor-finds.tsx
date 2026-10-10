@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { SITE_NAME, SITE_URL } from "~/lib/schema";
+import { trackAffiliateClick } from "~/lib/analytics";
 
 /**
  * Blog post: "13 Cozy Fall Decor Finds (No Orange Plastic)"
@@ -277,24 +278,6 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
-/** Pinterest tracking on affiliate clicks - mirrors ProductCard's pintrk call. */
-function trackAmazonClick(product: BlogProduct) {
-  if (typeof window !== "undefined" && "pintrk" in window) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (window as any).pintrk("track", "lead", {
-      event_id: `amz-click-${BLOG_SLUG}-${product.id}`,
-      value: product.price ? Math.round(product.price * 100) / 100 : undefined,
-      currency: "USD",
-      line_items: [
-        {
-          product_name: product.name,
-          product_id: String(product.id),
-        },
-      ],
-    });
-  }
-}
-
 /** Rating stars - same markup/styling as ProductCard. */
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -375,7 +358,16 @@ function ProductEntry({
             target="_blank"
             rel="noopener noreferrer sponsored"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sage transition-colors hover:text-sage-dark"
-            onClick={() => trackAmazonClick(product)}
+            onClick={() =>
+              trackAffiliateClick({
+                productId: product.id,
+                name: product.name,
+                price: product.price,
+                context: `blog:${BLOG_SLUG}`,
+                destinationUrl: product.amazonUrl,
+                eventId: `amz-click-${BLOG_SLUG}-${product.id}`,
+              })
+            }
           >
             Shop on Amazon
             <svg

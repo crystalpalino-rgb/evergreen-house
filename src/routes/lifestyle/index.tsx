@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductCard } from "~/components/ProductCard";
+import { AnalyticsList } from "~/components/AnalyticsList";
 import { getProductsByRoom } from "~/lib/intelligence";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Product } from "~/lib/types";
@@ -114,11 +115,13 @@ function LifestylePage() {
       <section className="py-8 sm:py-12">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {products.length > 0 ? (
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {products.map((product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
+            <AnalyticsList id="lifestyle-index" name="Shop by Lifestyle" items={products}>
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                {products.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            </AnalyticsList>
           ) : (
             <div className="py-10 text-center">
               <p className="text-lg text-warm-gray">

@@ -8,6 +8,7 @@ import {
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
+import { AnalyticsList } from "~/components/AnalyticsList";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getRelatedProducts } from "~/lib/related";
 import { generateProductMetadata } from "~/lib/seo";
@@ -21,6 +22,8 @@ import {
 import { sql } from "~/db";
 import type { Product } from "~/lib/types";
 import { canonicalProductSlug, productNameToSlug } from "~/lib/product-slug";
+import { trackAffiliateClick, trackViewItem } from "~/lib/analytics";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/product/$slug")({
   loader: async ({ params }) => {
@@ -120,6 +123,12 @@ function normalizeSlug(slug: string): string {
 
 function ProductPage() {
   const { product, related } = Route.useLoaderData();
+
+  // view_item: one push per product page mount, client-side only.
+  useEffect(() => {
+    if (product) trackViewItem(product);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product?.id]);
 
   if (!product) {
     return (
@@ -263,6 +272,18 @@ function ProductPage() {
                     target="_blank"
                     rel="noopener noreferrer sponsored"
                     className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-terracotta px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-terracotta-dark self-start"
+                    onClick={() =>
+                      trackAffiliateClick({
+                        productId: p.id,
+                        name: p.name,
+                        price: p.price ?? null,
+                        context: "product_page",
+                        destinationUrl: p.amazon_url,
+                        eventId: `amz-click-${p.id}`,
+                        // Pinterest did not track this button before; keep it that way.
+                        mirrorPinterest: false,
+                      })
+                    }
                   >
                     View on Amazon
                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -361,24 +382,26 @@ function ProductPage() {
               <p className="mt-2 text-warm-gray">
                 Pieces that pair beautifully with this {roomLabel.toLowerCase()} find - chosen by our editors for the same timeless aesthetic.
               </p>
-              <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {related.slice(0, 4).map((item) => (
-                  <ProductCard
-                    key={item.id}
-                    product={{
-                      id: item.id,
-                      name: item.name,
-                      seo_slug: item.seo_slug,
-                      image_url: item.image_url,
-                      price: item.price,
-                      room: item.room,
-                      rating: null,
-                      amazon_url: "",
-                      editor_note: null,
-                    } as Product}
-                  />
-                ))}
-              </div>
+              <AnalyticsList id="related-products" name="You Might Also Love" items={related.slice(0, 4)}>
+                <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {related.slice(0, 4).map((item) => (
+                    <ProductCard
+                      key={item.id}
+                      product={{
+                        id: item.id,
+                        name: item.name,
+                        seo_slug: item.seo_slug,
+                        image_url: item.image_url,
+                        price: item.price,
+                        room: item.room,
+                        rating: null,
+                        amazon_url: "",
+                        editor_note: null,
+                      } as Product}
+                    />
+                  ))}
+                </div>
+              </AnalyticsList>
             </div>
           </section>
         )}

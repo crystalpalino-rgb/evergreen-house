@@ -1,5 +1,7 @@
 import type { Product } from "~/lib/types";
 import { canonicalProductSlug } from "~/lib/product-slug";
+import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
+import { useAnalyticsList } from "./AnalyticsList";
 
 export type { Product };
 
@@ -30,6 +32,8 @@ function getPinDescription(product: Product): string {
 export function ProductCard({ product }: { product: Product }) {
   // Compatibility: data arrives in snake_case (DB direct) or camelCase (serialized)
   const p = product as any;
+  // Grid this card was rendered in (set by AnalyticsList); null outside a grid.
+  const list = useAnalyticsList();
   const price = p.price;
   const rating = p.rating;
   const editorNote = p.editor_note || p.editorNote || null;
@@ -75,21 +79,26 @@ export function ProductCard({ product }: { product: Product }) {
 
   const { srcSet, sizes } = getImageSrcSet(imageUrl);
 
+  /**
+   * Both Amazon anchors on the card (image + CTA) report through the single
+   * shared affiliate_click path. Navigation is untouched: no preventDefault,
+   * no href rewrite, target/rel stay as they are.
+   */
   function trackAmazonClick() {
-    if (typeof window !== "undefined" && "pintrk" in window) {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (window as any).pintrk("track", "lead", {
-        event_id: `amz-click-${product.id}`,
-        value: price ? Math.round(price * 100) / 100 : undefined,
-        currency: "USD",
-        line_items: [
-          {
-            product_name: name,
-            product_id: String(product.id),
-          },
-        ],
-      });
-    }
+    trackAffiliateClick({
+      productId: product.id,
+      name,
+      price: price ?? null,
+      context: list?.context || "product_card",
+      listId: list?.listId,
+      destinationUrl: amazonUrl,
+      eventId: `amz-click-${product.id}`,
+    });
+  }
+
+  /** The card's only on-site click target: opening the product page. */
+  function trackProductPageOpen() {
+    trackSelectItem(product, list ?? undefined);
   }
 
   return (
@@ -164,6 +173,7 @@ export function ProductCard({ product }: { product: Product }) {
           <a
             href={`/product/${productSlug}`}
             className="transition-colors hover:text-terracotta"
+            onClick={trackProductPageOpen}
           >
             {name}
           </a>
