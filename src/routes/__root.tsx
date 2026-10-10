@@ -89,7 +89,8 @@ export const Route = createRootRoute({
       {
         rel: "preload",
         as: "image",
-        href: "/images/living-room.jpg",
+        href: "/images/holiday-edit-hero-2026.webp",
+        type: "image/webp",
         fetchpriority: "high",
       },
     ],

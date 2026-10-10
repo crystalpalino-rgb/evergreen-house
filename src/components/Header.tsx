@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "@tanstack/react-router";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { APPAREL_BUCKETS } from "~/lib/apparel";
 
 interface ShopSubItem {
@@ -12,12 +12,29 @@ interface ShopCategory {
   items: ShopSubItem[];
 }
 
+/* Approved top level nav (owner, 2026-10-10). Labels render uppercase; they are
+   written uppercase here so the rendered markup matches the approved order
+   exactly: HOME | SHOP THE EDITS | BY ROOM | HOLIDAY | JOURNAL. */
+const NAV_ITEMS = [
+  { label: "HOME", href: "/" },
+  { label: "SHOP THE EDITS", href: "/collections" },
+  { label: "BY ROOM", href: "/rooms" },
+  { label: "HOLIDAY", href: "/collection/holiday" },
+  { label: "JOURNAL", href: "/blog" },
+];
+
+const NAV_LINK_CLASS =
+  "text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors";
+
 export function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
-  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
 
   const handleSearchSubmit = () => {
     const q = searchValue.trim();
@@ -27,6 +44,16 @@ export function Header() {
       setSearchValue("");
     }
   };
+
+  /* Active state: exact match, or a path below the destination. Burgundy on soft
+     white is ~9:1, so it carries both the hover and the active state. */
+  const isActive = (href: string) =>
+    href === "/"
+      ? pathname === "/"
+      : pathname === href || pathname.startsWith(`${href}/`);
+
+  const linkClass = (href: string) =>
+    `${NAV_LINK_CLASS} ${isActive(href) ? "text-burgundy" : "text-midnight hover:text-burgundy"}`;
 
   const shopCategories: ShopCategory[] = [
     {
@@ -73,16 +100,10 @@ export function Header() {
     },
   ];
 
-  const navLinks = [
-    { label: "Home", href: "/" },
-    { label: "About", href: "/about" },
-    { label: "Journal", href: "/blog" },
-  ];
-
-  // Apparel is a top level nav item of its own, with the /apparel groups as its
-  // dropdown. The bucket ids come from ~/lib/apparel, which is also what the
-  // /apparel page renders its sections from, so the menu can never drift from
-  // the anchors that exist on the page.
+  // Apparel keeps its /apparel groups as links, folded into the SHOP THE EDITS
+  // dropdown and the mobile drawer. The bucket ids come from ~/lib/apparel, which
+  // is also what the /apparel page renders its sections from, so the menu can
+  // never drift from the anchors that exist on the page.
   const apparelLinks: ShopSubItem[] = [
     { label: "All Apparel", href: "/apparel" },
     ...APPAREL_BUCKETS.map((bucket) => ({
@@ -96,120 +117,104 @@ export function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-50 border-b border-beige/20 bg-cream/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-midnight/10 bg-soft-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
         <a
           href="/"
-          className="font-serif text-2xl font-semibold tracking-tight text-warm-dark sm:text-3xl"
+          className="font-serif text-2xl font-semibold tracking-tight text-midnight transition-colors hover:text-burgundy sm:text-3xl"
         >
           Evergreen House
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden items-center gap-8 md:flex">
-          {/* Home */}
-          <a
-            href="/"
-            className="text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-          >
-            Home
-          </a>
+        <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
+          {NAV_ITEMS.map((item) =>
+            item.href === "/collections" ? (
+              /* SHOP THE EDITS links to /collections and opens the full shop menu
+                 on hover or keyboard focus. The panel is in the DOM even when
+                 closed, so every destination stays crawlable. */
+              <div key={item.href} className="group relative">
+                <a
+                  href={item.href}
+                  className={`${linkClass(item.href)} flex items-center gap-1.5`}
+                  aria-haspopup="true"
+                >
+                  {item.label}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </a>
 
-          {/* Shop dropdown - native <details> works without JS hydration */}
-          <details className="group relative">
-            <summary className="flex cursor-pointer items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta list-none select-none">
-              Shop
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="transition-transform duration-200 group-open:rotate-180"
-              >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </summary>
-
-            <div className="absolute left-0 top-full mt-2 w-[640px] rounded-xl border border-beige/20 bg-white py-6 shadow-lg">
-              <div className="grid grid-cols-4 gap-x-6 px-6">
-                {shopCategories.map((cat) => (
-                  <div key={cat.category}>
-                    <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-taupe">
-                      {cat.category}
-                    </h4>
-                    <ul className="space-y-1">
-                      {cat.items.map((item) => (
-                        <li key={item.label}>
-                          <a
-                            href={item.href}
-                            className="block py-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-                          >
-                            {item.label}
-                          </a>
-                        </li>
+                <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-hover:block group-focus-within:block">
+                  <div className="w-[46rem] max-w-[calc(100vw_-_3rem)] rounded-xl border border-midnight/10 bg-soft-white p-6 shadow-lg shadow-midnight/10">
+                    <div className="grid grid-cols-4 gap-x-6">
+                      {shopCategories.map((cat) => (
+                        <div key={cat.category}>
+                          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-midnight/70">
+                            {cat.category}
+                          </h4>
+                          <ul className="space-y-1">
+                            {cat.items.map((it) => (
+                              <li key={it.label}>
+                                <a
+                                  href={it.href}
+                                  className="block py-1 text-sm font-medium text-midnight/80 transition-colors hover:text-burgundy"
+                                >
+                                  {it.label}
+                                </a>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       ))}
-                    </ul>
+                    </div>
+
+                    <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-midnight/10 pt-4">
+                      <span className="text-xs font-semibold uppercase tracking-wider text-midnight/70">
+                        Apparel
+                      </span>
+                      {apparelLinks.map((it) => (
+                        <a
+                          key={it.label}
+                          href={it.href}
+                          className="rounded-full border border-midnight/15 px-3 py-1 text-xs font-medium text-midnight/80 transition-colors hover:border-burgundy hover:text-burgundy"
+                        >
+                          {it.label}
+                        </a>
+                      ))}
+                      <a
+                        href="/about"
+                        className="ml-auto text-xs font-semibold uppercase tracking-wider text-midnight/70 transition-colors hover:text-burgundy"
+                      >
+                        About
+                      </a>
+                    </div>
                   </div>
-                ))}
+                </div>
               </div>
-            </div>
-          </details>
-
-          {/* Apparel dropdown */}
-          <details className="group relative">
-            <summary className="flex cursor-pointer items-center gap-1 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta list-none select-none">
-              Apparel
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="transition-transform duration-200 group-open:rotate-180"
+            ) : (
+              <a
+                key={item.href}
+                href={item.href}
+                className={linkClass(item.href)}
               >
-                <polyline points="6 9 12 15 18 9" />
-              </svg>
-            </summary>
-
-            <div className="absolute left-0 top-full mt-2 w-[280px] rounded-xl border border-beige/20 bg-white py-4 shadow-lg">
-              <h4 className="mb-2 px-6 text-xs font-semibold uppercase tracking-wider text-taupe">
-                Apparel
-              </h4>
-              <ul className="space-y-1 px-2">
-                {apparelLinks.map((item) => (
-                  <li key={item.label}>
-                    <a
-                      href={item.href}
-                      className="block rounded-lg px-4 py-1.5 text-sm font-medium text-warm-gray transition-colors hover:bg-cream/60 hover:text-terracotta"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </details>
-
-          {/* Remaining nav links (Blog, About, Journal) */}
-          {navLinks.slice(1).map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-            >
-              {link.label}
-            </a>
-          ))}
+                {item.label}
+              </a>
+            ),
+          )}
         </nav>
 
         {/* Right side: search + hamburger */}
@@ -223,7 +228,7 @@ export function Header() {
                   placeholder="Search..."
                   value={searchValue}
                   onChange={(e) => setSearchValue(e.target.value)}
-                  className="w-36 rounded-full border border-beige/50 bg-white px-3 py-1.5 text-sm text-warm-dark placeholder-warm-gray/60 outline-none transition-all focus:w-48 focus:border-beige sm:w-48 sm:focus:w-64"
+                  className="w-36 rounded-full border border-midnight/20 bg-white px-3 py-1.5 text-sm text-midnight placeholder-midnight/50 outline-none transition-all focus:w-48 focus:border-burgundy sm:w-48 sm:focus:w-64"
                   autoFocus
                   onBlur={() => setSearchOpen(false)}
                   onKeyDown={(e) => {
@@ -233,7 +238,7 @@ export function Header() {
                 />
                 <button
                   onClick={handleSearchSubmit}
-                  className="ml-1 rounded-full p-2 text-warm-gray transition-colors hover:text-terracotta"
+                  className="ml-1 rounded-full p-2 text-midnight transition-colors hover:text-burgundy"
                   aria-label="Submit search"
                 >
                   <svg
@@ -255,7 +260,7 @@ export function Header() {
             ) : (
               <button
                 onClick={() => setSearchOpen(true)}
-                className="rounded-full p-2 text-warm-gray transition-colors hover:text-terracotta"
+                className="rounded-full p-2 text-midnight transition-colors hover:text-burgundy"
                 aria-label="Open search"
               >
                 <svg
@@ -279,7 +284,7 @@ export function Header() {
           {/* Mobile hamburger */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="rounded-full p-2 text-warm-gray transition-colors hover:text-terracotta md:hidden"
+            className="rounded-full p-2 text-midnight transition-colors hover:text-burgundy lg:hidden"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
           >
             <svg
@@ -312,26 +317,35 @@ export function Header() {
 
       {/* Mobile menu */}
       {mobileOpen && (
-        <nav className="border-t border-beige/20 bg-cream px-4 pb-4 pt-2 md:hidden">
-          {/* Home */}
-          <a
-            href="/"
-            onClick={() => setMobileOpen(false)}
-            className="block py-2 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-          >
-            Home
-          </a>
+        <nav
+          className="border-t border-midnight/10 bg-soft-white px-4 pb-4 pt-2 lg:hidden"
+          aria-label="Mobile"
+        >
+          {NAV_ITEMS.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              onClick={() => setMobileOpen(false)}
+              className={`block py-2 text-sm font-semibold uppercase tracking-[0.12em] transition-colors ${
+                isActive(item.href)
+                  ? "text-burgundy"
+                  : "text-midnight hover:text-burgundy"
+              }`}
+            >
+              {item.label}
+            </a>
+          ))}
 
           {/* Shop accordion */}
-          <div className="border-t border-beige/20 pt-1">
-            <p className="py-2 text-xs font-semibold uppercase tracking-wider text-taupe">
-              Shop
+          <div className="border-t border-midnight/10 pt-1">
+            <p className="py-2 text-xs font-semibold uppercase tracking-wider text-midnight/70">
+              Shop by
             </p>
             {shopCategories.map((cat) => (
               <div key={cat.category} className="mb-1">
                 <button
                   onClick={() => toggleCategory(cat.category)}
-                  className="flex w-full items-center justify-between py-2 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
+                  className="flex w-full items-center justify-between py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
                   aria-expanded={expandedCategories[cat.category] || false}
                 >
                   <span>{cat.category}</span>
@@ -352,14 +366,14 @@ export function Header() {
                 </button>
                 {expandedCategories[cat.category] && (
                   <div className="ml-4 space-y-0.5 pb-1">
-                    {cat.items.map((item) => (
+                    {cat.items.map((it) => (
                       <a
-                        key={item.label}
-                        href={item.href}
+                        key={it.label}
+                        href={it.href}
                         onClick={() => setMobileOpen(false)}
-                        className="block py-1.5 text-sm text-warm-gray/80 transition-colors hover:text-terracotta"
+                        className="block py-1.5 text-sm text-midnight/80 transition-colors hover:text-burgundy"
                       >
-                        {item.label}
+                        {it.label}
                       </a>
                     ))}
                   </div>
@@ -369,10 +383,10 @@ export function Header() {
           </div>
 
           {/* Apparel accordion */}
-          <div className="border-t border-beige/20 pt-1">
+          <div className="border-t border-midnight/10 pt-1">
             <button
               onClick={() => toggleCategory("Apparel")}
-              className="flex w-full items-center justify-between py-2 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
+              className="flex w-full items-center justify-between py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
               aria-expanded={expandedCategories["Apparel"] || false}
             >
               <span>Apparel</span>
@@ -393,32 +407,29 @@ export function Header() {
             </button>
             {expandedCategories["Apparel"] && (
               <div className="ml-4 space-y-0.5 pb-1">
-                {apparelLinks.map((item) => (
+                {apparelLinks.map((it) => (
                   <a
-                    key={item.label}
-                    href={item.href}
+                    key={it.label}
+                    href={it.href}
                     onClick={() => setMobileOpen(false)}
-                    className="block py-1.5 text-sm text-warm-gray/80 transition-colors hover:text-terracotta"
+                    className="block py-1.5 text-sm text-midnight/80 transition-colors hover:text-burgundy"
                   >
-                    {item.label}
+                    {it.label}
                   </a>
                 ))}
               </div>
             )}
           </div>
 
-          {/* Remaining links (Blog, About, Journal) */}
-          <div className="border-t border-beige/20 pt-1">
-            {navLinks.slice(1).map((link) => (
-              <a
-                key={link.label}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="block py-2 text-sm font-medium text-warm-gray transition-colors hover:text-terracotta"
-              >
-                {link.label}
-              </a>
-            ))}
+          {/* About lives in the SHOP THE EDITS dropdown and the footer now */}
+          <div className="border-t border-midnight/10 pt-1">
+            <a
+              href="/about"
+              onClick={() => setMobileOpen(false)}
+              className="block py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
+            >
+              About
+            </a>
           </div>
         </nav>
       )}
