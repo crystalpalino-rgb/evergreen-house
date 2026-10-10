@@ -11,6 +11,16 @@
   --color-sage-dark: #6d7c67;
   --color-warm-dark: #3d322c;
   --color-warm-gray: #6b5e55;
+  /* Owner palette (2026-10-10 conversion mandate).
+     Used by the shared product card: midnight navy leads the primary CTA,
+     burgundy carries the small editorial label, antique gold is the hairline
+     accent, soft white is the product-photo plate. */
+  --color-midnight: #1c2439;
+  --color-midnight-deep: #121a2c;
+  --color-burgundy: #6d2436;
+  --color-burgundy-deep: #521b29;
+  --color-antique-gold: #b3924f;
+  --color-soft-white: #fdfbf7;
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
 }
