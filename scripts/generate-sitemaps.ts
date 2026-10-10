@@ -150,6 +150,11 @@ async function main() {
       priority: "0.7",
       changefreq: "monthly",
     },
+    {
+      loc: "/blog/how-to-make-your-bed-look-expensive",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
 
