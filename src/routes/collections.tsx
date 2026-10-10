@@ -1,7 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useMatches } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { EditCard } from "~/components/EditCard";
+import { EDITS } from "~/lib/edits";
 import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
@@ -122,6 +124,12 @@ function CollectionCard({ col }: { col: Collection & { productCount: number } })
 function CollectionsPage() {
   const { roomCollections, styleCollections, otherCollections } =
     Route.useLoaderData();
+  /* /collections is also the parent of /collections/<edit-slug>. When an edit
+     page is matched, this index renders only the outlet. */
+  const matches = useMatches();
+  if (matches.some((m) => m.routeId === "/collections/$editSlug")) {
+    return <Outlet />;
+  }
 
   return (
     <>
@@ -178,6 +186,24 @@ function CollectionsPage() {
 
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            {/* Curated edits (the SHOP THE EDITS destination) first: these are
+                the four editorial collections the nav points at. */}
+            <div className="mb-14">
+              <h2 className="mb-6 font-serif text-2xl font-semibold text-warm-dark">
+                Shop the Edits
+              </h2>
+              <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+                {EDITS.map((edit, i) => (
+                  <EditCard
+                    key={edit.slug}
+                    edit={edit}
+                    eager={i === 0}
+                    showCount
+                  />
+                ))}
+              </div>
+            </div>
+
             {/* Room collections */}
             {roomCollections.length > 0 && (
               <div className="mb-14">

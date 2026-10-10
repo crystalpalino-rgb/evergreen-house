@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Hero } from "~/components/Hero";
+import { ShopTheEdits } from "~/components/ShopTheEdits";
 import { TrendingProducts } from "~/components/TrendingProducts";
 import { ShopTheLook } from "~/components/ShopTheLook";
-import { FeaturedStory } from "~/components/FeaturedStory";
 import { BrowseByRoom } from "~/components/BrowseByRoom";
+import { FromTheJournal } from "~/components/FromTheJournal";
 import { EmailSignup } from "~/components/EmailSignup";
 import { Footer } from "~/components/Footer";
 import { getAllProducts, getTrendingProducts } from "~/lib/intelligence";
@@ -96,11 +97,15 @@ function Home() {
             </a>
           </p>
         </div>
+        {/* Owner-approved homepage hierarchy, top to bottom:
+            1 hero, 2 shop the edits, 3 trending finds, 4 shop the look,
+            5 explore by room, 6 from the journal, 7 email signup. */}
         <Hero concept={heroConcept} />
-        <BrowseByRoom />
-        <ShopTheLook products={products} collections={[]} />
+        <ShopTheEdits />
         <TrendingProducts products={trending} />
-        <FeaturedStory />
+        <ShopTheLook products={products} collections={[]} />
+        <BrowseByRoom />
+        <FromTheJournal />
         <EmailSignup />
       </main>
       <Footer />

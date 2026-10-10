@@ -31,7 +31,7 @@ const curatedCollections: CuratedCollection[] = [
       "Warm gatherings, cozy nights, and thoughtful details for the season.",
     description:
       "From candlelit tables to plush throws, this edit is everything we reach for when the house feels festive and calm at once.",
-    imageUrl: "/images/seasonal.jpg",
+    imageUrl: "/images/seasonal-finds.jpg",
     gradient: "linear-gradient(135deg, #1f3a2c 0%, #2f5540 55%, #e6dcc6 100%)",
     href: "/collection/holiday",
     ctaLabel: "Shop Holiday",
@@ -112,14 +112,14 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
   return (
     <section className="py-8 sm:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
-          Inspired Spaces
+        <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+          Shop the Look
         </h2>
-        <p className="mt-3 text-center text-warm-gray">
-          Explore beautifully curated rooms and shop every piece that brings the space together.
+        <p className="mt-2 text-sm text-warm-gray sm:text-base">
+          Complete rooms, shoppable piece by piece.
         </p>
 
-        <div className="mt-10 space-y-10">
+        <div className="mt-6 space-y-8">
           {curatedCollections.map((collection) => {
             let collectionProducts: Product[];
 
@@ -187,21 +187,18 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                   </div>
                   {/* Content */}
                   <div className="p-6 lg:col-span-3 lg:p-8">
-                    <h3 className="font-serif text-2xl font-semibold text-warm-dark">
+                    <h3 className="font-serif text-lg font-semibold text-warm-dark sm:text-xl">
                       {collection.name}
                     </h3>
-                    <p className="mt-2 text-warm-gray">{collection.subtitle}</p>
-                    {collection.description && (
-                      <p className="mt-4 text-sm leading-relaxed text-warm-gray/80 max-w-prose">
-                        {collection.description}
-                      </p>
-                    )}
+                    <p className="mt-1.5 text-sm text-warm-gray">
+                      {collection.subtitle}
+                    </p>
                     <AnalyticsList
                       id={`shop-the-look-${collection.id}`}
                       name={collection.name}
                       items={collectionProducts}
                     >
-                      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
                         {collectionProducts.map((product) => (
                           <ProductCard key={`coll-${product.id}`} product={product} />
                         ))}
