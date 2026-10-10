@@ -8,8 +8,8 @@
       "headline": "Velvet, tartan and candlelight, gathered the way a house remembers it",
       "intro": "This is the Christmas a house inherits: deep green velvet, tartan wool, brass and candlelight, arranged around an evergreen mantel. Every piece is chosen to look collected over decades rather than bought in one season.",
       "art_note": "Living room at dusk, low warm lamp and candle glow, cream velvet seating, deep green tartan wool throw across the arm, cedar garland along a dark wood mantel, brass hurricane holders, one brass bell at the door, evergreen and burgundy palette, natural light fading, linen and wool textures, real lived-in room, no people, no text.",
-      "hero_image": "/images/edit-heritage-christmas-edit-hero",
-      "card_image": "/images/edit-heritage-christmas-edit-card",
+      "hero_image": "/images/edit-heritage-christmas-edit-hero-light",
+      "card_image": "/images/edit-heritage-christmas-edit-card-light",
       "items": [
         {
           "id": 259,
@@ -115,8 +115,8 @@
       "headline": "The softest room in the house, dressed for December",
       "intro": "A Christmas bedroom should feel like the warmest corner of the house, which means brushed flannel, faux fur and low lamplight rather than tinsel. Layer these across a bed and a bedside table and the season arrives at bedtime too.",
       "art_note": "Bedroom at night, unmade bed with cream faux fur throw over the foot, charcoal flannel bedding, olive knit throw, two cream cushions, warm pool of lamplight on a wooden nightstand, flameless candles in the window, tartan and cream palette, quiet and intimate, no people, no text.",
-      "hero_image": "/images/edit-cozy-christmas-bedroom-edit-hero",
-      "card_image": "/images/edit-cozy-christmas-bedroom-edit-card",
+      "hero_image": "/images/edit-cozy-christmas-bedroom-edit-hero-light",
+      "card_image": "/images/edit-cozy-christmas-bedroom-edit-card-light",
       "items": [
         {
           "id": 478,
@@ -214,8 +214,8 @@
       "headline": "Everything a host reaches for between November and January",
       "intro": "Hosting is a table that is already set before anyone arrives: holly banded china, a pitcher big enough for the whole table, glassware that survives the dishwasher. These are the pieces that make a Christmas dinner feel effortless.",
       "art_note": "Dining table set for a Christmas dinner, holly banded white plates, a large glass pitcher of eggnog, tree shaped wooden charcuterie platter, tall walnut candlesticks with burning tapers, clear votive glasses in a row, stemless wine glasses, brass and deep green accents, warm overhead glow, linen runner, no people, no text.",
-      "hero_image": "/images/edit-holiday-hosting-edit-hero",
-      "card_image": "/images/edit-holiday-hosting-edit-card",
+      "hero_image": "/images/edit-holiday-hosting-edit-hero-light",
+      "card_image": "/images/edit-holiday-hosting-edit-card-light",
       "items": [
         {
           "id": 482,
@@ -321,8 +321,8 @@
       "headline": "A tree dressed properly, from the skirt to the last ornament",
       "intro": "Start with the tree and the skirt, then add garland and ornaments until the light reads warm from the doorway. Nothing here needs a theme, only restraint and better materials.",
       "art_note": "A slender cypress tree in a woven basket, cream cable knit tree skirt, champagne and pearl ornaments, two lit cedar garlands, sage velvet cone trees on a console, rusty metal deer, a full pine and cedar wreath on the door, warm fireplace light, cream and deep green palette, no people, no text.",
-      "hero_image": "/images/edit-luxe-christmas-tree-edit-hero",
-      "card_image": "/images/edit-luxe-christmas-tree-edit-card",
+      "hero_image": "/images/edit-luxe-christmas-tree-edit-hero-light",
+      "card_image": "/images/edit-luxe-christmas-tree-edit-card-light",
       "items": [
         {
           "id": 434,

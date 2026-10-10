@@ -31,10 +31,10 @@ interface HeroConcept {
 const HERO_CONCEPTS: Record<string, HeroConcept> = {
   a: {
     id: "a",
-    desktopWebp: "/images/hero-a-heritage-desktop.webp",
-    desktopJpg: "/images/hero-a-heritage-desktop.jpg",
-    mobileWebp: "/images/hero-a-heritage-mobile.webp",
-    mobileJpg: "/images/hero-a-heritage-mobile.jpg",
+    desktopWebp: "/images/hero-a-heritage-desktop-light.webp",
+    desktopJpg: "/images/hero-a-heritage-desktop-light.jpg",
+    mobileWebp: "/images/hero-a-heritage-mobile-light.webp",
+    mobileJpg: "/images/hero-a-heritage-mobile-light.jpg",
     tone: "light",
     scrim: "light",
     alt: "Heirloom holiday drawing room with an oxblood velvet sofa, tartan throw, brass candlesticks and a lit stone fireplace under an evergreen garland",
@@ -123,7 +123,12 @@ export function Hero({ concept = DEFAULT_HERO_CONCEPT }: { concept?: string }) {
         </>
       )}
 
-      <div className="relative mx-auto flex min-h-[620px] max-w-7xl flex-col justify-start px-4 pb-12 pt-14 sm:min-h-[600px] sm:px-6 sm:pt-16 lg:min-h-[680px] lg:px-8 lg:pt-24">
+      {/* Band height. On a phone the hero is capped so the headline, the CTA and
+          the top of SHOP THE EDITS are all reachable without scrolling past a
+          full screen of artwork: 58vh, with a 360px floor (short viewports) and a
+          520px ceiling (very tall ones). From sm up the band goes back to its
+          content driven height, unchanged. */}
+      <div className="relative mx-auto flex h-[58vh] max-h-[520px] min-h-[360px] w-full max-w-7xl flex-col justify-start px-4 pb-8 pt-8 sm:h-auto sm:max-h-none sm:min-h-[600px] sm:px-6 sm:pb-12 sm:pt-16 lg:min-h-[680px] lg:px-8 lg:pt-24">
         {/* The headline block lives in the left third and stays top anchored:
             the upper two thirds are the calm zone of all three crops. */}
         <div className="w-full max-w-[24rem] sm:max-w-[25rem] lg:max-w-[28rem]">
@@ -137,18 +142,18 @@ export function Hero({ concept = DEFAULT_HERO_CONCEPT }: { concept?: string }) {
           </p>
 
           <h1
-            className={`mt-4 font-serif text-[2.1rem] font-semibold leading-[1.08] sm:mt-5 sm:text-5xl lg:text-[3.4rem] ${headlineClass}`}
+            className={`mt-3 font-serif text-[2.1rem] font-semibold leading-[1.08] sm:mt-5 sm:text-5xl lg:text-[3.4rem] ${headlineClass}`}
           >
             A Season, Beautifully Collected.
           </h1>
 
           <p
-            className={`mt-4 text-base leading-relaxed sm:mt-5 sm:text-lg ${subClass}`}
+            className={`mt-3 text-base leading-relaxed sm:mt-5 sm:text-lg ${subClass}`}
           >
             Timeless finds for a home worth coming back to.
           </p>
 
-          <div className="mt-7">
+          <div className="mt-5 sm:mt-7">
             <a
               href="/collection/holiday"
               className="inline-block w-full rounded-full bg-burgundy px-8 py-3.5 text-center text-sm font-semibold uppercase tracking-[0.12em] text-soft-white shadow-sm transition-colors hover:bg-burgundy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-antique-gold focus-visible:ring-offset-2 focus-visible:ring-offset-midnight sm:w-auto"

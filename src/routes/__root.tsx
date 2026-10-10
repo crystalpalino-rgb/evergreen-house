@@ -90,7 +90,7 @@ export const Route = createRootRoute({
       {
         rel: "preload",
         as: "image",
-        href: "/images/hero-a-heritage-desktop.webp",
+        href: "/images/hero-a-heritage-desktop-light.webp",
         type: "image/webp",
         fetchpriority: "high",
       },
