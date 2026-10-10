@@ -1,5 +1,6 @@
 import type { Product } from "~/lib/types";
 import { ProductCard } from "./ProductCard";
+import { AnalyticsList } from "./AnalyticsList";
 
 interface ShopTheLookProps {
   products: Product[];
@@ -195,11 +196,17 @@ export function ShopTheLook({ products: dbProducts, collections: _dbCollections 
                         {collection.description}
                       </p>
                     )}
-                    <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                      {collectionProducts.map((product) => (
-                        <ProductCard key={`coll-${product.id}`} product={product} />
-                      ))}
-                    </div>
+                    <AnalyticsList
+                      id={`shop-the-look-${collection.id}`}
+                      name={collection.name}
+                      items={collectionProducts}
+                    >
+                      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+                        {collectionProducts.map((product) => (
+                          <ProductCard key={`coll-${product.id}`} product={product} />
+                        ))}
+                      </div>
+                    </AnalyticsList>
                     <a
                       href={
                         collection.href ??

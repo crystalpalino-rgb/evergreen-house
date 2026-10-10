@@ -2,6 +2,7 @@ import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
+import { AnalyticsList } from "~/components/AnalyticsList";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getProductsByRoom } from "~/lib/intelligence";
 import { generateRoomMetadata } from "~/lib/seo";
@@ -265,9 +266,11 @@ function RoomPage() {
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {products.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {products.map((product) => (<ProductCard key={product.id} product={product} />))}
-              </div>
+              <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {products.map((product) => (<ProductCard key={product.id} product={product} />))}
+                </div>
+              </AnalyticsList>
             ) : (
               <div className="py-10 text-center">
                 <p className="text-lg text-warm-gray">No products found for this room yet.</p>

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
+import { AnalyticsList } from "~/components/AnalyticsList";
 import { ProductFilters } from "~/components/ProductFilters";
 import { searchProducts, getFilterOptions } from "~/lib/intelligence";
 import type { ProductFilters as PFilters } from "~/lib/intelligence";
@@ -196,11 +197,13 @@ function SearchPage() {
                   </div>
                 ) : results.length > 0 ? (
                   <>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                      {results.map((product) => (
-                        <ProductCard key={product.id} product={product} />
-                      ))}
-                    </div>
+                    <AnalyticsList id="search-results" name={query ? `Search: ${query}` : "Search results"} items={results}>
+                      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                        {results.map((product) => (
+                          <ProductCard key={product.id} product={product} />
+                        ))}
+                      </div>
+                    </AnalyticsList>
                     {/* Pagination */}
                     {totalPages > 1 && (
                       <div className="mt-8 flex items-center justify-center gap-2">

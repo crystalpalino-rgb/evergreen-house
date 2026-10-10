@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductCard } from "~/components/ProductCard";
+import { AnalyticsList } from "~/components/AnalyticsList";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { sql } from "~/db";
@@ -58,7 +59,7 @@ function LifestyleSlugPage() {
         </section>
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {products.length > 0 ? (<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div>) : (<div className="py-16 text-center"><p className="text-lg text-warm-gray">No products found for this lifestyle yet.</p><a href="/lifestyle" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all lifestyles →</a></div>)}
+            {products.length > 0 ? (<AnalyticsList id={`lifestyle-${slug}`} name={`${label} lifestyle`} items={products}><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div></AnalyticsList>) : (<div className="py-16 text-center"><p className="text-lg text-warm-gray">No products found for this lifestyle yet.</p><a href="/lifestyle" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all lifestyles →</a></div>)}
           </div>
         </section>
       </main>

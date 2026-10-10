@@ -1,10 +1,13 @@
 import type { Product } from "~/lib/types";
 import { ProductCard } from "./ProductCard";
+import { AnalyticsList } from "./AnalyticsList";
 
 export function TrendingProducts({ products }: { products: Product[] }) {
   if (products.length === 0) {
     return null;
   }
+
+  const shown = products.slice(0, 6);
 
   return (
     <section className="bg-cream-dark py-8 sm:py-12">
@@ -15,11 +18,13 @@ export function TrendingProducts({ products }: { products: Product[] }) {
         <p className="mt-3 text-center text-warm-gray">
           Newest discoveries and favorite recommendations
         </p>
-        <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
-          {products.slice(0, 6).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <AnalyticsList id="crystals-edit" name="Crystal's Edit" items={shown}>
+          <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-3">
+            {shown.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </AnalyticsList>
       </div>
     </section>
   );
