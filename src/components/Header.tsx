@@ -12,19 +12,77 @@ interface ShopCategory {
   items: ShopSubItem[];
 }
 
-/* Approved top level nav (owner, 2026-10-10). Labels render uppercase; they are
-   written uppercase here so the rendered markup matches the approved order
-   exactly: HOME | SHOP THE EDITS | BY ROOM | HOLIDAY | JOURNAL. */
+/* Approved simplified top level nav (owner, 2026-10-10): exactly three items.
+   The logo is the way home, Journal, About, Contact and the policy page live in
+   the footer, and every other destination is reachable from the two dropdowns
+   below and from the mobile drawer. */
 const NAV_ITEMS = [
-  { label: "HOME", href: "/" },
   { label: "SHOP THE EDITS", href: "/collections" },
   { label: "BY ROOM", href: "/rooms" },
   { label: "HOLIDAY", href: "/collection/holiday" },
-  { label: "JOURNAL", href: "/blog" },
 ];
 
 const NAV_LINK_CLASS =
   "text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors";
+
+/* All ten rooms. The dropdown is the only home these need now that BY ROOM is a
+   top level item, so it must stay complete. */
+const ROOM_ITEMS: ShopSubItem[] = [
+  { label: "Living Room", href: "/room/living-room" },
+  { label: "Bedroom", href: "/room/bedroom" },
+  { label: "Kitchen", href: "/room/kitchen" },
+  { label: "Bathroom", href: "/room/bathroom" },
+  { label: "Dining Room", href: "/room/dining-room" },
+  { label: "Home Office", href: "/room/office" },
+  { label: "Entryway", href: "/room/entryway" },
+  { label: "Outdoor", href: "/room/patio" },
+  { label: "Laundry Room", href: "/room/laundry" },
+  { label: "Pantry", href: "/room/pantry" },
+];
+
+const SHOP_CATEGORIES: ShopCategory[] = [
+  {
+    category: "By Season",
+    items: [
+      { label: "Holiday", href: "/collection/holiday" },
+      { label: "Fall", href: "/collection/fall" },
+      { label: "Spring", href: "/collection/spring" },
+      { label: "Summer", href: "/collection/summer" },
+    ],
+  },
+  {
+    category: "By Style",
+    items: [
+      { label: "Organic Modern", href: "/style/modern" },
+      { label: "Minimalist & Modern", href: "/style/minimalist" },
+      { label: "Everyday Luxury", href: "/style/glam" },
+      { label: "Cozy Style", href: "/style/cozy" },
+    ],
+  },
+  {
+    category: "By Lifestyle",
+    items: [
+      { label: "Small Space Living", href: "/lifestyle/small-spaces" },
+      { label: "Organization", href: "/lifestyle/organization" },
+      { label: "Hosting", href: "/lifestyle/hosting" },
+      { label: "Work From Home", href: "/lifestyle/work-from-home" },
+    ],
+  },
+];
+
+/* Apparel keeps its /apparel groups as links, folded into the SHOP THE EDITS
+   dropdown and the mobile drawer. The bucket ids come from ~/lib/apparel, which
+   is also what the /apparel page renders its sections from, so the menu can
+   never drift from the anchors that exist on the page. */
+const APPAREL_LINKS: ShopSubItem[] = [
+  { label: "All Apparel", href: "/apparel" },
+  ...APPAREL_BUCKETS.map((bucket) => ({
+    label: bucket.label,
+    href: `/apparel#${bucket.id}`,
+  })),
+];
+
+const DROPDOWN_KEYS = ["SHOP THE EDITS", "BY ROOM"] as const;
 
 export function Header() {
   const navigate = useNavigate();
@@ -45,72 +103,13 @@ export function Header() {
     }
   };
 
-  /* Active state: exact match, or a path below the destination. Burgundy on soft
-     white is ~9:1, so it carries both the hover and the active state. */
+  /* Active state: exact match, or a path below the destination. Oxblood on soft
+     white is 11.6:1, so it carries both the hover and the active state. */
   const isActive = (href: string) =>
-    href === "/"
-      ? pathname === "/"
-      : pathname === href || pathname.startsWith(`${href}/`);
+    pathname === href || pathname.startsWith(`${href}/`);
 
   const linkClass = (href: string) =>
     `${NAV_LINK_CLASS} ${isActive(href) ? "text-burgundy" : "text-midnight hover:text-burgundy"}`;
-
-  const shopCategories: ShopCategory[] = [
-    {
-      category: "By Room",
-      items: [
-        { label: "Living Room", href: "/room/living-room" },
-        { label: "Bedroom", href: "/room/bedroom" },
-        { label: "Kitchen", href: "/room/kitchen" },
-        { label: "Bathroom", href: "/room/bathroom" },
-        { label: "Dining Room", href: "/room/dining-room" },
-        { label: "Home Office", href: "/room/office" },
-        { label: "Entryway", href: "/room/entryway" },
-        { label: "Outdoor", href: "/room/patio" },
-        { label: "Laundry Room", href: "/room/laundry" },
-        { label: "Pantry", href: "/room/pantry" },
-      ],
-    },
-    {
-      category: "By Season",
-      items: [
-        { label: "Holiday", href: "/collection/holiday" },
-        { label: "Fall", href: "/collection/fall" },
-        { label: "Spring", href: "/collection/spring" },
-        { label: "Summer", href: "/collection/summer" },
-      ],
-    },
-    {
-      category: "By Style",
-      items: [
-        { label: "Organic Modern", href: "/style/modern" },
-        { label: "Minimalist & Modern", href: "/style/minimalist" },
-        { label: "Everyday Luxury", href: "/style/glam" },
-        { label: "Cozy Style", href: "/style/cozy" },
-      ],
-    },
-    {
-      category: "By Lifestyle",
-      items: [
-        { label: "Small Space Living", href: "/lifestyle/small-spaces" },
-        { label: "Organization", href: "/lifestyle/organization" },
-        { label: "Hosting", href: "/lifestyle/hosting" },
-        { label: "Work From Home", href: "/lifestyle/work-from-home" },
-      ],
-    },
-  ];
-
-  // Apparel keeps its /apparel groups as links, folded into the SHOP THE EDITS
-  // dropdown and the mobile drawer. The bucket ids come from ~/lib/apparel, which
-  // is also what the /apparel page renders its sections from, so the menu can
-  // never drift from the anchors that exist on the page.
-  const apparelLinks: ShopSubItem[] = [
-    { label: "All Apparel", href: "/apparel" },
-    ...APPAREL_BUCKETS.map((bucket) => ({
-      label: bucket.label,
-      href: `/apparel#${bucket.id}`,
-    })),
-  ];
 
   const toggleCategory = (cat: string) => {
     setExpandedCategories((prev) => ({ ...prev, [cat]: !prev[cat] }));
@@ -119,7 +118,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 border-b border-midnight/10 bg-soft-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-        {/* Logo */}
+        {/* Logo is the way home now that HOME left the nav */}
         <a
           href="/"
           className="font-serif text-2xl font-semibold tracking-tight text-midnight transition-colors hover:text-burgundy sm:text-3xl"
@@ -129,11 +128,29 @@ export function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Main">
-          {NAV_ITEMS.map((item) =>
-            item.href === "/collections" ? (
-              /* SHOP THE EDITS links to /collections and opens the full shop menu
-                 on hover or keyboard focus. The panel is in the DOM even when
-                 closed, so every destination stays crawlable. */
+          {NAV_ITEMS.map((item) => {
+            const hasDropdown = (DROPDOWN_KEYS as readonly string[]).includes(
+              item.label,
+            );
+
+            if (!hasDropdown) {
+              return (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className={linkClass(item.href)}
+                >
+                  {item.label}
+                </a>
+              );
+            }
+
+            const isShop = item.label === "SHOP THE EDITS";
+
+            return (
+              /* Both dropdown items link to their own index page and open the
+                 full menu on hover or keyboard focus. The panel is in the DOM
+                 even when closed, so every destination stays crawlable. */
               <div key={item.href} className="group relative">
                 <a
                   href={item.href}
@@ -159,62 +176,80 @@ export function Header() {
                 </a>
 
                 <div className="absolute left-1/2 top-full hidden -translate-x-1/2 pt-3 group-hover:block group-focus-within:block">
-                  <div className="w-[46rem] max-w-[calc(100vw_-_3rem)] rounded-xl border border-midnight/10 bg-soft-white p-6 shadow-lg shadow-midnight/10">
-                    <div className="grid grid-cols-4 gap-x-6">
-                      {shopCategories.map((cat) => (
-                        <div key={cat.category}>
-                          <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-midnight/70">
-                            {cat.category}
-                          </h4>
-                          <ul className="space-y-1">
-                            {cat.items.map((it) => (
-                              <li key={it.label}>
-                                <a
-                                  href={it.href}
-                                  className="block py-1 text-sm font-medium text-midnight/80 transition-colors hover:text-burgundy"
-                                >
-                                  {it.label}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      ))}
-                    </div>
+                  {isShop ? (
+                    <div className="w-[42rem] max-w-[calc(100vw_-_3rem)] rounded-xl border border-midnight/10 bg-soft-white p-6 shadow-lg shadow-midnight/10">
+                      <div className="grid grid-cols-3 gap-x-6">
+                        {SHOP_CATEGORIES.map((cat) => (
+                          <div key={cat.category}>
+                            <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-burgundy">
+                              {cat.category}
+                            </h4>
+                            <ul className="space-y-1">
+                              {cat.items.map((it) => (
+                                <li key={it.label}>
+                                  <a
+                                    href={it.href}
+                                    className="block py-1 text-sm font-medium text-midnight/80 transition-colors hover:text-burgundy"
+                                  >
+                                    {it.label}
+                                  </a>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        ))}
+                      </div>
 
-                    <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-midnight/10 pt-4">
-                      <span className="text-xs font-semibold uppercase tracking-wider text-midnight/70">
-                        Apparel
-                      </span>
-                      {apparelLinks.map((it) => (
+                      <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-2 border-t border-midnight/10 pt-4">
+                        <span className="text-xs font-semibold uppercase tracking-wider text-burgundy">
+                          Apparel
+                        </span>
+                        {APPAREL_LINKS.map((it) => (
+                          <a
+                            key={it.label}
+                            href={it.href}
+                            className="rounded-full border border-midnight/15 px-3 py-1 text-xs font-medium text-midnight/80 transition-colors hover:border-burgundy hover:text-burgundy"
+                          >
+                            {it.label}
+                          </a>
+                        ))}
                         <a
-                          key={it.label}
-                          href={it.href}
-                          className="rounded-full border border-midnight/15 px-3 py-1 text-xs font-medium text-midnight/80 transition-colors hover:border-burgundy hover:text-burgundy"
+                          href="/about"
+                          className="ml-auto text-xs font-semibold uppercase tracking-wider text-midnight/70 transition-colors hover:text-burgundy"
                         >
-                          {it.label}
+                          About
                         </a>
-                      ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="w-[24rem] max-w-[calc(100vw_-_3rem)] rounded-xl border border-midnight/10 bg-soft-white p-6 shadow-lg shadow-midnight/10">
+                      <h4 className="mb-2 text-xs font-semibold uppercase tracking-wider text-burgundy">
+                        By Room
+                      </h4>
+                      <ul className="grid grid-cols-2 gap-x-6 gap-y-1">
+                        {ROOM_ITEMS.map((it) => (
+                          <li key={it.label}>
+                            <a
+                              href={it.href}
+                              className="block py-1 text-sm font-medium text-midnight/80 transition-colors hover:text-burgundy"
+                            >
+                              {it.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
                       <a
-                        href="/about"
-                        className="ml-auto text-xs font-semibold uppercase tracking-wider text-midnight/70 transition-colors hover:text-burgundy"
+                        href="/rooms"
+                        className="mt-4 inline-block border-t border-midnight/10 pt-3 text-xs font-semibold uppercase tracking-wider text-midnight/70 transition-colors hover:text-burgundy"
                       >
-                        About
+                        All Rooms
                       </a>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
-            ) : (
-              <a
-                key={item.href}
-                href={item.href}
-                className={linkClass(item.href)}
-              >
-                {item.label}
-              </a>
-            ),
-          )}
+            );
+          })}
         </nav>
 
         {/* Right side: search + hamburger */}
@@ -315,10 +350,11 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu: the three top level items, then every destination the
+          dropdowns carry on desktop, then the footer-only pages. */}
       {mobileOpen && (
         <nav
-          className="border-t border-midnight/10 bg-soft-white px-4 pb-4 pt-2 lg:hidden"
+          className="max-h-[calc(100vh_-_5rem)] overflow-y-auto border-t border-midnight/10 bg-soft-white px-4 pb-6 pt-2 lg:hidden"
           aria-label="Mobile"
         >
           {NAV_ITEMS.map((item) => (
@@ -336,12 +372,51 @@ export function Header() {
             </a>
           ))}
 
+          {/* Rooms accordion */}
+          <div className="border-t border-midnight/10 pt-1">
+            <button
+              onClick={() => toggleCategory("By Room")}
+              className="flex w-full items-center justify-between py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
+              aria-expanded={expandedCategories["By Room"] || false}
+            >
+              <span>By Room</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className={`transition-transform duration-200 ${expandedCategories["By Room"] ? "rotate-180" : ""}`}
+              >
+                <polyline points="6 9 12 15 18 9" />
+              </svg>
+            </button>
+            {expandedCategories["By Room"] && (
+              <div className="ml-4 space-y-0.5 pb-1">
+                {ROOM_ITEMS.map((it) => (
+                  <a
+                    key={it.label}
+                    href={it.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-1.5 text-sm text-midnight/80 transition-colors hover:text-burgundy"
+                  >
+                    {it.label}
+                  </a>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Shop accordion */}
           <div className="border-t border-midnight/10 pt-1">
-            <p className="py-2 text-xs font-semibold uppercase tracking-wider text-midnight/70">
+            <p className="py-2 text-xs font-semibold uppercase tracking-wider text-burgundy">
               Shop by
             </p>
-            {shopCategories.map((cat) => (
+            {SHOP_CATEGORIES.map((cat) => (
               <div key={cat.category} className="mb-1">
                 <button
                   onClick={() => toggleCategory(cat.category)}
@@ -407,7 +482,7 @@ export function Header() {
             </button>
             {expandedCategories["Apparel"] && (
               <div className="ml-4 space-y-0.5 pb-1">
-                {apparelLinks.map((it) => (
+                {APPAREL_LINKS.map((it) => (
                   <a
                     key={it.label}
                     href={it.href}
@@ -421,15 +496,22 @@ export function Header() {
             )}
           </div>
 
-          {/* About lives in the SHOP THE EDITS dropdown and the footer now */}
+          {/* Pages that moved out of the top level nav */}
           <div className="border-t border-midnight/10 pt-1">
-            <a
-              href="/about"
-              onClick={() => setMobileOpen(false)}
-              className="block py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
-            >
-              About
-            </a>
+            {[
+              { label: "About", href: "/about" },
+              { label: "Journal", href: "/blog" },
+              { label: "Contact", href: "/contact" },
+            ].map((it) => (
+              <a
+                key={it.label}
+                href={it.href}
+                onClick={() => setMobileOpen(false)}
+                className="block py-2 text-sm font-medium text-midnight transition-colors hover:text-burgundy"
+              >
+                {it.label}
+              </a>
+            ))}
           </div>
         </nav>
       )}

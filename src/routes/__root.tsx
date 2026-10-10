@@ -85,11 +85,12 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap",
       },
-      // Preload LCP hero image for homepage (above-the-fold background image)
+      // Preload LCP hero image for homepage (above-the-fold background image).
+      // Concept A is the default hero, so the preload matches / out of the box.
       {
         rel: "preload",
         as: "image",
-        href: "/images/holiday-edit-hero-2026.webp",
+        href: "/images/hero-a-heritage-desktop.webp",
         type: "image/webp",
         fetchpriority: "high",
       },

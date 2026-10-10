@@ -1,64 +1,66 @@
 export function Footer() {
   return (
-    <footer className="border-t border-beige/20 bg-warm-dark text-cream-dark">
+    <footer className="border-t border-soft-white/10 bg-midnight text-soft-white">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
             <a
               href="/"
-              className="font-serif text-xl font-semibold tracking-tight text-cream"
+              className="font-serif text-xl font-semibold tracking-tight text-soft-white"
             >
               Evergreen House
             </a>
-            <p className="mt-3 text-sm text-beige/70">
+            <p className="mt-3 text-sm text-soft-white/70">
               Timeless home collections, thoughtfully curated for every room.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="font-serif text-sm font-semibold text-cream">
+            <h3 className="font-serif text-sm font-semibold text-soft-white">
               Shop
             </h3>
             <ul className="mt-3 space-y-2">
               {[
                 { label: "Living Room", href: "/room/living-room" },
                 { label: "Bedroom", href: "/room/bedroom" },
-                { label: "Apparel", href: "/apparel" },
                 { label: "Kitchen", href: "/room/kitchen" },
                 { label: "Bathroom", href: "/room/bathroom" },
-                { label: "Patio", href: "/room/patio" },
-              ].map(
-                (room) => (
-                  <li key={room.label}>
-                    <a
-                      href={room.href}
-                      className="text-sm text-beige/70 transition-colors hover:text-cream"
-                    >
-                      {room.label}
-                    </a>
-                  </li>
-                )
-              )}
+                { label: "Outdoor", href: "/room/patio" },
+                { label: "Apparel", href: "/apparel" },
+                { label: "All Rooms", href: "/rooms" },
+              ].map((room) => (
+                <li key={room.label}>
+                  <a
+                    href={room.href}
+                    className="text-sm text-soft-white/70 transition-colors hover:text-antique-gold"
+                  >
+                    {room.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
 
+          {/* Journal, About, Contact and the policy page live here now that the
+              top level nav is down to three shop destinations. */}
           <div>
-            <h3 className="font-serif text-sm font-semibold text-cream">
+            <h3 className="font-serif text-sm font-semibold text-soft-white">
               Explore
             </h3>
             <ul className="mt-3 space-y-2">
               {[
-                { label: "Collections", href: "/styles" },
-                { label: "Blog", href: "/blog" },
+                { label: "Collections", href: "/collections" },
+                { label: "Journal", href: "/blog" },
                 { label: "About", href: "/about" },
                 { label: "Contact", href: "/contact" },
+                { label: "Privacy", href: "/evergreen-house/privacy" },
               ].map((link) => (
                 <li key={link.label}>
                   <a
                     href={link.href}
-                    className="text-sm text-beige/70 transition-colors hover:text-cream"
+                    className="text-sm text-soft-white/70 transition-colors hover:text-antique-gold"
                   >
                     {link.label}
                   </a>
@@ -69,10 +71,10 @@ export function Footer() {
 
           {/* Disclosure */}
           <div>
-            <h3 className="font-serif text-sm font-semibold text-cream">
+            <h3 className="font-serif text-sm font-semibold text-soft-white">
               Disclosure
             </h3>
-            <p className="mt-3 text-xs leading-relaxed text-beige/60">
+            <p className="mt-3 text-xs leading-relaxed text-soft-white/60">
               As an Amazon Associate we earn from qualifying purchases. We
               carefully curate every product we recommend, our editorial
               integrity matters more than commissions.
@@ -81,12 +83,12 @@ export function Footer() {
         </div>
 
         {/* Social */}
-        <div className="mt-10 border-t border-beige/10 pt-6 flex items-center justify-center gap-5">
+        <div className="mt-10 border-t border-soft-white/10 pt-6 flex items-center justify-center gap-5">
           <a
             href="https://www.pinterest.com/evergreenhouseco/"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-beige/60 transition-colors hover:text-cream"
+            className="text-soft-white/60 transition-colors hover:text-antique-gold"
             aria-label="Follow us on Pinterest"
           >
             <svg
@@ -102,7 +104,7 @@ export function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-6 text-center text-xs text-beige/50">
+        <div className="mt-6 text-center text-xs text-soft-white/50">
           &copy; {new Date().getFullYear()} Evergreen House. All rights reserved.
         </div>
       </div>
