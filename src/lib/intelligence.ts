@@ -6,6 +6,7 @@
  */
 
 import { sql } from "~/db";
+import { canonicalProductSlug } from "~/lib/product-slug";
 import type { Product, Collection, CollectionRule, FilterOptions, FilterOption } from "~/lib/types";
 
 // ── Filter types ──
@@ -176,13 +177,43 @@ export async function getTrendingProducts(
   return rows as unknown as Product[];
 }
 
+/** Rooms used by seasonal collections - never surfaced as evergreen picks. */
+const SEASONAL_PICK_ROOMS = new Set(["seasonal", "seasonal-finds"]);
+
+/**
+ * Editor picks for the Crystal's Edit page.
+ *
+ * editor_pick is a hand-curated flag and is deliberately sparse, so a plain
+ * "WHERE editor_pick = true LIMIT n" returned a single card. Curated rows come
+ * first in their quality order, then the list is topped up with the highest
+ * quality-scored active products so the page always shows `limit` picks.
+ * Seasonal collections are excluded from the top-up.
+ */
 export async function getEditorsPicks(
   limit: number = 12,
 ): Promise<Product[]> {
   const db = sql();
-  const rows =
-    await db`SELECT * FROM products WHERE editor_pick = true AND is_active = true ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
-  return rows as unknown as Product[];
+  const picks =
+    await db`SELECT * FROM products WHERE editor_pick = true AND is_active = true ORDER BY quality_score DESC NULLS LAST, rating DESC NULLS LAST LIMIT ${limit}`;
+  const products = picks as unknown as Product[];
+  if (products.length >= limit) return products;
+  const seenIds = new Set(products.map((row) => String(row.id)));
+  const seenSlugs = new Set(products.map((row) => canonicalProductSlug(row)));
+  const fill =
+    await db`SELECT * FROM products WHERE is_active = true AND editor_pick IS NOT TRUE ORDER BY quality_score DESC NULLS LAST, rating DESC NULLS LAST LIMIT ${limit * 6}`;
+  for (const row of fill as unknown as Product[]) {
+    if (products.length >= limit) break;
+    if (SEASONAL_PICK_ROOMS.has(row.room)) continue;
+    if (seenIds.has(String(row.id))) continue;
+    // Two catalog rows can share one product URL (same name, no seo_slug).
+    // Only one card per canonical URL, so no pick repeats on the page.
+    const slug = canonicalProductSlug(row);
+    if (!slug || seenSlugs.has(slug)) continue;
+    seenIds.add(String(row.id));
+    seenSlugs.add(slug);
+    products.push(row);
+  }
+  return products;
 }
 
 export async function getProductsByRoom(room: string): Promise<Product[]> {

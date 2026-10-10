@@ -97,7 +97,7 @@ export function ProductCard({ product }: { product: Product }) {
       {/* Product image */}
       <div className="pin-image-wrapper aspect-square overflow-hidden rounded-t-2xl">
         {hasRealUrl ? (
-          <a href={amazonUrl} target="_blank" rel="noopener noreferrer" className="block h-full w-full" onClick={trackAmazonClick}>
+          <a href={amazonUrl} target="_blank" rel="noopener noreferrer sponsored" className="block h-full w-full" onClick={trackAmazonClick}>
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -183,7 +183,7 @@ export function ProductCard({ product }: { product: Product }) {
           <a
           href={amazonUrl}
           target="_blank"
-          rel="noopener noreferrer"
+          rel="noopener noreferrer sponsored"
           className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-sage transition-colors hover:text-sage-dark"
           onClick={trackAmazonClick}
           >
