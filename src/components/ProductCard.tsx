@@ -1,32 +1,38 @@
 import type { Product } from "~/lib/types";
 import { canonicalProductSlug } from "~/lib/product-slug";
 import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
+import { cardHookLine, cardRoomLabel } from "~/lib/card-copy";
 import { useAnalyticsList } from "./AnalyticsList";
 
 export type { Product };
 
+/**
+ * The shared product card, used by all 14 renderers (home, rooms, collections,
+ * styles, search, lifestyle, editors-picks, apparel, PDP related).
+ *
+ * Conversion mandate (owner, 2026-10-10): the primary interaction is an
+ * outbound Amazon click. The photo and the "View on Amazon" button both link
+ * straight to the affiliate URL, so the product page is never a required step.
+ * The product page stays reachable through one quiet internal link (the name)
+ * for SEO, and never sits between the shopper and Amazon.
+ *
+ * Card copy is deliberately card-shaped: a room label, the product name in two
+ * lines, and one optional one-line styling hook derived from the product's own
+ * editor note. No price, no rating, no stock or discount claims, because none
+ * of that is verified data the brand can stand behind (owner decision).
+ *
+ * Renders with no amazon_url (the PDP related grid hands us amazon_url: "") get
+ * no Amazon link at all: the photo is not a link, no CTA is rendered, and the
+ * name link is the only way off the card. No dead or empty hrefs.
+ */
+
+/** Pinterest pin description. No price: it is unverified data. */
 function getPinDescription(product: Product): string {
   const p = product as any;
   const productRoom = p.room || "";
-  const roomMap: Record<string, string> = {
-    "living-room": "living room",
-    bedroom: "bedroom",
-    kitchen: "kitchen",
-    bathroom: "bathroom",
-    patio: "patio",
-    organization: "home organization",
-    storage: "home organization",
-    laundry: "laundry room",
-    entryway: "entryway",
-  };
-  const room = roomMap[productRoom] || productRoom.replace(/-/g, " ");
-  const productPrice = p.price;
-  const priceStr = productPrice
-    ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(productPrice)
-    : "";
+  const room = cardRoomLabel(productRoom)?.toLowerCase() || productRoom.replace(/-/g, " ");
   const productName = p.name || "";
-
-  return `${productName}, a beautiful find for your ${room}${priceStr ? ` at just ${priceStr}` : ""}. Shop the look!`;
+  return `${productName}, a beautiful find for your ${room}. Shop the look!`;
 }
 
 export function ProductCard({ product }: { product: Product }) {
@@ -35,25 +41,24 @@ export function ProductCard({ product }: { product: Product }) {
   // Grid this card was rendered in (set by AnalyticsList); null outside a grid.
   const list = useAnalyticsList();
   const price = p.price;
-  const rating = p.rating;
-  const editorNote = p.editor_note || p.editorNote || null;
   const amazonUrl = p.amazon_url || p.amazonUrl || "";
   const imageUrl = p.image_url || p.imageUrl || "";
-  const name = p.name;
+  const name = p.name || "";
   // Canonical URL slug. Built with the SAME helper the product route resolves
   // with (src/lib/product-slug.ts), so a card link can never drift from the URL
   // the route actually serves: a stored seo_slug wins, name-derived otherwise.
   const productSlug = canonicalProductSlug(p);
-  const room = p.room || "";
   // Use existing image_alt from DB if available, otherwise generate a descriptive alt
   const imageAlt = p.image_alt || `${name} - Evergreen House`;
 
-  const formattedPrice = price
-    ? new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price)
-    : null;
+  const roomLabel = cardRoomLabel(p.room || "");
+  // One line only, straight from the product's own editor note. Null is common
+  // and expected; the card then renders no hook line.
+  const hook = cardHookLine(p.editor_note || p.editorNote || null, name);
 
   const pinDescription = getPinDescription(product);
-  const hasRealUrl = amazonUrl && amazonUrl !== "#" && amazonUrl.startsWith("http");
+  // The only guard that decides whether this card has an outbound Amazon path.
+  const hasRealUrl = Boolean(amazonUrl) && amazonUrl !== "#" && amazonUrl.startsWith("http");
 
   // Build srcset for Amazon images (they support size parameters)
   function getImageSrcSet(url: string): { srcSet?: string; sizes?: string } {
@@ -80,17 +85,20 @@ export function ProductCard({ product }: { product: Product }) {
   const { srcSet, sizes } = getImageSrcSet(imageUrl);
 
   /**
-   * Both Amazon anchors on the card (image + CTA) report through the single
-   * shared affiliate_click path. Navigation is untouched: no preventDefault,
-   * no href rewrite, target/rel stay as they are.
+   * Both Amazon anchors on the card (photo + CTA) report through the single
+   * shared affiliate_click path, which also mirrors the Pinterest lead.
+   * Navigation is untouched: no preventDefault, no href rewrite, target/rel
+   * stay as they are. One click fires exactly one event.
    */
   function trackAmazonClick() {
     trackAffiliateClick({
       productId: product.id,
       name,
+      // Not shown on the card; used only as the Pinterest lead value.
       price: price ?? null,
       context: list?.context || "product_card",
       listId: list?.listId,
+      merchant: "amazon",
       destinationUrl: amazonUrl,
       eventId: `amz-click-${product.id}`,
     });
@@ -101,120 +109,103 @@ export function ProductCard({ product }: { product: Product }) {
     trackSelectItem(product, list ?? undefined);
   }
 
+  /** The photo plate. Identical markup in both the linked and unlinked case. */
+  const photo = imageUrl ? (
+    <img
+      src={imageUrl}
+      srcSet={srcSet}
+      sizes={sizes}
+      alt={imageAlt}
+      className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-[1.04]"
+      loading="lazy"
+      decoding="async"
+      data-pin-description={pinDescription}
+      data-pin-url={hasRealUrl ? amazonUrl : undefined}
+    />
+  ) : (
+    <div className="flex h-full w-full items-center justify-center bg-soft-white">
+      {/* Placeholder plate for a row with no image. Decorative only. */}
+      <span aria-hidden="true" className="font-serif text-4xl text-warm-gray italic">
+        {name.charAt(0)}
+      </span>
+    </div>
+  );
+
   return (
-    <div className="group rounded-2xl border border-beige/20 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
-      {/* Product image */}
-      <div className="pin-image-wrapper aspect-square overflow-hidden rounded-t-2xl">
+    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:border-antique-gold/50 hover:shadow-md">
+      {/* Photo plate - consistent 1:1 frame on every renderer, image contained.
+          Primary outbound target when the row has a real Amazon URL. */}
+      <div className="pin-image-wrapper aspect-square w-full shrink-0 bg-soft-white">
         {hasRealUrl ? (
-          <a href={amazonUrl} target="_blank" rel="noopener noreferrer sponsored" className="block h-full w-full" onClick={trackAmazonClick}>
-            {imageUrl ? (
-              <img
-                src={imageUrl}
-                srcSet={srcSet}
-                sizes={sizes}
-                alt={imageAlt}
-                className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-                decoding="async"
-                data-pin-description={pinDescription}
-                data-pin-url={amazonUrl}
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center bg-beige/20">
-                <span className="font-serif text-4xl text-beige/50 italic">{name.charAt(0)}</span>
-              </div>
-            )}
+          <a
+            href={amazonUrl}
+            target="_blank"
+            rel="noopener noreferrer sponsored"
+            aria-label={`View ${name} on Amazon (opens in a new tab)`}
+            className="block h-full w-full"
+            onClick={trackAmazonClick}
+          >
+            {photo}
           </a>
         ) : (
-          imageUrl ? (
-            <img
-              src={imageUrl}
-              srcSet={srcSet}
-              sizes={sizes}
-              alt={imageAlt}
-              className="h-full w-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-              decoding="async"
-              data-pin-description={pinDescription}
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center bg-beige/20">
-              <span className="font-serif text-4xl text-beige/50 italic">{name.charAt(0)}</span>
-            </div>
-          )
+          photo
         )}
       </div>
       {/* Content */}
-      <div className="p-4 sm:p-5">
-        {/* Rating */}
-        {rating && (
-          <div className="mb-1 flex items-center gap-1">
-            <span className="text-xs font-medium text-warm-dark">{rating}</span>
-            <div className="flex">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                  key={i}
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="12"
-                  height="12"
-                  viewBox="0 0 24 24"
-                  fill={i < Math.round(rating) ? "#C9B99A" : "none"}
-                  stroke={i < Math.round(rating) ? "#C9B99A" : "#C9B99A"}
-                  strokeWidth="1.5"
-                >
-                  <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-                </svg>
-              ))}
-            </div>
-          </div>
+      <div className="flex flex-1 flex-col p-3.5 sm:p-5">
+        {roomLabel && (
+          <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-burgundy">
+            {roomLabel}
+          </p>
         )}
-        {/* Name */}
-        <h3 className="text-sm font-medium text-warm-dark line-clamp-2">
+        {/* Name - the card's one internal link, kept visually secondary to the CTA. */}
+        <h3 className={`font-serif text-sm leading-snug text-warm-dark line-clamp-2 ${roomLabel ? "mt-1.5" : ""}`}>
           <a
             href={`/product/${productSlug}`}
-            className="transition-colors hover:text-terracotta"
+            className="transition-colors hover:text-burgundy-deep"
             onClick={trackProductPageOpen}
           >
             {name}
           </a>
         </h3>
-        {/* Editor note */}
-        {editorNote && (
-          <p className="mt-1.5 text-xs italic leading-relaxed text-taupe line-clamp-2">
-            "{editorNote}"
-          </p>
+        {/* One-line styling hook, straight from the editor note. */}
+        {hook && (
+          <p className="mt-1 text-xs leading-relaxed text-warm-gray line-clamp-1">{hook}</p>
         )}
-        {/* Price */}
-        {formattedPrice && (
-          <p className="mt-1.5 text-sm font-semibold text-terracotta">{formattedPrice}</p>
-        )}
-        {/* CTA */}
-        {hasRealUrl && (
-          <a
-          href={amazonUrl}
-          target="_blank"
-          rel="noopener noreferrer sponsored"
-          className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-sage transition-colors hover:text-sage-dark"
-          onClick={trackAmazonClick}
-          >
-            View on Amazon
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
+        {/* CTA - full width, bottom aligned, thumb reachable. Rendered only when
+            the row carries a real Amazon URL, so a related card on the PDP never
+            shows an empty or dead outbound button. */}
+        <div className="mt-auto pt-3">
+          {hasRealUrl && (
+            <a
+              href={amazonUrl}
+              target="_blank"
+              rel="noopener noreferrer sponsored"
+              aria-label={`View ${name} on Amazon (opens in a new tab)`}
+              className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-midnight px-2.5 py-2.5 text-center text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-soft-white transition-colors duration-200 hover:bg-midnight-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-midnight focus-visible:ring-offset-2 focus-visible:ring-offset-soft-white"
+              onClick={trackAmazonClick}
             >
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
-          </a>
-        )}
+              View on Amazon
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </a>
+          )}
+        </div>
       </div>
-    </div>
+    </article>
   );
 }
