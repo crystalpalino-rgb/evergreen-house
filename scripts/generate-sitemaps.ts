@@ -128,6 +128,7 @@ async function main() {
   const staticPages = [
     { loc: "/", priority: "1.0", changefreq: "daily" },
     { loc: "/rooms", priority: "0.9", changefreq: "weekly" },
+    { loc: "/apparel", priority: "0.8", changefreq: "weekly" },
     { loc: "/styles", priority: "0.9", changefreq: "weekly" },
     { loc: "/collections", priority: "0.9", changefreq: "weekly" },
     { loc: "/editors-picks", priority: "0.8", changefreq: "daily" },

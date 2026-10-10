@@ -25,6 +25,7 @@ export function Footer() {
               {[
                 { label: "Living Room", href: "/room/living-room" },
                 { label: "Bedroom", href: "/room/bedroom" },
+                { label: "Apparel", href: "/apparel" },
                 { label: "Kitchen", href: "/room/kitchen" },
                 { label: "Bathroom", href: "/room/bathroom" },
                 { label: "Patio", href: "/room/patio" },
