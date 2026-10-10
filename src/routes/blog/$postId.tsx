@@ -236,6 +236,13 @@ function BlogPostPage() {
                     )}
                   </div>
                 </header>
+                {/* Posts may carry affiliate links in their body copy, so the
+                    disclosure sits above the content, not only in the footer. */}
+                <p className="mb-8 border-t border-beige/30 pt-5 text-xs leading-relaxed text-taupe">
+                  Some links in this post are Amazon affiliate links. Evergreen
+                  House may earn a small commission from qualifying purchases,
+                  at no extra cost to you.
+                </p>
                 <div
                   className="prose-custom text-base leading-relaxed text-warm-dark sm:text-lg"
                   dangerouslySetInnerHTML={{

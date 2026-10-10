@@ -415,6 +415,13 @@ function BlogPost() {
             </p>
           </header>
 
+          {/* Affiliate disclosure, stated once before the first shoppable link
+              in the post. The fuller note still sits under the closing paragraph. */}
+          <p className="mt-6 border-t border-beige/30 pt-5 text-xs leading-relaxed text-taupe">
+            Some links in this post are Amazon affiliate links. Evergreen House
+            may earn a small commission from qualifying purchases, at no extra
+            cost to you.
+          </p>
           {SECTIONS.map((section) => (
             <section key={section.heading} className="mt-12">
               <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
