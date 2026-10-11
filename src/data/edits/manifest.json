@@ -1,6 +1,6 @@
 {
-  "manifest_version": "2026-10-10",
-  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10).",
+  "manifest_version": "2026-10-11",
+  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present).",
   "collections": [
     {
       "slug": "heritage-christmas-edit",
@@ -106,6 +106,70 @@
           "display_title": "NEST New York Holiday Reed Diffuser",
           "hook": "Pomegranate, pine and clove, scenting the room without a flame.",
           "raw_name": false
+        },
+        {
+          "id": 531,
+          "slug": "green-plaid-christmas-pillow-covers-20x20-set-of-2",
+          "name": "Green Plaid Christmas Pillow Covers, 20x20, Set of 2",
+          "display_title": "Green Plaid Christmas Pillow Covers, Set of 2",
+          "hook": "Green plaid covers that shift a sofa into the season.",
+          "raw_name": false
+        },
+        {
+          "id": 532,
+          "slug": "plush-christmas-bear-family-set-of-4",
+          "name": "Plush Christmas Bear Family, Set of 4",
+          "display_title": "Plush Christmas Bear Family, Set of 4",
+          "hook": "Four plush bears that sit out for the whole season.",
+          "raw_name": false
+        },
+        {
+          "id": 533,
+          "slug": "festglox-gold-christmas-tree-figurines",
+          "name": "FESTGLOX Gold Christmas Tree Figurines",
+          "display_title": "FESTGLOX Gold Christmas Tree Figurines",
+          "hook": "Small gold trees for a mantel where a tree will not fit.",
+          "raw_name": false
+        },
+        {
+          "id": 534,
+          "slug": "santa-sleigh-christmas-decoration-19-inch",
+          "name": "Santa Sleigh Christmas Decoration, 19 Inch",
+          "display_title": "Santa Sleigh Christmas Decoration, 19 Inch",
+          "hook": "A nineteen inch sleigh for the porch, holding gifts or greenery.",
+          "raw_name": false
+        },
+        {
+          "id": 535,
+          "slug": "dried-orange-slice-christmas-garland-10-ft",
+          "name": "Dried Orange Slice Christmas Garland, 10 ft",
+          "display_title": "Dried Orange Slice Garland, 10 ft",
+          "hook": "Ten feet of dried orange slices that reads handmade.",
+          "raw_name": false
+        },
+        {
+          "id": 536,
+          "slug": "vintage-tin-cow-bells-set-of-15",
+          "name": "Vintage Tin Cow Bells, Set of 15",
+          "display_title": "Vintage Tin Cow Bells, Set of 15",
+          "hook": "Fifteen tin bells on jute rope for a stair rail.",
+          "raw_name": false
+        },
+        {
+          "id": 537,
+          "slug": "nuptio-gold-hurricane-candle-holders-set-of-2",
+          "name": "NUPTIO Gold Hurricane Candle Holders, Set of 2",
+          "display_title": "NUPTIO Gold Hurricane Candle Holders, Set of 2",
+          "hook": "Matte gold hurricanes that keep porch candles steady in wind.",
+          "raw_name": false
+        },
+        {
+          "id": 538,
+          "slug": "gemscream-tartan-christmas-ornaments-set-of-12",
+          "name": "Gemscream Tartan Christmas Ornaments, Set of 12",
+          "display_title": "Gemscream Tartan Christmas Ornaments, Set of 12",
+          "hook": "Navy and green tartan ornaments that echo the room plaid.",
+          "raw_name": false
         }
       ]
     },
@@ -204,6 +268,78 @@
           "name": "Wondise Flameless Window Candles with Timer",
           "display_title": "Wondise Flameless Window Candles with Timer",
           "hook": "Flameless window candles on a timer, lighting the street side nightly.",
+          "raw_name": false
+        },
+        {
+          "id": 522,
+          "slug": "green-plaid-tartan-lumbar-pillow-covers-12x20-set-of-2",
+          "name": "Green Plaid Tartan Lumbar Pillow Covers, 12x20, Set of 2",
+          "display_title": "Green Plaid Tartan Lumbar Covers, Set of 2",
+          "hook": "Tartan lumbar covers that finish a made bed instantly.",
+          "raw_name": false
+        },
+        {
+          "id": 523,
+          "slug": "heritage-christmas-throw-pillow-covers-set-of-4",
+          "name": "Heritage Christmas Throw Pillow Covers, Set of 4",
+          "display_title": "Heritage Christmas Throw Pillow Covers, Set of 4",
+          "hook": "Four heritage covers that change a room without new cushions.",
+          "raw_name": false
+        },
+        {
+          "id": 524,
+          "slug": "amelie-home-chenille-knit-throw-blanket-christmas-red",
+          "name": "Amelie Home Chenille Knit Throw Blanket, Christmas Red",
+          "display_title": "Amelie Home Red Chenille Knit Throw",
+          "hook": "A red chenille throw sized to cover a whole lap.",
+          "raw_name": false
+        },
+        {
+          "id": 525,
+          "slug": "hofdeco-merino-wool-tartan-lumbar-pillow-cover-beige-red",
+          "name": "Hofdeco Merino Wool Tartan Lumbar Pillow Cover, Beige Red",
+          "display_title": "Hofdeco Merino Wool Tartan Lumbar Cover",
+          "hook": "Wool tartan that is warm to the touch, not just to look at.",
+          "raw_name": false
+        },
+        {
+          "id": 526,
+          "slug": "hofdeco-merino-wool-tartan-throw-pillow-cover-navy-red",
+          "name": "Hofdeco Merino Wool Tartan Throw Pillow Cover, Navy Red",
+          "display_title": "Hofdeco Merino Wool Tartan Pillow Cover",
+          "hook": "A navy wool tartan cover for the chair you read in.",
+          "raw_name": false
+        },
+        {
+          "id": 527,
+          "slug": "tartan-plaid-wool-throw-blanket-black-watch",
+          "name": "Tartan Plaid Wool Throw Blanket, Black Watch",
+          "display_title": "Black Watch Tartan Wool Throw Blanket",
+          "hook": "A Black Watch wool throw dense enough to top a duvet.",
+          "raw_name": false
+        },
+        {
+          "id": 528,
+          "slug": "innqoo-candle-warmer-lamp-with-timer",
+          "name": "Innqoo Candle Warmer Lamp with Timer",
+          "display_title": "Innqoo Candle Warmer Lamp with Timer",
+          "hook": "A timed warmer that gives candle scent without an open flame.",
+          "raw_name": false
+        },
+        {
+          "id": 529,
+          "slug": "yiran-red-christmas-comforter-set-queen",
+          "name": "Yiran Red Christmas Comforter Set, Queen",
+          "display_title": "Yiran Red Christmas Comforter Set, Queen",
+          "hook": "A seven piece set that dresses a queen bed at once.",
+          "raw_name": false
+        },
+        {
+          "id": 530,
+          "slug": "eddie-bauer-montlake-flannel-sheet-set-queen",
+          "name": "Eddie Bauer Montlake Flannel Sheet Set, Queen",
+          "display_title": "Eddie Bauer Montlake Flannel Sheet Set, Queen",
+          "hook": "Brushed flannel sheets that soften with every winter wash.",
           "raw_name": false
         }
       ]
@@ -312,6 +448,86 @@
           "display_title": "Christmas Teaspoon Gift Set, Set of 4",
           "hook": "Four holiday teaspoons that work as a host or teacher gift.",
           "raw_name": false
+        },
+        {
+          "id": 512,
+          "slug": "colonial-candle-unscented-taper-candles-cranberry-set-of-6",
+          "name": "Colonial Candle Unscented Taper Candles, Cranberry, Set of 6",
+          "display_title": "Colonial Candle Cranberry Tapers, Set of 6",
+          "hook": "Unscented cranberry tapers that outlast a long holiday dinner.",
+          "raw_name": false
+        },
+        {
+          "id": 513,
+          "slug": "12l-stainless-steel-ice-bucket",
+          "name": "12L Stainless Steel Ice Bucket",
+          "display_title": "12L Stainless Steel Ice Bucket",
+          "hook": "A twelve litre stainless bucket that lets guests pour for themselves.",
+          "raw_name": false
+        },
+        {
+          "id": 514,
+          "slug": "cluster-of-10-round-serving-bowls-gold",
+          "name": "Cluster of 10 Round Serving Bowls, Gold",
+          "display_title": "Cluster of 10 Round Serving Bowls, Gold",
+          "hook": "Ten small gold bowls so no one passes a dish.",
+          "raw_name": false
+        },
+        {
+          "id": 515,
+          "slug": "marquis-by-waterford-markham-old-fashioned-glasses-set-of-4",
+          "name": "Marquis by Waterford Markham Old Fashioned Glasses, Set of 4",
+          "display_title": "Waterford Markham Old Fashioned Glasses, Set of 4",
+          "hook": "Deep crystal glasses with the weight a slow pour wants.",
+          "raw_name": false
+        },
+        {
+          "id": 516,
+          "slug": "solino-home-linen-table-runner-blue-and-green-plaid",
+          "name": "Solino Home Linen Table Runner, Blue and Green Plaid",
+          "display_title": "Solino Home Plaid Linen Table Runner",
+          "hook": "A linen runner long enough to hang past a full table.",
+          "raw_name": false
+        },
+        {
+          "id": 517,
+          "slug": "creative-co-op-hammered-metal-serving-bowl-gold-finish",
+          "name": "Creative Co-Op Hammered Metal Serving Bowl, Gold Finish",
+          "display_title": "Creative Co-Op Hammered Gold Serving Bowl",
+          "hook": "A hammered gold bowl that lifts a dark holiday setting.",
+          "raw_name": false
+        },
+        {
+          "id": 518,
+          "slug": "reed-and-barton-silverplate-serving-tray-16-inch",
+          "name": "Reed and Barton Silverplate Serving Tray, 16 Inch",
+          "display_title": "Reed and Barton Silverplate Serving Tray, 16 Inch",
+          "hook": "A silverplate tray that makes carrying drinks to the table easy.",
+          "raw_name": false
+        },
+        {
+          "id": 519,
+          "slug": "solino-home-linen-napkins-blue-and-green-plaid-set-of-4",
+          "name": "Solino Home Linen Napkins, Blue and Green Plaid, Set of 4",
+          "display_title": "Solino Home Plaid Linen Napkins, Set of 4",
+          "hook": "Washed linen napkins in plaid you can use past December.",
+          "raw_name": false
+        },
+        {
+          "id": 520,
+          "slug": "solino-home-linen-table-cloth-blue-and-green-plaid",
+          "name": "Solino Home Linen Table Cloth, Blue and Green Plaid",
+          "display_title": "Solino Home Plaid Linen Table Cloth",
+          "hook": "A plaid linen cloth sized for a table of four.",
+          "raw_name": false
+        },
+        {
+          "id": 521,
+          "slug": "dii-farmhouse-christmas-plaid-placemats-set-of-6",
+          "name": "DII Farmhouse Christmas Plaid Placemats, Set of 6",
+          "display_title": "DII Farmhouse Plaid Placemats, Set of 6",
+          "hook": "Six red and green plaid placemats that set a whole table.",
+          "raw_name": false
         }
       ]
     },
@@ -418,6 +634,70 @@
           "name": "Artificial Norfolk Pine & Cedar Christmas",
           "display_title": "Artificial Norfolk Pine & Cedar Christmas",
           "hook": "Real touch pine and cedar wreath finished with a deep velvet bow.",
+          "raw_name": false
+        },
+        {
+          "id": 504,
+          "slug": "30pcs-velvet-christmas-ball-ornaments-burgundy-flocked",
+          "name": "30pcs Velvet Christmas Ball Ornaments, Burgundy Flocked",
+          "display_title": "30pcs Burgundy Flocked Velvet Ornaments",
+          "hook": "Burgundy flocked velvet balls that fill a tree in one box.",
+          "raw_name": false
+        },
+        {
+          "id": 505,
+          "slug": "liliful-15-pcs-velvet-christmas-balls-navy-blue",
+          "name": "Liliful 15 Pcs Velvet Christmas Balls, Navy Blue",
+          "display_title": "Liliful Navy Velvet Christmas Balls, Set of 15",
+          "hook": "Navy velvet ornaments that keep a tree calm and deep.",
+          "raw_name": false
+        },
+        {
+          "id": 506,
+          "slug": "bbto-mini-chinoiserie-porcelain-ornaments-set-of-8",
+          "name": "BBTO Mini Chinoiserie Porcelain Ornaments, Set of 8",
+          "display_title": "BBTO Mini Chinoiserie Porcelain Ornaments, Set of 8",
+          "hook": "Blue and white porcelain miniatures for a collected, heirloom tree.",
+          "raw_name": false
+        },
+        {
+          "id": 507,
+          "slug": "8-pcs-champagne-gold-glitter-christmas-ball-ornaments",
+          "name": "8 Pcs Champagne Gold Glitter Christmas Ball Ornaments",
+          "display_title": "Champagne Gold Glitter Ball Ornaments, Set of 8",
+          "hook": "Glittered champagne ornaments that make a slim tree glow.",
+          "raw_name": false
+        },
+        {
+          "id": 508,
+          "slug": "yunlly-12-pcs-neutral-christmas-ornaments-bronze-gold",
+          "name": "Yunlly 12 Pcs Neutral Christmas Ornaments, Bronze Gold",
+          "display_title": "Yunlly Neutral Bronze Gold Ornaments, Set of 12",
+          "hook": "Twelve bronze ornaments that give a neutral tree its polish.",
+          "raw_name": false
+        },
+        {
+          "id": 509,
+          "slug": "12-pcs-hand-painted-champagne-christmas-ornaments",
+          "name": "12 Pcs Hand Painted Champagne Christmas Ornaments",
+          "display_title": "Hand Painted Champagne Ornaments, Set of 12",
+          "hook": "Hand painted glass balls that let the tree lights through.",
+          "raw_name": false
+        },
+        {
+          "id": 510,
+          "slug": "24-pcs-champagne-velvet-christmas-tree-bows",
+          "name": "24 Pcs Champagne Velvet Christmas Tree Bows",
+          "display_title": "24 Pcs Champagne Velvet Tree Bows",
+          "hook": "Twenty four velvet bows for the gaps ornaments always leave.",
+          "raw_name": false
+        },
+        {
+          "id": 511,
+          "slug": "canlierr-christmas-velvet-ball-garland-2-pcs",
+          "name": "Canlierr Christmas Velvet Ball Garland, 2 Pcs",
+          "display_title": "Canlierr Velvet Ball Garland, Set of 2",
+          "hook": "Two velvet ball garlands that dress a mantel in one pass.",
           "raw_name": false
         }
       ]
