@@ -49,8 +49,8 @@ export function EmailSignup() {
   }
 
   return (
-    <section id="signup" className="bg-beige/15 py-8 sm:py-12">
-      <div className="mx-auto max-w-2xl px-4 text-center sm:px-6">
+    <section id="signup" className="bg-beige/15 py-8 sm:py-10">
+      <div className="mx-auto max-w-xl px-4 text-center sm:px-6">
         {status === "success" ? (
           <div className="rounded-2xl bg-white p-10 shadow-sm">
             <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-sage/20">
@@ -80,8 +80,8 @@ export function EmailSignup() {
             <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
               Join the Journal
             </h2>
-            <p className="mt-3 text-warm-gray">
-              Thoughtfully curated home finds, timeless inspiration, and beautifully edited collections delivered to your inbox.
+            <p className="mt-2.5 text-sm text-warm-gray sm:text-base">
+              New finds, styling notes and seasonal edits, once a week.
             </p>
             <form
               onSubmit={handleSubmit}
@@ -106,7 +106,7 @@ export function EmailSignup() {
               <button
                 type="submit"
                 disabled={status === "loading"}
-                className="rounded-full bg-terracotta px-6 py-3 font-medium text-white shadow-md transition-all hover:bg-terracotta-dark hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-70"
+                className="rounded-full bg-burgundy px-6 py-3 text-sm font-semibold uppercase tracking-[0.1em] text-soft-white shadow-sm transition-colors hover:bg-burgundy-deep disabled:cursor-not-allowed disabled:opacity-70"
               >
                 {status === "loading" ? (
                   <span className="flex items-center justify-center gap-2">

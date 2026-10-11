@@ -1,0 +1,426 @@
+{
+  "manifest_version": "2026-10-10",
+  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10).",
+  "collections": [
+    {
+      "slug": "heritage-christmas-edit",
+      "title": "The Heritage Christmas Edit",
+      "headline": "Velvet, tartan and candlelight, gathered the way a house remembers it",
+      "intro": "This is the Christmas a house inherits: deep green velvet, tartan wool, brass and candlelight, arranged around an evergreen mantel. Every piece is chosen to look collected over decades rather than bought in one season.",
+      "art_note": "Living room at dusk, low warm lamp and candle glow, cream velvet seating, deep green tartan wool throw across the arm, cedar garland along a dark wood mantel, brass hurricane holders, one brass bell at the door, evergreen and burgundy palette, natural light fading, linen and wool textures, real lived-in room, no people, no text.",
+      "hero_image": "/images/edit-heritage-christmas-edit-hero-light",
+      "card_image": "/images/edit-heritage-christmas-edit-card-light",
+      "items": [
+        {
+          "id": 259,
+          "slug": "acanva-luxury-modern-tight-curved-back-velvet-sofa-minimalist-style-comfy-couch-for-living-room-apartment-4-seater-modul",
+          "name": "Acanva Luxury Modern Tight Curved Back Velvet Sofa, Minimalist Style Comfy Couch for Living Room Apartment, 4 Seater Modular Sectional, Cream",
+          "display_title": "Acanva Cream Velvet Modular Sofa, 4 Seater",
+          "hook": "Cream velvet anchoring the room under tartan, brass and candlelight.",
+          "raw_name": true
+        },
+        {
+          "id": 53,
+          "slug": "onevog-velvet-pouf-ottoman-olive-green",
+          "name": "ONEVOG Velvet Pouf Ottoman Olive Green",
+          "display_title": "ONEVOG Velvet Pouf Ottoman Olive Green",
+          "hook": "Olive velvet pouf that adds an extra seat and holiday warmth.",
+          "raw_name": false
+        },
+        {
+          "id": 436,
+          "slug": "lifelike-cedar-mantel-garland-6ft",
+          "name": "Lifelike Cedar Mantel Garland, 6FT",
+          "display_title": "Lifelike Cedar Mantel Garland, 6FT",
+          "hook": "Six feet of lifelike cedar that drapes a mantel without pins.",
+          "raw_name": false
+        },
+        {
+          "id": 78,
+          "slug": "eddie-bauer-throw-blanket-brushed-fleece",
+          "name": "Eddie Bauer Throw Blanket Brushed Fleece",
+          "display_title": "Eddie Bauer Throw Blanket Brushed Fleece",
+          "hook": "Dark green pine tartan sherpa throw, festive without shouting.",
+          "raw_name": false
+        },
+        {
+          "id": 423,
+          "slug": "evergrace-chenille-christmas-throw-blanket-50-x60-white-stewart-plaid",
+          "name": "EverGrace Chenille Christmas Throw Blanket, 50\"x60\", White Stewart Plaid",
+          "display_title": "EverGrace White Stewart Plaid Chenille Throw, 50x60",
+          "hook": "White Stewart plaid chenille throw for a calmer, quieter sofa.",
+          "raw_name": true
+        },
+        {
+          "id": 272,
+          "slug": "5-4-metal-candle-holder-with-handmade-glass-dome-in-brass-2-timer-candles-set-of-2-versatile-hurricane-glass-candle-hold",
+          "name": "5\"&4\" Metal Candle Holder with Handmade Glass Dome in Brass & 2 Timer Candles, Set of 2 Versatile Hurricane Glass Candle Holders for Pillar Candles & Plants",
+          "display_title": "Brass and Glass Hurricane Candle Holders, Set of 2",
+          "hook": "Brass and glass domes that make candlelight feel collected and heirloom.",
+          "raw_name": true
+        },
+        {
+          "id": 277,
+          "slug": "nikky-home-farmhouse-wooden-pillar-candle-holders-set-of-2-mantel-decor-rustic-brown-solid-wood-candle-pedestal-decorati",
+          "name": "NIKKY HOME Farmhouse Wooden Pillar Candle Holders Set of 2, Mantel Decor | Rustic Brown Solid Wood Candle Pedestal, Decorative Short Base Stand, Adds Natural Charm to Fireplace Table Centerpiece",
+          "display_title": "NIKKY HOME Wooden Pillar Candle Holders, Set of 2",
+          "hook": "Warm walnut pillars that lift candles above the mantel clutter.",
+          "raw_name": true
+        },
+        {
+          "id": 491,
+          "slug": "thymes-frasier-fir-pine-needle-candle",
+          "name": "Thymes Frasier Fir Pine Needle Candle",
+          "display_title": "Thymes Frasier Fir Pine Needle Candle",
+          "hook": "Frasier fir candle that gives an artificial tree the real scent.",
+          "raw_name": false
+        },
+        {
+          "id": 88,
+          "slug": "30pcs-velvet-christmas-ball-ornaments-flocked",
+          "name": "30pcs Velvet Christmas Ball Ornaments Flocked",
+          "display_title": "30pcs Velvet Christmas Ball Ornaments Flocked",
+          "hook": "Thirty dark green velvet ornaments, enough to finish a whole tree.",
+          "raw_name": false
+        },
+        {
+          "id": 114,
+          "slug": "bell-door-decor-bells-christmas-bells",
+          "name": "Bell Door Decor Bells Christmas Bells",
+          "display_title": "Bell Door Decor Bells Christmas Bells",
+          "hook": "Handmade brass cow bell that announces every guest at the door.",
+          "raw_name": false
+        },
+        {
+          "id": 450,
+          "slug": "vintage-gold-framed-reindeer-wall-art",
+          "name": "Vintage Gold Framed Reindeer Wall Art",
+          "display_title": "Vintage Gold Framed Reindeer Wall Art",
+          "hook": "Gold framed reindeer print that leans into an old pine shelf.",
+          "raw_name": false
+        },
+        {
+          "id": 481,
+          "slug": "nest-new-york-holiday-reed-diffuser",
+          "name": "NEST New York Holiday Reed Diffuser",
+          "display_title": "NEST New York Holiday Reed Diffuser",
+          "hook": "Pomegranate, pine and clove, scenting the room without a flame.",
+          "raw_name": false
+        }
+      ]
+    },
+    {
+      "slug": "cozy-christmas-bedroom-edit",
+      "title": "The Cozy Christmas Bedroom Edit",
+      "headline": "The softest room in the house, dressed for December",
+      "intro": "A Christmas bedroom should feel like the warmest corner of the house, which means brushed flannel, faux fur and low lamplight rather than tinsel. Layer these across a bed and a bedside table and the season arrives at bedtime too.",
+      "art_note": "Bedroom at night, unmade bed with cream faux fur throw over the foot, charcoal flannel bedding, olive knit throw, two cream cushions, warm pool of lamplight on a wooden nightstand, flameless candles in the window, tartan and cream palette, quiet and intimate, no people, no text.",
+      "hero_image": "/images/edit-cozy-christmas-bedroom-edit-hero-light",
+      "card_image": "/images/edit-cozy-christmas-bedroom-edit-card-light",
+      "items": [
+        {
+          "id": 478,
+          "slug": "cozy-earth-bubble-cuddle-faux-fur-throw",
+          "name": "Cozy Earth Bubble Cuddle Faux Fur Throw",
+          "display_title": "Cozy Earth Bubble Cuddle Faux Fur Throw",
+          "hook": "Weighted cream faux fur that stays put over the foot of a bed.",
+          "raw_name": false
+        },
+        {
+          "id": 493,
+          "slug": "mair-ve-embroidery-queen-comforter-set-7-pieces-brown-bed-in-a-bag",
+          "name": "MaiRêve Embroidery Queen Comforter Set 7 Pieces Brown Bed in a Bag",
+          "display_title": "MaiReve Embroidered Queen Comforter Set, 7 Pieces",
+          "hook": "Seven piece embroidered comforter set that dresses the whole bed.",
+          "raw_name": true
+        },
+        {
+          "id": 430,
+          "slug": "bare-home-flannel-duvet-cover-charcoal-gray-washed-cotton",
+          "name": "Bare Home Flannel Duvet Cover - Charcoal Gray Washed Cotton",
+          "display_title": "Bare Home Flannel Duvet Cover - Charcoal Gray Washed Cotton",
+          "hook": "Twice brushed flannel duvet cover for warmth without the quilt weight.",
+          "raw_name": false
+        },
+        {
+          "id": 432,
+          "slug": "bunnikins-clover-waffle-knit-throw-blanket-tan",
+          "name": "Bunnikins Clover Waffle Knit Throw Blanket - Tan",
+          "display_title": "Bunnikins Clover Waffle Knit Throw Blanket - Tan",
+          "hook": "Tan waffle knit that reads handmade and layers over white linen.",
+          "raw_name": false
+        },
+        {
+          "id": 270,
+          "slug": "evergracehome-chunky-chenille-knit-throw-blanket-for-couch-soft-luxurious-moss-stitch-chair-blankets-for-bed-cozy-decora",
+          "name": "EVERGRACEHOME Chunky Chenille Knit Throw Blanket for Couch, Soft Luxurious Moss Stitch Chair Blankets for Bed, Cozy Decorative Farmhouse Knitted Throws for Sofa, Olive Green, 50\" x 60\"",
+          "display_title": "EVERGRACEHOME Olive Chunky Chenille Knit Throw",
+          "hook": "Olive chunky chenille knit that warms a bed before the heat.",
+          "raw_name": true
+        },
+        {
+          "id": 433,
+          "slug": "foindtower-textured-chenille-pillow-covers-cream-20x20",
+          "name": "Foindtower Textured Chenille Pillow Covers - Cream, 20x20",
+          "display_title": "Foindtower Textured Chenille Pillow Covers - Cream, 20x20",
+          "hook": "Cream chenille cushions that soften a dark duvet and give light back.",
+          "raw_name": false
+        },
+        {
+          "id": 20,
+          "slug": "knot-pillow-ball-soft-home-decorative",
+          "name": "Knot Pillow Ball Soft Home Decorative",
+          "display_title": "Knot Pillow Ball Soft Home Decorative",
+          "hook": "Beige boucle knot pillow, the one round shape a bed needs.",
+          "raw_name": false
+        },
+        {
+          "id": 42,
+          "slug": "safavieh-lighting-collection-acer-modern-rustic",
+          "name": "SAFAVIEH Lighting Collection Acer Modern Rustic",
+          "display_title": "SAFAVIEH Lighting Collection Acer Modern Rustic",
+          "hook": "Quiet farmhouse bedside lamp that lights a book without glare.",
+          "raw_name": false
+        },
+        {
+          "id": 52,
+          "slug": "industrial-table-lamp-for-bedroom",
+          "name": "Industrial Table Lamp for Bedroom",
+          "display_title": "Industrial Table Lamp for Bedroom",
+          "hook": "Pair of bedside lamps with dimming, USB ports and a plug.",
+          "raw_name": false
+        },
+        {
+          "id": 41,
+          "slug": "modern-bedroom-bench-47-inch-upholstered",
+          "name": "Modern Bedroom Bench 47 Inch Upholstered",
+          "display_title": "Modern Bedroom Bench 47 Inch Upholstered",
+          "hook": "Upholstered end of bed bench that turns a bedroom into a sitting room.",
+          "raw_name": false
+        },
+        {
+          "id": 447,
+          "slug": "wondise-flameless-window-candles-with-timer",
+          "name": "Wondise Flameless Window Candles with Timer",
+          "display_title": "Wondise Flameless Window Candles with Timer",
+          "hook": "Flameless window candles on a timer, lighting the street side nightly.",
+          "raw_name": false
+        }
+      ]
+    },
+    {
+      "slug": "holiday-hosting-edit",
+      "title": "The Holiday Hosting Edit",
+      "headline": "Everything a host reaches for between November and January",
+      "intro": "Hosting is a table that is already set before anyone arrives: holly banded china, a pitcher big enough for the whole table, glassware that survives the dishwasher. These are the pieces that make a Christmas dinner feel effortless.",
+      "art_note": "Dining table set for a Christmas dinner, holly banded white plates, a large glass pitcher of eggnog, tree shaped wooden charcuterie platter, tall walnut candlesticks with burning tapers, clear votive glasses in a row, stemless wine glasses, brass and deep green accents, warm overhead glow, linen runner, no people, no text.",
+      "hero_image": "/images/edit-holiday-hosting-edit-hero-light",
+      "card_image": "/images/edit-holiday-hosting-edit-card-light",
+      "items": [
+        {
+          "id": 482,
+          "slug": "lenox-holiday-porcelain-dinner-plates-set-of-6",
+          "name": "Lenox Holiday Porcelain Dinner Plates, Set of 6",
+          "display_title": "Lenox Holiday Porcelain Dinner Plates, Set of 6",
+          "hook": "Holly banded porcelain plates that carry decades of family Christmas.",
+          "raw_name": false
+        },
+        {
+          "id": 483,
+          "slug": "spode-christmas-tree-glass-pitcher-96-oz",
+          "name": "Spode Christmas Tree Glass Pitcher, 96 oz",
+          "display_title": "Spode Christmas Tree Glass Pitcher, 96 oz",
+          "hook": "Ninety six ounce Christmas pitcher, a full table of eggnog.",
+          "raw_name": false
+        },
+        {
+          "id": 490,
+          "slug": "wooden-christmas-tree-charcuterie-platter",
+          "name": "Wooden Christmas Tree Charcuterie Platter",
+          "display_title": "Wooden Christmas Tree Charcuterie Platter",
+          "hook": "Tree shaped wooden platter that arranges the cheese for you.",
+          "raw_name": false
+        },
+        {
+          "id": 419,
+          "slug": "nuptio-wooden-taper-candle-holders-set-of-3-brown-candlesticks",
+          "name": "NUPTIO Wooden Taper Candle Holders, Set of 3 Brown Candlesticks",
+          "display_title": "NUPTIO Wooden Taper Candle Holders, Set of 3",
+          "hook": "Walnut taper holders, spaced down the table once evenings draw in.",
+          "raw_name": true
+        },
+        {
+          "id": 90,
+          "slug": "24-pack-votive-candle-holders-clear",
+          "name": "24 Pack Votive Candle Holders Clear",
+          "display_title": "24 Pack Votive Candle Holders Clear",
+          "hook": "Twenty four clear votives that light a whole run of table.",
+          "raw_name": false
+        },
+        {
+          "id": 102,
+          "slug": "libbey-stemless-wine-glasses",
+          "name": "Libbey Stemless Wine Glasses",
+          "display_title": "Libbey Stemless Wine Glasses",
+          "hook": "Stemless wine glasses for twelve, steady in hand and dishwasher safe.",
+          "raw_name": false
+        },
+        {
+          "id": 470,
+          "slug": "10-piece-cocktail-shaker-set-with-bamboo-stand",
+          "name": "10-Piece Cocktail Shaker Set with Bamboo Stand",
+          "display_title": "10-Piece Cocktail Shaker Set with Bamboo Stand",
+          "hook": "Ten piece cocktail set with a stand, so nothing gets hunted mid pour.",
+          "raw_name": false
+        },
+        {
+          "id": 101,
+          "slug": "opayly-whiskey-glasses-old-fashioned-glasses",
+          "name": "OPAYLY Whiskey Glasses Old Fashioned Glasses",
+          "display_title": "OPAYLY Whiskey Glasses Old Fashioned Glasses",
+          "hook": "Old fashioned glasses in the wide, heavy shape a slow pour wants.",
+          "raw_name": false
+        },
+        {
+          "id": 28,
+          "slug": "homesphere-acacia-wood-cake-stand",
+          "name": "HOMESPHERE Acacia Wood Cake Stand",
+          "display_title": "HOMESPHERE Acacia Wood Cake Stand",
+          "hook": "Acacia cake stand that flips to a serving board for the buffet.",
+          "raw_name": false
+        },
+        {
+          "id": 105,
+          "slug": "kiteiscat-extra-large-glass-salad-bowl",
+          "name": "KITEISCAT Extra Large Glass Salad Bowl",
+          "display_title": "KITEISCAT Extra Large Glass Salad Bowl",
+          "hook": "Oversized glass salad bowl with acacia base and serving utensils.",
+          "raw_name": false
+        },
+        {
+          "id": 72,
+          "slug": "feppo-warming-mat-for-food",
+          "name": "FEPPO Warming Mat for Food",
+          "display_title": "FEPPO Warming Mat for Food",
+          "hook": "Forty two inch warming mat that keeps a buffet honest through seconds.",
+          "raw_name": false
+        },
+        {
+          "id": 484,
+          "slug": "christmas-teaspoon-gift-set-set-of-4",
+          "name": "Christmas Teaspoon Gift Set, Set of 4",
+          "display_title": "Christmas Teaspoon Gift Set, Set of 4",
+          "hook": "Four holiday teaspoons that work as a host or teacher gift.",
+          "raw_name": false
+        }
+      ]
+    },
+    {
+      "slug": "luxe-christmas-tree-edit",
+      "title": "The Luxe Christmas Tree Edit",
+      "headline": "A tree dressed properly, from the skirt to the last ornament",
+      "intro": "Start with the tree and the skirt, then add garland and ornaments until the light reads warm from the doorway. Nothing here needs a theme, only restraint and better materials.",
+      "art_note": "A slender cypress tree in a woven basket, cream cable knit tree skirt, champagne and pearl ornaments, two lit cedar garlands, sage velvet cone trees on a console, rusty metal deer, a full pine and cedar wreath on the door, warm fireplace light, cream and deep green palette, no people, no text.",
+      "hero_image": "/images/edit-luxe-christmas-tree-edit-hero-light",
+      "card_image": "/images/edit-luxe-christmas-tree-edit-card-light",
+      "items": [
+        {
+          "id": 434,
+          "slug": "cypress-christmas-tree-in-wicker-basket",
+          "name": "Cypress Christmas Tree in Wicker Basket",
+          "display_title": "Cypress Christmas Tree in Wicker Basket",
+          "hook": "Four foot cypress already sitting in a woven wicker basket.",
+          "raw_name": false
+        },
+        {
+          "id": 421,
+          "slug": "knit-christmas-tree-skirts-neutral-tree-skirt-cozy-christmas-decorations",
+          "name": "Knit Christmas Tree Skirts, Neutral Tree Skirt, Cozy Christmas Decorations",
+          "display_title": "Knit Christmas Tree Skirt, Neutral Cream",
+          "hook": "Cream cable knit tree skirt with the weight of a good sweater.",
+          "raw_name": true
+        },
+        {
+          "id": 444,
+          "slug": "9ft-pre-lit-cedar-garland-set-of-2",
+          "name": "9FT Pre-Lit Cedar Garland, Set of 2",
+          "display_title": "9FT Pre-Lit Cedar Garland, Set of 2",
+          "hook": "Two nine foot lit cedar garlands covering a long mantel run.",
+          "raw_name": false
+        },
+        {
+          "id": 417,
+          "slug": "9ft-pre-lit-christmas-garland-with-lights-cedar-garland-christmas-decor",
+          "name": "9FT Pre-lit Christmas Garland with Lights Cedar Garland Christmas Decor",
+          "display_title": "9FT Pre-Lit Cedar Garland with Lights",
+          "hook": "Nine foot pre lit cedar garland with the lights already woven in.",
+          "raw_name": true
+        },
+        {
+          "id": 83,
+          "slug": "bbto-8-pcs-christmas-tree-ball",
+          "name": "BBTO 8 Pcs Christmas Tree Ball",
+          "display_title": "BBTO 8 Pcs Christmas Tree Ball",
+          "hook": "Eight oversized champagne sequin balls that carry a slim tree.",
+          "raw_name": false
+        },
+        {
+          "id": 81,
+          "slug": "viorawhite-12-pcs-white-pearl",
+          "name": "VioraWhite 12 Pcs White Pearl",
+          "display_title": "VioraWhite 12 Pcs White Pearl",
+          "hook": "Twelve pearl white bows for a tree dressed in neutrals.",
+          "raw_name": false
+        },
+        {
+          "id": 446,
+          "slug": "tangkula-lighted-metal-ball-ornaments-3-pack",
+          "name": "Tangkula Lighted Metal Ball Ornaments, 3 Pack",
+          "display_title": "Tangkula Lighted Metal Ball Ornaments, 3 Pack",
+          "hook": "Three twinkling metal ornaments for the bay window or porch tree.",
+          "raw_name": false
+        },
+        {
+          "id": 439,
+          "slug": "velvet-ceramic-christmas-trees-set-of-3",
+          "name": "Velvet Ceramic Christmas Trees, Set of 3",
+          "display_title": "Velvet Ceramic Christmas Trees, Set of 3",
+          "hook": "Green and sage velvet cone trees that step up in size.",
+          "raw_name": false
+        },
+        {
+          "id": 440,
+          "slug": "kpx-metal-tree-and-deer-tabletop-set-of-5",
+          "name": "KPX Metal Tree and Deer Tabletop Set of 5",
+          "display_title": "KPX Metal Tree and Deer Tabletop Set of 5",
+          "hook": "Five rusty steel pines and deer with flat, wobble free bases.",
+          "raw_name": false
+        },
+        {
+          "id": 438,
+          "slug": "norfolk-pine-branches-for-vase-16-pcs",
+          "name": "Norfolk Pine Branches for Vase, 16 Pcs",
+          "display_title": "Norfolk Pine Branches for Vase, 16 Pcs",
+          "hook": "Sixteen faux pine branches that stand up straight in a tall vase.",
+          "raw_name": false
+        },
+        {
+          "id": 79,
+          "slug": "12pcs-red-velvet-bows-for-christmas",
+          "name": "12PCS Red Velvet Bows for Christmas",
+          "display_title": "12PCS Red Velvet Bows for Christmas",
+          "hook": "Twelve red velvet bows with gold ties already attached.",
+          "raw_name": false
+        },
+        {
+          "id": 84,
+          "slug": "artificial-norfolk-pine-cedar-christmas",
+          "name": "Artificial Norfolk Pine & Cedar Christmas",
+          "display_title": "Artificial Norfolk Pine & Cedar Christmas",
+          "hook": "Real touch pine and cedar wreath finished with a deep velvet bow.",
+          "raw_name": false
+        }
+      ]
+    }
+  ]
+}

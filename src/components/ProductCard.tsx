@@ -204,6 +204,14 @@ export function ProductCard({ product }: { product: Product }) {
               </svg>
             </a>
           )}
+          {/* Amazon Associates disclosure. Cards are the smallest surface that
+              carries an Amazon anchor, so the line rides with the anchor itself:
+              one muted 10px sentence, never a badge and never a headline. */}
+          {hasRealUrl && (
+            <p className="mt-2 text-center text-[10px] leading-tight text-taupe">
+              As an Amazon Associate we earn from qualifying purchases.
+            </p>
+          )}
         </div>
       </div>
     </article>

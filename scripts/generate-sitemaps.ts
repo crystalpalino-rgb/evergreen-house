@@ -7,6 +7,9 @@
 import { neon } from "@neondatabase/serverless";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
+// The published "Shop the Edit" collections come from the same checked-in
+// manifest the pages render from, so a new edit lands in the sitemap with it.
+import editsManifest from "../src/data/edits/manifest.json";
 
 const SITE_URL = "https://evergreenhouse.co";
 
@@ -135,6 +138,8 @@ async function main() {
     { loc: "/search", priority: "0.7", changefreq: "weekly" },
     { loc: "/about", priority: "0.6", changefreq: "monthly" },
     { loc: "/contact", priority: "0.5", changefreq: "monthly" },
+    { loc: "/terms", priority: "0.4", changefreq: "monthly" },
+    { loc: "/affiliate-disclosure", priority: "0.4", changefreq: "monthly" },
     { loc: "/blog", priority: "0.8", changefreq: "weekly" },
     {
       loc: "/blog/cheap-things-that-make-your-home-look-expensive",
@@ -158,6 +163,14 @@ async function main() {
     },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
+  // Shop the Edit landing pages: /collections/<edit-slug> (four published edits).
+  for (const edit of editsManifest.collections) {
+    staticPages.push({
+      loc: `/collections/${edit.slug}`,
+      priority: "0.8",
+      changefreq: "weekly",
+    });
+  }
 
   const pagesSitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

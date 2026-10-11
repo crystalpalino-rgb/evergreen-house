@@ -1,240 +1,128 @@
-import type { Product } from "~/lib/types";
-import { ProductCard } from "./ProductCard";
+import type { EditProduct } from "~/lib/edits";
+import { SHOP_THE_LOOK, type HomepageSection } from "~/lib/homepage-sections";
 import { AnalyticsList } from "./AnalyticsList";
+import { EditProductCard } from "./EditProductCard";
 
-interface ShopTheLookProps {
-  products: Product[];
-  collections: { collection: string; count: number }[];
-}
-
-interface CuratedCollection {
-  id: string;
-  name: string;
-  subtitle: string;
-  description: string;
-  imageUrl?: string;
-  /** Rendered in place of the hero image when no imageUrl is set (seasonal blocks). */
-  gradient?: string;
-  /** Explicit CTA target; defaults to /collection/<id without -look>. */
-  href?: string;
-  ctaLabel?: string;
-  room: string;
-  curatedProductIds?: number[];
-}
-
-// Curated collection definitions
-const curatedCollections: CuratedCollection[] = [
-  {
-    id: "holiday-edit",
-    name: "The Holiday Edit",
-    subtitle:
-      "Warm gatherings, cozy nights, and thoughtful details for the season.",
-    description:
-      "From candlelit tables to plush throws, this edit is everything we reach for when the house feels festive and calm at once.",
-    imageUrl: "/images/seasonal.jpg",
-    gradient: "linear-gradient(135deg, #1f3a2c 0%, #2f5540 55%, #e6dcc6 100%)",
-    href: "/collection/holiday",
-    ctaLabel: "Shop Holiday",
-    room: "holiday",
-  },
-  {
-    id: "fall-finds",
-    name: "Fall Finds",
-    subtitle:
-      "Cozy layers, amber tones, and textures that invite you to slow down.",
-    description:
-      "The best of our fall shop: warm throws, rich ceramics, and quiet pieces made for longer evenings at home.",
-    imageUrl: "/images/fall.jpg",
-    gradient: "linear-gradient(135deg, #d4b896 0%, #c49a6c 50%, #c2784a 100%)",
-    href: "/collection/fall",
-    ctaLabel: "Shop Fall",
-    room: "fall",
-    curatedProductIds: [415, 342, 346, 236],
-  },
-  {
-    id: "living-room-look",
-    name: "Sunday Morning Living",
-    subtitle: "Warm neutrals, layered textures, and pieces that feel collected over time.",
-    description:
-      "Slow mornings with coffee and a good book. This collection layers warm neutrals, soft textures, and pieces that feel collected over time rather than bought all at once. Every piece was chosen to make your living room the room you gravitate toward first.",
-    imageUrl:
-      "/images/living-room.jpg",
-    room: "living-room",
-  },
-  {
-    id: "bedroom-look",
-    name: "Bedroom Finds Worth the Upgrade",
-    subtitle: "A calming escape with soft linens, warm wood tones, and golden accents.",
-    description:
-      "Your bedroom should feel like an exhale at the end of a long day. From stonewashed linens to warm lighting, every piece here was chosen to create a space that quiets the noise and invites rest.",
-    imageUrl:
-      "/images/bedroom.jpg",
-    room: "all",
-    curatedProductIds: [52, 41, 30, 44],
-  },
-  {
-    id: "bathroom-look",
-    name: "The Pieces That Make My Bathroom Feel Like a Spa",
-    subtitle: "Turn your daily routine into a moment of calm.",
-    description:
-      "Thoughtful touches that make every shower and skincare ritual feel like a spa visit. From plush towels to sleek dispensers, these are the bathroom upgrades worth making.",
-    imageUrl:
-      "/images/bathroom.jpg",
-    room: "bathroom",
-  },
-  {
-    id: "kitchen-look",
-    name: "Everything I'd Buy Again for My Kitchen",
-    subtitle: "Beautifully organized countertops with natural materials and timeless pieces.",
-    description:
-      "The kitchen is the heart of the home, and it deserves to feel as beautiful as it is functional. This collection pairs warm wood, clear glass, and honest materials, pieces that make you want to linger a little longer.",
-    imageUrl:
-      "/images/kitchen.jpg",
-    room: "kitchen",
-    curatedProductIds: [28, 35, 39, 92],
-  },
-  {
-    id: "apartment-must-haves",
-    name: "Small Space Finds I'd Recommend to a Friend",
-    subtitle: "Best-rated finds for small spaces and first homes.",
-    description:
-      "Clever, compact, and endlessly charming, these are the pieces that make even the smallest apartment feel like a thoughtfully designed home. High ratings, versatile style, and renter-friendly.",
-    imageUrl:
-      "/images/organization.jpg",
-    room: "all",
-    curatedProductIds: [167, 53, 54, 64],
-  },
-];
-
-export function ShopTheLook({ products: dbProducts, collections: _dbCollections }: ShopTheLookProps) {
-  const hasDbData = dbProducts && dbProducts.length > 0;
+/**
+ * Homepage SHOP THE LOOK: one scene, one table.
+ *
+ * The section is a single full-bleed tablescape photograph (the holiday hosting
+ * table from /collections/holiday-hosting-edit) with six curated pieces below it,
+ * not a stack of mini collection cards: every product in the list physically sits
+ * on that one table, so the picture and the list are the same idea.
+ *
+ * Art: webp first with a jpg fallback, both shipped sizes used. The 4:5 crop
+ * (1200x1500) carries the band on phones, where it stays tall enough to read;
+ * the 16:9 hero (1600x900) takes over from the sm breakpoint.
+ *
+ * Type over the art: the delivered hero keeps its LEFT third quiet (measured
+ * mean L 72, white type at 9.1:1), so the headline sits left aligned over the
+ * photograph with no scrim. On phones the copy drops below the art instead of
+ * sitting on a 4:5 crop the designer did not measure, and the band turns into a
+ * midnight block. No text is baked into the image.
+ *
+ * All copy comes from the curation file via src/lib/homepage-sections.ts.
+ */
+export function ShopTheLook({
+  products,
+  section = SHOP_THE_LOOK,
+}: {
+  products: EditProduct[];
+  section?: HomepageSection;
+}) {
+  const { eyebrow, title, subcopy, link } = section;
+  /* GA4 payload for view_item_list: the id plus the display title the card shows. */
+  const analyticsItems = products.map((p) => ({ id: p.id, name: p.title }));
 
   return (
-    <section className="py-8 sm:py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
-          Inspired Spaces
-        </h2>
-        <p className="mt-3 text-center text-warm-gray">
-          Explore beautifully curated rooms and shop every piece that brings the space together.
-        </p>
+    <section className="bg-midnight">
+      <div className="relative isolate">
+        <div className="relative aspect-[4/5] w-full sm:aspect-[16/9]">
+          <picture>
+            <source
+              media="(max-width: 639px)"
+              srcSet="/images/shop-the-look-card.webp"
+              type="image/webp"
+            />
+            <source media="(max-width: 639px)" srcSet="/images/shop-the-look-card.jpg" />
+            <source srcSet="/images/shop-the-look-hero.webp" type="image/webp" />
+            <img
+              src="/images/shop-the-look-hero.jpg"
+              alt="A holiday hosting table set with holly banded china, a Christmas tree glass pitcher, a tree shaped wooden platter, walnut taper candlesticks and a run of votive candlelight."
+              width={1600}
+              height={900}
+              loading="lazy"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-cover"
+              data-pin-description="The Holiday Hosting Table: holly banded china, walnut tapers and candlelight. Shop the look at Evergreen House."
+            />
+          </picture>
+        </div>
+        {/* Copy: in the quiet left band over the art from sm up, below the art on
+            phones. No scrim (measured 9.1:1 against white type). */}
+        <div className="mx-auto flex max-w-7xl flex-col justify-center px-4 py-7 sm:absolute sm:inset-0 sm:px-6 sm:py-10 lg:px-8">
+          <div className="max-w-[34rem]">
+            <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-antique-gold">
+              {eyebrow}
+            </p>
+            <h2 className="mt-2.5 max-w-[26rem] font-serif text-3xl font-semibold leading-[1.1] text-soft-white sm:mt-3 sm:text-4xl lg:text-5xl">
+              {title}
+            </h2>
+            <p className="mt-3 max-w-[32rem] text-sm leading-relaxed text-soft-white/90 sm:text-base">
+              {subcopy}
+            </p>
+          </div>
+        </div>
+      </div>
 
-        <div className="mt-10 space-y-10">
-          {curatedCollections.map((collection) => {
-            let collectionProducts: Product[];
-
-            if (hasDbData) {
-              if (collection.curatedProductIds) {
-                // Use specific curated product IDs
-                collectionProducts = collection.curatedProductIds
-                  .map((id) => dbProducts.find((p) => p.id === id))
-                  .filter(Boolean) as Product[];
-              } else if (collection.room === "all") {
-                // "Apartment Must Haves" - best-rated across rooms
-                collectionProducts = [...dbProducts]
-                  .filter((p) => p.rating && p.rating >= 4.4)
-                  .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-                  .slice(0, 4);
-              } else {
-                collectionProducts = dbProducts
-                  .filter(
-                    (p) => p.room === collection.room && p.is_active !== false,
-                  )
-                  .sort((a, b) => (b.rating || 0) - (a.rating || 0))
-                  .slice(0, 4);
-              }
-            } else {
-              collectionProducts = [];
-            }
-
-            if (collectionProducts.length === 0) return null;
-
-            return (
-              <div
-                key={collection.id}
-                className="overflow-hidden rounded-2xl bg-white shadow-sm ring-1 ring-beige/10"
+      {/* The six pieces on that table, in curated order. */}
+      <div className="bg-soft-white pb-12 pt-8 sm:pb-16 sm:pt-10">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3">
+            <div className="flex items-baseline gap-3">
+              <h3 className="font-serif text-xl text-warm-dark sm:text-2xl">
+                In this look
+              </h3>
+              <p className="text-xs uppercase tracking-[0.14em] text-taupe">
+                {products.length} pieces
+              </p>
+            </div>
+            {link && (
+              <a
+                href={link.href}
+                className="inline-flex min-h-11 items-center gap-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-burgundy transition-colors hover:text-burgundy-deep"
               >
-                <div className="grid lg:grid-cols-5">
-                  {/* Hero image, or a gradient panel for the seasonal blocks */}
-                  <div className="lg:col-span-2">
-                    <div className="pin-image-wrapper h-48 sm:h-64 lg:h-full">
-                      {collection.imageUrl ? (
-                        <img
-                          src={collection.imageUrl}
-                          alt={`${collection.name}, ${collection.subtitle}`}
-                          className="h-full w-full object-cover"
-                          loading="lazy"
-                          data-pin-description={`${collection.name}: ${collection.subtitle}. Save this pin!`}
-                        />
-                      ) : (
-                        <div
-                          className="relative h-full w-full"
-                          style={{ background: collection.gradient }}
-                          data-pin-description={`${collection.name}: ${collection.subtitle}. Save this pin!`}
-                        >
-                          <div
-                            className="absolute inset-0 opacity-[0.06]"
-                            style={{
-                              backgroundImage:
-                                "radial-gradient(circle at 30% 40%, #ffffff 1px, transparent 1px)",
-                              backgroundSize: "30px 30px",
-                            }}
-                            aria-hidden="true"
-                          />
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  {/* Content */}
-                  <div className="p-6 lg:col-span-3 lg:p-8">
-                    <h3 className="font-serif text-2xl font-semibold text-warm-dark">
-                      {collection.name}
-                    </h3>
-                    <p className="mt-2 text-warm-gray">{collection.subtitle}</p>
-                    {collection.description && (
-                      <p className="mt-4 text-sm leading-relaxed text-warm-gray/80 max-w-prose">
-                        {collection.description}
-                      </p>
-                    )}
-                    <AnalyticsList
-                      id={`shop-the-look-${collection.id}`}
-                      name={collection.name}
-                      items={collectionProducts}
-                    >
-                      <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-                        {collectionProducts.map((product) => (
-                          <ProductCard key={`coll-${product.id}`} product={product} />
-                        ))}
-                      </div>
-                    </AnalyticsList>
-                    <a
-                      href={
-                        collection.href ??
-                        `/collection/${collection.id.replace(/-look$/, "")}`
-                      }
-                      className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark"
-                    >
-                      {collection.ctaLabel ?? "View full collection"}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="14"
-                        height="14"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="5" y1="12" x2="19" y2="12" />
-                        <polyline points="12 5 19 12 12 19" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                {link.label}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+            )}
+          </div>
+          <AnalyticsList
+            id={section.key}
+            name={title}
+            context={section.key}
+            items={analyticsItems}
+          >
+            <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:grid-cols-3 sm:gap-5">
+              {products.map((product) => (
+                <EditProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          </AnalyticsList>
         </div>
       </div>
     </section>

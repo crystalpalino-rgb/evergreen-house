@@ -39,23 +39,20 @@ const rooms = [
 
 export function BrowseByRoom() {
   return (
-    <section className="bg-cream-dark py-8 sm:py-12">
+    <section className="bg-cream-dark py-8 sm:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
-          Start with Your Space
+        <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+          Explore by Room
         </h2>
-        <p className="mt-3 text-center text-warm-gray">
-          Choose the room you're decorating and explore thoughtfully curated collections.
-        </p>
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-5 grid grid-cols-2 gap-3 sm:mt-6 sm:grid-cols-3 sm:gap-4">
           {rooms.map((room) => (
             <a
               key={room.name}
               href={room.href}
-              className="group overflow-hidden rounded-2xl shadow-sm ring-1 ring-beige/10 transition-shadow hover:shadow-md"
+              className="group overflow-hidden rounded-xl shadow-sm ring-1 ring-beige/10 transition-shadow hover:shadow-md"
             >
               <div
-                className="relative flex h-48 flex-col justify-end p-6 sm:h-56"
+                className="relative flex h-32 flex-col justify-end p-4 sm:h-40"
                 style={
                   room.image
                     ? {
@@ -67,15 +64,10 @@ export function BrowseByRoom() {
                 }
               >
                 {/* Dark overlay for photo tiles so text is readable */}
-                {room.image && (
-                  <div className="absolute inset-0 bg-black/40" />
-                )}
-                <h3 className="relative z-10 font-serif text-xl font-semibold text-white drop-shadow-sm group-hover:text-cream transition-colors">
+                {room.image && <div className="absolute inset-0 bg-black/40" />}
+                <h3 className="relative z-10 font-serif text-base font-semibold text-white drop-shadow-sm transition-colors group-hover:text-cream sm:text-lg">
                   {room.name}
                 </h3>
-                <p className="relative z-10 mt-1 text-sm text-white/80 drop-shadow-sm">
-                  {room.description}
-                </p>
               </div>
             </a>
           ))}
