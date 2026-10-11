@@ -1,4 +1,4 @@
-import { trackAffiliateClick } from "~/lib/analytics";
+import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
 import { useAnalyticsList } from "./AnalyticsList";
 import type { EditProduct } from "~/lib/edits";
 
@@ -42,6 +42,11 @@ export function EditProductCard({
     });
   }
 
+  /** The card's only on-site click target: opening the product page. */
+  function trackProductPageOpen() {
+    trackSelectItem({ id: product.id, name: product.title }, list ?? undefined);
+  }
+
   const pinDescription = `${product.title}, an editor pick from the ${list?.listName || "Shop the Edit"} collection.`;
 
   return (
@@ -76,6 +81,7 @@ export function EditProductCard({
           <a
             href={`/product/${product.slug}`}
             className="transition-colors hover:text-burgundy-deep"
+            onClick={trackProductPageOpen}
           >
             {product.title}
           </a>

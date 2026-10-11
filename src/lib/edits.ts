@@ -81,28 +81,44 @@ export interface EditProduct {
 interface ProductRow {
   id: number;
   name: string | null;
+  seo_slug: string | null;
   image_url: string | null;
   image_alt: string | null;
   amazon_url: string | null;
 }
 
+/** The minimum a curated file (an edit, or a homepage section) says per item. */
+export interface CuratedItemRef {
+  id: number;
+  slug: string;
+  display_title?: string;
+  name?: string;
+  hook?: string;
+}
+
 /**
- * Live product rows for one edit, in manifest order.
+ * Live product rows for a curated item list, in curated order.
  *
- * One query for the whole edit, keyed on the integer ids from the curated file
+ * One query for the whole list, keyed on the integer ids from the curated file
  * (never on names or slugs: 21 slugs in the catalog are shared by more than one
  * row, so slug matching can silently resolve to a different product). An id
  * that has gone missing from the catalog is skipped rather than rendered as a
  * blank card.
+ *
+ * The link slug comes from the row itself when it carries a stored seo_slug, so
+ * the card can never point at a URL the product route does not serve; the
+ * curated slug is the fallback. Callers without a curated slug (none today) get
+ * the row-derived one.
  */
-export async function getEditProducts(
-  edit: EditCollection,
+export async function getCuratedProducts(
+  items: CuratedItemRef[],
 ): Promise<EditProduct[]> {
-  const ids = edit.items.map((i) => i.id).filter((n) => Number.isInteger(n));
-  if (ids.length === 0) return [];
+  const wanted = items.filter((i) => Number.isInteger(i?.id));
+  if (wanted.length === 0) return [];
+  const ids = wanted.map((i) => i.id);
   const db = sql();
   const rows = (await db.query(
-    `SELECT id, name, image_url, image_alt, amazon_url FROM products WHERE id IN (${ids.join(
+    `SELECT id, name, seo_slug, image_url, image_alt, amazon_url FROM products WHERE id IN (${ids.join(
       ",",
     )})`,
     [],
@@ -112,23 +128,32 @@ export async function getEditProducts(
   for (const row of rows) byId.set(Number(row.id), row);
 
   const out: EditProduct[] = [];
-  for (const item of edit.items) {
+  for (const item of wanted) {
     const row = byId.get(item.id);
     if (!row) continue;
     const amazonUrl = (row.amazon_url || "").trim();
+    const storedSlug = (row.seo_slug || "").trim();
     out.push({
       id: item.id,
-      title: item.display_title || item.name,
-      slug: item.slug,
-      hook: item.hook,
+      title: item.display_title || item.name || row.name || "",
+      slug: storedSlug || item.slug,
+      hook: item.hook || "",
       imageUrl: row.image_url || null,
       imageAlt:
-        row.image_alt || `${item.display_title || item.name} - Evergreen House`,
+        row.image_alt ||
+        `${item.display_title || item.name || row.name || ""} - Evergreen House`,
       amazonUrl,
       hasRealUrl: amazonUrl.startsWith("http"),
     });
   }
   return out;
+}
+
+/** Live product rows for one edit, in manifest order. */
+export async function getEditProducts(
+  edit: EditCollection,
+): Promise<EditProduct[]> {
+  return getCuratedProducts(edit.items);
 }
 
 /** Product count per edit, for the cards and the /collections list. */

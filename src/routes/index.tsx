@@ -2,16 +2,20 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Hero } from "~/components/Hero";
 import { ShopTheEdits } from "~/components/ShopTheEdits";
-import { TrendingProducts } from "~/components/TrendingProducts";
 import { ShopTheLook } from "~/components/ShopTheLook";
+import { TheCurrentEdit } from "~/components/TheCurrentEdit";
 import { BrowseByRoom } from "~/components/BrowseByRoom";
 import { FromTheJournal } from "~/components/FromTheJournal";
 import { EmailSignup } from "~/components/EmailSignup";
 import { Footer } from "~/components/Footer";
-import { getAllProducts, getTrendingProducts } from "~/lib/intelligence";
+import {
+  CURRENT_EDIT,
+  SHOP_THE_LOOK,
+  getSectionProducts,
+} from "~/lib/homepage-sections";
 import { generateHomeMetadata } from "~/lib/seo";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
-import type { Product } from "~/lib/types";
+import type { EditProduct } from "~/lib/edits";
 
 type HomeSearch = { hero?: "b" | "c" };
 
@@ -32,16 +36,19 @@ export const Route = createFileRoute("/")({
   },
   loader: async () => {
     try {
-      const [products, trending] = await Promise.all([
-        getAllProducts(),
-        getTrendingProducts(6),
+      /* Two curated grids, fetched by id from the checked-in curation file.
+         The old getTrendingProducts(6) auto-pick is gone: nothing above the
+         fold is chosen by a query any more. */
+      const [shopTheLook, currentEdit] = await Promise.all([
+        getSectionProducts(SHOP_THE_LOOK),
+        getSectionProducts(CURRENT_EDIT),
       ]);
-      return { products, trending };
+      return { shopTheLook, currentEdit };
     } catch (err) {
       console.error("Loader error:", err);
       return {
-        products: [] as Product[],
-        trending: [] as Product[],
+        shopTheLook: [] as EditProduct[],
+        currentEdit: [] as EditProduct[],
       };
     }
   },
@@ -49,7 +56,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { products, trending } = Route.useLoaderData();
+  const { shopTheLook, currentEdit } = Route.useLoaderData();
   const { hero } = Route.useSearch();
   const heroConcept = hero ?? "a";
 
@@ -98,12 +105,14 @@ function Home() {
           </p>
         </div>
         {/* Owner-approved homepage hierarchy, top to bottom:
-            1 hero, 2 shop the edits, 3 trending finds, 4 shop the look,
-            5 explore by room, 6 from the journal, 7 email signup. */}
+            1 hero, 2 shop the edits, 3 shop the look (the holiday hosting
+            table), 4 the current edit, 5 explore by room, 6 from the journal,
+            7 email signup. Sections 3 and 4 are curated from the checked-in
+            homepage merchandising file, so no row on this page is query-picked. */}
         <Hero concept={heroConcept} />
         <ShopTheEdits />
-        <TrendingProducts products={trending} />
-        <ShopTheLook products={products} collections={[]} />
+        <ShopTheLook products={shopTheLook} />
+        <TheCurrentEdit products={currentEdit} />
         <BrowseByRoom />
         <FromTheJournal />
         <EmailSignup />
