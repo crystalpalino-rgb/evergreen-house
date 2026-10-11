@@ -1,8 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
+import { generateStaticMetadata } from "~/lib/seo";
 
 export const Route = createFileRoute("/evergreen-house/privacy")({
+  /* This page had no head of its own, so it shipped no canonical and inherited
+     the root og:url (the homepage). It is indexable, so it gets its own. */
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Privacy Policy",
+      "How Evergreen House handles the information you share, and the analytics we use to understand how the site is read.",
+      "/evergreen-house/privacy"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: PrivacyPolicy,
 });
 

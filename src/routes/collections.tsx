@@ -42,7 +42,21 @@ export const Route = createFileRoute("/collections")({
       };
     }
   },
-  head: () => {
+  head: ({ matches }) => {
+    /* /collections is the parent route of /collections/<edit-slug>, and a nested
+       route's links are appended after its parent's, not merged over them. If
+       this index head emitted its own canonical while an edit page was matched,
+       the edit page would ship two <link rel="canonical"> tags with the index
+       first, and Google would read every edit page as a duplicate of
+       /collections. The edit page's head owns the canonical and og:url for those
+       URLs, so this head stays silent whenever the child route is in the lane. */
+    /* `matches` is typed as this route's own match union, but at runtime it is
+       the whole lane from the root down, so the child's route id is not part of
+       the type here. */
+    const editPageMatched = matches.some(
+      (m) => (m.routeId as string) === "/collections/$editSlug"
+    );
+    if (editPageMatched) return {};
     const seo = generateStaticMetadata(
       "Collections",
       "Browse all Evergreen House collections - thoughtfully curated finds for every room, style, and season.",
