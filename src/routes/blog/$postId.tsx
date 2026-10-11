@@ -14,6 +14,12 @@ export const Route = createFileRoute("/blog/$postId")({
       id: post?.id,
       created_at: post?.created_at,
     });
+    /* An unknown id is a real 404: the loader throws notFound. A 404 page has no
+       canonical of its own, so the link is dropped rather than pointing at the
+       journal index; title and description stay for the browser tab. */
+    if (!post) {
+      return { meta: seo.meta, links: seo.links.filter((l) => l.rel !== "canonical") };
+    }
     return { meta: seo.meta, links: seo.links };
   },
   loader: async ({ params }) => {

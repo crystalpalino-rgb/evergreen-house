@@ -73,6 +73,11 @@ export const Route = createRootRoute({
       // NOTE: canonical is set per-route in each route's head export.
       // No global fallback - a conflicting root canonical causes duplicate
       // canonical tags, which makes Google reject pages as duplicates.
+      // Nested routes: a child route's links are appended after its parent's,
+      // not merged over them. So a parent that emits a canonical and a child
+      // that emits its own means the URL ships both. A parent route that has a
+      // canonical-bearing child must skip its own head for that child (see the
+      // /collections + /collections/$editSlug pair).
       { rel: "stylesheet", href: appCss },
       // Preconnect for Google Fonts (before the stylesheet)
       { rel: "preconnect", href: "https://fonts.googleapis.com" },

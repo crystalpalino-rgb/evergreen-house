@@ -6,6 +6,7 @@ import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
 import { ProductFilters } from "~/components/ProductFilters";
 import { searchProducts, getFilterOptions } from "~/lib/intelligence";
+import { generateStaticMetadata } from "~/lib/seo";
 import type { ProductFilters as PFilters } from "~/lib/intelligence";
 import type { Product, FilterOptions } from "~/lib/types";
 
@@ -41,12 +42,17 @@ function buildFiltersFromParams(params: Record<string, string>): { filters: PFil
 }
 
 export const Route = createFileRoute("/search")({
-  head: () => ({
-    meta: [
-      { title: "Search - Evergreen House" },
-      { name: "description", content: "Search our curated collection of timeless home finds." },
-    ],
-  }),
+  /* /search is in sitemap-pages.xml, so it needs its own canonical and og:url;
+     without them it inherited the root og:url (the homepage). Filter and page
+     query params are deliberately dropped: one canonical for the search page. */
+  head: () => {
+    const seo = generateStaticMetadata(
+      "Search",
+      "Search our curated collection of timeless home finds.",
+      "/search"
+    );
+    return { meta: seo.meta, links: seo.links };
+  },
   component: SearchPage,
 });
 
