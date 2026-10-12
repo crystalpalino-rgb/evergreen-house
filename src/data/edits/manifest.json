@@ -1,6 +1,6 @@
 {
-  "manifest_version": "2026-10-11",
-  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present).",
+  "manifest_version": "2026-10-11.2",
+  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present). 2026-10-11 (second owner file, 'Evergreen New 10.11.2'): every Amazon link in that catalog was added to the collection named on its row (13 new catalog rows, ids 539-551; 2 duplicate rows inside the file collapsed; 0 rows were already present in their collection).",
   "collections": [
     {
       "slug": "heritage-christmas-edit",
@@ -169,6 +169,86 @@
           "name": "Gemscream Tartan Christmas Ornaments, Set of 12",
           "display_title": "Gemscream Tartan Christmas Ornaments, Set of 12",
           "hook": "Navy and green tartan ornaments that echo the room plaid.",
+          "raw_name": false
+        },
+        {
+          "id": 539,
+          "slug": "garveehome-washable-christmas-5x7-rug",
+          "name": "GarveeHome Washable Christmas 5x7 Rug",
+          "display_title": "GarveeHome Washable Christmas Rug, 5x7",
+          "hook": "A deep green plaid rug that grounds a holiday living room.",
+          "raw_name": false
+        },
+        {
+          "id": 540,
+          "slug": "homeford-nutcracker-filigree-wired-ribbon-navy",
+          "name": "Homeford Nutcracker Filigree Wired Ribbon, Navy",
+          "display_title": "Homeford Nutcracker Filigree Wired Ribbon, Navy",
+          "hook": "Navy nutcracker ribbon that makes every bow look collected.",
+          "raw_name": false
+        },
+        {
+          "id": 542,
+          "slug": "lifelike-cedar-branches-for-vases-set-of-6",
+          "name": "Lifelike Cedar Branches for Vases, Set of 6",
+          "display_title": "Lifelike Cedar Branches, Set of 6",
+          "hook": "Six lifelike cedar branches that keep a vase green all winter.",
+          "raw_name": false
+        },
+        {
+          "id": 543,
+          "slug": "weysat-gold-wooden-nutcracker-figures-set-of-2",
+          "name": "Weysat Gold Wooden Nutcracker Figures, Set of 2",
+          "display_title": "Weysat Gold Wooden Nutcrackers, Set of 2",
+          "hook": "Two wooden nutcrackers in muted gold for a mantel.",
+          "raw_name": false
+        },
+        {
+          "id": 544,
+          "slug": "vintage-christmas-pillow-cover-holly-deer",
+          "name": "Vintage Christmas Pillow Cover, Holly Deer",
+          "display_title": "Vintage Christmas Pillow Cover, 18x18",
+          "hook": "A velvet cover printed with woodland creatures in storybook colors.",
+          "raw_name": false
+        },
+        {
+          "id": 545,
+          "slug": "velvet-christmas-tree-skirt-48-inch-brown",
+          "name": "Velvet Christmas Tree Skirt, 48 Inch Brown",
+          "display_title": "Velvet Christmas Tree Skirt, 48 Inch",
+          "hook": "A soft velvet skirt that hides the tree stand in style.",
+          "raw_name": false
+        },
+        {
+          "id": 546,
+          "slug": "framed-merry-little-christmas-quote-print-9x11",
+          "name": "Framed Merry Little Christmas Quote Print, 9x11",
+          "display_title": "Framed Merry Little Christmas Quote Print",
+          "hook": "A green plaid quote print that hangs without a single tool.",
+          "raw_name": false
+        },
+        {
+          "id": 547,
+          "slug": "framed-santa-and-reindeer-canvas-9-5x12",
+          "name": "Framed Santa and Reindeer Canvas, 9.5x12",
+          "display_title": "Framed Santa and Reindeer Canvas",
+          "hook": "A small canvas of Santa in the snow with his reindeer.",
+          "raw_name": false
+        },
+        {
+          "id": 548,
+          "slug": "artoid-mode-christmas-kitchen-mats-set-of-2",
+          "name": "Artoid Mode Christmas Kitchen Mats, Set of 2",
+          "display_title": "Artoid Mode Christmas Kitchen Mats, Set of 2",
+          "hook": "Two low profile mats that put winter trees by the sink.",
+          "raw_name": false
+        },
+        {
+          "id": 550,
+          "slug": "framed-vintage-christmas-oval-wall-art",
+          "name": "Framed Vintage Christmas Oval Wall Art",
+          "display_title": "Framed Vintage Christmas Oval Print",
+          "hook": "A small oval print for a hallway or entry shelf.",
           "raw_name": false
         }
       ]
@@ -528,6 +608,14 @@
           "display_title": "DII Farmhouse Plaid Placemats, Set of 6",
           "hook": "Six red and green plaid placemats that set a whole table.",
           "raw_name": false
+        },
+        {
+          "id": 549,
+          "slug": "xph-christmas-bell-kitchen-towels-set-of-2",
+          "name": "XPH Christmas Bell Kitchen Towels, Set of 2",
+          "display_title": "XPH Christmas Bell Kitchen Towels, Set of 2",
+          "hook": "Two crisp microfiber towels printed with vintage Christmas bells.",
+          "raw_name": false
         }
       ]
     },
@@ -698,6 +786,22 @@
           "name": "Canlierr Christmas Velvet Ball Garland, 2 Pcs",
           "display_title": "Canlierr Velvet Ball Garland, Set of 2",
           "hook": "Two velvet ball garlands that dress a mantel in one pass.",
+          "raw_name": false
+        },
+        {
+          "id": 541,
+          "slug": "yunlly-neutral-copper-christmas-ornaments-set-of-9",
+          "name": "Yunlly Neutral Copper Christmas Ornaments, Set of 9",
+          "display_title": "Yunlly Copper Christmas Ornaments, Set of 9",
+          "hook": "Nine textured bronze ornaments that fill a tree evenly.",
+          "raw_name": false
+        },
+        {
+          "id": 551,
+          "slug": "woven-hyacinth-christmas-tree-collar-36-inch",
+          "name": "Woven Hyacinth Christmas Tree Collar, 36 Inch",
+          "display_title": "Woven Hyacinth Christmas Tree Collar, 36 Inch",
+          "hook": "A woven hyacinth collar that hides the stand in three pieces.",
           "raw_name": false
         }
       ]
