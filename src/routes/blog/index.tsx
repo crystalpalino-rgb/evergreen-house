@@ -58,6 +58,37 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title:
+      "Getting Organized During Divorce: The Paperwork System That Kept Me Sane",
+    description:
+      "Divorce comes with a mountain of paperwork, deadlines, and details. Here's the organization system one mom used to keep track of it all, from legal documents to financial records.",
+    href: "/blog/divorce-organization-paperwork-system",
+    date: "October 12, 2026",
+  },
+  {
+    title:
+      "How I Feed Two Kids on a Tight Grocery Budget (Without Losing My Mind)",
+    description:
+      "A busy full-time working mom shares the exact meal planning system that keeps her grocery bill under control: one planning session, real food, no coupons required.",
+    href: "/blog/meal-planning-tight-grocery-budget",
+    date: "October 12, 2026",
+  },
+  {
+    title:
+      "The 90-Minute Life Admin Day: My Monthly Reset for Bills, Inbox, and Paperwork",
+    description:
+      "Drowning in bills, emails, and paperwork? This 90-minute monthly life admin reset is how one busy working mom of two clears the backlog and stays on top of it all.",
+    href: "/blog/90-minute-life-admin-reset",
+    date: "October 12, 2026",
+  },
+  {
+    title: "The 20-Minute Home Reset for Moms Whose Brains Won't Cooperate",
+    description:
+      "A realistic cleaning system for busy moms and ADHD brains: 20 minutes, four rounds, zero shame. How to reset your home when you're overwhelmed and short on time.",
+    href: "/blog/20-minute-home-reset-adhd-moms",
+    date: "October 12, 2026",
+  },
+  {
     title: "13 Things That Make Your Bed Look Expensive",
     description:
       "Thirteen bedroom finds - deep pocket sheets, an oversized duvet, layered pillows and a knit throw - that make a bed look expensive without a new mattress.",
