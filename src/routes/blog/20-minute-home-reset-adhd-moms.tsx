@@ -22,6 +22,7 @@ const BLOG_DESCRIPTION =
   "A realistic cleaning system for busy moms and ADHD brains: 20 minutes, four rounds, zero shame. How to reset your home when you're overwhelmed and short on time.";
 const DATE_PUBLISHED = "2026-10-12";
 const DATE_PUBLISHED_LABEL = "October 12, 2026";
+const AUTHOR_NAME = "Crystal Costa";
 
 const INTRO_PARAGRAPHS = [
   "Let me paint you a picture. It's 8pm. You worked all day. The kids are finally winding down. You look around and your house looks like it lost a fight. Dishes everywhere, laundry chair overflowing, mystery sticky spot on the counter. And you are so tired that the thought of cleaning makes you want to sit on the floor and cry.",
@@ -121,9 +122,8 @@ const articleSchema = {
   inLanguage: "en-US",
   image: `${SITE_URL}/og-image.jpg`,
   author: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
+    "@type": "Person",
+    name: AUTHOR_NAME,
   },
   publisher: {
     "@type": "Organization",
@@ -159,6 +159,10 @@ function BlogPost() {
             </h1>
             <p className="mt-5 text-xs font-medium uppercase tracking-wide text-taupe">
               <time dateTime={DATE_PUBLISHED}>{DATE_PUBLISHED_LABEL}</time>
+              <span className="mx-2 text-beige" aria-hidden="true">
+                /
+              </span>
+              <span>By {AUTHOR_NAME}</span>
             </p>
             {INTRO_PARAGRAPHS.map((paragraph) => (
               <p
