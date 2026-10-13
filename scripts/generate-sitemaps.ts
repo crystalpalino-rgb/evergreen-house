@@ -161,6 +161,26 @@ async function main() {
       priority: "0.7",
       changefreq: "monthly",
     },
+    {
+      loc: "/blog/divorce-organization-paperwork-system",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/meal-planning-tight-grocery-budget",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/90-minute-life-admin-reset",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/20-minute-home-reset-adhd-moms",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
   // Shop the Edit landing pages: /collections/<edit-slug> (four published edits).
