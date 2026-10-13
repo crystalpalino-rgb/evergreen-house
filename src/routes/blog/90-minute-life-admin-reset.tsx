@@ -23,6 +23,7 @@ const BLOG_DESCRIPTION =
   "Drowning in bills, emails, and paperwork? This 90-minute monthly life admin reset is how one busy working mom of two clears the backlog and stays on top of it all.";
 const DATE_PUBLISHED = "2026-10-12";
 const DATE_PUBLISHED_LABEL = "October 12, 2026";
+const AUTHOR_NAME = "Crystal Costa";
 
 const INTRO_PARAGRAPHS = [
   "There is a special kind of stress that comes from knowing your life admin is a mess but never having a big enough chunk of time to fix it. The unopened mail pile. The 4,000 unread emails. The permission slip that's been on the counter for a week. The dentist appointment you keep meaning to book.",
@@ -123,9 +124,8 @@ const articleSchema = {
   inLanguage: "en-US",
   image: `${SITE_URL}/og-image.jpg`,
   author: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
+    "@type": "Person",
+    name: AUTHOR_NAME,
   },
   publisher: {
     "@type": "Organization",
@@ -161,6 +161,10 @@ function BlogPost() {
             </h1>
             <p className="mt-5 text-xs font-medium uppercase tracking-wide text-taupe">
               <time dateTime={DATE_PUBLISHED}>{DATE_PUBLISHED_LABEL}</time>
+              <span className="mx-2 text-beige" aria-hidden="true">
+                /
+              </span>
+              <span>By {AUTHOR_NAME}</span>
             </p>
             {INTRO_PARAGRAPHS.map((paragraph) => (
               <p

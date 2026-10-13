@@ -1,5 +1,5 @@
 /**
- * Homepage FROM THE JOURNAL strip: the three most recent hand-authored
+ * Homepage FROM THE JOURNAL strip: the four most recent hand-authored
  * editorial posts, image-led and short. These are static route files under
  * src/routes/blog/, not generated copy, so the titles and dates here are the
  * same ones the Journal index lists (src/routes/blog/index.tsx).
@@ -19,34 +19,51 @@ type JournalPost = {
 
 const POSTS: JournalPost[] = [
   {
-    category: "Bedroom",
-    title: "13 Things That Make Your Bed Look Expensive",
-    href: "/blog/how-to-make-your-bed-look-expensive",
+    category: "Paperwork",
+    title:
+      "Getting Organized During Divorce: The Paperwork System That Kept Me Sane",
+    href: "/blog/divorce-organization-paperwork-system",
     excerpt:
-      "Deep pocket sheets, an oversized duvet and layered pillows, without a new mattress.",
-    image: "/images/bedroom.jpg",
-    imageAlt: "Serene bedroom with layered linens and warm lamplight",
-    date: "October 10, 2026",
+      "The binder, the filing habits and the weekly check-in that kept every legal document, deadline and custody detail in one place.",
+    image: "/images/home-office.jpg",
+    imageAlt:
+      "Desk with an open laptop, a clipboard of papers and a pen in warm natural light",
+    date: "October 12, 2026",
   },
   {
-    category: "Holiday",
-    title: "Cozy Neutral Holiday Decor Finds for a Calm Home",
-    href: "/blog/cozy-neutral-holiday-decor-finds",
+    category: "Meal Planning",
+    title:
+      "How I Feed Two Kids on a Tight Grocery Budget (Without Losing My Mind)",
+    href: "/blog/meal-planning-tight-grocery-budget",
     excerpt:
-      "A knit tree skirt, cedar garland and pearl ornaments for a warm Christmas without the tinsel.",
-    image: "/images/edit-luxe-christmas-tree-edit-card.webp",
-    imageAlt: "Deep green Christmas tree in a woven basket on a cream knit skirt",
-    date: "October 8, 2026",
+      "One planning session a week, real food and no coupons: the system that keeps a grocery bill under control.",
+    image: "/images/kitchen.jpg",
+    imageAlt:
+      "Kitchen counter with white ceramic canisters, wooden utensils and a cutting board",
+    date: "October 12, 2026",
   },
   {
-    category: "Living Room",
-    title: "Cheap Things That Make Your Home Look Expensive",
-    href: "/blog/cheap-things-that-make-your-home-look-expensive",
+    category: "Life Admin",
+    title:
+      "The 90-Minute Life Admin Day: My Monthly Reset for Bills, Inbox, and Paperwork",
+    href: "/blog/90-minute-life-admin-reset",
     excerpt:
-      "Mirrors, lamps, trays and candlelight that make a room look considered, not costly.",
+      "Ninety minutes, once a month, for the bills, the inbox and the paper pile. The reset that clears the backlog in one sitting.",
+    image: "/images/organization.jpg",
+    imageAlt:
+      "Baskets, trays and bins laid out in tidy rows for an organized home",
+    date: "October 12, 2026",
+  },
+  {
+    category: "Home Reset",
+    title: "The 20-Minute Home Reset for Moms Whose Brains Won't Cooperate",
+    href: "/blog/20-minute-home-reset-adhd-moms",
+    excerpt:
+      "Twenty minutes, four rounds, zero shame: a realistic reset for the nights the house is a mess and you are running on empty.",
     image: "/images/living-room.jpg",
-    imageAlt: "Warm neutral living room with a linen sofa and dried grasses",
-    date: "October 3, 2026",
+    imageAlt:
+      "Warm living room with a cream sectional sofa, coffee table and softly lit shelves",
+    date: "October 12, 2026",
   },
 ];
 
@@ -65,7 +82,7 @@ export function FromTheJournal() {
             All stories
           </a>
         </div>
-        <div className="mt-6 grid gap-6 sm:mt-8 sm:grid-cols-3">
+        <div className="mt-6 grid gap-6 sm:mt-8 sm:grid-cols-2 lg:grid-cols-4">
           {POSTS.map((post) => (
             <article key={post.href} className="group">
               <a

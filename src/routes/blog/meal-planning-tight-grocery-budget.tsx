@@ -23,6 +23,7 @@ const BLOG_DESCRIPTION =
   "A busy full-time working mom shares the exact meal planning system that keeps her grocery bill under control: one planning session, real food, no coupons required.";
 const DATE_PUBLISHED = "2026-10-12";
 const DATE_PUBLISHED_LABEL = "October 12, 2026";
+const AUTHOR_NAME = "Crystal Costa";
 
 const INTRO_PARAGRAPHS = [
   "I'm a full-time working mom of two, and after my divorce my budget got very real, very fast. One income, two growing kids, and grocery prices doing whatever it is they're doing right now. Something had to change, and it wasn't going to be the kids' appetites.",
@@ -103,9 +104,8 @@ const articleSchema = {
   inLanguage: "en-US",
   image: `${SITE_URL}/og-image.jpg`,
   author: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
+    "@type": "Person",
+    name: AUTHOR_NAME,
   },
   publisher: {
     "@type": "Organization",
@@ -147,6 +147,10 @@ function BlogPost() {
             </h1>
             <p className="mt-5 text-xs font-medium uppercase tracking-wide text-taupe">
               <time dateTime={DATE_PUBLISHED}>{DATE_PUBLISHED_LABEL}</time>
+              <span className="mx-2 text-beige" aria-hidden="true">
+                /
+              </span>
+              <span>By {AUTHOR_NAME}</span>
             </p>
             {INTRO_PARAGRAPHS.map((paragraph) => (
               <p

@@ -23,6 +23,7 @@ const BLOG_DESCRIPTION =
   "Divorce comes with a mountain of paperwork, deadlines, and details. Here's the organization system one mom used to keep track of it all, from legal documents to financial records.";
 const DATE_PUBLISHED = "2026-10-12";
 const DATE_PUBLISHED_LABEL = "October 12, 2026";
+const AUTHOR_NAME = "Crystal Costa";
 
 const INTRO_PARAGRAPHS = [
   "I'm going to be honest with you: the emotional part of divorce gets all the attention, but the paperwork almost broke me. Legal documents, financial disclosures, custody schedules, account numbers, deadlines, copies of copies of copies. All of it arriving while you're running on no sleep and trying to keep your kids' lives feeling normal.",
@@ -119,9 +120,8 @@ const articleSchema = {
   inLanguage: "en-US",
   image: `${SITE_URL}/og-image.jpg`,
   author: {
-    "@type": "Organization",
-    name: SITE_NAME,
-    url: SITE_URL,
+    "@type": "Person",
+    name: AUTHOR_NAME,
   },
   publisher: {
     "@type": "Organization",
@@ -159,6 +159,10 @@ function BlogPost() {
             </h1>
             <p className="mt-5 text-xs font-medium uppercase tracking-wide text-taupe">
               <time dateTime={DATE_PUBLISHED}>{DATE_PUBLISHED_LABEL}</time>
+              <span className="mx-2 text-beige" aria-hidden="true">
+                /
+              </span>
+              <span>By {AUTHOR_NAME}</span>
             </p>
             {INTRO_PARAGRAPHS.map((paragraph) => (
               <p
