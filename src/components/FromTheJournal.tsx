@@ -25,9 +25,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/divorce-organization-paperwork-system",
     excerpt:
       "The binder, the filing habits and the weekly check-in that kept every legal document, deadline and custody detail in one place.",
-    image: "/images/home-office.jpg",
+    image: "/images/blog-divorce-organizing.jpg",
     imageAlt:
-      "Desk with an open laptop, a clipboard of papers and a pen in warm natural light",
+      "A cream tabbed binder on an oak desk with stacked file folders, a pen resting on a flat sheet of paper and a brass desk lamp glowing beside a stoneware mug",
     date: "October 12, 2026",
   },
   {
@@ -37,9 +37,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/meal-planning-tight-grocery-budget",
     excerpt:
       "One planning session a week, real food and no coupons: the system that keeps a grocery bill under control.",
-    image: "/images/kitchen.jpg",
+    image: "/images/blog-meal-planning.jpg",
     imageAlt:
-      "Kitchen counter with white ceramic canisters, wooden utensils and a cutting board",
+      "A canvas tote of carrots, leafy greens and onions on a butcher block counter beside an egg carton, a bowl of apples, glass jars of pantry staples and a paper meal plan",
     date: "October 12, 2026",
   },
   {
@@ -49,9 +49,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/90-minute-life-admin-reset",
     excerpt:
       "Ninety minutes, once a month, for the bills, the inbox and the paper pile. The reset that clears the backlog in one sitting.",
-    image: "/images/organization.jpg",
+    image: "/images/blog-life-admin.jpg",
     imageAlt:
-      "Baskets, trays and bins laid out in tidy rows for an organized home",
+      "An open paper planner and pen on an oak desk with wooden trays of mail, an upright file holder, a closed laptop with reading glasses and a mug of coffee",
     date: "October 12, 2026",
   },
   {
@@ -60,9 +60,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/20-minute-home-reset-adhd-moms",
     excerpt:
       "Twenty minutes, four rounds, zero shame: a realistic reset for the nights the house is a mess and you are running on empty.",
-    image: "/images/living-room.jpg",
+    image: "/images/blog-home-reset.jpg",
     imageAlt:
-      "Warm living room with a cream sectional sofa, coffee table and softly lit shelves",
+      "A linen armchair with a folded knit throw beside a woven basket of blankets, a candle and books on an oak side table and slippers on the rug",
     date: "October 12, 2026",
   },
 ];
