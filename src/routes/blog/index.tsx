@@ -58,6 +58,42 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title: "The Sunday Reset: Meal Plan + Tidy House in 2 Hours",
+    description:
+      "The 2-hour Sunday reset: a step-by-step plan to walk into Monday with meals planned and the house under control.",
+    href: "/blog/sunday-reset-meal-plan-tidy",
+    date: "October 18, 2026",
+  },
+  {
+    title:
+      "How to Cut Your Grocery Bill by $200 a Month Without Clipping a Single Coupon",
+    description:
+      "Cut your grocery bill by $200 a month with these 9 practical strategies, no coupons, no extreme frugality, just smarter shopping.",
+    href: "/blog/cut-grocery-bill-200",
+    date: "October 18, 2026",
+  },
+  {
+    title: "15 Cheap High-Protein Meals That Actually Taste Good",
+    description:
+      "15 high-protein meals under $2.50 per serving. Real food, real flavor, no sad plain chicken breast.",
+    href: "/blog/cheap-high-protein-meals",
+    date: "October 18, 2026",
+  },
+  {
+    title: "The 20-Minute ADHD Home Reset That Actually Works",
+    description:
+      "The 20-minute ADHD home reset: a cleaning system designed for how ADHD brains actually work, timers, visible progress, and zero shame.",
+    href: "/blog/20-minute-adhd-home-reset",
+    date: "October 18, 2026",
+  },
+  {
+    title: "10 Cleaning Systems Designed for ADHD Brains",
+    description:
+      "10 cleaning systems built for ADHD, body doubling, visible cues, and low-friction routines that work with your brain instead of against it.",
+    href: "/blog/cleaning-systems-adhd-brains",
+    date: "October 18, 2026",
+  },
+  {
     title:
       "Getting Organized During Divorce: The Paperwork System That Kept Me Sane",
     description:

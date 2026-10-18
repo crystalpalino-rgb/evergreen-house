@@ -19,51 +19,49 @@ type JournalPost = {
 
 const POSTS: JournalPost[] = [
   {
-    category: "Paperwork",
-    title:
-      "Getting Organized During Divorce: The Paperwork System That Kept Me Sane",
-    href: "/blog/divorce-organization-paperwork-system",
+    category: "Sunday Reset",
+    title: "The Sunday Reset: Meal Plan + Tidy House in 2 Hours",
+    href: "/blog/sunday-reset-meal-plan-tidy",
     excerpt:
-      "The binder, the filing habits and the weekly check-in that kept every legal document, deadline and custody detail in one place.",
-    image: "/images/blog-divorce-organizing.jpg",
+      "Two hours, one block: five dinners planned, the kitchen reset and the house back in order before Monday.",
+    image: "/images/blog-sunday-reset.jpg",
     imageAlt:
-      "A cream tabbed binder on an oak desk with stacked file folders, a pen resting on a flat sheet of paper and a brass desk lamp glowing beside a stoneware mug",
-    date: "October 12, 2026",
+      "An open blank planner with a brass pen and a mug of coffee on an oak counter with folded dish towels, stacked plates and a bread basket in soft morning light",
+    date: "October 18, 2026",
   },
   {
     category: "Meal Planning",
     title:
-      "How I Feed Two Kids on a Tight Grocery Budget (Without Losing My Mind)",
-    href: "/blog/meal-planning-tight-grocery-budget",
+      "How to Cut Your Grocery Bill by $200 a Month Without Clipping a Single Coupon",
+    href: "/blog/cut-grocery-bill-200",
     excerpt:
-      "One planning session a week, real food and no coupons: the system that keeps a grocery bill under control.",
-    image: "/images/blog-meal-planning.jpg",
+      "Nine strategies, no coupons: the list-first system that quietly moves $200 a month back into your budget.",
+    image: "/images/blog-cut-grocery-bill.jpg",
     imageAlt:
-      "A canvas tote of carrots, leafy greens and onions on a butcher block counter beside an egg carton, a bowl of apples, glass jars of pantry staples and a paper meal plan",
-    date: "October 12, 2026",
-  },
-  {
-    category: "Life Admin",
-    title:
-      "The 90-Minute Life Admin Day: My Monthly Reset for Bills, Inbox, and Paperwork",
-    href: "/blog/90-minute-life-admin-reset",
-    excerpt:
-      "Ninety minutes, once a month, for the bills, the inbox and the paper pile. The reset that clears the backlog in one sitting.",
-    image: "/images/blog-life-admin.jpg",
-    imageAlt:
-      "An open paper planner and pen on an oak desk with wooden trays of mail, an upright file holder, a closed laptop with reading glasses and a mug of coffee",
-    date: "October 12, 2026",
+      "A canvas tote of crisp apples, a yellow onion and leafy greens on a warm oak counter beside glass jars of pantry staples, folded paper freezer packages and a blank meal planning notepad",
+    date: "October 18, 2026",
   },
   {
     category: "Home Reset",
-    title: "The 20-Minute Home Reset for Moms Whose Brains Won't Cooperate",
-    href: "/blog/20-minute-home-reset-adhd-moms",
+    title: "The 20-Minute ADHD Home Reset That Actually Works",
+    href: "/blog/20-minute-adhd-home-reset",
     excerpt:
-      "Twenty minutes, four rounds, zero shame: a realistic reset for the nights the house is a mess and you are running on empty.",
-    image: "/images/blog-home-reset.jpg",
+      "Four rounds, five minutes each, one visible timer: the reset built for the brain you actually have.",
+    image: "/images/blog-adhd-home-reset.jpg",
     imageAlt:
-      "A linen armchair with a folded knit throw beside a woven basket of blankets, a candle and books on an oak side table and slippers on the rug",
-    date: "October 12, 2026",
+      "A round kitchen timer with a plain face beside a woven basket holding a folded linen cloth and a small amber spray bottle on a clean pale counter",
+    date: "October 18, 2026",
+  },
+  {
+    category: "Home Reset",
+    title: "10 Cleaning Systems Designed for ADHD Brains",
+    href: "/blog/cleaning-systems-adhd-brains",
+    excerpt:
+      "Body doubling, landing pads and a ten-thing pickup: ten systems that work with the way you clean.",
+    image: "/images/blog-cleaning-systems-adhd.jpg",
+    imageAlt:
+      "Open woven storage baskets and a clear bin of folded linens on an oak shelf above a bench with a tray holding keys and a wallet",
+    date: "October 18, 2026",
   },
 ];
 

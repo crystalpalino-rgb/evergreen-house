@@ -16,11 +16,17 @@ function baseMeta(overrides: {
   ogType?: string;
   ogUrl?: string;
   twitterCard?: "summary" | "summary_large_image";
+  /** Per-page social image; defaults to the site-wide og-image.jpg. */
+  ogImage?: string;
+  /** Real pixel size of ogImage, so the declared dimensions stay truthful. */
+  ogImageWidth?: number;
+  ogImageHeight?: number;
 }) {
   const ogTitle = overrides.ogTitle || overrides.title;
   const ogDesc = overrides.ogDescription || overrides.description;
   const ogType = overrides.ogType || "website";
   const twitterCard = overrides.twitterCard || "summary_large_image";
+  const ogImage = overrides.ogImage || OG_IMAGE_URL;
 
   return {
     meta: [
@@ -31,16 +37,16 @@ function baseMeta(overrides: {
       { property: "og:description", content: ogDesc },
       { property: "og:type", content: ogType },
       { property: "og:url", content: overrides.ogUrl || SITE_URL },
-      { property: "og:image", content: OG_IMAGE_URL },
-      { property: "og:image:width", content: "1200" },
-      { property: "og:image:height", content: "630" },
+      { property: "og:image", content: ogImage },
+      { property: "og:image:width", content: String(overrides.ogImageWidth || 1200) },
+      { property: "og:image:height", content: String(overrides.ogImageHeight || 630) },
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:locale", content: "en_US" },
       // Twitter
       { name: "twitter:card", content: twitterCard },
       { name: "twitter:title", content: ogTitle },
       { name: "twitter:description", content: ogDesc },
-      { name: "twitter:image", content: OG_IMAGE_URL },
+      { name: "twitter:image", content: ogImage },
       { name: "twitter:site", content: "@evergreenhouse" },
     ] as Array<Record<string, string>>,
     links: [
@@ -188,13 +194,19 @@ export function generateStyleMetadata(styleName: string, slug?: string) {
 export function generateStaticMetadata(
   pageTitle: string,
   pageDescription: string,
-  path: string
+  path: string,
+  options?: { image?: string; imageWidth?: number; imageHeight?: number }
 ) {
   const title = `${pageTitle} | Evergreen House`;
   return baseMeta({
     title,
     description: pageDescription,
     ogUrl: `${SITE_URL}${path}`,
+    // Per-post art (Journal heroes) overrides the site-wide og-image.jpg; the
+    // declared dimensions follow the file so the tags stay truthful.
+    ogImage: options?.image,
+    ogImageWidth: options?.imageWidth,
+    ogImageHeight: options?.imageHeight,
   });
 }
 
