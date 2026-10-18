@@ -181,6 +181,31 @@ async function main() {
       priority: "0.7",
       changefreq: "monthly",
     },
+    {
+      loc: "/blog/sunday-reset-meal-plan-tidy",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/cut-grocery-bill-200",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/cheap-high-protein-meals",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/20-minute-adhd-home-reset",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/cleaning-systems-adhd-brains",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
   // Shop the Edit landing pages: /collections/<edit-slug> (four published edits).
