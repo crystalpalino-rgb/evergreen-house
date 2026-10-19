@@ -37,13 +37,19 @@ export interface EditCollection {
   art_note: string;
   hero_image: string;
   card_image: string;
+  /** Optional edit-authored related list, in strip order. The two Thanksgiving
+   *  edits name each other plus the holiday hosting edit; the older edits leave
+   *  it unset and fall back to the first three published edits. */
+  related?: string[];
   items: EditItem[];
 }
 
 const ALL: EditCollection[] = (manifest as { collections: EditCollection[] })
   .collections;
 
-/** The four published edits, in the order the owner brief lists them. */
+/** The published edits, in manifest order: the four holiday edits first, then
+    the two Thanksgiving edits, which is the order the homepage row and the
+    /collections list render them in. */
 export const EDITS: EditCollection[] = ALL;
 
 export const EDIT_SLUGS: string[] = EDITS.map((e) => e.slug);
@@ -52,9 +58,23 @@ export function getEdit(slug: string): EditCollection | null {
   return EDITS.find((e) => e.slug === slug) ?? null;
 }
 
-/** The other three edits, for the "Related edits" strip. */
+/**
+ * The "Related edits" strip for one edit, in order.
+ *
+ * An edit that names its own related list in the manifest wins: the Thanksgiving
+ * edits lead with the holiday hosting edit and with each other, which the
+ * positional fallback could never express (they sit last in the manifest, so the
+ * fallback would always hand them the Christmas edits). Everything else keeps the
+ * old behaviour: the first three published edits that are not this one.
+ */
 export function getRelatedEdits(slug: string, limit = 3): EditCollection[] {
-  return EDITS.filter((e) => e.slug !== slug).slice(0, limit);
+  const self = EDITS.find((e) => e.slug === slug);
+  const named = (self?.related ?? [])
+    .filter((other) => other !== slug)
+    .map((other) => EDITS.find((e) => e.slug === other))
+    .filter((e): e is EditCollection => e !== undefined);
+  const list = named.length > 0 ? named : EDITS.filter((e) => e.slug !== slug);
+  return list.slice(0, limit);
 }
 
 /** Artist-credited hero/card art: webp first, jpg fallback. */
