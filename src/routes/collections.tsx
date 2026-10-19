@@ -201,12 +201,14 @@ function CollectionsPage() {
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             {/* Curated edits (the SHOP THE EDITS destination) first: these are
-                the four editorial collections the nav points at. */}
+                the editorial collections the nav points at, including the two
+                Thanksgiving edits. Three up on desktop keeps the six cards in
+                two even rows. */}
             <div className="mb-14">
               <h2 className="mb-6 font-serif text-2xl font-semibold text-warm-dark">
                 Shop the Edits
               </h2>
-              <div className="grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
                 {EDITS.map((edit, i) => (
                   <EditCard
                     key={edit.slug}
