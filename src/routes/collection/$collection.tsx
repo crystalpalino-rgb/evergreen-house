@@ -9,6 +9,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { HolidaySets } from "~/components/HolidaySets";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getCollection, getCollectionProducts, getAllCollections } from "~/lib/intelligence";
+import { isRoomPublic } from "~/lib/room-visibility";
 import { generateCollectionMetadata } from "~/lib/seo";
 import { getCollectionPageSchema, getFAQSchema, SITE_URL } from "~/lib/schema";
 import type { Product, Collection } from "~/lib/types";
@@ -56,6 +57,12 @@ function getCollectionFAQs(
 export const Route = createFileRoute("/collection/$collection")({
   loader: async ({ params }) => {
     const slug = params.collection;
+    // A collection slug can be the same string as a room slug, so the same public
+    // room list applies here: a room the owner has not approved is not reachable
+    // through /collection either (src/lib/room-visibility.ts).
+    if (!isRoomPublic(slug)) {
+      throw notFound();
+    }
     try {
       const [collection, products, allCollections] = await Promise.all([
         getCollection(slug),

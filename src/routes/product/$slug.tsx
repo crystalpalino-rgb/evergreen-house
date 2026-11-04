@@ -12,6 +12,7 @@ import { AnalyticsList } from "~/components/AnalyticsList";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { getRelatedProducts } from "~/lib/related";
+import { isRoomPublic } from "~/lib/room-visibility";
 import { generateProductMetadata } from "~/lib/seo";
 import {
   getProductSchema,
@@ -177,7 +178,9 @@ function ProductPage() {
   const breadcrumbItems = [
     { label: "Home", href: "/" },
     { label: "Rooms", href: "/rooms" },
-    { label: roomLabel, href: `/room/${p.room}` },
+    // The room crumb only carries a link when the room is approved as public
+    // (src/lib/room-visibility.ts). A hidden room still names the piece's space.
+    ...(isRoomPublic(p.room) ? [{ label: roomLabel, href: `/room/${p.room}` }] : []),
     { label: displayName.length > 40 ? displayName.slice(0, 40) + "..." : displayName },
   ];
 
@@ -310,7 +313,7 @@ function ProductPage() {
 
                 {/* Room & style tags */}
                 <div className="mt-4 flex flex-wrap gap-2">
-                  {p.room && (
+                  {p.room && isRoomPublic(p.room) && (
                     <a
                       href={`/room/${p.room}`}
                       className="inline-block rounded-full bg-cream px-3 py-1 text-xs font-medium text-warm-dark transition-colors hover:bg-cream-dark"
@@ -409,7 +412,9 @@ function ProductPage() {
           </section>
         )}
 
-        {/* Browse by Room */}
+        {/* Browse by Room. Only for a room the owner has approved as public
+            (src/lib/room-visibility.ts): a hidden room has no page to send to. */}
+        {isRoomPublic(p.room) && (
         <section aria-labelledby="browse-room-heading" className="border-t border-beige/20 bg-cream/30 py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <h2
@@ -433,6 +438,7 @@ function ProductPage() {
             </a>
           </div>
         </section>
+        )}
       </main>
       <Footer />
     </>
