@@ -61,10 +61,10 @@ export const SHOP_THE_LOOK: HomepageSection = {
       hook: "Holly banded porcelain plates that finish the table before the food arrives.",
     },
     {
-      id: 483,
-      slug: "spode-christmas-tree-glass-pitcher-96-oz",
-      display_title: "Spode Christmas Tree Glass Pitcher, 96 oz",
-      hook: "Ninety six ounces of eggnog, cider or water, all in one pitcher.",
+      id: 521,
+      slug: "dii-farmhouse-christmas-plaid-placemats-set-of-6",
+      display_title: "DII Christmas Plaid Placemats, Set of 6",
+      hook: "Six placemats that sit under the six plates and finish the setting.",
     },
     {
       id: 490,
