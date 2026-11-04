@@ -1,14 +1,14 @@
 /**
  * Apparel merchandising groups for the /apparel landing page and its nav menu.
  *
- * The catalogue already carries the clothing rows under `product_type = 'apparel'`,
+ * The catalog already carries the clothing rows under `product_type = 'apparel'`,
  * so nothing about the data model had to change to give apparel a home: the page
  * selects that product type through the same resolver library the room, collection
  * and search pages use (`getAllProducts` in ~/lib/intelligence.ts), and this module
  * only decides which of those rows sits in which editorial group.
  *
  * Buckets are keyword matched against the product name (long and short names are the
- * same string in this catalogue). Order matters: the first bucket that matches wins,
+ * same string in this catalog). Order matters: the first bucket that matches wins,
  * so outerwear is tested before knitwear and knitwear before tops, which keeps a
  * "sweatshirt" out of Tops and a "flannel shacket" out of Shirts.
  *

@@ -13,7 +13,7 @@
  * (serialized/mapped payloads via the per-route mappers).
  */
 
-/** Slugify a product display name. Mirrors the historical route behaviour. */
+/** Slugify a product display name. Mirrors the historical route behavior. */
 export function productNameToSlug(name: string): string {
   return (name || "")
     .toLowerCase()

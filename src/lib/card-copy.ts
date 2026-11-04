@@ -164,7 +164,7 @@ const STOPWORDS = new Set([
   "into", "onto", "over", "under", "past", "about", "above", "below",
   "between", "through", "during", "before", "after", "against", "across",
   "around", "along", "behind", "beyond", "within", "upon", "per", "via",
-  "off", "out", "up", "down", "near", "like", "despite", "toward", "towards",
+  "off", "out", "up", "down", "near", "like", "despite", "toward",
   // auxiliaries and copulas
   "is", "are", "was", "were", "be", "been", "being", "am",
   "has", "have", "had", "having", "do", "does", "did", "doing",

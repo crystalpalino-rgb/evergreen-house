@@ -24,7 +24,7 @@ const DATE_PUBLISHED = "2026-10-08";
 const DATE_PUBLISHED_LABEL = "October 8, 2026";
 
 const INTRO =
-  "There is a version of fall decorating that has nothing to do with plastic pumpkins. It is a runner the colour of terracotta on a bare wood table, a felt garland hung over a mantel, dried stems in a stone vase, and a throw heavy enough that a sofa becomes somewhere you stay. Warm light, texture and a little green do more for a room in October than any ornament does. Below are the thirteen pieces we would put out first, all of them from our fall edit, and the ones we would happily leave out until spring.";
+  "There is a version of fall decorating that has nothing to do with plastic pumpkins. It is a runner the color of terracotta on a bare wood table, a felt garland hung over a mantel, dried stems in a stone vase, and a throw heavy enough that a sofa becomes somewhere you stay. Warm light, texture and a little green do more for a room in October than any ornament does. Below are the thirteen pieces we would put out first, all of them from our fall edit, and the ones we would happily leave out until spring.";
 
 const CLOSING =
   "None of this asks you to replace anything you own. Warm the light, warm the table, add one thing you can actually feel with your hands, and the room reads autumn. Every piece here is a small decision rather than a seasonal overhaul, and most of it folds away in December.";
@@ -116,7 +116,7 @@ const SECTIONS: BlogSection[] = [
         amazonUrl: "https://www.amazon.com/dp/B0GXTY6253?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/71FBfnS-D6L._AC_SL1500_.jpg",
-        note: "Two pumpkins in a matte terracotta finish, one round and one tall, sized for a table rather than a porch step. Because they are the colour of clay rather than bright orange, they sit easily with wood, linen and white dishes: put them on the runner with a candle and the table is done. Weighted enough to stay where you place them.",
+        note: "Two pumpkins in a matte terracotta finish, one round and one tall, sized for a table rather than a porch step. Because they are the color of clay rather than bright orange, they sit easily with wood, linen and white dishes: put them on the runner with a candle and the table is done. Weighted enough to stay where you place them.",
       },
       {
         id: 411,
@@ -156,7 +156,7 @@ const SECTIONS: BlogSection[] = [
         amazonUrl: "https://www.amazon.com/dp/B0F6C8L1LR?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/81pG+yI6E3L._AC_SL1500_.jpg",
-        note: "Rust orange in the same 18 inch size, for anyone who wants one honest hit of autumn colour. Layer these behind the beige covers so the rust only shows at the edges, and the sofa looks styled rather than themed. Double-sided, so they can be turned when one face has had a season of use.",
+        note: "Rust orange in the same 18 inch size, for anyone who wants one honest hit of autumn color. Layer these behind the beige covers so the rust only shows at the edges, and the sofa looks styled rather than themed. Double-sided, so they can be turned when one face has had a season of use.",
       },
       {
         id: 197,
@@ -210,7 +210,7 @@ const SECTIONS: BlogSection[] = [
         amazonUrl: "https://www.amazon.com/dp/B0CDJS8CZG?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/91LwQXjmW0L._AC_SL1500_.jpg",
-        note: "Faux rabbit has the closest pile to the real thing, dense and short, and it stays soft after washing. At 60 by 80 inches it covers a lap and still falls over the back of a chair, which is what makes a corner look lived in rather than staged. In Brun rabbit, it warms a pale room without introducing a single new colour. Note the 4.2 rating: this is the pick for pure texture, not the highest-rated item in the room.",
+        note: "Faux rabbit has the closest pile to the real thing, dense and short, and it stays soft after washing. At 60 by 80 inches it covers a lap and still falls over the back of a chair, which is what makes a corner look lived in rather than staged. In Brun rabbit, it warms a pale room without introducing a single new color. Note the 4.2 rating: this is the pick for pure texture, not the highest-rated item in the room.",
       },
     ],
   },

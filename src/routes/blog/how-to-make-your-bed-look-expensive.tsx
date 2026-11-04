@@ -173,7 +173,7 @@ const SECTIONS: BlogSection[] = [
           "/product/evergracehome-chunky-chenille-knit-throw-blanket-for-couch-soft-luxurious-moss-stitch-chair-blankets-for-bed-cozy-decora",
         amazonUrl: "https://www.amazon.com/dp/B0DRCHR48S?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/81iSCjC9l1L._AC_SL1500_.jpg",
-        note: "A throw folded across the foot of the bed is the detail that finishes the room. This one is a chunky moss stitch in chenille, so it has real dimension rather than a printed texture, and the yarn is soft against the skin rather than scratchy, which is not true of every chunky knit. At 50 by 60 inches it covers the end of a bed without dragging on the floor. The olive sits comfortably beside cream, grey and wood.",
+        note: "A throw folded across the foot of the bed is the detail that finishes the room. This one is a chunky moss stitch in chenille, so it has real dimension rather than a printed texture, and the yarn is soft against the skin rather than scratchy, which is not true of every chunky knit. At 50 by 60 inches it covers the end of a bed without dragging on the floor. The olive sits comfortably beside cream, gray and wood.",
       },
     ],
   },

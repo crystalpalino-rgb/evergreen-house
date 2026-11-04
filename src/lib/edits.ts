@@ -66,7 +66,7 @@ export function getEdit(slug: string): EditCollection | null {
  * edits lead with the holiday hosting edit and with each other, which the
  * positional fallback could never express (they sit last in the manifest, so the
  * fallback would always hand them the Christmas edits). Everything else keeps the
- * old behaviour: the first three published edits that are not this one.
+ * old behavior: the first three published edits that are not this one.
  */
 export function getRelatedEdits(slug: string, limit = 3): EditCollection[] {
   const self = EDITS.find((e) => e.slug === slug);

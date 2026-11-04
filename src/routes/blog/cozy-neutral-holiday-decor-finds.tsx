@@ -24,7 +24,7 @@ const DATE_PUBLISHED = "2026-10-08";
 const DATE_PUBLISHED_LABEL = "October 8, 2026";
 
 const INTRO =
-  "The holiday rooms we remember are never the busiest ones. They are warm white light on a windowsill, greenery that looks like it was gathered rather than bought, a cream knit skirt under a bare tree, and one soft throw where someone always sits. Colour, when it comes, arrives in small honest amounts: a red plaid mat at the door, a holly border on the plates. Here are fourteen pieces from our holiday edit that do that work, most of them under thirty dollars, none of them tinsel.";
+  "The holiday rooms we remember are never the busiest ones. They are warm white light on a windowsill, greenery that looks like it was gathered rather than bought, a cream knit skirt under a bare tree, and one soft throw where someone always sits. Color, when it comes, arrives in small honest amounts: a red plaid mat at the door, a holly border on the plates. Here are fourteen pieces from our holiday edit that do that work, most of them under thirty dollars, none of them tinsel.";
 
 const CLOSING =
   "The most restful Christmas rooms are the ones where the light and the greenery do the talking and everything else stays quiet. Start at the front door, move to the mantel, then finish at the tree. By the time you get there, the house already feels like December.";
@@ -143,7 +143,7 @@ const SECTIONS: BlogSection[] = [
         amazonUrl: "https://www.amazon.com/dp/B07RT4GT8W?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/81QA7CwkG1L._AC_SL1500_.jpg",
-        note: "Cream cable knit, 48 inches across, with the weight of a good sweater. A neutral skirt lets the tree and the wrapping carry the colour, and it covers the stand completely rather than half-heartedly. The rib and garter knit gives it enough texture to look deliberate under a bare tree, and it rolls up small in January.",
+        note: "Cream cable knit, 48 inches across, with the weight of a good sweater. A neutral skirt lets the tree and the wrapping carry the color, and it covers the stand completely rather than half-heartedly. The rib and garter knit gives it enough texture to look deliberate under a bare tree, and it rolls up small in January.",
       },
       {
         id: 81,
