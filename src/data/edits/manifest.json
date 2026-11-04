@@ -1,6 +1,6 @@
 {
   "manifest_version": "2026-10-18",
-  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present). 2026-10-11 (second owner file, 'Evergreen New 10.11.2'): every Amazon link in that catalog was added to the collection named on its row (13 new catalog rows, ids 539-551; 2 duplicate rows inside the file collapsed; 0 rows were already present in their collection). 2026-10-18: two new Thanksgiving edits added to the published set (The Thanksgiving Hosting Edit, 13 pieces; The Moody Tablescape Edit, 10 pieces), built from the merchandiser verification CSVs /home/team/shared/thanksgiving-hosting-edit/products-verified.csv and /home/team/shared/moody-tablescape-edit/products-verified.csv; 23 new catalog rows, ids 552-574, each with a clean tagged link.",
+  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present). 2026-10-11 (second owner file, 'Evergreen New 10.11.2'): every Amazon link in that catalog was added to the collection named on its row (13 new catalog rows, ids 539-551; 2 duplicate rows inside the file collapsed; 0 rows were already present in their collection). 2026-10-18: two new Thanksgiving edits added to the published set (The Thanksgiving Hosting Edit, 13 pieces; The Moody Tablescape Edit, 10 pieces), built from the merchandiser verification CSVs /home/team/shared/thanksgiving-hosting-edit/products-verified.csv and /home/team/shared/moody-tablescape-edit/products-verified.csv; 23 new catalog rows, ids 552-574, each with a clean tagged link. 2026-11-04: Thanksgiving 2026 build. Four Thanksgiving edits now published: thanksgiving-table-edit (20), moody-thanksgiving-edit (20), thanksgiving-hosting-edit (19), thanksgiving-welcome-edit (12). Built by scripts/build-thanksgiving-edits.mjs from the set files and copy file in /home/team/shared/thanksgiving-2026/build/, all figures verified live on 2026-11-04. moody-tablescape-edit retired (owner decision 17: one Moody collection) and its URL redirects to /collections/moody-thanksgiving-edit. DOWAN Large White Serving Bowls, Set of 2 (id 608) is deliberately absent from the Hosting set: same Amazon listing family as id 590 in the Table set, so one product would sit in two sets of the same season. Hosting ships at 19, unpadded.",
   "collections": [
     {
       "slug": "heritage-christmas-edit",
@@ -791,6 +791,358 @@
       ]
     },
     {
+      "slug": "thanksgiving-table-edit",
+      "title": "The Thanksgiving Table Edit",
+      "headline": "Cream and amber, layered so the food is the only color on the table",
+      "intro": "Thanksgiving at its most classic is a table that gets out of the way: cream stoneware, a linen runner down the length of the table, ivory napkins, amber glass catching the candlelight. Nothing here competes with the bird, which is why the same plates will look right at Easter and on an ordinary Tuesday in March. It is built in the order a table is actually set, plates first, then linen, then light.",
+      "art_note": "A long dining table shot from a high three quarter angle in late afternoon window light: a light natural linen runner running the full length and pooling at the near end, cream stoneware dinner plates set on round water hyacinth chargers, ivory cotton napkins folded loose beside each plate with one Spode Woodland turkey plate tucked under a cream plate as the single patterned note, amber pressed glass goblets and amber hobnail tumblers catching the light, a white ceramic serving bowl of mashed potatoes and a wide shallow bowl of stuffing at the center, three gold taper holders at three heights with ivory beeswax tapers lit, a loose bundle of faux eucalyptus laid along the runner and two potted eucalyptus in cream pots at the far end. Cream, ivory, natural flax, amber and one warm honey flame, soft directional daylight with long shadows across the wood, no people, no text",
+      "hero_image": "/images/edit-thanksgiving-table-edit-hero-light",
+      "card_image": "/images/edit-thanksgiving-table-edit-card-light",
+      "related": [
+        "moody-thanksgiving-edit",
+        "thanksgiving-hosting-edit",
+        "thanksgiving-welcome-edit"
+      ],
+      "items": [
+        {
+          "id": 575,
+          "slug": "gibson-elite-pasco-16-piece-cream-stoneware-dinner-set",
+          "name": "Gibson Elite Pasco 16 Piece Cream Stoneware Dinner Set",
+          "display_title": "Gibson Elite Pasco 16 Piece Cream Stoneware Dinner Set",
+          "hook": "Cream stoneware for four, with a reactive glaze that breaks differently on every plate.",
+          "raw_name": false
+        },
+        {
+          "id": 576,
+          "slug": "pfaltzgraff-trellis-white-16-piece-stoneware-dinner-set",
+          "name": "Pfaltzgraff Trellis White 16 Piece Stoneware Dinner Set",
+          "display_title": "Pfaltzgraff Trellis White 16 Piece Stoneware Dinner Set",
+          "hook": "Crisp white stoneware for four with a raised trellis pressed into every piece.",
+          "raw_name": false
+        },
+        {
+          "id": 577,
+          "slug": "solino-home-light-natural-linen-table-runner-108-inches",
+          "name": "Solino Home Light Natural Linen Table Runner, 108 Inches",
+          "display_title": "Solino Home Light Natural Linen Table Runner, 108 Inches",
+          "hook": "One long length of European flax that pools off both ends of the table.",
+          "raw_name": false
+        },
+        {
+          "id": 578,
+          "slug": "wracra-rustic-linen-table-runner-in-light-coffee-72-inches",
+          "name": "Wracra Rustic Linen Table Runner in Light Coffee, 72 Inches",
+          "display_title": "Wracra Rustic Linen Table Runner in Light Coffee, 72 Inches",
+          "hook": "A short fringed runner for a sideboard, or a second layer over the long one.",
+          "raw_name": false
+        },
+        {
+          "id": 579,
+          "slug": "ruvanti-ivory-cotton-napkins-set-of-12",
+          "name": "Ruvanti Ivory Cotton Napkins, Set of 12",
+          "display_title": "Ruvanti Ivory Cotton Napkins, Set of 12",
+          "hook": "Twelve ivory napkins that come out of the drawer already smooth.",
+          "raw_name": false
+        },
+        {
+          "id": 580,
+          "slug": "urban-villa-beige-and-white-cotton-napkins-set-of-12",
+          "name": "Urban Villa Beige and White Cotton Napkins, Set of 12",
+          "display_title": "Urban Villa Beige and White Cotton Napkins, Set of 12",
+          "hook": "A heavier twenty inch cotton napkin that drapes instead of folding.",
+          "raw_name": false
+        },
+        {
+          "id": 581,
+          "slug": "cotton-craft-fringed-cotton-napkins-in-beige-set-of-12",
+          "name": "Cotton Craft Fringed Cotton Napkins in Beige, Set of 12",
+          "display_title": "Cotton Craft Fringed Cotton Napkins in Beige, Set of 12",
+          "hook": "Beige cotton with a cut fringe, so a plain plate still has something to say.",
+          "raw_name": false
+        },
+        {
+          "id": 582,
+          "slug": "o-lucio-pure-linen-napkins-with-swiss-dot-set-of-4",
+          "name": "O'lucio Pure Linen Napkins with Swiss Dot, Set of 4",
+          "display_title": "O'lucio Pure Linen Napkins with Swiss Dot, Set of 4",
+          "hook": "Four linen napkins with a hemstitched border for the seats you want noticed.",
+          "raw_name": false
+        },
+        {
+          "id": 583,
+          "slug": "koyal-water-hyacinth-woven-charger-placemats-set-of-4",
+          "name": "Koyal Water Hyacinth Woven Charger Placemats, Set of 4",
+          "display_title": "Koyal Water Hyacinth Woven Charger Placemats, Set of 4",
+          "hook": "Round water hyacinth chargers that put a warm ring under each cream plate.",
+          "raw_name": false
+        },
+        {
+          "id": 584,
+          "slug": "spode-woodland-turkey-dinner-plate-10-5-inches",
+          "name": "Spode Woodland Turkey Dinner Plate, 10.5 Inches",
+          "display_title": "Spode Woodland Turkey Dinner Plate, 10.5 Inches",
+          "hook": "One patterned plate, the only bird on the table, tucked under the cream one.",
+          "raw_name": false
+        },
+        {
+          "id": 585,
+          "slug": "10-strawberry-street-vatican-amber-goblets-set-of-6",
+          "name": "10 Strawberry Street Vatican Amber Goblets, Set of 6",
+          "display_title": "10 Strawberry Street Vatican Amber Goblets, Set of 6",
+          "hook": "Six pressed amber goblets whose pattern reads as texture rather than shine.",
+          "raw_name": false
+        },
+        {
+          "id": 586,
+          "slug": "yungala-amber-hobnail-tumblers-set-of-6",
+          "name": "Yungala Amber Hobnail Tumblers, Set of 6",
+          "display_title": "Yungala Amber Hobnail Tumblers, Set of 6",
+          "hook": "Hobnail amber tumblers with the color in the glass itself, not painted on.",
+          "raw_name": false
+        },
+        {
+          "id": 587,
+          "slug": "joyjolt-layla-white-wine-glasses-set-of-4",
+          "name": "JoyJolt Layla White Wine Glasses, Set of 4",
+          "display_title": "JoyJolt Layla White Wine Glasses, Set of 4",
+          "hook": "Thin rimmed clear stems to sit beside the amber and let the wine show.",
+          "raw_name": false
+        },
+        {
+          "id": 588,
+          "slug": "nuptio-gold-taper-candle-holders-set-of-3-heights",
+          "name": "NUPTIO Gold Taper Candle Holders, Set of 3 Heights",
+          "display_title": "NUPTIO Gold Taper Candle Holders, Set of 3 Heights",
+          "hook": "Three gold holders at three heights, so the flames climb across the table.",
+          "raw_name": false
+        },
+        {
+          "id": 589,
+          "slug": "big-dipper-hand-dipped-beeswax-tapers-in-ivory-12-inch",
+          "name": "Big Dipper Hand Dipped Beeswax Tapers in Ivory, 12 Inch",
+          "display_title": "Big Dipper Hand Dipped Beeswax Tapers in Ivory, 12 Inch",
+          "hook": "Two hand dipped beeswax tapers, unpainted, so the wax keeps its honey tone.",
+          "raw_name": false
+        },
+        {
+          "id": 590,
+          "slug": "dowan-90-ounce-white-serving-bowl",
+          "name": "DOWAN 90 Ounce White Serving Bowl",
+          "display_title": "DOWAN 90 Ounce White Serving Bowl",
+          "hook": "A deep white bowl, 90 ounces, for the potatoes, the stuffing or a salad.",
+          "raw_name": false
+        },
+        {
+          "id": 591,
+          "slug": "amorarc-ceramic-serving-bowls-set-of-2",
+          "name": "AmorArc Ceramic Serving Bowls, Set of 2",
+          "display_title": "AmorArc Ceramic Serving Bowls, Set of 2",
+          "hook": "Two wide shallow bowls sized to hold a lot without crowding the table.",
+          "raw_name": false
+        },
+        {
+          "id": 592,
+          "slug": "bloomingville-cream-stoneware-bowl-with-orbs",
+          "name": "Bloomingville Cream Stoneware Bowl with Orbs",
+          "display_title": "Bloomingville Cream Stoneware Bowl with Orbs",
+          "hook": "A cream bowl with raised orbs around the outside, glaze breaking over each one.",
+          "raw_name": false
+        },
+        {
+          "id": 593,
+          "slug": "tiyard-faux-eucalyptus-stems-18-pieces",
+          "name": "Tiyard Faux Eucalyptus Stems, 18 Pieces",
+          "display_title": "Tiyard Faux Eucalyptus Stems, 18 Pieces",
+          "hook": "Eighteen bendable eucalyptus stems to run the length of the linen runner.",
+          "raw_name": false
+        },
+        {
+          "id": 594,
+          "slug": "velener-potted-faux-eucalyptus-set-of-2",
+          "name": "Velener Potted Faux Eucalyptus, Set of 2",
+          "display_title": "Velener Potted Faux Eucalyptus, Set of 2",
+          "hook": "Two small potted eucalyptus in cream pots to anchor the end of the runner.",
+          "raw_name": false
+        }
+      ]
+    },
+    {
+      "slug": "moody-thanksgiving-edit",
+      "title": "The Moody Thanksgiving Edit",
+      "headline": "Black matte, wine and brass, with the candles doing the lighting",
+      "intro": "A moody table starts with black: matte stoneware plates, a dark brown linen runner, burgundy cotton napkins and smoke gray glass, then brass candle holders short enough that the flames sit below the conversation. There is almost no color anywhere except the wine and one low arrangement of burgundy peonies, and that restraint is what makes the room read as deliberate. This is the set for the year you host after dark, when the table has to hold its own against the candles.",
+      "art_note": "A Thanksgiving table shot at a low three quarter angle in a dark room, lit by candles only: black matte stoneware dinner plates and coupe settings, a dark brown linen runner running the full length with a shorter wine hemstitch runner laid over it, burgundy cotton napkins beside each plate, smoke gray ribbed goblets and stemless glasses with a copper band, three short antique brass candlesticks holding lit burgundy beeswax tapers, a reversible acacia board with bread at the center and a glass carafe beside it, four burgundy peony stems kept low in a footed bowl. Black, burgundy, dark brown and antique brass, deep shadow with warm flame cores and one copper highlight, no people, no text",
+      "hero_image": "/images/edit-moody-thanksgiving-edit-hero-light",
+      "card_image": "/images/edit-moody-thanksgiving-edit-card-light",
+      "related": [
+        "thanksgiving-table-edit",
+        "thanksgiving-hosting-edit",
+        "thanksgiving-welcome-edit"
+      ],
+      "items": [
+        {
+          "id": 595,
+          "slug": "stone-lain-celina-black-matte-stoneware-dinner-set-16-pieces",
+          "name": "Stone Lain Celina Black Matte Stoneware Dinner Set, 16 Pieces",
+          "display_title": "Stone Lain Celina Black Matte Stoneware Dinner Set, 16 Pieces",
+          "hook": "Black matte stoneware for four, round and quiet, going straight in the dishwasher.",
+          "raw_name": false
+        },
+        {
+          "id": 596,
+          "slug": "10-strawberry-street-wazee-matte-black-dinner-set-16-pieces",
+          "name": "10 Strawberry Street Wazee Matte Black Dinner Set, 16 Pieces",
+          "display_title": "10 Strawberry Street Wazee Matte Black Dinner Set, 16 Pieces",
+          "hook": "Four coupe settings with a mug apiece, matte black from the plate to the coffee.",
+          "raw_name": false
+        },
+        {
+          "id": 597,
+          "slug": "solino-home-brown-linen-table-runner-108-inches",
+          "name": "Solino Home Brown Linen Table Runner, 108 Inches",
+          "display_title": "Solino Home Brown Linen Table Runner, 108 Inches",
+          "hook": "A full length of dark brown flax that runs the table and pools at the ends.",
+          "raw_name": false
+        },
+        {
+          "id": 598,
+          "slug": "solino-home-wine-hemstitch-table-runner-90-inches",
+          "name": "Solino Home Wine Hemstitch Table Runner, 90 Inches",
+          "display_title": "Solino Home Wine Hemstitch Table Runner, 90 Inches",
+          "hook": "Wine cotton and linen with a hemstitched border, laid lighter over the brown.",
+          "raw_name": false
+        },
+        {
+          "id": 599,
+          "slug": "solino-home-grape-linen-table-runner-60-inches",
+          "name": "Solino Home Grape Linen Table Runner, 60 Inches",
+          "display_title": "Solino Home Grape Linen Table Runner, 60 Inches",
+          "hook": "The shortest band of pure linen, for a small table or one grape stripe.",
+          "raw_name": false
+        },
+        {
+          "id": 600,
+          "slug": "utopia-kitchen-burgundy-cotton-napkins-set-of-12",
+          "name": "Utopia Kitchen Burgundy Cotton Napkins, Set of 12",
+          "display_title": "Utopia Kitchen Burgundy Cotton Napkins, Set of 12",
+          "hook": "Twelve burgundy cotton napkins, so a table of eight still has spares.",
+          "raw_name": false
+        },
+        {
+          "id": 571,
+          "slug": "yangqihome-woven-water-hyacinth-placemats-set-of-4",
+          "name": "Round Woven Placemats Set of 4, Natural Water Hyacinth Place Mats, Boho Wicker Placemats, Table Mats for Dining Table (13.8 inch) by YANGQIHOME",
+          "display_title": "Round Woven Placemats Set of 4, Natural Water Hyacinth Place Mats, Boho Wicker Placemats, Table Mats for Dining Table (13.8 inch) by YANGQIHOME",
+          "hook": "Hand coiled water hyacinth chargers that warm a dark table.",
+          "raw_name": true
+        },
+        {
+          "id": 601,
+          "slug": "libbey-classic-stemmed-goblets-set-of-12",
+          "name": "Libbey Classic Stemmed Goblets, Set of 12",
+          "display_title": "Libbey Classic Stemmed Goblets, Set of 12",
+          "hook": "Twelve clear goblets, the volume answer when everyone reaches at once.",
+          "raw_name": false
+        },
+        {
+          "id": 602,
+          "slug": "fitz-and-floyd-trestle-smoke-goblets-set-of-4",
+          "name": "Fitz and Floyd Trestle Smoke Goblets, Set of 4",
+          "display_title": "Fitz and Floyd Trestle Smoke Goblets, Set of 4",
+          "hook": "Four smoke gray goblets with a ribbed bowl, the dark glass that sets the mood.",
+          "raw_name": false
+        },
+        {
+          "id": 603,
+          "slug": "mygift-copper-accent-stemless-wine-glasses-set-of-4",
+          "name": "MyGift Copper Accent Stemless Wine Glasses, Set of 4",
+          "display_title": "MyGift Copper Accent Stemless Wine Glasses, Set of 4",
+          "hook": "Four stemless glasses with a copper band that ties the glass to the brass.",
+          "raw_name": false
+        },
+        {
+          "id": 604,
+          "slug": "allsum-reversible-wood-serving-board",
+          "name": "Allsum Reversible Wood Serving Board",
+          "display_title": "Allsum Reversible Wood Serving Board",
+          "hook": "A reversible acacia board, grooved side up when the bird is carved at the table.",
+          "raw_name": false
+        },
+        {
+          "id": 570,
+          "slug": "oganazi-amber-glass-coasters-set-of-5",
+          "name": "Modern Clear Coasters Set of 5- Glass Cute Coasters for Drinks, Amber",
+          "display_title": "Modern Clear Coasters Set of 5- Glass Cute Coasters for Drinks, Amber",
+          "hook": "Five amber glass coasters that keep rings off the dark wood.",
+          "raw_name": true
+        },
+        {
+          "id": 567,
+          "slug": "romadedi-gold-hurricane-candlesticks-set-of-3",
+          "name": "Romadedi Glass Hurricane Candle Holders for Candlestick, Gold, Set of 3",
+          "display_title": "Romadedi Glass Hurricane Candle Holders for Candlestick, Gold, Set of 3",
+          "hook": "Three gold candlesticks with glass chimneys that steady a taper.",
+          "raw_name": true
+        },
+        {
+          "id": 605,
+          "slug": "sujun-revere-antique-brass-taper-candlesticks-set-of-3",
+          "name": "SUJUN Revere Antique Brass Taper Candlesticks, Set of 3",
+          "display_title": "SUJUN Revere Antique Brass Taper Candlesticks, Set of 3",
+          "hook": "Three short antique brass sticks that hold the burgundy tapers down low.",
+          "raw_name": false
+        },
+        {
+          "id": 606,
+          "slug": "burgundy-beeswax-taper-candles-12-inch-pair",
+          "name": "Burgundy Beeswax Taper Candles, 12 Inch, Pair",
+          "display_title": "Burgundy Beeswax Taper Candles, 12 Inch, Pair",
+          "hook": "A pair of burgundy beeswax tapers that burn slow and match the linen.",
+          "raw_name": false
+        },
+        {
+          "id": 568,
+          "slug": "parsin-black-and-gold-resin-pumpkins-set-of-3",
+          "name": "Parsin 3 Pcs Black & Gold Resin Pumpkin Decorations for Fall and Halloween",
+          "display_title": "Parsin 3 Pcs Black & Gold Resin Pumpkin Decorations for Fall and Halloween",
+          "hook": "Matte black pumpkins with gold stems for a centrepiece in low light.",
+          "raw_name": true
+        },
+        {
+          "id": 607,
+          "slug": "burgundy-faux-peony-bouquets-set-of-4",
+          "name": "Burgundy Faux Peony Bouquets, Set of 4",
+          "display_title": "Burgundy Faux Peony Bouquets, Set of 4",
+          "hook": "Four burgundy peony stems kept low, the one bloom on a black table.",
+          "raw_name": false
+        },
+        {
+          "id": 566,
+          "slug": "hananona-black-silk-babys-breath-10-stems",
+          "name": "Hananona 10 Pcs Babys Breath Artificial Flowers Black Fake Silk Flowers for Halloween Home Decor Floral Arrangement Table Centerpieces (10, Black)",
+          "display_title": "Hananona 10 Pcs Babys Breath Artificial Flowers Black Fake Silk Flowers for Halloween Home Decor Floral Arrangement Table Centerpieces (10, Black)",
+          "hook": "Black silk filler that pulls a bright bouquet into the dark.",
+          "raw_name": true
+        },
+        {
+          "id": 572,
+          "slug": "domestar-natural-pine-cone-bowl-filler-38-pieces",
+          "name": "DomeStar 38 PCS Pine Cone Set for Bowl Centerpiece, Natural Bowl Fillers",
+          "display_title": "DomeStar 38 PCS Pine Cone Set for Bowl Centerpiece, Natural Bowl Fillers",
+          "hook": "A bowl of natural pine cones for the low centrepiece.",
+          "raw_name": true
+        },
+        {
+          "id": 565,
+          "slug": "naturevibe-feathered-pheasants-set-of-2",
+          "name": "naturevibe Feathered Pheasant Decor Set of 2 for Autumn Fall Thanksgiving",
+          "display_title": "naturevibe Feathered Pheasant Decor Set of 2 for Autumn Fall Thanksgiving",
+          "hook": "A pair of feathered pheasants for the dark end of the table.",
+          "raw_name": true
+        }
+      ]
+    },
+    {
       "slug": "thanksgiving-hosting-edit",
       "title": "The Thanksgiving Hosting Edit",
       "headline": "The table is set before the first guest knocks",
@@ -799,24 +1151,32 @@
       "hero_image": "/images/edit-thanksgiving-hosting-edit-hero-light",
       "card_image": "/images/edit-thanksgiving-hosting-edit-card-light",
       "related": [
-        "holiday-hosting-edit",
-        "moody-tablescape-edit",
-        "heritage-christmas-edit"
+        "thanksgiving-table-edit",
+        "moody-thanksgiving-edit",
+        "thanksgiving-welcome-edit"
       ],
       "items": [
         {
           "id": 552,
           "slug": "mud-pie-turkey-platter",
           "name": "Mud Pie Turkey Platter, Large Thanksgiving Serving Platter, White Ceramic",
-          "display_title": "Mud Pie Turkey Platter",
+          "display_title": "Mud Pie Turkey Platter, Large Thanksgiving Serving Platter, White Ceramic",
           "hook": "A watercolor turkey platter wide enough for the bird and the carving fork.",
           "raw_name": true
+        },
+        {
+          "id": 555,
+          "slug": "famiware-oval-serving-platters-set-of-3",
+          "name": "famiware Serving Platters Set of 3 Sizes - Oval, Vanilla White",
+          "display_title": "famiware Serving Platters Set of 3 Sizes - Oval, Vanilla White",
+          "hook": "Three nested oval platters that cover a whole harvest table.",
+          "raw_name": false
         },
         {
           "id": 553,
           "slug": "staub-petite-pumpkin-baking-dish",
           "name": "STAUB Ceramic 0.75-qt Petite Pumpkin, Oven & Stove Safe up to 572°F, Pumpkin Dish, Baking Candy Burnt Orange",
-          "display_title": "STAUB Petite Pumpkin Baking Dish",
+          "display_title": "STAUB Ceramic 0.75-qt Petite Pumpkin, Oven & Stove Safe up to 572°F, Pumpkin Dish, Baking Candy Burnt Orange",
           "hook": "Oven to table stoneware that bakes a side and serves it warm.",
           "raw_name": true
         },
@@ -824,23 +1184,15 @@
           "id": 554,
           "slug": "grazerie-acacia-charcuterie-board-set",
           "name": "Grazerie Charcuterie Board Set with Serving Accessories, Acacia Wood",
-          "display_title": "Grazerie Acacia Charcuterie Board Set",
+          "display_title": "Grazerie Charcuterie Board Set with Serving Accessories, Acacia Wood",
           "hook": "The before dinner board, acacia, with its own serving accessories included.",
           "raw_name": true
-        },
-        {
-          "id": 555,
-          "slug": "famiware-oval-serving-platters-set-of-3",
-          "name": "famiware Serving Platters Set of 3 Sizes - Oval, Vanilla White",
-          "display_title": "famiware Oval Serving Platters, Set of 3",
-          "hook": "Three nested oval platters that cover a whole harvest table.",
-          "raw_name": false
         },
         {
           "id": 556,
           "slug": "ximisise-woven-rattan-bread-baskets-set-of-3",
           "name": "Rattan Bread Basket, Hand Woven Fruit Basket, Wicker Serving Basket Bowl, Decorative Baskets for Kitchen Counter Organizing, Set of 3 (Wave)",
-          "display_title": "XIMISISE Woven Rattan Bread Baskets, Set of 3",
+          "display_title": "Rattan Bread Basket, Hand Woven Fruit Basket, Wicker Serving Basket Bowl, Decorative Baskets for Kitchen Counter Organizing, Set of 3 (Wave)",
           "hook": "Hand woven rattan in three sizes for bread on the counter.",
           "raw_name": true
         },
@@ -848,161 +1200,225 @@
           "id": 557,
           "slug": "folkulture-resin-and-metal-salad-servers",
           "name": "Folkulture Resin Metal Salad Servers, Salad Hands, Fall Decor - (12 X 3\")",
-          "display_title": "Folkulture Resin and Metal Salad Servers",
+          "display_title": "Folkulture Resin Metal Salad Servers, Salad Hands, Fall Decor - (12 X 3\")",
           "hook": "Resin and metal salad hands that keep the leaves off your fingers.",
-          "raw_name": true
-        },
-        {
-          "id": 558,
-          "slug": "haviti-amber-glass-votive-holders-24-pack",
-          "name": "24 Pack Amber Tealight Candle Holders, Glass Votive Candle Holders",
-          "display_title": "HAVITI Amber Glass Votive Holders, 24 Pack",
-          "hook": "Twenty four amber votives to line a buffet without counting them.",
           "raw_name": true
         },
         {
           "id": 559,
           "slug": "foodle-glass-drink-dispenser-with-stand",
           "name": "FOODLE Glass Drink Dispenser with Spigot - Beverage Dispenser with Stand",
-          "display_title": "FOODLE Glass Drink Dispenser with Stand",
+          "display_title": "FOODLE Glass Drink Dispenser with Spigot - Beverage Dispenser with Stand",
           "hook": "A glass dispenser on an acacia stand, so the host stays seated.",
-          "raw_name": true
-        },
-        {
-          "id": 560,
-          "slug": "vivirbien-acacia-cake-stand-with-glass-dome",
-          "name": "VIVIRBIEN 12in Acacia Wood Cake Stand with Glass Dome&Magnetic Pedestal",
-          "display_title": "VIVIRBIEN Acacia Cake Stand with Glass Dome",
-          "hook": "Acacia and a glass dome that keep dessert covered between courses.",
-          "raw_name": true
-        },
-        {
-          "id": 561,
-          "slug": "samhita-acacia-napkin-rings-set-of-12",
-          "name": "SAMHITA Handmade Acacia Wood Napkin Ring Set of 12 for Dining, Anniversary, Birthday, Christmas | Napkin Ring for Home and Kitchen Décor",
-          "display_title": "SAMHITA Acacia Napkin Rings, Set of 12",
-          "hook": "Plain acacia rings that dress twelve settings for the price of one.",
-          "raw_name": true
-        },
-        {
-          "id": 562,
-          "slug": "nuptio-hurricane-candle-holders-set-of-10",
-          "name": "NUPTIO Hurricane Glass Candle Holders: Set of 10 Candlestick Holder 11.8\" H",
-          "display_title": "NUPTIO Hurricane Candle Holders, Set of 10",
-          "hook": "Ten clear hurricane holders that lift candlelight above the plates.",
           "raw_name": true
         },
         {
           "id": 563,
           "slug": "zmowipdl-green-pressed-glass-tumblers-set-of-6",
           "name": "ZMOWIPDL Drinking Glasses Set of 6,13oz Flower Design Green Glass Cups",
-          "display_title": "ZMOWIPDL Green Pressed Glass Tumblers, Set of 6",
+          "display_title": "ZMOWIPDL Drinking Glasses Set of 6,13oz Flower Design Green Glass Cups",
           "hook": "Six green pressed glass tumblers that echo the table's greenery.",
+          "raw_name": true
+        },
+        {
+          "id": 560,
+          "slug": "vivirbien-acacia-cake-stand-with-glass-dome",
+          "name": "VIVIRBIEN 12in Acacia Wood Cake Stand with Glass Dome&Magnetic Pedestal",
+          "display_title": "VIVIRBIEN 12in Acacia Wood Cake Stand with Glass Dome&Magnetic Pedestal",
+          "hook": "Acacia and a glass dome that keep dessert covered between courses.",
           "raw_name": true
         },
         {
           "id": 564,
           "slug": "qtlcohd-three-tier-cupcake-stands-set-of-2",
           "name": "QTLCOHD 2 Pcs 3 Tier Stainless Steel Cupcake Stand",
-          "display_title": "QTLCOHD Three Tier Cupcake Stands, Set of 2",
+          "display_title": "QTLCOHD 2 Pcs 3 Tier Stainless Steel Cupcake Stand",
           "hook": "Two tiered stands that give a dessert table its height.",
+          "raw_name": false
+        },
+        {
+          "id": 561,
+          "slug": "samhita-acacia-napkin-rings-set-of-12",
+          "name": "SAMHITA Handmade Acacia Wood Napkin Ring Set of 12 for Dining, Anniversary, Birthday, Christmas | Napkin Ring for Home and Kitchen Décor",
+          "display_title": "SAMHITA Handmade Acacia Wood Napkin Ring Set of 12 for Dining, Anniversary, Birthday, Christmas | Napkin Ring for Home and Kitchen Décor",
+          "hook": "Plain acacia rings that dress twelve settings for the price of one.",
+          "raw_name": true
+        },
+        {
+          "id": 558,
+          "slug": "haviti-amber-glass-votive-holders-24-pack",
+          "name": "24 Pack Amber Tealight Candle Holders, Glass Votive Candle Holders",
+          "display_title": "24 Pack Amber Tealight Candle Holders, Glass Votive Candle Holders",
+          "hook": "Twenty four amber votives to line a buffet without counting them.",
+          "raw_name": true
+        },
+        {
+          "id": 562,
+          "slug": "nuptio-hurricane-candle-holders-set-of-10",
+          "name": "NUPTIO Hurricane Glass Candle Holders: Set of 10 Candlestick Holder 11.8\" H",
+          "display_title": "NUPTIO Hurricane Glass Candle Holders: Set of 10 Candlestick Holder 11.8\" H",
+          "hook": "Ten clear hurricane holders that lift candlelight above the plates.",
+          "raw_name": true
+        },
+        {
+          "id": 609,
+          "slug": "gbhome-ceramic-pasta-bowls-set-of-4",
+          "name": "GBhome Ceramic Pasta Bowls, Set of 4",
+          "display_title": "GBhome Ceramic Pasta Bowls, Set of 4",
+          "hook": "Four wide stoneware bowls that make a side look plated on purpose.",
+          "raw_name": false
+        },
+        {
+          "id": 610,
+          "slug": "dowan-white-ceramic-bowls-set-of-4",
+          "name": "DOWAN White Ceramic Bowls, Set of 4",
+          "display_title": "DOWAN White Ceramic Bowls, Set of 4",
+          "hook": "Four deep white bowls for the cranberry and the gravy at the end of the line.",
+          "raw_name": false
+        },
+        {
+          "id": 611,
+          "slug": "lipper-acacia-curved-serving-tray",
+          "name": "Lipper Acacia Curved Serving Tray",
+          "display_title": "Lipper Acacia Curved Serving Tray",
+          "hook": "An acacia tray with cutout handles for carrying plates out and clearing back.",
+          "raw_name": false
+        },
+        {
+          "id": 612,
+          "slug": "zulay-kitchen-teak-utensil-set-6-piece",
+          "name": "Zulay Kitchen Teak Utensil Set, 6 Piece",
+          "display_title": "Zulay Kitchen Teak Utensil Set, 6 Piece",
+          "hook": "Six teak servers, so the dish goes to the table instead of staying in the pan.",
+          "raw_name": false
+        },
+        {
+          "id": 613,
+          "slug": "netany-glass-carafes-with-lids-set-of-4",
+          "name": "NETANY Glass Carafes with Lids, Set of 4",
+          "display_title": "NETANY Glass Carafes with Lids, Set of 4",
+          "hook": "Four lidded carafes that keep water and iced tea on the buffet, not the counter.",
+          "raw_name": false
+        },
+        {
+          "id": 614,
+          "slug": "ivory-beeswax-taper-candles-8-inch-2-count",
+          "name": "Ivory Beeswax Taper Candles, 8 Inch, 2 Count",
+          "display_title": "Ivory Beeswax Taper Candles, 8 Inch, 2 Count",
+          "hook": "Two shorter beeswax tapers, eight inches, sized for a standard candlestick.",
           "raw_name": false
         }
       ]
     },
     {
-      "slug": "moody-tablescape-edit",
-      "title": "The Moody Tablescape Edit",
-      "headline": "A dark table, lit low, in the season's deepest colors",
-      "intro": "A moody table is built from the shadows up: near black pumpkins, burgundy linen, smoked amber glass and candlelight held low so the food still reads warm. Almost nothing here is bright, and that is the point of it.",
-      "art_note": "A Thanksgiving table under candlelight only, camera at a low three quarter angle: matte black resin pumpkins with gold stems, a low wooden bowl of natural pine cones, burgundy linen napkins on hand coiled water hyacinth chargers, gold hurricane candlesticks with lit tapers, a small vase of burgundy mums with black silk filler, smoked amber glass coasters, two feathered pheasants at the quiet end of the table. Burgundy, black, antique gold and dark wood, deep shadow with warm flame cores, no people, no text.",
-      "hero_image": "/images/edit-moody-tablescape-edit-hero-light",
-      "card_image": "/images/edit-moody-tablescape-edit-card-light",
+      "slug": "thanksgiving-welcome-edit",
+      "title": "The Thanksgiving Welcome Edit",
+      "headline": "What the porch says before the door opens",
+      "intro": "This is everything a guest meets before they are inside: a wreath on the door, a plaid mat that can take wet boots, a pair of urns either side of the step, baskets for whatever lands by the entrance and dried stems to carry the season a little further. It is twelve pieces, not a whole house, and it is meant to be finished in an afternoon. Set it once and it holds from the first cold week through the last of the leaves.",
+      "art_note": "A front porch shot straight on from the path, camera at chest height: a magnolia leaf and pine wreath hung on a dark painted door with a smaller eucalyptus wreath on the porch wall beside it, a black and white buffalo plaid mat on the step below, two black fluted urn planters flanking the door with rust mums in them, a tall water hyacinth basket of folded throws beside the nearer urn, a stone urn on the step holding a hand tied dried bouquet, two woven cattail pumpkins at the base of the planters and a bundle of dried pampas in a floor vase at the edge of the frame. Warm beige, black, natural green and rust, low late afternoon sun raking across the porch boards, no people, no text",
+      "hero_image": "/images/edit-thanksgiving-welcome-edit-hero-light",
+      "card_image": "/images/edit-thanksgiving-welcome-edit-card-light",
       "related": [
-        "holiday-hosting-edit",
-        "thanksgiving-hosting-edit",
-        "heritage-christmas-edit"
+        "thanksgiving-table-edit",
+        "moody-thanksgiving-edit",
+        "thanksgiving-hosting-edit"
       ],
       "items": [
         {
-          "id": 565,
-          "slug": "naturevibe-feathered-pheasants-set-of-2",
-          "name": "naturevibe Feathered Pheasant Decor Set of 2 for Autumn Fall Thanksgiving",
-          "display_title": "naturevibe Feathered Pheasants, Set of 2",
-          "hook": "A pair of feathered pheasants for the dark end of the table.",
-          "raw_name": true
+          "id": 615,
+          "slug": "magnolia-leaf-fall-wreath-26-inch",
+          "name": "Magnolia Leaf Fall Wreath, 26 Inch",
+          "display_title": "Magnolia Leaf Fall Wreath, 26 Inch",
+          "hook": "Magnolia, pine and dried accents on a full round wreath wide enough for a door.",
+          "raw_name": false
         },
         {
-          "id": 566,
-          "slug": "hananona-black-silk-babys-breath-10-stems",
-          "name": "Hananona 10 Pcs Babys Breath Artificial Flowers Black Fake Silk Flowers for Halloween Home Decor Floral Arrangement Table Centerpieces (10, Black)",
-          "display_title": "Hananona Black Silk Baby's Breath, 10 Stems",
-          "hook": "Black silk filler that pulls a bright bouquet into the dark.",
-          "raw_name": true
+          "id": 616,
+          "slug": "pinkpum-eucalyptus-wreath-20-inch",
+          "name": "Pinkpum Eucalyptus Wreath, 20 Inch",
+          "display_title": "Pinkpum Eucalyptus Wreath, 20 Inch",
+          "hook": "A twenty inch eucalyptus wreath in three leaf tones, for the porch wall.",
+          "raw_name": false
         },
         {
-          "id": 567,
-          "slug": "romadedi-gold-hurricane-candlesticks-set-of-3",
-          "name": "Romadedi Glass Hurricane Candle Holders for Candlestick, Gold, Set of 3",
-          "display_title": "Romadedi Gold Hurricane Candlesticks, Set of 3",
-          "hook": "Three gold candlesticks with glass chimneys that steady a taper.",
-          "raw_name": true
+          "id": 617,
+          "slug": "cainanel-buffalo-plaid-front-door-mat",
+          "name": "CAINANEL Buffalo Plaid Front Door Mat",
+          "display_title": "CAINANEL Buffalo Plaid Front Door Mat",
+          "hook": "A black and white plaid mat wide enough that two people can wipe their feet.",
+          "raw_name": false
         },
         {
-          "id": 568,
-          "slug": "parsin-black-and-gold-resin-pumpkins-set-of-3",
-          "name": "Parsin 3 Pcs Black & Gold Resin Pumpkin Decorations for Fall and Halloween",
-          "display_title": "Parsin Black and Gold Resin Pumpkins, Set of 3",
-          "hook": "Matte black pumpkins with gold stems for a centrepiece in low light.",
-          "raw_name": true
+          "id": 618,
+          "slug": "arcadia-classic-urn-planter-large-black",
+          "name": "Arcadia Classic Urn Planter, Large, Black",
+          "display_title": "Arcadia Classic Urn Planter, Large, Black",
+          "hook": "A black fluted urn for one side of the door, with a second for the other.",
+          "raw_name": false
         },
         {
-          "id": 569,
-          "slug": "winemana-gold-fall-pumpkins-set-of-3",
-          "name": "winemana 3 Pack Gold Fall Pumpkin Decor Fall Table Centerpieces for Home",
-          "display_title": "winemana Gold Fall Pumpkins, Set of 3",
-          "hook": "Three gold pumpkins to bridge the pheasants and the candles.",
-          "raw_name": true
+          "id": 619,
+          "slug": "classic-stone-urn-planter-14-inch",
+          "name": "Classic Stone Urn Planter, 14 Inch",
+          "display_title": "Classic Stone Urn Planter, 14 Inch",
+          "hook": "A smaller stone urn for the step, with drainage you punch out yourself.",
+          "raw_name": false
         },
         {
-          "id": 570,
-          "slug": "oganazi-amber-glass-coasters-set-of-5",
-          "name": "Modern Clear Coasters Set of 5- Glass Cute Coasters for Drinks, Amber",
-          "display_title": "OGANAZI Amber Glass Coasters, Set of 5",
-          "hook": "Five amber glass coasters that keep rings off the dark wood.",
-          "raw_name": true
+          "id": 620,
+          "slug": "household-essentials-tall-water-hyacinth-basket",
+          "name": "Household Essentials Tall Water Hyacinth Basket",
+          "display_title": "Household Essentials Tall Water Hyacinth Basket",
+          "hook": "A tall woven basket by the door for the blanket that never makes it upstairs.",
+          "raw_name": false
         },
         {
-          "id": 571,
-          "slug": "yangqihome-woven-water-hyacinth-placemats-set-of-4",
-          "name": "Round Woven Placemats Set of 4, Natural Water Hyacinth Place Mats, Boho Wicker Placemats, Table Mats for Dining Table (13.8 inch) by YANGQIHOME",
-          "display_title": "YANGQIHOME Woven Water Hyacinth Placemats, Set of 4",
-          "hook": "Hand coiled water hyacinth chargers that warm a dark table.",
-          "raw_name": true
+          "id": 621,
+          "slug": "best-choice-products-handwoven-seagrass-baskets-set-of-4",
+          "name": "Best Choice Products Handwoven Seagrass Baskets, Set of 4",
+          "display_title": "Best Choice Products Handwoven Seagrass Baskets, Set of 4",
+          "hook": "Four seagrass totes that nest, for shoes, kindling and the entryway pile.",
+          "raw_name": false
         },
         {
-          "id": 572,
-          "slug": "domestar-natural-pine-cone-bowl-filler-38-pieces",
-          "name": "DomeStar 38 PCS Pine Cone Set for Bowl Centerpiece, Natural Bowl Fillers",
-          "display_title": "DomeStar Natural Pine Cone Bowl Filler, 38 Pieces",
-          "hook": "A bowl of natural pine cones for the low centrepiece.",
-          "raw_name": true
+          "id": 622,
+          "slug": "yesland-woven-seagrass-plant-baskets-set-of-2",
+          "name": "Yesland Woven Seagrass Plant Baskets, Set of 2",
+          "display_title": "Yesland Woven Seagrass Plant Baskets, Set of 2",
+          "hook": "Two woven baskets sized so a pot drops in and the plastic never shows.",
+          "raw_name": false
         },
         {
-          "id": 573,
-          "slug": "geegoods-burgundy-artificial-mums-12-stems",
-          "name": "Geegoods Burgundy Fall Artificial Mum Flowers, 12 Stems for Vase, 21 Inch",
-          "display_title": "Geegoods Burgundy Artificial Mums, 12 Stems",
-          "hook": "Twelve burgundy stems that bring the board's signature color.",
-          "raw_name": true
+          "id": 623,
+          "slug": "seagrass-storage-boxes-with-lids-set-of-2",
+          "name": "Seagrass Storage Boxes with Lids, Set of 2",
+          "display_title": "Seagrass Storage Boxes with Lids, Set of 2",
+          "hook": "Two lidded seagrass boxes, stiff enough on their frame to hold their shape.",
+          "raw_name": false
         },
         {
-          "id": 574,
-          "slug": "solino-home-burgundy-linen-napkins-set-of-4",
-          "name": "Solino Home 100% Linen Cloth Dinner Napkins Set of 4, Burgundy 20 x 20 in",
-          "display_title": "Solino Home Burgundy Linen Napkins, Set of 4",
-          "hook": "Burgundy washed linen napkins that soften every course.",
-          "raw_name": true
+          "id": 624,
+          "slug": "dried-pampas-grass-100-stems",
+          "name": "Dried Pampas Grass, 100 Stems",
+          "display_title": "Dried Pampas Grass, 100 Stems",
+          "hook": "A hundred dried stems, mostly pampas, for a floor vase by the door.",
+          "raw_name": false
+        },
+        {
+          "id": 625,
+          "slug": "fall-dried-flower-bouquet",
+          "name": "Fall Dried Flower Bouquet",
+          "display_title": "Fall Dried Flower Bouquet",
+          "hook": "A hand tied dried bouquet, already arranged, so it only needs a vase.",
+          "raw_name": false
+        },
+        {
+          "id": 626,
+          "slug": "handwoven-cattail-pumpkins-set-of-2",
+          "name": "Handwoven Cattail Pumpkins, Set of 2",
+          "display_title": "Handwoven Cattail Pumpkins, Set of 2",
+          "hook": "Two woven cattail pumpkins, textured rather than painted, for the bottom step.",
+          "raw_name": false
         }
       ]
     }

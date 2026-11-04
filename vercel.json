@@ -1,6 +1,13 @@
 {
   "buildCommand": "bash build-vercel.sh",
   "framework": null,
+  "redirects": [
+    {
+      "source": "/collections/moody-tablescape-edit",
+      "destination": "/collections/moody-thanksgiving-edit",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",

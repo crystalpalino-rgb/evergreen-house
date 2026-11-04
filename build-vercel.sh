@@ -45,6 +45,13 @@ JSON
 cat > .vercel/output/config.json <<'JSON'
 {
   "version": 3,
+  "redirects": [
+    {
+      "source": "/collections/moody-tablescape-edit",
+      "destination": "/collections/moody-thanksgiving-edit",
+      "permanent": true
+    }
+  ],
   "routes": [
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/render" }
