@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { sql } from "~/db";
@@ -12,10 +13,10 @@ const lifestyleMappings: Record<string, { label: string; rooms: string[] }> = {
   "work-from-home": { label: "Work From Home", rooms: ["office", "living-room", "bedroom"] },
 };
 
-interface ProductItem { id: number; name: string; seoSlug: string | null; fullName: string; room: string; style: string[]; amazonUrl: string; price: number | null; rating: number | null; editorNote: string | null; imageUrl: string | null; pinterestTitle: string | null; blogCategory: string | null; collection: string | null; isTrending: boolean; }
+interface ProductItem { id: number; name: string; displayTitle: string | null; cardHook: string | null; seoSlug: string | null; fullName: string; room: string; style: string[]; amazonUrl: string; price: number | null; rating: number | null; editorNote: string | null; imageUrl: string | null; pinterestTitle: string | null; blogCategory: string | null; collection: string | null; isTrending: boolean; }
 
 function mapRow(row: any): ProductItem {
-  return { id: row.id, name: row.name, seoSlug: row.seo_slug, fullName: row.full_name || row.name, room: row.room, style: typeof row.style === "string" ? JSON.parse(row.style) : row.style || [], amazonUrl: row.amazon_url, price: row.price, rating: row.rating, editorNote: row.editor_note, imageUrl: row.image_url, pinterestTitle: row.pinterest_title, blogCategory: row.blog_category, collection: row.collection, isTrending: row.is_trending ?? false };
+  return { id: row.id, name: row.name, displayTitle: row.display_title ?? null, cardHook: row.card_hook ?? null, seoSlug: row.seo_slug, fullName: row.full_name || row.name, room: row.room, style: typeof row.style === "string" ? JSON.parse(row.style) : row.style || [], amazonUrl: row.amazon_url, price: row.price, rating: row.rating, editorNote: row.editor_note, imageUrl: row.image_url, pinterestTitle: row.pinterest_title, blogCategory: row.blog_category, collection: row.collection, isTrending: row.is_trending ?? false };
 }
 
 export const Route = createFileRoute("/lifestyle/$slug")({
@@ -59,7 +60,7 @@ function LifestyleSlugPage() {
         </section>
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {products.length > 0 ? (<AnalyticsList id={`lifestyle-${slug}`} name={`${label} lifestyle`} items={products}><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div></AnalyticsList>) : (<div className="py-16 text-center"><p className="text-lg text-warm-gray">No products found for this lifestyle yet.</p><a href="/lifestyle" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all lifestyles →</a></div>)}
+            {products.length > 0 ? (<><AnalyticsList id={`lifestyle-${slug}`} name={`${label} lifestyle`} items={products}><div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={{ ...product, display_title: product.displayTitle, card_hook: product.cardHook } as any} />))}</div></AnalyticsList><div className="mt-8"><AmazonDisclosure /></div></>) : (<div className="py-16 text-center"><p className="text-lg text-warm-gray">No products found for this lifestyle yet.</p><a href="/lifestyle" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all lifestyles →</a></div>)}
           </div>
         </section>
       </main>

@@ -28,6 +28,16 @@ export interface Product {
   is_prime: boolean;
   availability: string;
 
+  // ── Card presentation (Room Card Standard) ──
+  /** Clean human title for the card. NULL means "use name". */
+  display_title: string | null;
+  /** One short editorial line for the card. NULL means "derive from editor_note". */
+  card_hook: string | null;
+  /** Day the price and rating were last read from the Amazon product page. */
+  price_checked_at: string | null;
+  /** Pinterest-rotation order, lower first. NULL sorts last on room pages. */
+  pin_rank: number | null;
+
   // ── Editorial ──
   editor_note: string | null;
   editor_why: string | null;

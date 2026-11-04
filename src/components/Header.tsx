@@ -45,7 +45,7 @@ const SHOP_CATEGORIES: ShopCategory[] = [
     category: "By Season",
     items: [
       { label: "Holiday", href: "/collection/holiday" },
-      { label: "Fall", href: "/collection/fall" },
+      { label: "Fall", href: "/room/fall" },
       { label: "Spring", href: "/collection/spring" },
       { label: "Summer", href: "/collection/summer" },
     ],

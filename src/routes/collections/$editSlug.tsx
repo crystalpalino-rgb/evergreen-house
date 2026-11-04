@@ -18,6 +18,8 @@ import {
   type EditProduct,
 } from "~/lib/edits";
 import { generateStaticMetadata, SITE_URL } from "~/lib/seo";
+import { CARD_DATA_CHECKED_AT } from "~/components/AmazonDisclosure";
+import { cardVerifiedMonth } from "~/lib/card-copy";
 import { getCollectionPageSchema } from "~/lib/schema";
 
 /**
@@ -169,10 +171,13 @@ function EditPage() {
             <p className="mt-3 max-w-[34rem] text-sm leading-relaxed text-soft-white/85 sm:text-base">
               {edit.intro}
             </p>
-            {/* Affiliate disclosure: small, understated, inside the header. */}
+            {/* Affiliate disclosure: small, understated, inside the header.
+                Dated from the same constant as the page-level disclosure so the
+                edit pages never drift from the rest of the site. */}
             <p className="mt-4 text-[11px] leading-relaxed text-soft-white/60">
               As an Amazon Associate, Evergreen House earns from qualifying
-              purchases.
+              purchases. Prices and ratings checked{" "}
+              {cardVerifiedMonth(CARD_DATA_CHECKED_AT)} and can change.
             </p>
           </div>
         </section>

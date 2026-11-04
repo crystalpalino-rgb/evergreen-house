@@ -41,6 +41,20 @@ const roomCards = [
     description: "Tablescapes, lighting, and serveware for everyday meals and special gatherings",
     image: "/images/dining-room.jpg",
   },
+  /* Seasonal rooms. These are the pages the Pinterest pins point at, so they
+     need a link from the rooms index, not only from the nav (2026-11-04). */
+  {
+    name: "Fall",
+    slug: "fall",
+    description: "Warm garlands, terracotta linen, and the amber light of the season",
+    image: "/images/fall.jpg",
+  },
+  {
+    name: "Holiday",
+    slug: "holiday",
+    description: "The Hosting Table, Tree and Mantel, and The Porch - three sets for the season",
+    image: "/images/holiday-edit-hero-2026.jpg",
+  },
 ];
 
 export const Route = createFileRoute("/rooms")({

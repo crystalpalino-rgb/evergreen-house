@@ -216,10 +216,22 @@ export async function getEditorsPicks(
   return products;
 }
 
+/**
+ * Products for a room page, in card order.
+ *
+ * Pinterest-rotation products come first (pin_rank ascending, NULLs last) so a
+ * product that a live pin points at can never sit at the bottom of the page its
+ * pin lands on (owner Standing Merchandising Rule, 2026-10-19). Everything else
+ * follows by quality score, and rows with no score follow those.
+ */
 export async function getProductsByRoom(room: string): Promise<Product[]> {
   const db = sql();
+  // Pinned products lead (pin_rank 1), then quality score. Two pins can share
+  // one room - /room/fall holds both the garland and the runner, both pin_rank
+  // 1 - so the tie is broken by id DESC (most recently curated row first) to
+  // keep the order stable between requests instead of leaving it to the plan.
   const rows =
-    await db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY quality_score DESC NULLS LAST`;
+    await db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY pin_rank NULLS LAST, quality_score DESC NULLS LAST, id DESC`;
   return rows as unknown as Product[];
 }
 

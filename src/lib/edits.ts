@@ -12,7 +12,8 @@ import manifest from "~/data/edits/manifest.json";
  * the checked-in file, so it has no route and no card.
  *
  * The manifest owns the ORDER and the editorial copy. The database owns the
- * live product facts (name, image, affiliate URL), fetched by id.
+ * live product facts (name, image, affiliate URL, plus the verified price, star
+ * rating and review count the card prints), fetched by id.
  *
  * URL rule (from the curation README): the manifest `slug` is the whole URL and
  * is used verbatim for the product link and nothing is rebuilt from `name`,
@@ -96,6 +97,18 @@ export interface EditProduct {
   imageAlt: string;
   amazonUrl: string;
   hasRealUrl: boolean;
+  /**
+   * Verified facts, straight from the product row and never touched on the way
+   * here (owner Room Card Standard extended to edit and homepage cards,
+   * 2026-11-04). Same three numbers the room card prints, formatted by the same
+   * helpers in src/lib/card-copy.ts, so a 4.2 star row prints 4.2 and a row with
+   * no rating prints no stars. Null means "the row does not carry it".
+   */
+  rating: number | string | null;
+  reviewCount: number | string | null;
+  price: number | string | null;
+  /** Day the price and rating were last read from the Amazon product page. */
+  priceCheckedAt: string | Date | null;
 }
 
 interface ProductRow {
@@ -105,6 +118,10 @@ interface ProductRow {
   image_url: string | null;
   image_alt: string | null;
   amazon_url: string | null;
+  rating: number | string | null;
+  review_count: number | string | null;
+  price: number | string | null;
+  price_checked_at: string | Date | null;
 }
 
 /** The minimum a curated file (an edit, or a homepage section) says per item. */
@@ -137,10 +154,14 @@ export async function getCuratedProducts(
   if (wanted.length === 0) return [];
   const ids = wanted.map((i) => i.id);
   const db = sql();
+  /* One query for the whole grid, carrying the three verified facts as well as
+     the card's identity (owner Room Card Standard, extended to edit and
+     homepage cards on 2026-11-04): no second round trip per card, and the
+     numbers the card prints are the numbers the room card prints. */
   const rows = (await db.query(
-    `SELECT id, name, seo_slug, image_url, image_alt, amazon_url FROM products WHERE id IN (${ids.join(
-      ",",
-    )})`,
+    `SELECT id, name, seo_slug, image_url, image_alt, amazon_url,
+            rating, review_count, price, price_checked_at
+       FROM products WHERE id IN (${ids.join(",")})`,
     [],
   )) as unknown as ProductRow[];
 
@@ -164,6 +185,12 @@ export async function getCuratedProducts(
         `${item.display_title || item.name || row.name || ""} - Evergreen House`,
       amazonUrl,
       hasRealUrl: amazonUrl.startsWith("http"),
+      // Facts pass through untouched: the card decides what it can honestly
+      // show, and src/lib/card-copy.ts does the formatting for every renderer.
+      rating: row.rating ?? null,
+      reviewCount: row.review_count ?? null,
+      price: row.price ?? null,
+      priceCheckedAt: row.price_checked_at ?? null,
     });
   }
   return out;

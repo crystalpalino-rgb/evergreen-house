@@ -105,7 +105,7 @@ export async function getRelatedProducts(
 
     // Products in the same room that also match collection style rules
     const roomProducts =
-      await db`SELECT id, name, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ${sourceRoom} AND is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit * 3}`;
+      await db`SELECT id, name, display_title, card_hook, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ${sourceRoom} AND is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit * 3}`;
 
     for (const p of roomProducts as any[]) {
       if (seenIds.has(p.id)) continue;
@@ -149,7 +149,7 @@ export async function getRelatedProducts(
   // 4. Fill remaining with same-room products (tier 2)
   if (results.length < limit) {
     const moreRoom =
-      await db`SELECT id, name, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ${sourceRoom} AND is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
+      await db`SELECT id, name, display_title, card_hook, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ${sourceRoom} AND is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
 
     for (const p of moreRoom as any[]) {
       if (seenIds.has(p.id)) continue;
@@ -182,7 +182,7 @@ export async function getRelatedProducts(
     if (collRooms.size > 0) {
       const roomsArr = [...collRooms];
       const otherRoomProducts =
-        await db`SELECT id, name, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ANY(${roomsArr}) AND is_active = true ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
+        await db`SELECT id, name, display_title, card_hook, seo_slug, image_url, price, room, style, quality_score FROM products WHERE room = ANY(${roomsArr}) AND is_active = true ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
 
       for (const p of otherRoomProducts as any[]) {
         if (seenIds.has(p.id)) continue;
@@ -205,7 +205,7 @@ export async function getRelatedProducts(
   // 6. Final fallback: popular products
   if (results.length < limit) {
     const fallback =
-      await db`SELECT id, name, seo_slug, image_url, price, room, style, quality_score FROM products WHERE is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
+      await db`SELECT id, name, display_title, card_hook, seo_slug, image_url, price, room, style, quality_score FROM products WHERE is_active = true AND id != ${productId} ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
 
     for (const p of fallback as any[]) {
       if (seenIds.has(p.id)) continue;
@@ -238,7 +238,7 @@ export async function getRelatedProductsForRoom(
   const db = sql();
 
   const rows =
-    await db`SELECT id, name, seo_slug, image_url, price, room, quality_score FROM products WHERE room = ${room} AND is_active = true ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
+    await db`SELECT id, name, display_title, card_hook, seo_slug, image_url, price, room, quality_score FROM products WHERE room = ${room} AND is_active = true ORDER BY quality_score DESC NULLS LAST LIMIT ${limit}`;
 
   return (rows as any[]).map((p) => ({
     id: p.id,

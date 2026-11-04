@@ -1,7 +1,14 @@
 import type { Product } from "~/lib/types";
 import { canonicalProductSlug } from "~/lib/product-slug";
 import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
-import { cardHookLine, cardRoomLabel } from "~/lib/card-copy";
+import {
+  cardHookLine,
+  cardPrice,
+  cardRating,
+  cardReviewCount,
+  cardRoomLabel,
+  cardTitle,
+} from "~/lib/card-copy";
 import { useAnalyticsList } from "./AnalyticsList";
 
 export type { Product };
@@ -16,10 +23,13 @@ export type { Product };
  * The product page stays reachable through one quiet internal link (the name)
  * for SEO, and never sits between the shopper and Amazon.
  *
- * Card copy is deliberately card-shaped: a room label, the product name in two
- * lines, and one optional one-line styling hook derived from the product's own
- * editor note. No price, no rating, no stock or discount claims, because none
- * of that is verified data the brand can stand behind (owner decision).
+ * Card copy is deliberately card-shaped: a room label, the product title in two
+ * lines, one short editorial line, and the three verified facts (star rating,
+ * review count, price) read from the product's own Amazon page on the date in
+ * price_checked_at. Honest numbers only: a 4.2 star product prints 4.2, a row
+ * with no rating prints no stars, and a row with no price prints no price. The
+ * Amazon Associates sentence is NOT on the card - it renders once per page
+ * through src/components/AmazonDisclosure.tsx (owner Room Card Standard).
  *
  * Renders with no amazon_url (the PDP related grid hands us amazon_url: "") get
  * no Amazon link at all: the photo is not a link, no CTA is rendered, and the
@@ -52,9 +62,17 @@ export function ProductCard({ product }: { product: Product }) {
   const imageAlt = p.image_alt || `${name} - Evergreen House`;
 
   const roomLabel = cardRoomLabel(p.room || "");
-  // One line only, straight from the product's own editor note. Null is common
-  // and expected; the card then renders no hook line.
-  const hook = cardHookLine(p.editor_note || p.editorNote || null, name);
+  // Clean human title when the row has one (Room Card Standard), listing name otherwise.
+  const title = cardTitle(p.display_title || p.displayTitle || null, name);
+  // One line, always. The stored card_hook wins; otherwise it is derived from the
+  // editor note with a guaranteed non-empty result (see cardHookLine).
+  const hook =
+    (p.card_hook || p.cardHook || "").trim() ||
+    cardHookLine(p.editor_note || p.editorNote || null, name, roomLabel);
+  // Verified facts, exactly as stored. Any missing value renders nothing at all.
+  const ratingValue = cardRating(p.rating);
+  const reviewCount = cardReviewCount(p.review_count ?? p.reviewCount);
+  const priceLabel = cardPrice(p.price);
 
   const pinDescription = getPinDescription(product);
   // The only guard that decides whether this card has an outbound Amazon path.
@@ -141,7 +159,7 @@ export function ProductCard({ product }: { product: Product }) {
             href={amazonUrl}
             target="_blank"
             rel="noopener noreferrer sponsored"
-            aria-label={`View ${name} on Amazon (opens in a new tab)`}
+            aria-label={`View ${title} on Amazon (opens in a new tab)`}
             className="block h-full w-full"
             onClick={trackAmazonClick}
           >
@@ -165,12 +183,45 @@ export function ProductCard({ product }: { product: Product }) {
             className="transition-colors hover:text-burgundy-deep"
             onClick={trackProductPageOpen}
           >
-            {name}
+            {title}
           </a>
         </h3>
-        {/* One-line styling hook, straight from the editor note. */}
-        {hook && (
-          <p className="mt-1 text-xs leading-relaxed text-warm-gray line-clamp-1">{hook}</p>
+        {/* One-line styling hook. Always present: stored card_hook first, derived
+            from the editor note otherwise, and never an empty line. */}
+        <p className="mt-1 text-xs leading-relaxed text-warm-gray line-clamp-2">{hook}</p>
+        {/* Verified facts: star rating, review count, price. Each prints only when
+            the row actually carries the number - no placeholder, no estimate. */}
+        {(ratingValue || priceLabel) && (
+          <div className="mt-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            {ratingValue && (
+              <span className="flex items-center gap-1">
+                <span aria-hidden="true" className="flex">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="11"
+                      height="11"
+                      viewBox="0 0 24 24"
+                      fill={i < Math.round(Number(ratingValue)) ? "#C9B99A" : "none"}
+                      stroke="#C9B99A"
+                      strokeWidth="1.5"
+                      aria-hidden="true"
+                    >
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </span>
+                <span className="text-[11px] font-medium text-warm-dark">{ratingValue}</span>
+                {reviewCount && (
+                  <span className="text-[11px] text-taupe">({reviewCount})</span>
+                )}
+              </span>
+            )}
+            {priceLabel && (
+              <span className="ml-auto text-[11px] font-medium text-warm-dark">{priceLabel}</span>
+            )}
+          </div>
         )}
         {/* CTA - full width, bottom aligned, thumb reachable. Rendered only when
             the row carries a real Amazon URL, so a related card on the PDP never
@@ -181,7 +232,7 @@ export function ProductCard({ product }: { product: Product }) {
               href={amazonUrl}
               target="_blank"
               rel="noopener noreferrer sponsored"
-              aria-label={`View ${name} on Amazon (opens in a new tab)`}
+              aria-label={`View ${title} on Amazon (opens in a new tab)`}
               className="flex min-h-11 w-full items-center justify-center gap-1.5 rounded-full bg-midnight px-2.5 py-2.5 text-center text-[11px] font-semibold uppercase leading-tight tracking-[0.06em] text-soft-white transition-colors duration-200 hover:bg-midnight-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-midnight focus-visible:ring-offset-2 focus-visible:ring-offset-soft-white"
               onClick={trackAmazonClick}
             >
@@ -203,14 +254,6 @@ export function ProductCard({ product }: { product: Product }) {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-          )}
-          {/* Amazon Associates disclosure. Cards are the smallest surface that
-              carries an Amazon anchor, so the line rides with the anchor itself:
-              one muted 10px sentence, never a badge and never a headline. */}
-          {hasRealUrl && (
-            <p className="mt-2 text-center text-[10px] leading-tight text-taupe">
-              As an Amazon Associate we earn from qualifying purchases.
-            </p>
           )}
         </div>
       </div>

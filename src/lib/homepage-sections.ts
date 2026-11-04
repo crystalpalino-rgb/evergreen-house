@@ -61,10 +61,10 @@ export const SHOP_THE_LOOK: HomepageSection = {
       hook: "Holly banded porcelain plates that finish the table before the food arrives.",
     },
     {
-      id: 483,
-      slug: "spode-christmas-tree-glass-pitcher-96-oz",
-      display_title: "Spode Christmas Tree Glass Pitcher, 96 oz",
-      hook: "Ninety six ounces of eggnog, cider or water, all in one pitcher.",
+      id: 521,
+      slug: "dii-farmhouse-christmas-plaid-placemats-set-of-6",
+      display_title: "DII Christmas Plaid Placemats, Set of 6",
+      hook: "Six placemats that sit under the six plates and finish the setting.",
     },
     {
       id: 490,
@@ -110,10 +110,10 @@ export const CURRENT_EDIT: HomepageSection = {
     "Warm light, quiet texture and a little evergreen: the pieces we would buy again, chosen to sit well past December.",
   items: [
     {
-      id: 434,
-      slug: "cypress-christmas-tree-in-wicker-basket",
-      display_title: "Cypress Christmas Tree in Wicker Basket",
-      hook: "A four foot cypress already in its wicker basket, ready in minutes.",
+      id: 427,
+      slug: "6-ft-fall-garland-with-lights-timer-thanksgiving-fireplace-mantel-decor",
+      display_title: "6 Ft Fall Garland with 30 Warm Lights",
+      hook: "Comes on at dusk, off by bedtime, all season long.",
     },
     {
       id: 421,
@@ -128,10 +128,10 @@ export const CURRENT_EDIT: HomepageSection = {
       hook: "Three sage ceramic trees for a mantel, shelf or sideboard.",
     },
     {
-      id: 88,
-      slug: "30pcs-velvet-christmas-ball-ornaments-flocked",
-      display_title: "Flocked Velvet Christmas Ornaments, Set of 30",
-      hook: "Thirty flocked velvet balls in mixed sizes, enough for one tree.",
+      id: 415,
+      slug: "fall-table-runner-terracotta-cheesecloth-boho-wedding-thanksgiving-decor",
+      display_title: "Terracotta Cheesecloth Table Runner, 120 In",
+      hook: "Gathers and drapes instead of lying flat.",
     },
     {
       id: 114,
