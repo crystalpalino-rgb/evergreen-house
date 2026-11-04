@@ -20,6 +20,18 @@ const PORT = 3000;
 const HOST = "0.0.0.0";
 const CLIENT_DIR = `${import.meta.dir}/dist/client`;
 
+// ── Retired URLs ──
+// A page that stops being published gets a permanent redirect rather than a
+// 404 when a live Pinterest pin still points at it. Keep this map identical to
+// the "redirects" block that build-vercel.sh writes into
+// .vercel/output/config.json and to the one in vercel.json, so production, the
+// prebuilt deploy and this server all answer the same way.
+const LEGACY_REDIRECTS: Record<string, string> = {
+  // The Moody Tablescape Edit was retired on 2026-11-04 (owner decision 17:
+  // one Moody collection) and folded into the Moody Thanksgiving Edit.
+  "/collections/moody-tablescape-edit": "/collections/moody-thanksgiving-edit",
+};
+
 // ── Content-Security-Policy ──
 const CSP_HEADER = [
   "default-src 'self'",
@@ -411,7 +423,17 @@ for (let attempt = 1; ; attempt++) {
       port: PORT,
       hostname: HOST,
       async fetch(req) {
-        const { pathname } = new URL(req.url);
+        const { pathname, search } = new URL(req.url);
+
+        // Retired URLs first: a permanent redirect, never a 404, so a live pin
+        // keeps working (see LEGACY_REDIRECTS above).
+        const legacy = LEGACY_REDIRECTS[pathname.replace(/\/+$/, "") || "/"];
+        if (legacy) {
+          return new Response(null, {
+            status: 308,
+            headers: { Location: legacy + search },
+          });
+        }
 
         // Static files
         if (pathname !== "/") {

@@ -6,10 +6,11 @@ import { EditCard } from "./EditCard";
  * the hero. Image-led and deliberately wordless: art, serif title, one link
  * each. No prices, no product copy, nothing to read before the picture.
  *
- * The six cards come from the checked-in curation manifest, so adding or
- * retiring an edit is a data change, not a layout change. Two rows of three on
- * desktop (six cards in a four column grid would leave a widow), two up on a
- * tablet, one up on a phone.
+ * The cards come from the checked-in curation manifest, so adding or retiring an
+ * edit is a data change, not a layout change, and the count in the line under
+ * the heading is read from the manifest rather than written by hand. Eight edits
+ * (November 2026: four holiday, four Thanksgiving) sit four up on desktop in two
+ * even rows with no widow, two up on a tablet, one up on a phone.
  */
 export function ShopTheEdits() {
   return (
@@ -21,7 +22,7 @@ export function ShopTheEdits() {
               Shop the Edits
             </h2>
             <p className="mt-2 text-sm text-warm-gray sm:text-base">
-              Six curated edits for the season.
+              {EDITS.length} curated edits for the season.
             </p>
           </div>
           <a
@@ -31,7 +32,7 @@ export function ShopTheEdits() {
             All collections
           </a>
         </div>
-        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:mt-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
           {EDITS.map((edit, i) => (
             <EditCard key={edit.slug} edit={edit} eager={i === 0} />
           ))}
