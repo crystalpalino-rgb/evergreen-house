@@ -10,6 +10,9 @@ import { join } from "node:path";
 // The published "Shop the Edit" collections come from the same checked-in
 // manifest the pages render from, so a new edit lands in the sitemap with it.
 import editsManifest from "../src/data/edits/manifest.json";
+// The public room list is shared with the site routes, so a hidden room can
+// never be listed here even though its products are active in the database.
+import { publicRoomSlugs } from "../src/lib/room-visibility";
 
 const SITE_URL = "https://evergreenhouse.co";
 
@@ -96,8 +99,9 @@ async function main() {
 
   console.log(`Found ${collectionRows.length} active collections`);
 
-  // Unique rooms from products
-  const rooms = [...new Set(productRows.map((p) => p.room).filter(Boolean))].sort();
+  // Unique rooms from products, minus any room that is not approved as public
+  // (src/lib/room-visibility.ts). A room page that 404s must not be in a sitemap.
+  const rooms = publicRoomSlugs(productRows.map((p) => p.room));
 
   // ── 1. Sitemap Index ──
   const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>

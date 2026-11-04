@@ -9,6 +9,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { HolidaySets } from "~/components/HolidaySets";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getProductsByRoom } from "~/lib/intelligence";
+import { isRoomPublic } from "~/lib/room-visibility";
 import { generateRoomMetadata } from "~/lib/seo";
 import {
   getCollectionPageSchema,
@@ -146,6 +147,13 @@ const roomEditorial: Record<string, { intro: string; whatToLookFor: string[] }> 
 
 export const Route = createFileRoute("/room/$room")({
   loader: async ({ params }) => {
+    // One source of truth decides whether a room page exists: the public room
+    // list in src/lib/room-visibility.ts. Checked before any product query, so a
+    // hidden room 404s with no cards even though its products are active in the
+    // database (loungewear: 30 active clothing rows, owner approval pending).
+    if (!isRoomPublic(params.room)) {
+      throw notFound();
+    }
     try {
       const products = await getProductsByRoom(params.room);
       if (!roomLabels[params.room] && products.length === 0) {

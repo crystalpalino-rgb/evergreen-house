@@ -7,6 +7,7 @@
 
 import { sql } from "~/db";
 import type { Product } from "~/lib/types";
+import { isRoomPublic } from "~/lib/room-visibility";
 
 /** A related product with its relationship type */
 export interface RelatedProduct {
@@ -304,7 +305,7 @@ export function getRelatedRooms(
   const result: { slug: string; label: string }[] = [];
 
   for (const r of related) {
-    if (!seen.has(r)) {
+    if (!seen.has(r) && isRoomPublic(r)) {
       seen.add(r);
       result.push({ slug: r, label: ROOM_LABELS[r] || r });
     }
@@ -314,7 +315,7 @@ export function getRelatedRooms(
   if (result.length === 0) {
     const defaults = ["living-room", "bedroom", "kitchen"];
     for (const d of defaults) {
-      if (d !== room && !seen.has(d)) {
+      if (d !== room && !seen.has(d) && isRoomPublic(d)) {
         seen.add(d);
         result.push({ slug: d, label: ROOM_LABELS[d] || d });
       }

@@ -3,6 +3,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
+import { isRoomPublic } from "~/lib/room-visibility";
 
 const roomCards = [
   {
@@ -70,6 +71,10 @@ export const Route = createFileRoute("/rooms")({
 });
 
 function RoomsPage() {
+  // Only rooms the owner has approved are listed. The filter reads the single
+  // public room list in src/lib/room-visibility.ts, so a hidden room can never be
+  // surfaced here even if a card is added to the array above.
+  const publicRoomCards = roomCards.filter((room) => isRoomPublic(room.slug));
   return (
     <>
       <Header />
@@ -127,7 +132,7 @@ function RoomsPage() {
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {roomCards.map((room) => (
+              {publicRoomCards.map((room) => (
                 <a
                   key={room.slug}
                   href={`/room/${room.slug}`}

@@ -8,6 +8,8 @@ import type { ReactNode } from "react";
 
 import appCss from "~/styles/app.css?url";
 import { ThirdPartyScripts } from "~/components/ThirdPartyScripts";
+import { Header } from "~/components/Header";
+import { Footer } from "~/components/Footer";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 
 const SITE_NAME = "Evergreen House";
@@ -101,7 +103,7 @@ export const Route = createRootRoute({
       },
     ],
   }),
-  notFoundComponent: () => <div>Page not found</div>,
+  notFoundComponent: NotFoundPage,
   component: RootComponent,
 });
 
@@ -110,6 +112,46 @@ function RootComponent() {
     <RootDocument>
       <Outlet />
     </RootDocument>
+  );
+}
+
+/**
+ * Every 404 in the site renders this. The robots noindex is the point: a page
+ * that does not exist (a hidden room such as /room/loungewear, or an old slug a
+ * pin still points at) is served with a real 404 status and must never be
+ * indexed. React 19 hoists the meta tag into <head>.
+ */
+function NotFoundPage() {
+  return (
+    <>
+      <meta name="robots" content="noindex" />
+      <Header />
+      <main className="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:px-6">
+        <p className="text-sm uppercase tracking-widest text-taupe">404</p>
+        <h1 className="mt-3 font-serif text-3xl font-semibold text-warm-dark sm:text-4xl">
+          This page is not here
+        </h1>
+        <p className="mt-4 text-base leading-relaxed text-warm-gray">
+          The page you were looking for has moved or never existed. Our curated
+          rooms and collections are one click away.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a
+            href="/"
+            className="rounded-full bg-midnight px-6 py-3 text-sm font-medium text-soft-white transition-colors hover:bg-oxblood"
+          >
+            Back to home
+          </a>
+          <a
+            href="/rooms"
+            className="rounded-full border border-midnight/15 px-6 py-3 text-sm font-medium text-midnight transition-colors hover:border-oxblood hover:text-oxblood"
+          >
+            Browse rooms
+          </a>
+        </div>
+      </main>
+      <Footer />
+    </>
   );
 }
 

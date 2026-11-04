@@ -1,5 +1,6 @@
 import { neon } from "@neondatabase/serverless";
 import * as fs from "fs";
+import { isRoomPublic } from "../src/lib/room-visibility";
 
 const DATABASE_URL = process.env.DATABASE_URL;
 if (!DATABASE_URL) {
@@ -32,10 +33,12 @@ for (const page of staticPages) {
   </url>`);
 }
 
-// Room pages
+// Room pages. Only rooms approved as public go in the sitemap, same list the
+// site routes read (src/lib/room-visibility.ts).
 const rooms = await sql`SELECT DISTINCT room FROM products ORDER BY room`;
 for (const row of rooms) {
-  const room = row.room;
+  const room = row.room as string;
+  if (!isRoomPublic(room)) continue;
   urls.push(`  <url>
     <loc>${BASE_URL}/room/${room}</loc>
     <changefreq>weekly</changefreq>
