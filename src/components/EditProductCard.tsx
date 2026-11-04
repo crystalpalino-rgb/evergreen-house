@@ -12,6 +12,9 @@ import type { EditProduct } from "~/lib/edits";
  *   - exactly one internal link: the product name, to /product/<manifest slug>
  *   - exactly one Amazon anchor: "View on Amazon", new tab, sponsored
  *   - no price, no rating, no availability, no discount claim
+ *   - no Amazon Associates sentence on the card itself: the page renders it
+ *     once, through src/components/AmazonDisclosure.tsx (owner Room Card
+ *     Standard). A 30 product edit used to print 31 identical sentences.
  *   - no em-dashes
  * The photo is not a second outbound link here: the edit page's job is to sell
  * the edit, and one affiliate anchor per product keeps the click path legible.
@@ -119,14 +122,6 @@ export function EditProductCard({
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-          )}
-          {/* Amazon Associates disclosure. Cards are the smallest surface that
-              carries an Amazon anchor, so the line rides with the anchor itself:
-              one muted 10px sentence, never a badge and never a headline. */}
-          {product.hasRealUrl && (
-            <p className="mt-2 text-center text-[10px] leading-tight text-taupe">
-              As an Amazon Associate we earn from qualifying purchases.
-            </p>
           )}
         </div>
       </div>

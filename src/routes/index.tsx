@@ -8,6 +8,7 @@ import { BrowseByRoom } from "~/components/BrowseByRoom";
 import { FromTheJournal } from "~/components/FromTheJournal";
 import { EmailSignup } from "~/components/EmailSignup";
 import { Footer } from "~/components/Footer";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import {
   CURRENT_EDIT,
   SHOP_THE_LOOK,
@@ -113,6 +114,11 @@ function Home() {
         <ShopTheEdits />
         <ShopTheLook products={shopTheLook} />
         <TheCurrentEdit products={currentEdit} />
+        {/* One Amazon Associates disclosure for the whole page, under the last
+            product grid (owner Room Card Standard). The cards carry none. */}
+        <div className="bg-soft-white pb-8">
+          <AmazonDisclosure />
+        </div>
         <BrowseByRoom />
         <FromTheJournal />
         <EmailSignup />
