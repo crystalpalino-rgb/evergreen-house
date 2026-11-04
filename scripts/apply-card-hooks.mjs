@@ -17,9 +17,12 @@
  *   - the number of rows matched in the database equals the number of hooks
  * If any of those fail it throws, names the offending ids, and changes nothing.
  *
+ * The rooms it reports on are the rooms the file actually carries, so the same
+ * script applies batch 1, batch 2a and batch 2b without edits.
+ *
  * Usage:
  *   bun run scripts/apply-card-hooks.mjs [path/to/card-hooks.json]
- * Default file: /home/team/shared/curation/card-hooks-batch1-2026-11-04.json
+ * Default file: /home/team/shared/curation/card-hooks-batch2a-2026-11-04.json
  *
  * DATABASE_URL falls back to site/.env.local when it is not already in the
  * environment, the same way scripts/apply-card-data.mjs does.
@@ -28,8 +31,9 @@ import { readFileSync } from "node:fs";
 import { neon } from "@neondatabase/serverless";
 
 const FILE =
-  process.argv[2] || "/home/team/shared/curation/card-hooks-batch1-2026-11-04.json";
-const ROOMS = ["fall", "bedroom", "dining-room"];
+  process.argv[2] || "/home/team/shared/curation/card-hooks-batch2a-2026-11-04.json";
+/** Rooms this batch covers. Filled from the file itself in main(). */
+let ROOMS = [];
 
 function resolveDatabaseUrl() {
   const fromEnv = (process.env.DATABASE_URL || "").trim();
@@ -48,7 +52,7 @@ function resolveDatabaseUrl() {
 
 const db = neon(resolveDatabaseUrl());
 
-/** Active products in the three rooms that still have no authored hook. */
+/** Active products in this batch's rooms that still have no authored hook. */
 async function countMissingHooks() {
   const rows = await db.query(
     `SELECT room, count(*)::int AS n
@@ -73,8 +77,10 @@ function printMissing(label, counts) {
 async function main() {
   const file = JSON.parse(readFileSync(FILE, "utf8"));
   const hooks = Array.isArray(file.hooks) ? file.hooks : [];
+  ROOMS = [...new Set(hooks.map((h) => String(h.room || "").trim()).filter(Boolean))].sort();
   console.log(`Source file: ${FILE}`);
   console.log(`Batch: ${file.batch || "-"}  written_at: ${file.written_at || "-"}`);
+  console.log(`Rooms in file: ${ROOMS.join(", ") || "-"}`);
   console.log(`Hooks in file: ${hooks.length}  count field: ${file.count}\n`);
 
   // ---- Validation. Nothing below this block runs if it throws. ----
