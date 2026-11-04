@@ -6,6 +6,8 @@ import { AnalyticsList } from "~/components/AnalyticsList";
 import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { ContentUnavailable } from "~/components/ContentUnavailable";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { HolidaySets } from "~/components/HolidaySets";
+import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getProductsByRoom } from "~/lib/intelligence";
 import { generateRoomMetadata } from "~/lib/seo";
 import {
@@ -149,7 +151,11 @@ export const Route = createFileRoute("/room/$room")({
       if (!roomLabels[params.room] && products.length === 0) {
         throw notFound();
       }
-      return { products, room: params.room, unavailable: false };
+      // The holiday room drops the products Amazon cannot currently sell. The
+      // list comes from src/data/holiday-hidden-products.json, so the page
+      // never hardcodes an id and the products return when stock does.
+      const visible = params.room === "holiday" ? hideUnbuyableHolidayProducts(products) : products;
+      return { products: visible, room: params.room, unavailable: false };
     } catch (err) {
       if (isNotFound(err)) throw err;
       console.error("Loader error:", err);
@@ -281,11 +287,17 @@ function RoomPage() {
               <ContentUnavailable message="Our product library could not be reached just now, so the products for this room are not loading. Nothing has been lost - please try this page again in a moment." />
             ) : products.length > 0 ? (
               <>
-                <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {products.map((product) => (<ProductCard key={product.id} product={product} />))}
-                  </div>
-                </AnalyticsList>
+                {room === "holiday" ? (
+                  /* Three owner-approved sets plus More Christmas Finds, one
+                     AnalyticsList each, and one disclosure for the page. */
+                  <HolidaySets products={products} listPrefix={`room-${room}`} />
+                ) : (
+                  <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                      {products.map((product) => (<ProductCard key={product.id} product={product} />))}
+                    </div>
+                  </AnalyticsList>
+                )}
                 {/* One disclosure for the whole page (Room Card Standard). */}
                 <div className="mt-8">
                   <AmazonDisclosure />

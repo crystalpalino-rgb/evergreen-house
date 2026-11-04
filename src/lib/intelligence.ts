@@ -226,8 +226,12 @@ export async function getEditorsPicks(
  */
 export async function getProductsByRoom(room: string): Promise<Product[]> {
   const db = sql();
+  // Pinned products lead (pin_rank 1), then quality score. Two pins can share
+  // one room - /room/fall holds both the garland and the runner, both pin_rank
+  // 1 - so the tie is broken by id DESC (most recently curated row first) to
+  // keep the order stable between requests instead of leaving it to the plan.
   const rows =
-    await db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY pin_rank NULLS LAST, quality_score DESC NULLS LAST`;
+    await db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY pin_rank NULLS LAST, quality_score DESC NULLS LAST, id DESC`;
   return rows as unknown as Product[];
 }
 
