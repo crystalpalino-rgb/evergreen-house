@@ -14,6 +14,7 @@
  *   - the file's count field equals the number of hooks in it
  *   - no id appears twice
  *   - every id exists in products, and its room matches the room in the file
+ *   - no id already carries a different authored hook (same value re-applies fine)
  *   - the number of rows matched in the database equals the number of hooks
  * If any of those fail it throws, names the offending ids, and changes nothing.
  *
@@ -52,26 +53,56 @@ function resolveDatabaseUrl() {
 
 const db = neon(resolveDatabaseUrl());
 
-/** Active products in this batch's rooms that still have no authored hook. */
-async function countMissingHooks() {
+/**
+ * Row counts for this batch's rooms: active rows, rows that already carry an
+ * authored hook, rows still missing one. Printed before and after the update so
+ * the log shows the batch moved exactly its own rows.
+ */
+async function countHooks() {
   const rows = await db.query(
-    `SELECT room, count(*)::int AS n
+    `SELECT room,
+            count(*)::int AS active,
+            count(*) FILTER (
+              WHERE card_hook IS NOT NULL AND btrim(card_hook) <> ''
+            )::int AS with_hook,
+            count(*) FILTER (
+              WHERE card_hook IS NULL OR btrim(card_hook) = ''
+            )::int AS missing
        FROM products
       WHERE is_active = true
         AND room = ANY($1::text[])
-        AND (card_hook IS NULL OR btrim(card_hook) = '')
       GROUP BY room`,
     [ROOMS],
   );
-  const byRoom = Object.fromEntries(ROOMS.map((room) => [room, 0]));
-  for (const row of rows) byRoom[row.room] = Number(row.n);
-  const total = Object.values(byRoom).reduce((a, b) => a + b, 0);
+  const byRoom = Object.fromEntries(
+    ROOMS.map((room) => [room, { active: 0, withHook: 0, missing: 0 }]),
+  );
+  for (const row of rows) {
+    byRoom[row.room] = {
+      active: Number(row.active),
+      withHook: Number(row.with_hook),
+      missing: Number(row.missing),
+    };
+  }
+  const total = Object.values(byRoom).reduce(
+    (acc, r) => ({
+      active: acc.active + r.active,
+      withHook: acc.withHook + r.withHook,
+      missing: acc.missing + r.missing,
+    }),
+    { active: 0, withHook: 0, missing: 0 },
+  );
   return { byRoom, total };
 }
 
 function printMissing(label, counts) {
-  const parts = ROOMS.map((room) => `${room} ${counts.byRoom[room]}`).join(", ");
-  console.log(`${label}: ${counts.total} active products without a card_hook (${parts})`);
+  const parts = ROOMS.map(
+    (room) => `${room} ${counts.byRoom[room].withHook}/${counts.byRoom[room].active} hooked`,
+  ).join(", ");
+  console.log(
+    `${label}: ${counts.total.withHook} of ${counts.total.active} active rows carry a card_hook, ` +
+      `${counts.total.missing} without one (${parts})`,
+  );
 }
 
 async function main() {
@@ -140,6 +171,25 @@ async function main() {
     );
   }
 
+  // An id that already carries a different authored hook is a conflict, not a
+  // no-op: silently overwriting it would lose copy somebody else approved. The
+  // same value re-applied is fine, so a re-run of the same file is idempotent.
+  const conflicting = hooks
+    .filter((h) => {
+      const current = byId.get(Number(h.id)).card_hook;
+      return (
+        typeof current === "string" &&
+        current.trim() !== "" &&
+        current !== h.hook
+      );
+    })
+    .map((h) => `${h.id} db="${byId.get(Number(h.id)).card_hook}" file="${h.hook}"`);
+  if (conflicting.length) {
+    throw new Error(
+      `ids already carry a different card_hook: ${conflicting.join(" | ")}: refusing to apply`,
+    );
+  }
+
   if (existing.length !== hooks.length) {
     throw new Error(
       `file carries ${hooks.length} hooks but ${existing.length} rows matched in products: refusing to apply`,
@@ -147,7 +197,7 @@ async function main() {
   }
   console.log(`Validated: ${hooks.length} hooks, ${existing.length} rows matched, rooms agree.\n`);
 
-  const before = await countMissingHooks();
+  const before = await countHooks();
   printMissing("Before", before);
 
   // ---- Apply, in one statement so a half-applied batch cannot happen. ----
@@ -163,7 +213,7 @@ async function main() {
     params,
   );
 
-  const after = await countMissingHooks();
+  const after = await countHooks();
   printMissing("After", after);
 
   // ---- Proof: every hook is stored exactly as written. ----
@@ -177,9 +227,9 @@ async function main() {
     throw new Error(`hooks not stored exactly as written: ${notStored.map((h) => h.id).join(", ")}`);
   }
   console.log(`\nVerified: ${hooks.length} of ${hooks.length} hooks stored exactly as written.`);
-  if (after.total !== 0) {
+  if (after.total.missing !== 0) {
     console.log(
-      `\nNote: ${after.total} active products in these rooms still have no authored hook. They are outside this batch.`,
+      `\nNote: ${after.total.missing} active products in these rooms still have no authored hook. They are outside this batch.`,
     );
   }
 
