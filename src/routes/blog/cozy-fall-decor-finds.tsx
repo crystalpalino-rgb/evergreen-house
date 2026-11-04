@@ -159,22 +159,22 @@ const SECTIONS: BlogSection[] = [
         note: "Rust orange in the same 18 inch size, for anyone who wants one honest hit of autumn colour. Layer these behind the beige covers so the rust only shows at the edges, and the sofa looks styled rather than themed. Double-sided, so they can be turned when one face has had a season of use.",
       },
       {
-        id: 236,
+        id: 197,
         name: "Textured Boucle Pillow Covers, Set of 2 (Camel, 12 x 20)",
         price: 15.27,
         rating: 4.6,
-        productUrl: "/product/foindtower-pack-of-2-textured-boucle-fall",
+        productUrl: "/product/foindtower-pack-of-2-textured-boucle-78oc",
         amazonUrl: "https://www.amazon.com/dp/B0BYMDX598?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/816IeEq0eDL._AC_SL1500_.jpg",
         note: "A camel boucle lumbar is how you make a plain sofa or a leather chair look layered. The looped texture does the work a print would otherwise do, and the neutral tone means it stays out all year; from October it sits in front of a heavier throw. Two in the pack covers both ends of a sofa or one end of two chairs.",
       },
       {
-        id: 237,
+        id: 198,
         name: "MIULEE 12 x 20 Lumbar Pillow Insert",
         price: 9.99,
         rating: 4.5,
-        productUrl: "/product/miulee-pillow-insert-12x20-inch-decorative-fall",
+        productUrl: "/product/miulee-pillow-insert-12x20-inch-decorative-c2w7",
         amazonUrl: "https://www.amazon.com/dp/B0BN5VRGS6?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/71bvN7Lb2JL._AC_SL1500_.jpg",
@@ -186,11 +186,11 @@ const SECTIONS: BlogSection[] = [
     heading: "The bed",
     products: [
       {
-        id: 232,
+        id: 1,
         name: "Bedsure Oversized Queen Duvet Cover, White",
         price: 29.99,
         rating: 4.5,
-        productUrl: "/product/bedsure-duvet-cover-oversized-queen-fall",
+        productUrl: "/product/bedsure-duvet-cover-oversized-queen",
         amazonUrl: "https://www.amazon.com/dp/B0D3LL9T12?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/8167xAJl5-L._AC_SL1500_.jpg",
@@ -202,11 +202,11 @@ const SECTIONS: BlogSection[] = [
     heading: "The one thing you drape",
     products: [
       {
-        id: 235,
+        id: 65,
         name: "Hyde Lane Faux Rabbit Fur Throw, 60 x 80",
         price: 54.99,
         rating: 4.2,
-        productUrl: "/product/hyde-lane-soft-faux-rabbit-fall",
+        productUrl: "/product/hyde-lane-soft-faux-rabbit",
         amazonUrl: "https://www.amazon.com/dp/B0CDJS8CZG?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/91LwQXjmW0L._AC_SL1500_.jpg",
