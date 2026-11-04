@@ -13,6 +13,7 @@ import {
   APPAREL_FALLBACK_BUCKET,
   apparelBucketId,
   apparelBucketMeta,
+  apparelFeaturedRow,
 } from "~/lib/apparel";
 import type { Product } from "~/lib/types";
 
@@ -54,10 +55,12 @@ export const Route = createFileRoute("/apparel")({
         if (qb !== qa) return qb - qa;
         return (b.rating ?? 0) - (a.rating ?? 0);
       });
-      return { products: sorted };
+      // The pinned pieces, in pin_rank order, for the row above the sections.
+      // pin_rank travels with each row from the database, so the order is data.
+      return { products: sorted, featured: apparelFeaturedRow(sorted) };
     } catch (err) {
       console.error("Apparel loader error:", err);
-      return { products: [] as Product[] };
+      return { products: [] as Product[], featured: [] as Product[] };
     }
   },
   head: () => {
@@ -68,7 +71,7 @@ export const Route = createFileRoute("/apparel")({
 });
 
 function ApparelPage() {
-  const { products } = Route.useLoaderData();
+  const { products, featured } = Route.useLoaderData();
 
   // Group in memory so the section order matches APPAREL_BUCKETS, not the query order.
   const grouped = new Map<string, Product[]>();
@@ -147,6 +150,42 @@ function ApparelPage() {
             </p>
           </div>
         </section>
+
+        {/* The pinned pieces, above the category chips and the first group. Each
+            one also stays in its own group further down. */}
+        {featured.length > 0 && (
+          <section
+            aria-labelledby="apparel-featured-heading"
+            className="border-b border-beige/20 bg-cream/30 py-8 sm:py-12"
+          >
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <h2
+                id="apparel-featured-heading"
+                className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl"
+              >
+                The Most Pinned Pieces
+              </h2>
+              <p className="mt-2 max-w-3xl text-warm-gray">
+                The three pieces our readers save and pass along most often, gathered here
+                first. Each one also sits in its own group further down the page.
+              </p>
+              <div className="mt-6">
+                <AnalyticsList
+                  id="apparel-featured"
+                  name="Pinned apparel"
+                  context="apparel"
+                  items={featured}
+                >
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                    {featured.map((product) => (
+                      <ProductCard key={`featured-${product.id}`} product={product} />
+                    ))}
+                  </div>
+                </AnalyticsList>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Jump links to the groups below */}
         {sections.length > 0 && (
