@@ -16,6 +16,8 @@
  * header dropdown. Labels are display only.
  */
 
+import type { Product } from "~/lib/types";
+
 export interface ApparelBucket {
   /** Anchor id on /apparel, used by the nav dropdown links. */
   id: string;
@@ -104,4 +106,38 @@ export function apparelBucket(name: string | null | undefined): { id: string; la
 /** Bucket metadata (id, label, intro) for a bucket id, including the fallback. */
 export function apparelBucketMeta(id: string) {
   return APPAREL_BUCKETS.find((b) => b.id === id) || APPAREL_FALLBACK_BUCKET;
+}
+
+/**
+ * The pieces whose Pinterest pins open /apparel, shown in their own row at the
+ * very top of the page so a pin lands on the product it pictured. The buckets
+ * below are keyword groups with no "top of page" position, and these three pins
+ * belong to three different groups, so promoting them inside their own group
+ * would still bury them.
+ *
+ * Ids only: the order comes from `pin_rank` in the database, so re-ranking a pin
+ * is a data change and this list only says which rows the row is made of.
+ *
+ * 413 (Oatmeal Lounge Set) is deliberately NOT here. It carries pin_rank 1 for
+ * /room/bedroom and is rendered on this page only because it is
+ * product_type apparel, so its rank belongs to the bedroom page, not this one.
+ */
+export const APPAREL_FEATURED_IDS = [405, 406, 407];
+
+/**
+ * The featured row for /apparel: the pinned ids that are actually on this page,
+ * sorted by pin_rank. Each piece is ALSO still rendered inside its own bucket
+ * further down, so the row adds a position rather than moving a card.
+ *
+ * An empty result means the page renders exactly as it did before the row
+ * existed, which is why the caller renders nothing when this returns nothing.
+ */
+export function apparelFeaturedRow(products: Product[]): Product[] {
+  const byId = new Map(products.map((product) => [Number(product.id), product]));
+  return APPAREL_FEATURED_IDS.map((id) => byId.get(id))
+    .filter((product): product is Product => Boolean(product))
+    .sort(
+      (a, b) =>
+        (a.pin_rank ?? Number.MAX_SAFE_INTEGER) - (b.pin_rank ?? Number.MAX_SAFE_INTEGER),
+    );
 }
