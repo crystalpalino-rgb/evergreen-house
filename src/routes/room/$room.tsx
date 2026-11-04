@@ -3,6 +3,8 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
+import { ContentUnavailable } from "~/components/ContentUnavailable";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getProductsByRoom } from "~/lib/intelligence";
 import { generateRoomMetadata } from "~/lib/seo";
@@ -147,11 +149,12 @@ export const Route = createFileRoute("/room/$room")({
       if (!roomLabels[params.room] && products.length === 0) {
         throw notFound();
       }
-      return { products, room: params.room };
+      return { products, room: params.room, unavailable: false };
     } catch (err) {
       if (isNotFound(err)) throw err;
       console.error("Loader error:", err);
-      return { products: [] as Product[], room: params.room };
+      // A database outage is NOT an empty room: flag it so the page says so.
+      return { products: [] as Product[], room: params.room, unavailable: true };
     }
   },
     head: ({ loaderData }) => {
@@ -169,8 +172,11 @@ export const Route = createFileRoute("/room/$room")({
           fetchpriority: "high",
         });
       }
+      const meta = loaderData?.unavailable
+        ? [...seo.meta, { name: "robots", content: "noindex, follow" }]
+        : seo.meta;
       return {
-        meta: seo.meta,
+        meta,
         links,
       };
     },
@@ -178,7 +184,7 @@ export const Route = createFileRoute("/room/$room")({
 });
 
 function RoomPage() {
-  const { products, room } = Route.useLoaderData();
+  const { products, room, unavailable } = Route.useLoaderData();
   const roomName =
     roomLabels[room] ||
     room.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
@@ -233,7 +239,13 @@ function RoomPage() {
               Back to Home
             </a>
             <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{roomName}</h1>
-            <p className="mt-4 text-lg text-warm-gray">{products.length} {products.length === 1 ? "product" : "products"} curated for your {roomName.toLowerCase()}</p>
+            {unavailable ? (
+              <p className="mt-4 text-lg text-warm-gray">
+                Our product library is temporarily unavailable. Please try this page again in a moment.
+              </p>
+            ) : (
+              <p className="mt-4 text-lg text-warm-gray">{products.length} {products.length === 1 ? "product" : "products"} curated for your {roomName.toLowerCase()}</p>
+            )}
             {editorial && (
               <p className="mt-6 max-w-3xl text-base leading-relaxed text-warm-gray">
                 {editorial.intro}
@@ -265,12 +277,20 @@ function RoomPage() {
 
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {products.length > 0 ? (
-              <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {products.map((product) => (<ProductCard key={product.id} product={product} />))}
+            {unavailable ? (
+              <ContentUnavailable message="Our product library could not be reached just now, so the products for this room are not loading. Nothing has been lost - please try this page again in a moment." />
+            ) : products.length > 0 ? (
+              <>
+                <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                    {products.map((product) => (<ProductCard key={product.id} product={product} />))}
+                  </div>
+                </AnalyticsList>
+                {/* One disclosure for the whole page (Room Card Standard). */}
+                <div className="mt-8">
+                  <AmazonDisclosure />
                 </div>
-              </AnalyticsList>
+              </>
             ) : (
               <div className="py-10 text-center">
                 <p className="text-lg text-warm-gray">No products found for this room yet.</p>

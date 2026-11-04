@@ -3,6 +3,8 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
+import { ContentUnavailable } from "~/components/ContentUnavailable";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getCollection, getCollectionProducts, getAllCollections } from "~/lib/intelligence";
 import { generateCollectionMetadata } from "~/lib/seo";
@@ -77,11 +79,12 @@ export const Route = createFileRoute("/collection/$collection")({
         })
         .slice(0, 3);
 
-      return { products, collection: slug, label, description, imageUrl, collectionType, relatedCollections };
+      return { products, collection: slug, label, description, imageUrl, collectionType, relatedCollections, unavailable: false };
     } catch (err) {
       if (isNotFound(err)) throw err;
       console.error("Collection loader error:", err);
-      return { products: [] as Product[], collection: slug, label: slug, description: null, imageUrl: null, collectionType: "room", relatedCollections: [] as Collection[] };
+      // A database outage is NOT an empty collection: flag it so the page says so.
+      return { products: [] as Product[], collection: slug, label: slug, description: null, imageUrl: null, collectionType: "room", relatedCollections: [] as Collection[], unavailable: true };
     }
   },
   head: ({ loaderData }) => {
@@ -97,13 +100,16 @@ export const Route = createFileRoute("/collection/$collection")({
         fetchpriority: "high",
       });
     }
-    return { meta: seo.meta, links };
+    const meta = loaderData?.unavailable
+      ? [...seo.meta, { name: "robots", content: "noindex, follow" }]
+      : seo.meta;
+    return { meta, links };
   },
   component: CollectionPage,
 });
 
 function CollectionPage() {
-  const { products, label, description, imageUrl, collectionType, relatedCollections } = Route.useLoaderData();
+  const { products, label, description, imageUrl, collectionType, relatedCollections, unavailable } = Route.useLoaderData();
   const breadcrumbItems = [{ label: "Home", href: "/" }, { label: "Collections", href: "/collections" }, { label }];
   const collectionUrl = `${SITE_URL}/collection/${Route.useLoaderData().collection}`;
   const collectionSchema = getCollectionPageSchema({ name: label, display_name: label, description }, collectionUrl);
@@ -146,7 +152,11 @@ function CollectionPage() {
             </a>
             <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{label}</h1>
             {description && <p className="mt-4 max-w-2xl text-lg text-warm-gray">{description}</p>}
-            <p className="mt-2 text-sm text-taupe">{products.length} {products.length === 1 ? "product" : "products"} in this curated collection</p>
+            {unavailable ? (
+              <p className="mt-2 text-sm text-taupe">Our product library is temporarily unavailable. Please try this page again in a moment.</p>
+            ) : (
+              <p className="mt-2 text-sm text-taupe">{products.length} {products.length === 1 ? "product" : "products"} in this curated collection</p>
+            )}
           </div>
         </section>
 
@@ -154,10 +164,18 @@ function CollectionPage() {
         {/* Product grid */}
         <section className="py-8 sm:py-12">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            {products.length > 0 ? (
-              <AnalyticsList id={`collection-${Route.useLoaderData().collection}`} name={label} items={products}>
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div>
-              </AnalyticsList>
+            {unavailable ? (
+              <ContentUnavailable message="Our product library could not be reached just now, so this collection is not loading. Nothing has been lost - please try this page again in a moment." />
+            ) : products.length > 0 ? (
+              <>
+                <AnalyticsList id={`collection-${Route.useLoaderData().collection}`} name={label} items={products}>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">{products.map((product) => (<ProductCard key={product.id} product={product} />))}</div>
+                </AnalyticsList>
+                {/* One disclosure for the whole page (Room Card Standard). */}
+                <div className="mt-8">
+                  <AmazonDisclosure />
+                </div>
+              </>
             ) : (
               <div className="py-10 text-center"><p className="text-lg text-warm-gray">No products found for this collection yet.</p><a href="/collections" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all collections →</a></div>
             )}

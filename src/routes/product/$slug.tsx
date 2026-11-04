@@ -10,6 +10,7 @@ import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { getRelatedProducts } from "~/lib/related";
 import { generateProductMetadata } from "~/lib/seo";
 import {
@@ -296,9 +297,9 @@ function ProductPage() {
                 {/* Amazon disclosure */}
                 {hasAmazonUrl && (
                   <>
-                    <p className="mt-3 text-xs text-taupe/70">
-                      As an Amazon Associate, Evergreen House earns from qualifying purchases.
-                    </p>
+                    <div className="mt-3">
+                      <AmazonDisclosure variant="inline" />
+                    </div>
                     <p className="mt-2 text-xs text-taupe/70">
                       Shipping and returns are handled by Amazon. Standard US shipping usually
                       arrives in 3 to 7 days, and most items can be returned within 30 days at no
@@ -390,6 +391,8 @@ function ProductPage() {
                       product={{
                         id: item.id,
                         name: item.name,
+                        display_title: item.display_title ?? null,
+                        card_hook: item.card_hook ?? null,
                         seo_slug: item.seo_slug,
                         image_url: item.image_url,
                         price: item.price,

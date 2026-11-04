@@ -3,6 +3,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { getAllProducts } from "~/lib/intelligence";
 import { generateStaticMetadata } from "~/lib/seo";
@@ -166,7 +167,8 @@ function ApparelPage() {
 
         {/* One section per group */}
         {products.length > 0 ? (
-          sections.map(({ bucket, items }) => (
+          <>
+          {sections.map(({ bucket, items }) => (
             <section
               key={bucket.id}
               id={bucket.id}
@@ -200,7 +202,12 @@ function ApparelPage() {
                 </div>
               </div>
             </section>
-          ))
+          ))}
+          {/* One disclosure for the whole page (Room Card Standard). */}
+          <div className="py-8">
+            <AmazonDisclosure />
+          </div>
+          </>
         ) : (
           <section className="py-12">
             <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">

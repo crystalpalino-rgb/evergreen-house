@@ -4,6 +4,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { ProductFilters } from "~/components/ProductFilters";
 import { searchProducts, getFilterOptions } from "~/lib/intelligence";
 import { generateStaticMetadata } from "~/lib/seo";
@@ -210,6 +211,10 @@ function SearchPage() {
                         ))}
                       </div>
                     </AnalyticsList>
+                    {/* One disclosure for the whole page (Room Card Standard). */}
+                    <div className="mt-8">
+                      <AmazonDisclosure />
+                    </div>
                     {/* Pagination */}
                     {totalPages > 1 && (
                       <div className="mt-8 flex items-center justify-center gap-2">
