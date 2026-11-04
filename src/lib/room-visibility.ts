@@ -19,9 +19,15 @@
  * The data is already waiting: 30 rows carry room = 'loungewear' and
  * is_active = true, ready for the day the owner approves the loungewear
  * collection.
+ *
+ * 2026-11-04: the 52 Thanksgiving 2026 products carry room = 'thanksgiving'.
+ * They are seasonal collection stock that lives on /collections/<slug>-edit,
+ * not evergreen room stock, so the room stays hidden here and the room
+ * sitemap stays at 16 rooms.
  */
 export const HIDDEN_ROOMS: readonly string[] = [
   "loungewear", // 30 active clothing rows, waiting on owner approval
+  "thanksgiving", // 52 seasonal collection rows, live on the Thanksgiving edits
 ];
 
 const HIDDEN_ROOM_SET = new Set<string>(HIDDEN_ROOMS);
