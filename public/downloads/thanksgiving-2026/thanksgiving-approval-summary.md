@@ -33,7 +33,7 @@ Target was about 100 (25+ per collection). Delivered 112, 28 per collection. Eve
 
 ## Hero candidates per collection (first pass, not approved)
 
-- **Table:** cream stoneware dinnerware set (Gibson Elite Pasco 16 piece, 4.7 stars, 21,721 reviews); neutral cotton napkins, 12 pack (Urban Villa, 4.6, 17,401); a second napkin colourway for layering; brass candlesticks; cream charger plates.
+- **Table:** cream stoneware dinnerware set (Gibson Elite Pasco 16 piece, 4.7 stars, 21,721 reviews); neutral cotton napkins, 12 pack (Urban Villa, 4.6, 17,401); a second napkin colorway for layering; brass candlesticks; cream charger plates.
 - **Moody:** Stone Lain Celina stoneware in plum (4.7, 21,846); burgundy cotton napkins, 12 pack (Utopia, 4.6, 24,211); plum or wine runner; antique brass candlesticks; smoked glass goblets.
 - **Hosting:** large stoneware platters (Sweese, 4.7, 2,638; DOWAN 16 inch, 4.6, 2,270); acacia charcuterie board; glass beverage dispenser; ceramic cake stand.
 - **Welcome:** magnolia leaf wreath (26 inch, 4.5, 2,308); eucalyptus and olive wreaths; cream and olive faux pumpkins; outdoor lantern; urn planter; neutral doormat.
@@ -42,7 +42,7 @@ Target was about 100 (25+ per collection). Delivered 112, 28 per collection. Eve
 
 1. **Brand-fit drift on cheaper search results.** Amazon's best-reviewed items in these categories are not always the most editorial. Four to six rows per collection are practical but plain: cooking utensil sets and bamboo spoons under Hosting, a buffalo plaid doormat and pampas grass under Welcome, some value-brand dinnerware under Table. They are included because they meet the rating bar and solve a real hosting problem, but they should be judged on look, not just stars. I have marked them lower on the Visual Appeal column instead of deleting them.
 2. **Welcome is the weakest collection on rating depth.** Only 12 of 28 are 4.5 or better; the rest are 4.3 to 4.4. Wreaths and doormats genuinely do sit at 4.3 to 4.4 across the category. If you want 4.5 only, Welcome shrinks to about 12.
-3. **Duplicates by family.** Some rows are the same product in two colourways or two sizes (napkins, platters). They are deliberate (you need two colours to layer a table) but approve the family once rather than treating them as separate finds.
+3. **Duplicates by family.** Some rows are the same product in two colorways or two sizes (napkins, platters). They are deliberate (you need two colors to layer a table) but approve the family once rather than treating them as separate finds.
 4. **Commission.** Amazon Associates rates differ by category and change. Column 18 says "standard category rate, confirm in the Associates dashboard" rather than stating a percentage I cannot verify from here. I did not invent a rate.
 5. **Existing catalog reuse is documented but not in the sheet.** Adding existing products as rows would have required re-verifying ratings I could not read today. They are in `catalog-audit.md` with slugs and prices so nothing is lost.
 6. **Product URLs are raw `amazon.com/dp/<ASIN>` with no affiliate tag**, exactly as you asked. The site adds its own tag when a product is loaded later.

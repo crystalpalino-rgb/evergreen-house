@@ -83,7 +83,7 @@ const SECTIONS: BlogSection[] = [
         productUrl: "/product/sunmory-floor-lamps-for-living-room-hn4g",
         amazonUrl: "https://www.amazon.com/dp/B0DSBVYSZV?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/71Cy12mRz5L._AC_SL1500_.jpg",
-        note: "The cheapest way to make a dark corner look intentional is to put a lamp in it, and this arc lamp does it without eating floor space. Two interchangeable shades - rattan for warmth, fabric for something more tailored - a slim wooden stem with a small built-in shelf, and a 12W LED bulb with three colour temperatures in the box. Warm light in the evening, brighter for reading, no rewiring, no ceiling work.",
+        note: "The cheapest way to make a dark corner look intentional is to put a lamp in it, and this arc lamp does it without eating floor space. Two interchangeable shades - rattan for warmth, fabric for something more tailored - a slim wooden stem with a small built-in shelf, and a 12W LED bulb with three color temperatures in the box. Warm light in the evening, brighter for reading, no rewiring, no ceiling work.",
       },
       {
         id: 52,

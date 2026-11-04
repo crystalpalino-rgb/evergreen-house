@@ -64,7 +64,7 @@ Format: query -> chips as displayed, first 18 to 24, in order.
 9. maroon and gold table setting
 10. candlelight thanksgiving table
 
-**Primary intent:** "I want a table that looks like a magazine, not a catalog" - a specific aesthetic commitment, low volume, high loyalty. **Secondary intent:** colour coordination help (buyers search `burgundy` then `maroon and gold` then `gold and` to pair).
+**Primary intent:** "I want a table that looks like a magazine, not a catalog" - a specific aesthetic commitment, low volume, high loyalty. **Secondary intent:** color coordination help (buyers search `burgundy` then `maroon and gold` then `gold and` to pair).
 
 **Seasonal relevance:** the strongest of the four for November. Burgundy, plum and candlelight are cold-weather cues that run from mid-October through Christmas, so pins created here have a second life in December if the copy stays season-neutral.
 
@@ -74,8 +74,8 @@ Format: query -> chips as displayed, first 18 to 24, in order.
 
 **Pin concepts (5):**
 1. **"The moody table, lit only by candles"** - Description: "Burgundy linen, smoked glass, and antique brass. Shot at 8pm with no overhead light." Alt: "Dark moody Thanksgiving table with burgundy linens, smoked glass goblets and brass candlesticks lit by candles." Creative: evening photography, single warm light source, deep shadows, dark wood. No AI look. Featured: burgundy napkins, smoked goblets, brass candleholders, dark dinnerware. Destination: /collections/moody-thanksgiving (draft). CTA: "Shop the moody edit".
-2. **"Burgundy, but not wedding"** - Description: "How to use wine colours at Thanksgiving without it reading as a reception." Alt: "Burgundy and brass Thanksgiving table styled for a family dinner." Creative: overhead, muted, one textile and one metal only. Featured: burgundy runner, brass, cream plates. Destination: /collections/moody-thanksgiving. CTA: "See the palette".
-3. **"Smoked glass is the whole trick"** - Description: "Grey-tinted goblets make even a plain white plate look collected." Alt: "Smoked glass goblets on a dark Thanksgiving table." Creative: close product-in-context crop, backlight through the glass. Featured: smoked goblets, dark ceramic plates. Destination: /collections/moody-thanksgiving. CTA: "Shop glassware".
+2. **"Burgundy, but not wedding"** - Description: "How to use wine colors at Thanksgiving without it reading as a reception." Alt: "Burgundy and brass Thanksgiving table styled for a family dinner." Creative: overhead, muted, one textile and one metal only. Featured: burgundy runner, brass, cream plates. Destination: /collections/moody-thanksgiving. CTA: "See the palette".
+3. **"Smoked glass is the whole trick"** - Description: "Gray-tinted goblets make even a plain white plate look collected." Alt: "Smoked glass goblets on a dark Thanksgiving table." Creative: close product-in-context crop, backlight through the glass. Featured: smoked goblets, dark ceramic plates. Destination: /collections/moody-thanksgiving. CTA: "Shop glassware".
 4. **"Dark plates, warm room"** - Description: "Matte charcoal stoneware keeps a candlelit table from going flat." Alt: "Charcoal matte stoneware dinnerware on a candlelit table." Creative: side-lit, textural close crop, linen napkin in plum. Featured: dark dinnerware, plum napkins, brass. Destination: /collections/moody-thanksgiving. CTA: "Shop dinnerware".
 5. **"The collected table"** - Description: "Start with one vintage goblet. Add brass. It should look gathered, not bought as a set." Alt: "Vintage brass and mismatched glassware collected on a dark wood table." Creative: layered surfaces, three metals, real patina, slightly imperfect styling. Featured: antique brass holders, vintage goblets, sculptural vase. Destination: /collections/moody-thanksgiving. CTA: "Shop the collected look".
 
