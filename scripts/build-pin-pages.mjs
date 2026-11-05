@@ -65,7 +65,7 @@ const TABLESCAPE_PIN = "pin-holiday-hosting-table.jpg";
  * owner approved the swap; the disc label changed with it).
  */
 const TABLESCAPE_LABEL_IDS = {
-  "CUT CRYSTAL PITCHER": 628,
+  "GLASS PITCHER": 628,
 };
 
 const apply = process.argv.includes("--apply");
