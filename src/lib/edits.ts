@@ -5,26 +5,40 @@ import manifest from "~/data/edits/manifest.json";
  * "Shop the Edit" collections.
  *
  * Since the collection admin work (P6adm phase 1, 2026-11-05) the curated data
- * lives in Postgres, not in the repo: `edits` holds one row per published edit
- * and `edit_items` holds its ordered product list. This module is the only
- * reader. The page loaders are async because of it; the `EditCollection` and
- * `EditProduct` shapes are unchanged, so `getCuratedProducts` and every card
- * component were not touched.
+ * lives in Postgres, not in the repo. Since phase 2a (2026-11-05) it lives there
+ * in two layers:
+ *
+ *   `edits` / `edit_items`      the DRAFT working copy. The curation screens in
+ *                               /admin/collections write here and nowhere else.
+ *   `edit_publications`         one row per live collection holding the snapshot
+ *                               the public pages render, written only by the
+ *                               explicit "switch this collection live" control.
+ *
+ * This module is the only public reader, and it reads `edit_publications` and
+ * nothing else. That is the whole of the draft-then-publish guarantee: an edit
+ * saved into the draft tables cannot reach a page, because no public code path
+ * looks at them. `status = 'published'` is filtered here and nowhere else.
  *
  * The database owns the ORDER and the editorial copy. It also owns the live
  * product facts through `products` (name, image, affiliate URL, plus the
  * verified price, star rating and review count the card prints), fetched by id.
  *
+ * A price the owner typed on a card is carried in the snapshot as
+ * `price_override` plus `price_set_at`, deliberately separate from
+ * `products.price`: a verification pass writes the product row, so the typed
+ * figure and the verified figure never overwrite each other and the card can
+ * say which of the two it is showing.
+ *
  * `src/data/edits/manifest.json` is still checked in, but as a generated export
- * of these tables (`scripts/dump-edits-manifest.ts` writes it), not as the
- * source. Two build scripts read it: `scripts/build-pin-pages.mjs` resolves a
- * pin number to an edit item, and `scripts/build-thanksgiving-edits.mjs` was the
- * writer before this migration. It is also the outage fallback below: if the
- * database cannot be read at all, the pages render the last exported snapshot
- * instead of going dark. See the note on `fallbackEdits()`.
+ * of the published snapshots (`scripts/dump-edits-manifest.ts` writes it), not
+ * as the source. Two build scripts read it: `scripts/build-pin-pages.mjs`
+ * resolves a pin number to an edit item, and `scripts/build-thanksgiving-edits.mjs`
+ * was the writer before the phase 1 migration. It is also the outage fallback
+ * below: if the database cannot be read at all, the pages render the last
+ * exported snapshot instead of going dark. See the note on `fallbackEdits()`.
  *
  * URL rule (from the curation README): the curated `slug` is the whole URL and
- * is used verbatim for the product link and nothing is rebuilt from `name`,
+ * is used verbatim for the product link and nothing else is rebuilt from `name`,
  * because 9 of the 47 names are long Amazon listing titles whose name-derived
  * slug is truncated at 120 characters.
  */
@@ -36,6 +50,13 @@ export interface EditItem {
   display_title: string;
   hook: string;
   raw_name: boolean;
+  /**
+   * The price the owner typed on this card, and the day she typed it. Absent or
+   * null means the card prints the verified `products.price` instead. Both live
+   * in the published snapshot, so a typed price goes live only on publish.
+   */
+  price_override?: number | null;
+  price_set_at?: string | null;
 }
 
 export interface EditCollection {
@@ -76,27 +97,29 @@ export interface EditSummary extends EditCardData {
   related?: string[];
 }
 
-interface EditRow {
+/** One item as the published snapshot stores it. */
+export interface SnapshotItem {
   id: number;
   slug: string;
-  title: string;
-  headline: string | null;
-  intro: string | null;
-  art_note: string | null;
-  hero_image: string | null;
-  card_image: string | null;
-  related: string[] | null;
+  name: string;
+  display_title: string;
+  hook: string;
+  raw_name: boolean;
+  price_override?: number | null;
+  price_set_at?: string | null;
 }
 
-interface EditItemRow {
-  edit_id: number;
-  product_id: number;
-  position: number;
-  display_title: string | null;
-  hook: string | null;
-  slug: string | null;
-  name: string | null;
-  raw_name: boolean | null;
+/** One collection as the published snapshot stores it (the manifest shape). */
+export interface SnapshotCollection {
+  slug: string;
+  title: string;
+  headline: string;
+  intro: string;
+  art_note: string;
+  hero_image: string;
+  card_image: string;
+  related?: string[];
+  items: SnapshotItem[];
 }
 
 /** Manifest snapshot, used only when the database cannot be read at all. */
@@ -105,15 +128,30 @@ const SNAPSHOT = (manifest as { collections: EditCollection[] }).collections;
 /**
  * Last-resort render path.
  *
- * The checked-in manifest is a dump of the `edits` and `edit_items` tables, so
- * serving it while the database is unreachable shows the same published set the
- * site had when the export was written. It is never consulted when a query
- * succeeds, and never consulted for a slug that simply is not published (a
- * draft therefore cannot render through this path, because a draft is not in
- * the export). Every use logs the underlying error first.
+ * The checked-in manifest is a dump of the published snapshots, so serving it
+ * while the database is unreachable shows the same published set the site had
+ * when the export was written. It is never consulted when a query succeeds, and
+ * never consulted for a slug that simply is not published (a draft therefore
+ * cannot render through this path, because a draft is not in the export). Every
+ * use logs the underlying error first.
  */
 function fallbackEdits(): EditCollection[] {
   return SNAPSHOT;
+}
+
+/** jsonb arrives parsed from the Neon driver; a text column would arrive as a
+ *  string. Accept both so a driver change cannot break the public pages. */
+function asObject<T>(value: unknown): T | null {
+  if (value == null) return null;
+  if (typeof value === "string") {
+    try {
+      return JSON.parse(value) as T;
+    } catch {
+      return null;
+    }
+  }
+  if (typeof value === "object") return value as T;
+  return null;
 }
 
 /** The manifest snapshot in the shape the list surfaces take. */
@@ -130,53 +168,60 @@ function toSummaries(edits: EditCollection[]): EditSummary[] {
   });
 }
 
-function toEdit(row: EditRow, items: EditItem[]): EditCollection {
+function toItem(raw: SnapshotItem): EditItem {
+  const item: EditItem = {
+    id: Number(raw.id),
+    slug: raw.slug ?? "",
+    name: raw.name ?? "",
+    display_title: raw.display_title ?? "",
+    hook: raw.hook ?? "",
+    raw_name: Boolean(raw.raw_name),
+  };
+  /* Only present when the owner typed a price on this card. Absent keeps the
+     serialised payload identical for the 166 items that carry no override. */
+  if (raw.price_override != null) {
+    item.price_override = Number(raw.price_override);
+    item.price_set_at = raw.price_set_at ?? null;
+  }
+  return item;
+}
+
+function toEdit(snapshot: SnapshotCollection): EditCollection {
   const edit: EditCollection = {
-    slug: row.slug,
-    title: row.title,
-    headline: row.headline ?? "",
-    intro: row.intro ?? "",
-    art_note: row.art_note ?? "",
-    hero_image: row.hero_image ?? "",
-    card_image: row.card_image ?? "",
+    slug: snapshot.slug,
+    title: snapshot.title,
+    headline: snapshot.headline ?? "",
+    intro: snapshot.intro ?? "",
+    art_note: snapshot.art_note ?? "",
+    hero_image: snapshot.hero_image ?? "",
+    card_image: snapshot.card_image ?? "",
+    items: (snapshot.items ?? []).map(toItem),
   };
   /* Key order matters: the manifest dump writes `related` between `card_image`
      and `items`, exactly as the original file had it. */
-  if (row.related && row.related.length > 0) edit.related = row.related;
-  edit.items = items;
+  if (snapshot.related && snapshot.related.length > 0) edit.related = snapshot.related;
   return edit;
-}
-
-function toItem(row: EditItemRow): EditItem {
-  return {
-    id: Number(row.product_id),
-    slug: row.slug ?? "",
-    name: row.name ?? "",
-    display_title: row.display_title ?? "",
-    hook: row.hook ?? "",
-    raw_name: Boolean(row.raw_name),
-  };
 }
 
 /**
  * The published edits, in curated order: the four holiday edits first, then the
  * four Thanksgiving edits, which is the order the homepage row and the
- * /collections list render them in. `status = 'published'` is filtered here and
- * nowhere else, so a draft row can never reach a page.
+ * /collections list render them in.
  *
- * One query: the piece count comes from an aggregate, so the ordered item lists
- * never leave the database for a page that only shows cards.
+ * One query: the piece count comes from the snapshot itself, so the ordered item
+ * lists never leave the database for a page that only shows cards.
  */
 export async function getEditSummaries(): Promise<EditSummary[]> {
   try {
     const db = sql();
     const rows = (await db.query(
-      `SELECT e.slug, e.title, e.card_image, e.related,
-              COALESCE(c.n, 0)::int AS item_count
+      `SELECT e.slug,
+              COALESCE(p.snapshot->>'title', e.title) AS title,
+              COALESCE(p.snapshot->>'card_image', e.card_image) AS card_image,
+              ARRAY(SELECT jsonb_array_elements_text(p.snapshot->'related')) AS related,
+              COALESCE(jsonb_array_length(p.snapshot->'items'), 0)::int AS item_count
          FROM edits e
-         LEFT JOIN (
-           SELECT edit_id, count(*) AS n FROM edit_items GROUP BY edit_id
-         ) c ON c.edit_id = e.id
+         JOIN edit_publications p ON p.edit_id = e.id
         WHERE e.status = 'published'
         ORDER BY e.sort_order, e.id`,
       [],
@@ -205,33 +250,45 @@ export async function getEditSummaries(): Promise<EditSummary[]> {
 
 /** One published edit by slug, or null when the slug is unknown or a draft. */
 export async function getEdit(slug: string): Promise<EditCollection | null> {
-  let editRow: EditRow | undefined;
-  let itemRows: EditItemRow[];
   try {
     const db = sql();
     const rows = (await db.query(
-      `SELECT id, slug, title, headline, intro, art_note, hero_image,
-              card_image, related
-         FROM edits
-        WHERE slug = $1 AND status = 'published'
+      `SELECT p.snapshot
+         FROM edits e
+         JOIN edit_publications p ON p.edit_id = e.id
+        WHERE e.slug = $1 AND e.status = 'published'
         LIMIT 1`,
       [slug],
-    )) as unknown as EditRow[];
-    editRow = rows[0];
-    if (!editRow) return null;
-    itemRows = (await db.query(
-      `SELECT edit_id, product_id, position, display_title, hook, slug, name,
-              raw_name
-         FROM edit_items
-        WHERE edit_id = $1
-        ORDER BY position, id`,
-      [Number(editRow.id)],
-    )) as unknown as EditItemRow[];
+    )) as unknown as { snapshot: unknown }[];
+    const snapshot = asObject<SnapshotCollection>(rows[0]?.snapshot);
+    if (!snapshot) return null;
+    return toEdit(snapshot);
   } catch (err) {
     console.error(`Edit query failed for "${slug}", serving the snapshot:`, err);
     return fallbackEdits().find((e) => e.slug === slug) ?? null;
   }
-  return toEdit(editRow, itemRows.map(toItem));
+}
+
+/**
+ * Every published collection exactly as the public pages would render it.
+ *
+ * Used by the curation screens and by the pin guard (src/lib/pin-guard.ts): the
+ * guard needs the published set, not the draft, because the pin landing pages
+ * are built from what is live.
+ */
+export async function getPublishedCollections(): Promise<SnapshotCollection[]> {
+  const db = sql();
+  const rows = (await db.query(
+    `SELECT p.snapshot
+       FROM edits e
+       JOIN edit_publications p ON p.edit_id = e.id
+      WHERE e.status = 'published'
+      ORDER BY e.sort_order, e.id`,
+    [],
+  )) as unknown as { snapshot: unknown }[];
+  return rows
+    .map((row) => asObject<SnapshotCollection>(row.snapshot))
+    .filter((value): value is SnapshotCollection => value !== null);
 }
 
 /**
@@ -291,6 +348,13 @@ export interface EditProduct {
   price: number | string | null;
   /** Day the price and rating were last read from the Amazon product page. */
   priceCheckedAt: string | Date | null;
+  /**
+   * The price the owner typed on this card and the day she set it (owner
+   * decision 21, 2026-11-05). Null means "no typed price": the card prints the
+   * verified `price` above and nothing else changes.
+   */
+  priceOverride: number | null;
+  priceSetAt: string | null;
 }
 
 interface ProductRow {
@@ -313,6 +377,9 @@ export interface CuratedItemRef {
   display_title?: string;
   name?: string;
   hook?: string;
+  /** A price typed by the owner, which wins over the verified product price. */
+  price_override?: number | null;
+  price_set_at?: string | null;
 }
 
 /**
@@ -373,6 +440,10 @@ export async function getCuratedProducts(
       reviewCount: row.review_count ?? null,
       price: row.price ?? null,
       priceCheckedAt: row.price_checked_at ?? null,
+      // A typed price is the owner's editorial number and wins over the verified
+      // one on the card, dated so the reader can see when it was set.
+      priceOverride: item.price_override != null ? Number(item.price_override) : null,
+      priceSetAt: item.price_override != null ? (item.price_set_at ?? null) : null,
     });
   }
   return out;

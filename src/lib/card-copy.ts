@@ -479,6 +479,25 @@ export function cardVerifiedMonth(date: string | Date | null | undefined): strin
   return d.toLocaleDateString("en-US", { month: "long", year: "numeric", timeZone: "UTC" });
 }
 
+/**
+ * "Nov 5, 2026" from the day the owner typed a price on a card.
+ *
+ * A typed price is not a verified one, so it prints with the exact day it was
+ * set rather than the month of the last verification pass. Null when there is no
+ * date, so the card shows the figure alone rather than a made up day.
+ */
+export function cardSetDate(date: string | Date | null | undefined): string | null {
+  if (!date) return null;
+  const d = date instanceof Date ? date : new Date(String(date));
+  if (Number.isNaN(d.getTime())) return null;
+  return d.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
 /** The card's title: the clean human title when set, the listing name otherwise. */
 export function cardTitle(
   displayTitle: string | null | undefined,

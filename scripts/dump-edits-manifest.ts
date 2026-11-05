@@ -30,44 +30,45 @@ const db = sql();
 const CHECK = process.argv.includes("--check");
 const OUT = join(import.meta.dir, "..", "src", "data", "edits", "manifest.json");
 
-interface EditRow {
+interface SnapshotItemRow {
   id: number;
   slug: string;
-  title: string;
-  headline: string | null;
-  intro: string | null;
-  art_note: string | null;
-  hero_image: string | null;
-  card_image: string | null;
-  related: string[] | null;
+  name: string;
+  display_title: string;
+  hook: string;
+  raw_name: boolean;
+  price_override?: number | null;
+  price_set_at?: string | null;
 }
 
-interface ItemRow {
-  edit_id: number;
-  product_id: number;
-  position: number;
-  display_title: string | null;
-  hook: string | null;
-  slug: string | null;
-  name: string | null;
-  raw_name: boolean | null;
+interface SnapshotRow {
+  slug: string;
+  snapshot: {
+    slug: string;
+    title: string;
+    headline: string;
+    intro: string;
+    art_note: string;
+    hero_image: string;
+    card_image: string;
+    related?: string[];
+    items: SnapshotItemRow[];
+  };
 }
 
 async function main() {
-  const editRows = (await db`
-    SELECT id, slug, title, headline, intro, art_note, hero_image, card_image,
-           related
-      FROM edits
-     WHERE status = 'published'
-     ORDER BY sort_order, id
-  `) as unknown as EditRow[];
-
-  const itemRows = (await db`
-    SELECT edit_id, product_id, position, display_title, hook, slug, name,
-           raw_name
-      FROM edit_items
-     ORDER BY edit_id, position, id
-  `) as unknown as ItemRow[];
+  /* Since collection admin phase 2a the public pages render the published
+     snapshot in `edit_publications`, not the draft in `edits` / `edit_items`.
+     The manifest is the outage fallback for those same pages, so it is dumped
+     from the same place: dumping the draft would make the fallback show an
+     unpublished change. */
+  const snapshotRows = (await db`
+    SELECT e.slug, p.snapshot
+      FROM edits e
+      JOIN edit_publications p ON p.edit_id = e.id
+     WHERE e.status = 'published'
+     ORDER BY e.sort_order, e.id
+  `) as unknown as SnapshotRow[];
 
   const metaRows = (await db`
     SELECT key, value FROM edits_manifest_meta
@@ -75,27 +76,29 @@ async function main() {
 
   const meta = new Map(metaRows.map((r) => [r.key, r.value ?? ""]));
 
-  const byEdit = new Map<number, ItemRow[]>();
-  for (const row of itemRows) {
-    const key = Number(row.edit_id);
-    const list = byEdit.get(key);
-    if (list) list.push(row);
-    else byEdit.set(key, [row]);
-  }
-
   /* Key order is part of the contract: it is what makes the dump reproduce the
      pre-migration file byte for byte. Do not reorder. */
-  const collections = editRows.map((edit) => {
-    const items = (byEdit.get(Number(edit.id)) ?? []).map((item) => ({
-      id: Number(item.product_id),
-      slug: item.slug ?? "",
-      name: item.name ?? "",
-      display_title: item.display_title ?? "",
-      hook: item.hook ?? "",
-      raw_name: Boolean(item.raw_name),
-    }));
+  const collections = snapshotRows.map((row) => {
+    const edit = row.snapshot;
+    const items = (edit.items ?? []).map((item) => {
+      const out: Record<string, unknown> = {
+        id: Number(item.id),
+        slug: item.slug ?? "",
+        name: item.name ?? "",
+        display_title: item.display_title ?? "",
+        hook: item.hook ?? "",
+        raw_name: Boolean(item.raw_name),
+      };
+      /* Present only on a card the owner typed a price on, so an edit with no
+         typed price dumps exactly as it did before phase 2a. */
+      if (item.price_override != null) {
+        out.price_override = Number(item.price_override);
+        out.price_set_at = item.price_set_at ?? null;
+      }
+      return out;
+    });
     const out: Record<string, unknown> = {
-      slug: edit.slug,
+      slug: edit.slug ?? row.slug,
       title: edit.title,
       headline: edit.headline ?? "",
       intro: edit.intro ?? "",
@@ -107,6 +110,11 @@ async function main() {
     out.items = items;
     return out;
   });
+
+  const itemCount = collections.reduce(
+    (total, collection) => total + (collection.items as unknown[]).length,
+    0,
+  );
 
   const manifest = {
     manifest_version: meta.get("manifest_version") ?? "",
@@ -120,13 +128,13 @@ async function main() {
   if (CHECK) {
     if (current === serialised) {
       console.log(
-        `OK: src/data/edits/manifest.json matches the database exactly (${collections.length} edits, ${itemRows.length} items, ${serialised.length} bytes).`,
+        `OK: src/data/edits/manifest.json matches the published snapshots exactly (${collections.length} edits, ${itemCount} items, ${serialised.length} bytes).`,
       );
       return;
     }
     const at = firstDifference(current, serialised);
     console.error(
-      `MISMATCH: src/data/edits/manifest.json differs from the database at byte ${at}.`,
+      `MISMATCH: src/data/edits/manifest.json differs from the published snapshots at byte ${at}.`,
     );
     console.error(`  file:     ${JSON.stringify(current.slice(at, at + 120))}`);
     console.error(`  database: ${JSON.stringify(serialised.slice(at, at + 120))}`);
@@ -135,7 +143,7 @@ async function main() {
 
   writeFileSync(OUT, serialised);
   console.log(
-    `Wrote src/data/edits/manifest.json (${collections.length} edits, ${itemRows.length} items, ${serialised.length} bytes)`,
+    `Wrote src/data/edits/manifest.json (${collections.length} edits, ${itemCount} items, ${serialised.length} bytes)`,
   );
 }
 

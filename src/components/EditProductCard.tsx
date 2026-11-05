@@ -1,5 +1,5 @@
 import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
-import { cardPrice, cardRating, cardReviewCount } from "~/lib/card-copy";
+import { cardPrice, cardRating, cardReviewCount, cardSetDate } from "~/lib/card-copy";
 import { useAnalyticsList } from "./AnalyticsList";
 import type { EditProduct } from "~/lib/edits";
 
@@ -76,14 +76,19 @@ export function EditProductCard({
   // Verified facts, exactly as stored. Any missing value renders nothing at all.
   const ratingValue = cardRating(product.rating);
   const reviewCount = cardReviewCount(product.reviewCount);
-  const priceLabel = cardPrice(product.price);
+  /* A price the owner typed on this card wins over the verified one, and it
+     prints with the day she set it (owner decision 21, 2026-11-05). With no
+     typed price the markup below is byte for byte what it was before. */
+  const typedPrice = product.priceOverride != null ? product.priceOverride : null;
+  const priceLabel = cardPrice(typedPrice != null ? typedPrice : product.price);
+  const priceSetLabel = typedPrice != null ? cardSetDate(product.priceSetAt) : null;
 
   function trackAmazonClick() {
     trackAffiliateClick({
       productId: product.id,
       name: product.title,
       // The card's price label, or null when the row carries no price.
-      price: priceLabel ? Number(product.price) : null,
+      price: priceLabel ? Number(typedPrice != null ? typedPrice : product.price) : null,
       context: list?.context || "shop_the_edit",
       listId: list?.listId,
       merchant: "amazon",
@@ -179,7 +184,12 @@ export function EditProductCard({
               </span>
             )}
             {priceLabel && (
-              <span className="ml-auto text-[11px] font-medium text-warm-dark">{priceLabel}</span>
+              <span className="ml-auto text-[11px] font-medium text-warm-dark">
+                {priceLabel}
+                {priceSetLabel && (
+                  <span className="ml-1 font-normal text-taupe">set {priceSetLabel}</span>
+                )}
+              </span>
             )}
           </div>
         )}

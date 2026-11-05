@@ -261,6 +261,125 @@ async function main() {
   console.log("  ✓ edit_items (product_id) index");
 
   console.log("Migration 004 complete.\n");
+
+  // ── Migration 005: Collection admin, phase 2a (draft then publish) ──
+  // Additive only. Nothing here drops, renames or rewrites an existing column,
+  // and a row that existed before this migration keeps working untouched:
+  //
+  //   edits.published_at      when the collection last went live. NULL on an
+  //                           edit that has never been switched live.
+  //   edit_items.price_override  the price the owner typed, and
+  //   edit_items.price_set_at    the day she typed it. Deliberately separate
+  //                           from products.price: a verification pass writes
+  //                           products.price, so the typed figure and the
+  //                           verified figure can never be confused, and the
+  //                           card can print which of the two it is showing.
+  //   edit_publications       one row per live collection holding the snapshot
+  //                           the public pages render. The edits/edit_items
+  //                           tables become the DRAFT working copy, so an
+  //                           unsaved-into-public change cannot leak: the
+  //                           public read path (src/lib/edits.ts) reads only
+  //                           this table, and only for status = 'published'.
+  //
+  // Backfill: every currently published edit gets a snapshot of exactly what it
+  // renders today, so the public pages are unchanged by this migration. Draft
+  // edits get no snapshot (they have never been live).
+  console.log("Migration 005 - Collection admin phase 2a (draft then publish)...");
+
+  await db`ALTER TABLE edits ADD COLUMN IF NOT EXISTS published_at TIMESTAMPTZ`;
+  console.log("  ✓ edits.published_at");
+  await db`ALTER TABLE edit_items ADD COLUMN IF NOT EXISTS price_override NUMERIC`;
+  console.log("  ✓ edit_items.price_override");
+  await db`ALTER TABLE edit_items ADD COLUMN IF NOT EXISTS price_set_at TIMESTAMPTZ`;
+  console.log("  ✓ edit_items.price_set_at");
+
+  await db`CREATE TABLE IF NOT EXISTS edit_publications (
+    edit_id INT PRIMARY KEY REFERENCES edits(id) ON DELETE CASCADE,
+    published_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    snapshot JSONB NOT NULL
+  )`;
+  console.log("  ✓ edit_publications");
+
+  await db`CREATE INDEX IF NOT EXISTS idx_edit_publications_published
+             ON edit_publications (published_at)`;
+  console.log("  ✓ edit_publications (published_at) index");
+
+  // Backfill: published edits that have no snapshot yet.
+  const liveEdits = (await db`
+    SELECT e.id, e.slug, e.title, e.headline, e.intro, e.art_note, e.hero_image,
+           e.card_image, e.related, e.updated_at
+      FROM edits e
+      LEFT JOIN edit_publications p ON p.edit_id = e.id
+     WHERE e.status = 'published' AND p.edit_id IS NULL
+     ORDER BY e.sort_order, e.id
+  `) as unknown as {
+    id: number;
+    slug: string;
+    title: string;
+    headline: string | null;
+    intro: string | null;
+    art_note: string | null;
+    hero_image: string | null;
+    card_image: string | null;
+    related: string[] | null;
+    updated_at: string | Date;
+  }[];
+
+  for (const edit of liveEdits) {
+    const items = (await db`
+      SELECT product_id, display_title, hook, slug, name, raw_name,
+             price_override, price_set_at
+        FROM edit_items
+       WHERE edit_id = ${edit.id}
+       ORDER BY position, id
+    `) as unknown as {
+      product_id: number;
+      display_title: string | null;
+      hook: string | null;
+      slug: string | null;
+      name: string | null;
+      raw_name: boolean | null;
+      price_override: number | null;
+      price_set_at: string | Date | null;
+    }[];
+
+    const snapshot: Record<string, unknown> = {
+      slug: edit.slug,
+      title: edit.title,
+      headline: edit.headline ?? "",
+      intro: edit.intro ?? "",
+      art_note: edit.art_note ?? "",
+      hero_image: edit.hero_image ?? "",
+      card_image: edit.card_image ?? "",
+    };
+    if (edit.related && edit.related.length > 0) snapshot.related = edit.related;
+    snapshot.items = items.map((item) => {
+      const out: Record<string, unknown> = {
+        id: Number(item.product_id),
+        slug: item.slug ?? "",
+        name: item.name ?? "",
+        display_title: item.display_title ?? "",
+        hook: item.hook ?? "",
+        raw_name: Boolean(item.raw_name),
+      };
+      if (item.price_override != null) {
+        out.price_override = Number(item.price_override);
+        out.price_set_at = item.price_set_at ? new Date(item.price_set_at).toISOString() : null;
+      }
+      return out;
+    });
+
+    await db`
+      INSERT INTO edit_publications (edit_id, published_at, snapshot)
+      VALUES (${edit.id}, ${edit.updated_at}, ${JSON.stringify(snapshot)}::jsonb)
+      ON CONFLICT (edit_id) DO NOTHING
+    `;
+    await db`UPDATE edits SET published_at = ${edit.updated_at} WHERE id = ${edit.id} AND published_at IS NULL`;
+    console.log(`  ✓ snapshot backfilled: ${edit.slug} (${items.length} items)`);
+  }
+  if (liveEdits.length === 0) console.log("  ✓ no published edit needed a snapshot");
+
+  console.log("Migration 005 complete.\n");
   console.log("=== All Phase A migrations complete ===");
 }
 

@@ -169,6 +169,12 @@ export default function AdminDashboard() {
               {loading ? "Loading..." : "Refresh"}
             </button>
             <a
+              href="/admin/collections"
+              className="rounded-lg border border-beige/40 px-4 py-2 text-sm text-warm-dark transition hover:bg-cream-dark"
+            >
+              Collections
+            </a>
+            <a
               href="/"
               className="rounded-lg bg-warm-dark px-4 py-2 text-sm text-white transition hover:opacity-90"
             >
