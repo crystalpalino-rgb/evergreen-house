@@ -10,6 +10,9 @@ import { join } from "node:path";
 // The published "Shop the Edit" collections come from the same checked-in
 // manifest the pages render from, so a new edit lands in the sitemap with it.
 import editsManifest from "../src/data/edits/manifest.json";
+// Pinterest landing pages (/pin/<slug>) come from the pin manifest for the same
+// reason: a page that ships in the repo ships in the sitemap with it.
+import pinsManifest from "../src/data/pins/manifest.json";
 // The public room list is shared with the site routes, so a hidden room can
 // never be listed here even though its products are active in the database.
 import { publicRoomSlugs } from "../src/lib/room-visibility";
@@ -217,6 +220,15 @@ async function main() {
     staticPages.push({
       loc: `/collections/${edit.slug}`,
       priority: "0.8",
+      changefreq: "weekly",
+    });
+  }
+
+  // Pinterest landing pages: /pin/<pin-slug>, one per live pin.
+  for (const pin of pinsManifest.pages) {
+    staticPages.push({
+      loc: `/pin/${pin.slug}`,
+      priority: "0.5",
       changefreq: "weekly",
     });
   }
