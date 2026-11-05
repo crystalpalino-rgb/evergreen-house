@@ -38,9 +38,12 @@ import {
 import {
   checkPinPages,
   pinRefusalText,
-  pinRetireRefusalHeadline,
+  pinsPointingAt,
+  pinRetireConsequence,
+  pinRetireList,
   withEditSubstituted,
   type PinGuardResult,
+  type PinPointingHere,
   type PinRefusalVerb,
 } from "~/lib/pin-guard";
 
@@ -103,6 +106,13 @@ export interface AdminEditDetail {
   hasUnpublishedChanges: boolean;
 }
 
+/**
+ * How the screen tells one outcome from another. The screen selects on these
+ * codes, never on the words in `message`, so rewriting the copy cannot change
+ * which button or panel she sees.
+ */
+export type SaveResultCode = "retire-would-break-pins";
+
 export interface SaveResult {
   ok: boolean;
   /** What to show the owner. On a refusal this is the whole plain refusal. */
@@ -114,6 +124,13 @@ export interface SaveResult {
   warnings?: string[];
   /** Present when the pin guard ran. */
   pin?: PinGuardResult;
+  /** Which outcome this is, for the screen to select on. */
+  code?: SaveResultCode;
+  /**
+   * The live pins that point at the collection, when a retire needs confirming
+   * or has just broken them. Always read from the pin manifest, never invented.
+   */
+  pins?: PinPointingHere[];
 }
 
 export interface ProductSearchResult {
@@ -471,6 +488,24 @@ export const searchAdminProducts = createServerFn({ method: "GET" })
     }));
   });
 
+/**
+ * The live pins that point at one collection, for the retire confirmation.
+ *
+ * Read from the pin manifest, the same source the guard uses, so the list the
+ * owner is shown is the list the server checks her acknowledgement against. A
+ * read only: nothing here changes the site.
+ */
+export const getRetirePins = createServerFn({ method: "GET" })
+  .middleware([adminOnly])
+  .validator((data: { slug?: unknown }) => ({
+    slug: typeof data?.slug === "string" ? data.slug : "",
+  }))
+  .handler(async ({ data }): Promise<PinPointingHere[]> => {
+    const edit = await readEditRowBySlug(data.slug);
+    if (!edit) return [];
+    return pinsPointingAt(edit.slug);
+  });
+
 // ── Writes: the collection itself ──
 
 /**
@@ -557,9 +592,12 @@ export const saveEditMeta = createServerFn({ method: "POST" })
  *     collection that has never been live it is the switch that makes it live.
  *     Nothing in this path ever writes `status = 'draft'`.
  *   - `retire` is the only path that sets `status = 'draft'`, and it is the one
- *     action that takes a page down on purpose. It is refused when a pin page
- *     points at this collection, because the pin build fails without its
- *     destination.
+ *     action that takes a page down on purpose. When a live pin points at the
+ *     collection it happens only after the owner has been shown every one of
+ *     those pins and acknowledged it (owner decision, 2026-11-05): the request
+ *     carries `confirmBreakPins`, and without it the server writes nothing and
+ *     answers with the pin list. A collection no pin points at retires in one
+ *     step, as it always did.
  *
  * The pin guard runs before either write, against the exact snapshot that would
  * go live, and a refusal returns before a single row is touched, so a refused
@@ -572,10 +610,13 @@ export const saveEditMeta = createServerFn({ method: "POST" })
  */
 export const setEditPublication = createServerFn({ method: "POST" })
   .middleware([adminOnly])
-  .validator((data: { slug?: unknown; action?: unknown }) => ({
+  .validator((data: { slug?: unknown; action?: unknown; confirmBreakPins?: unknown }) => ({
     slug: typeof data?.slug === "string" ? data.slug : "",
     action:
       data?.action === "publish" ? "publish" : data?.action === "retire" ? "retire" : "",
+    /* Only an explicit true counts. A missing, false or malformed value is a
+     * request that has not been shown the pin list. */
+    confirmBreakPins: data?.confirmBreakPins === true,
   }))
   .handler(async ({ data }): Promise<SaveResult> => {
     const edit = await readEditRowBySlug(data.slug);
@@ -618,35 +659,41 @@ export const setEditPublication = createServerFn({ method: "POST" })
       );
     }
 
-    /* Retire. Refuse on a collection that is already off the site, and refuse
-     * when a pin page points here, because that pin would be left pointing at a
-     * page that is not there. The case is selected by its code, never by the
-     * words the owner reads, so rewriting a message cannot change a decision. */
+    /* Retire, behind a click-through when live pins point here (owner decision,
+     * 2026-11-05). Which pins those are is read from the pin manifest, because a
+     * guard run against this collection's own draft always finds its own
+     * destination still resolves and so can never see the case.
+     *
+     * Without the acknowledgement the request is answered with the pin list and
+     * nothing is written, so a stale tab or a direct call cannot take down a
+     * page a pin points at. The acknowledgement is only ever sent by the screen
+     * after it has shown her every pin and its number. */
     if (!wasLive) {
       return {
         ok: false,
         message: "This collection is already not on the site. There is nothing to retire.",
       };
     }
-    const pin = await runPinGuard(edit);
-    const pinErrors = pin.errors.filter((error) => error.code === "destination-off-site");
-    if (pinErrors.length > 0) {
+    const pins = pinsPointingAt(edit.slug);
+    if (pins.length > 0 && !data.confirmBreakPins) {
       return {
         ok: false,
-        pin,
-        message: [
-          pinRetireRefusalHeadline(),
-          ...pinErrors.map((error) => error.message),
-        ].join(" "),
+        code: "retire-would-break-pins",
+        pins,
+        message: [pinRetireConsequence(pins), ...pinRetireList(pins)].join(" "),
       };
     }
     await sql().query(`UPDATE edits SET status = 'draft' WHERE id = $1`, [edit.id]);
     return {
       ok: true,
-      pin,
+      pins,
       message:
-        "Retired. This collection is off the site on purpose and its page now returns 404. " +
-        "Every piece is kept, so you can publish it again whenever you want it back.",
+        pins.length > 0
+          ? "Retired. This collection is off the site on purpose and its page now returns " +
+            "404. The pins that pointed here now open a page that is not there. Every piece " +
+            "is kept, so you can publish it again whenever you want it back."
+          : "Retired. This collection is off the site on purpose and its page now returns " +
+            "404. Every piece is kept, so you can publish it again whenever you want it back.",
     };
   });
 
