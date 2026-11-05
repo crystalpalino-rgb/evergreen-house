@@ -653,21 +653,9 @@ for (let attempt = 1; ; attempt++) {
           }
         }
 
-        // Subscriber list API (admin)
-        if (pathname === "/api/subscribers" && req.method === "GET") {
-          try {
-            const { handleGetSubscribers } = await import("./src/lib/subscribers");
-            const subscribers = await handleGetSubscribers();
-            return new Response(JSON.stringify(subscribers), {
-              headers: { "Content-Type": "application/json" },
-            });
-          } catch (err: any) {
-            return new Response(JSON.stringify({ error: err.message }), {
-              status: 500,
-              headers: { "Content-Type": "application/json" },
-            });
-          }
-        }
+        // Subscriber list API removed on 2026-11-05: it answered unauthenticated
+        // requests with the subscriber list. Reading subscribers goes through an
+        // authenticated server function once the admin login lands.
 
         const ssrResponse = await (
           handler as { fetch: (r: Request) => Response | Promise<Response> }
