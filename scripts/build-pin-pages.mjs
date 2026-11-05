@@ -58,11 +58,17 @@ const PUBLIC_IMAGES = join(ROOT, "public/images");
 const TABLESCAPE_PIN = "pin-holiday-hosting-table.jpg";
 
 /**
- * Product ids for the tablescape pin's pills. Four of the five labels also
- * appear on another pin's disc, so they resolve from the disc map by label; the
- * cut crystal pitcher appears only here, and its id is the row that replaced the
- * Spode pitcher on 2026-11-04 (the Spode piece had no Amazon buy box, so the
- * owner approved the swap; the disc label changed with it).
+ * Product ids for the tablescape pin's pills, keyed by the label printed on the
+ * ART, not the label printed on the page. Four of the five labels also appear on
+ * another pin's disc, so they resolve from the disc map by label; the pitcher
+ * appears only here, and its id is the row that replaced the Spode pitcher on
+ * 2026-11-04 (the Spode piece had no Amazon buy box, so the owner approved the
+ * swap).
+ *
+ * Owner rule (2026-11-05): the pin carries the broad label (GLASS PITCHER) and
+ * the landing page carries the exact product name the card sells (CUT CRYSTAL
+ * PITCHER). So the page's displayed label comes from the copy file's `numbers`,
+ * while the art's pill label only has to resolve to a product id here.
  */
 const TABLESCAPE_LABEL_IDS = {
   "GLASS PITCHER": 628,
@@ -223,6 +229,13 @@ for (const page of copy.pages) {
     if (label !== disc.label) {
       fail(`/pin/${slug} number ${entry.n}: copy label "${label}" does not match the disc label "${disc.label}"`);
     }
+    // The label printed on the page is normally the label printed on the art, so
+    // a shopper matching a disc to a card never has to translate. The owner can
+    // override that per number with `page_label` when the art carries a broad
+    // name and the card sells a specific piece (tablescape pill 1: art says
+    // GLASS PITCHER, page says CUT CRYSTAL PITCHER). `label` must still match the
+    // art, so the override can never drift from the pin it belongs to.
+    const pageLabel = (entry.page_label ?? entry.label).trim();
 
     const item = editItems.get(disc.id);
     const hiddenRow = hiddenById.get(disc.id);
@@ -247,7 +260,7 @@ for (const page of copy.pages) {
 
     numbers.push({
       n: entry.n,
-      label,
+      label: pageLabel,
       product_id: disc.id,
       display_title: item ? item.display_title : hiddenRow.display_title,
       product_slug: item ? item.slug : null,
