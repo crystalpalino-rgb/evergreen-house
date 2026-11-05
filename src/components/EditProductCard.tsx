@@ -4,6 +4,26 @@ import { useAnalyticsList } from "./AnalyticsList";
 import type { EditProduct } from "~/lib/edits";
 
 /**
+ * The tan numbered chip that mirrors a Pinterest pin's product disc: a soft tan
+ * pill (#E1CEBE) holding a darker roundel (#D2B796) with the numeral in
+ * #2A1A12. Shared by the numbered card below and the off-sale card on the pin
+ * pages (src/components/PinUnavailableCard.tsx), so both read identically.
+ */
+export function PinNumberChip({ number }: { number: number }) {
+  return (
+    <span className="mb-2 inline-flex items-center rounded-full bg-[#E1CEBE] p-[3px]">
+      <span
+        aria-hidden="true"
+        className="flex h-6 w-6 items-center justify-center rounded-full bg-[#D2B796] font-serif text-[12px] font-semibold leading-none text-[#2A1A12]"
+      >
+        {number}
+      </span>
+      <span className="sr-only">Number {number}. </span>
+    </span>
+  );
+}
+
+/**
  * The product card used on the "Shop the Edit" landing pages
  * (/collections/<edit-slug>) and on the two homepage grids (Shop the Look and
  * The Current Edit), where the product list, not the product page, is the
@@ -36,9 +56,20 @@ import type { EditProduct } from "~/lib/edits";
 export function EditProductCard({
   product,
   eager = false,
+  number,
 }: {
   product: EditProduct;
   eager?: boolean;
+  /**
+   * The number printed on the Pinterest pin this card answers (project P3).
+   * When set, the card shows the tan numbered chip above the title and carries
+   * id="item-<number>" so a deep link such as /pin/<slug>#item-4 lands on the
+   * right card. The number always comes from the pin manifest, never from the
+   * card's position in the grid, so a product that drops out leaves its gap
+   * rather than silently inheriting the next number. Left undefined on every
+   * other surface, which renders byte-identically to before.
+   */
+  number?: number;
 }) {
   const list = useAnalyticsList();
 
@@ -69,7 +100,12 @@ export function EditProductCard({
   const pinDescription = `${product.title}, an editor pick from the ${list?.listName || "Shop the Edit"} collection.`;
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:border-antique-gold/50 hover:shadow-md">
+    <article
+      id={number ? `item-${number}` : undefined}
+      className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:border-antique-gold/50 hover:shadow-md${
+        number ? " scroll-mt-24" : ""
+      }`}
+    >
       <div className="pin-image-wrapper aspect-square w-full shrink-0 bg-soft-white">
         {product.imageUrl ? (
           <img
@@ -95,6 +131,7 @@ export function EditProductCard({
         )}
       </div>
       <div className="flex flex-1 flex-col p-3.5 sm:p-5">
+        {number !== undefined && <PinNumberChip number={number} />}
         {/* The card's one internal link. */}
         <h3 className="font-serif text-sm leading-snug text-warm-dark sm:text-base">
           <a
