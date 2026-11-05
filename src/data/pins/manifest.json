@@ -30,12 +30,12 @@
         },
         {
           "n": 2,
-          "label": "WHITE PEARL ORNAMENTS",
-          "product_id": 81,
-          "display_title": "White Pearl Ornaments, Set of 12",
-          "product_slug": null,
-          "hook": null,
-          "unavailable": true
+          "label": "WHITE GLASS ORNAMENTS",
+          "product_id": 627,
+          "display_title": "White Glass Christmas Ball Ornaments, Set of 9",
+          "product_slug": "white-glass-christmas-ball-ornaments-set-of-9",
+          "hook": "Nine white glass balls that keep a lit tree quiet instead of busy.",
+          "unavailable": false
         },
         {
           "n": 3,
@@ -257,12 +257,12 @@
       "numbers": [
         {
           "n": 1,
-          "label": "SPODE TREE PITCHER",
-          "product_id": 483,
-          "display_title": "Spode Christmas Tree Glass Pitcher, 96 Oz",
-          "product_slug": null,
-          "hook": null,
-          "unavailable": true
+          "label": "CUT CRYSTAL PITCHER",
+          "product_id": 628,
+          "display_title": "Cut Crystal Glass Pitcher with Handle, 46 Oz",
+          "product_slug": "cut-crystal-glass-pitcher-with-handle-46-oz",
+          "hook": "Cut crystal that echoes the votives and holds a whole batch of eggnog.",
+          "unavailable": false
         },
         {
           "n": 2,

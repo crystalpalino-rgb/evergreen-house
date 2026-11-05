@@ -1,6 +1,6 @@
 {
   "manifest_version": "2026-10-18",
-  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present). 2026-10-11 (second owner file, 'Evergreen New 10.11.2'): every Amazon link in that catalog was added to the collection named on its row (13 new catalog rows, ids 539-551; 2 duplicate rows inside the file collapsed; 0 rows were already present in their collection). 2026-10-18: two new Thanksgiving edits added to the published set (The Thanksgiving Hosting Edit, 13 pieces; The Moody Tablescape Edit, 10 pieces), built from the merchandiser verification CSVs /home/team/shared/thanksgiving-hosting-edit/products-verified.csv and /home/team/shared/moody-tablescape-edit/products-verified.csv; 23 new catalog rows, ids 552-574, each with a clean tagged link. 2026-11-04: Thanksgiving 2026 build. Four Thanksgiving edits now published: thanksgiving-table-edit (20), moody-thanksgiving-edit (20), thanksgiving-hosting-edit (19), thanksgiving-welcome-edit (12). Built by scripts/build-thanksgiving-edits.mjs from the set files and copy file in /home/team/shared/thanksgiving-2026/build/, all figures verified live on 2026-11-04. moody-tablescape-edit retired (owner decision 17: one Moody collection) and its URL redirects to /collections/moody-thanksgiving-edit. DOWAN Large White Serving Bowls, Set of 2 (id 608) is deliberately absent from the Hosting set: same Amazon listing family as id 590 in the Table set, so one product would sit in two sets of the same season. Hosting ships at 19, unpadded.",
+  "note": "Checked in from /home/team/shared/collections/manifest-2026-10-10.json. Published set only: winter-capsule-wardrobe is deliberately excluded (owner decision, see collections README 2026-10-10). 2026-10-11: every Amazon link in the owner's 'Evergreen New 10.11' catalog was added to the collection named on its row (35 new catalog rows, ids 504-538; 3 duplicate rows inside the file collapsed; 1 row already present). 2026-10-11 (second owner file, 'Evergreen New 10.11.2'): every Amazon link in that catalog was added to the collection named on its row (13 new catalog rows, ids 539-551; 2 duplicate rows inside the file collapsed; 0 rows were already present in their collection). 2026-10-18: two new Thanksgiving edits added to the published set (The Thanksgiving Hosting Edit, 13 pieces; The Moody Tablescape Edit, 10 pieces), built from the merchandiser verification CSVs /home/team/shared/thanksgiving-hosting-edit/products-verified.csv and /home/team/shared/moody-tablescape-edit/products-verified.csv; 23 new catalog rows, ids 552-574, each with a clean tagged link. 2026-11-04: Thanksgiving 2026 build. Four Thanksgiving edits now published: thanksgiving-table-edit (20), moody-thanksgiving-edit (20), thanksgiving-hosting-edit (19), thanksgiving-welcome-edit (12). Built by scripts/build-thanksgiving-edits.mjs from the set files and copy file in /home/team/shared/thanksgiving-2026/build/, all figures verified live on 2026-11-04. moody-tablescape-edit retired (owner decision 17: one Moody collection) and its URL redirects to /collections/moody-thanksgiving-edit. DOWAN Large White Serving Bowls, Set of 2 (id 608) is deliberately absent from the Hosting set: same Amazon listing family as id 590 in the Table set, so one product would sit in two sets of the same season. Hosting ships at 19, unpadded. 2026-11-04 (pin disc replacements): the two pinned products that had no Amazon buy box were replaced at owner approval. luxe-christmas-tree-edit position 2 is now id 627 White Glass Christmas Ball Ornaments, Set of 9 (was the VioraWhite pearl set, id 81, still in the catalog but unlisted); holiday-hosting-edit position 1 is now id 628 Cut Crystal Glass Pitcher with Handle, 46 Oz (was the Spode pitcher, id 483, still in the catalog but unlisted). Both new rows were read live on Amazon on 2026-11-04.",
   "collections": [
     {
       "slug": "heritage-christmas-edit",
@@ -434,6 +434,14 @@
       "card_image": "/images/edit-holiday-hosting-edit-card-light",
       "items": [
         {
+          "id": 628,
+          "slug": "cut-crystal-glass-pitcher-with-handle-46-oz",
+          "name": "Cut Crystal Glass Pitcher with Handle, 46 Oz",
+          "display_title": "Cut Crystal Glass Pitcher with Handle, 46 Oz",
+          "hook": "Cut crystal that echoes the votives and holds a whole batch of eggnog.",
+          "raw_name": false
+        },
+        {
           "id": 482,
           "slug": "lenox-holiday-porcelain-dinner-plates-set-of-6",
           "name": "Lenox Holiday Porcelain Dinner Plates, Set of 6",
@@ -626,6 +634,14 @@
           "name": "Cypress Christmas Tree in Wicker Basket",
           "display_title": "Cypress Christmas Tree in Wicker Basket",
           "hook": "Four foot cypress already sitting in a woven wicker basket.",
+          "raw_name": false
+        },
+        {
+          "id": 627,
+          "slug": "white-glass-christmas-ball-ornaments-set-of-9",
+          "name": "White Glass Christmas Ball Ornaments, Set of 9",
+          "display_title": "White Glass Christmas Ball Ornaments, Set of 9",
+          "hook": "Nine white glass balls that keep a lit tree quiet instead of busy.",
           "raw_name": false
         },
         {
