@@ -199,6 +199,68 @@ async function main() {
   console.log("  ✓ full_text_search (GIN)");
 
   console.log("Migration 003 complete.\n");
+
+  // ── Migration 004: Collection admin, phase 1 (edits in Postgres) ──
+  // The eight curated "Shop the Edit" collections move out of the git-resident
+  // manifest (src/data/edits/manifest.json) and into these tables. Additive
+  // only: nothing here touches the products, collections or blog tables, and
+  // the existing `collections` table is deliberately NOT reused (it backs
+  // /collection/<slug> and sitemap-collections.xml, so an edit slug in it would
+  // create a second URL for the same page).
+  //
+  // `edits` holds the set-level editorial copy in the manifest's own key order.
+  // `edit_items` holds one row per product in curated order; slug, name and
+  // raw_name are carried alongside the product_id so the manifest can be dumped
+  // back out byte-for-byte (they are the curated fallbacks, not a copy of the
+  // products row).
+  // `edits_manifest_meta` holds the manifest's top-level version and note, so
+  // the dump script is a pure database read with nothing hardcoded.
+  console.log("Migration 004 - Collection admin phase 1 (edits)...");
+
+  await db`CREATE TABLE IF NOT EXISTS edits (
+    id SERIAL PRIMARY KEY,
+    slug TEXT NOT NULL UNIQUE,
+    title TEXT NOT NULL,
+    headline TEXT,
+    intro TEXT,
+    art_note TEXT,
+    hero_image TEXT,
+    card_image TEXT,
+    related TEXT[],
+    status TEXT NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'published')),
+    sort_order INT NOT NULL DEFAULT 0,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+  )`;
+  console.log("  ✓ edits");
+
+  await db`CREATE TABLE IF NOT EXISTS edit_items (
+    id SERIAL PRIMARY KEY,
+    edit_id INT NOT NULL REFERENCES edits(id) ON DELETE CASCADE,
+    product_id INT NOT NULL REFERENCES products(id),
+    position INT NOT NULL,
+    display_title TEXT,
+    hook TEXT,
+    slug TEXT,
+    name TEXT,
+    raw_name BOOLEAN NOT NULL DEFAULT false,
+    UNIQUE (edit_id, product_id)
+  )`;
+  console.log("  ✓ edit_items");
+
+  await db`CREATE TABLE IF NOT EXISTS edits_manifest_meta (
+    key TEXT PRIMARY KEY,
+    value TEXT
+  )`;
+  console.log("  ✓ edits_manifest_meta");
+
+  await db`CREATE INDEX IF NOT EXISTS idx_edits_status_sort ON edits (status, sort_order, id)`;
+  console.log("  ✓ edits (status, sort_order) index");
+  await db`CREATE INDEX IF NOT EXISTS idx_edit_items_edit_position ON edit_items (edit_id, position)`;
+  console.log("  ✓ edit_items (edit_id, position) index");
+  await db`CREATE INDEX IF NOT EXISTS idx_edit_items_product ON edit_items (product_id)`;
+  console.log("  ✓ edit_items (product_id) index");
+
+  console.log("Migration 004 complete.\n");
   console.log("=== All Phase A migrations complete ===");
 }
 

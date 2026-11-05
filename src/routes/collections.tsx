@@ -3,13 +3,22 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { EditCard } from "~/components/EditCard";
-import { EDITS } from "~/lib/edits";
+import { getEditSummaries, type EditCardData } from "~/lib/edits";
 import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
 
 export const Route = createFileRoute("/collections")({
   loader: async () => {
+    /* The curated edits come from the `edits` table (collection admin, phase 1)
+       and are loaded before the room/style collections so a failure there still
+       leaves the edits row on the page, and vice versa. */
+    let edits: EditCardData[] = [];
+    try {
+      edits = await getEditSummaries();
+    } catch (err) {
+      console.error("Edits loader error:", err);
+    }
     try {
       const collections = await getAllCollections();
 
@@ -32,10 +41,11 @@ export const Route = createFileRoute("/collections")({
         (c) => c.type !== "room" && c.type !== "style"
       );
 
-      return { roomCollections, styleCollections, otherCollections };
+      return { edits, roomCollections, styleCollections, otherCollections };
     } catch (err) {
       console.error("Collections loader error:", err);
       return {
+        edits,
         roomCollections: [] as (Collection & { productCount: number })[],
         styleCollections: [] as (Collection & { productCount: number })[],
         otherCollections: [] as (Collection & { productCount: number })[],
@@ -136,7 +146,7 @@ function CollectionCard({ col }: { col: Collection & { productCount: number } })
 }
 
 function CollectionsPage() {
-  const { roomCollections, styleCollections, otherCollections } =
+  const { edits, roomCollections, styleCollections, otherCollections } =
     Route.useLoaderData();
   /* /collections is also the parent of /collections/<edit-slug>. When an edit
      page is matched, this index renders only the outlet. */
@@ -209,7 +219,7 @@ function CollectionsPage() {
                 Shop the Edits
               </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
-                {EDITS.map((edit, i) => (
+                {edits.map((edit, i) => (
                   <EditCard
                     key={edit.slug}
                     edit={edit}

@@ -7,9 +7,9 @@
 import { neon } from "@neondatabase/serverless";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join } from "node:path";
-// The published "Shop the Edit" collections come from the same checked-in
-// manifest the pages render from, so a new edit lands in the sitemap with it.
-import editsManifest from "../src/data/edits/manifest.json";
+// The published "Shop the Edit" collections come from the `edits` table, the
+// same place the pages read them from (collection admin, phase 1), so a new
+// published edit lands in the sitemap with it and a draft never does.
 // Pinterest landing pages (/pin/<slug>) come from the pin manifest for the same
 // reason: a page that ships in the repo ships in the sitemap with it.
 import pinsManifest from "../src/data/pins/manifest.json";
@@ -68,6 +68,10 @@ interface CollectionRow {
   updated_at: string;
 }
 
+interface EditSlugRow {
+  slug: string;
+}
+
 async function main() {
   const dbUrl = (process.env.DATABASE_URL || "").replace(/^["']|["']$/g, "");
   if (!dbUrl) {
@@ -101,6 +105,16 @@ async function main() {
   ` as unknown as CollectionRow[];
 
   console.log(`Found ${collectionRows.length} active collections`);
+
+  console.log("Fetching published edits...");
+  const editRows = await db`
+    SELECT slug
+    FROM edits
+    WHERE status = 'published'
+    ORDER BY sort_order, id
+  ` as unknown as EditSlugRow[];
+
+  console.log(`Found ${editRows.length} published edits`);
 
   // Unique rooms from products, minus any room that is not approved as public
   // (src/lib/room-visibility.ts). A room page that 404s must not be in a sitemap.
@@ -215,8 +229,9 @@ async function main() {
     },
     { loc: "/seasonal", priority: "0.7", changefreq: "weekly" },
   ];
-  // Shop the Edit landing pages: /collections/<edit-slug> (four published edits).
-  for (const edit of editsManifest.collections) {
+  // Shop the Edit landing pages: /collections/<edit-slug>, one per published
+  // edit row, in curated order.
+  for (const edit of editRows) {
     staticPages.push({
       loc: `/collections/${edit.slug}`,
       priority: "0.8",

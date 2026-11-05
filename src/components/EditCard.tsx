@@ -1,4 +1,4 @@
-import { artSources, type EditCollection } from "~/lib/edits";
+import { artSources, type EditCardData } from "~/lib/edits";
 
 /**
  * One "Shop the Edit" card: the designer's 4:5 editorial card art, the serif
@@ -15,7 +15,10 @@ export function EditCard({
   showCount = false,
   compact = false,
 }: {
-  edit: EditCollection;
+  /* The card projection: art, title, link and a precomputed piece count. The
+     ordered item list stays on the server, so a page full of cards does not
+     inline every edit's products into its payload. */
+  edit: EditCardData;
   /** First card in a row can fetch eagerly (it may be in the first viewport). */
   eager?: boolean;
   showCount?: boolean;
@@ -57,7 +60,7 @@ export function EditCard({
       </p>
       {showCount && (
         <p className="mt-1 text-xs text-taupe">
-          {edit.items.length} editor-picked pieces
+          {edit.itemCount} editor-picked pieces
         </p>
       )}
     </a>
