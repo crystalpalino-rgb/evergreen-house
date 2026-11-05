@@ -10,7 +10,7 @@ import {
   saveEditItem,
   saveEditMeta,
   searchAdminProducts,
-  setEditPublished,
+  setEditPublication,
   type AdminEditDetail,
   type ProductSearchResult,
   type SaveResult,
@@ -20,11 +20,19 @@ import heroImages from "~/data/hero-images.json";
 /**
  * /admin/collections/<slug>: the curation screen for one collection.
  *
- * Everything on this page writes to the DRAFT (`edits` / `edit_items`). The only
- * control that changes what the public sees is the switch at the top, which
- * writes the published snapshot in `edit_publications` (owner decision 22,
- * 2026-11-05). A price typed on a card is stored with the day it was set, on the
- * item, never in the product row (owner decision 21).
+ * Everything on this page writes to the DRAFT (`edits` / `edit_items`). The
+ * controls at the top are the only ones that change what the public sees, and
+ * they are two separate actions (owner decisions 22 and 27, 2026-11-05):
+ *
+ *   - "Publish changes" on a live collection swaps the published snapshot in
+ *     place, so the page is never taken down and a pin that points at it keeps
+ *     resolving. A draft collection gets the same publish action, which is what
+ *     makes it live.
+ *   - "Retire from the site" is the only action that takes a page down, it says
+ *     so plainly, and it asks first.
+ *
+ * A price typed on a card is stored with the day it was set, on the item, never
+ * in the product row (owner decision 21).
  *
  * Every write goes through an adminOnly server function. A save that would leave
  * a Pinterest landing page out of date is refused, and the refusal is shown
@@ -107,6 +115,8 @@ function CollectionEditor() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [busy, setBusy] = useState(false);
+  /** The retire panel: a deliberate second step, because it takes a page down. */
+  const [retireConfirm, setRetireConfirm] = useState(false);
 
   const load = useCallback(async () => {
     try {
@@ -155,6 +165,7 @@ function CollectionEditor() {
   );
 
   const isLive = detail?.status === "published";
+  const hasPending = detail?.hasUnpublishedChanges ?? false;
 
   return (
     <div className="min-h-screen bg-cream font-sans">
@@ -195,38 +206,107 @@ function CollectionEditor() {
 
         {detail && meta && (
           <>
-            {/* The one control that changes what the public sees. */}
+            {/* The only controls that change what the public sees. */}
             <section className="mb-8 rounded-xl border border-beige/30 bg-white p-5 shadow-sm">
-              <div className="flex flex-wrap items-center justify-between gap-4">
-                <div>
+              <div className="flex flex-wrap items-start justify-between gap-4">
+                <div className="min-w-0">
                   <p className="text-xs font-semibold uppercase tracking-wider text-taupe">
                     Public status
                   </p>
-                  <p className="mt-1 font-serif text-lg text-warm-dark">
-                    {isLive ? "Live on the site" : "Draft only, not on the site"}
+                  <p className="mt-1 font-serif text-lg text-warm-dark" data-testid="public-status">
+                    {!isLive
+                      ? "Draft only, not on the site"
+                      : hasPending
+                        ? "Live on the site, with changes you have not published"
+                        : "Live on the site and up to date"}
                   </p>
-                  <p className="mt-1 text-xs text-warm-gray">
-                    {isLive
-                      ? `Published ${detail.publishedAt ? new Date(detail.publishedAt).toLocaleString() : "earlier"}. Changes saved below are not public until you switch it live again.`
-                      : "This collection has never been live. Switch it live when it is ready."}
+                  <p className="mt-1 max-w-xl text-xs leading-relaxed text-warm-gray">
+                    {!isLive
+                      ? "This collection has never been live. Publishing it puts it on the site."
+                      : hasPending
+                        ? "The page is serving the version you last published. Publishing changes swaps the new version in without taking the page down, so anyone following a pin keeps landing on a live page."
+                        : `Published ${detail.publishedAt ? new Date(detail.publishedAt).toLocaleString() : "earlier"}. Everything you have saved is already on the page.`}
                   </p>
                 </div>
-                <button
-                  type="button"
-                  disabled={busy}
-                  onClick={() =>
-                    run(
-                      () => setEditPublished({ data: { slug, live: !isLive } }),
-                      isLive ? "Taken offline" : "Switched live",
-                    )
-                  }
-                  className={`rounded-lg px-5 py-3 text-sm font-medium text-white transition disabled:opacity-50 ${
-                    isLive ? "bg-burgundy hover:bg-burgundy-deep" : "bg-midnight hover:bg-midnight-deep"
-                  }`}
-                >
-                  {isLive ? "Take this collection offline" : "Switch this collection live"}
-                </button>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  {(!isLive || hasPending) && (
+                    <button
+                      type="button"
+                      disabled={busy}
+                      data-action={isLive ? "publish-changes" : "publish-draft"}
+                      onClick={() =>
+                        run(
+                          () => setEditPublication({ data: { slug, action: "publish" } }),
+                          "Published",
+                        )
+                      }
+                      className={`rounded-lg px-5 py-3 text-sm font-medium text-white transition disabled:opacity-50 ${
+                        isLive ? "bg-burgundy hover:bg-burgundy-deep" : "bg-midnight hover:bg-midnight-deep"
+                      }`}
+                    >
+                      {isLive ? "Publish changes" : "Publish this collection"}
+                    </button>
+                  )}
+
+                  {isLive && (
+                    <button
+                      type="button"
+                      disabled={busy}
+                      data-action="retire-open"
+                      onClick={() => {
+                        setNotice("");
+                        setError("");
+                        setRetireConfirm(true);
+                      }}
+                      className="rounded-lg border border-red-300 px-4 py-3 text-sm text-red-700 transition hover:bg-red-50 disabled:opacity-50"
+                    >
+                      Retire from the site
+                    </button>
+                  )}
+                </div>
               </div>
+
+              {isLive && retireConfirm && (
+                <div
+                  className="mt-4 rounded-lg border border-red-300 bg-red-50 p-4"
+                  data-testid="retire-confirm"
+                >
+                  <p className="font-semibold text-red-900">
+                    Retiring takes this page down on purpose. It is not a publish.
+                  </p>
+                  <p className="mt-1 text-sm leading-relaxed text-red-800">
+                    /collections/{slug} stops being served the moment you confirm, and anyone who
+                    follows a link or a pin to it gets a 404. Nothing is deleted: every piece stays
+                    here, and you can publish the collection again whenever you want it back.
+                  </p>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={busy}
+                      data-action="retire-confirm"
+                      onClick={async () => {
+                        await run(
+                          () => setEditPublication({ data: { slug, action: "retire" } }),
+                          "Retired",
+                        );
+                        setRetireConfirm(false);
+                      }}
+                      className="rounded-lg bg-red-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-800 disabled:opacity-50"
+                    >
+                      Yes, take the page down
+                    </button>
+                    <button
+                      type="button"
+                      data-action="retire-cancel"
+                      onClick={() => setRetireConfirm(false)}
+                      className="rounded-lg border border-beige/60 bg-white px-4 py-2.5 text-sm text-warm-dark transition hover:bg-cream-dark"
+                    >
+                      Keep it live
+                    </button>
+                  </div>
+                </div>
+              )}
             </section>
 
             {/* Metadata */}
