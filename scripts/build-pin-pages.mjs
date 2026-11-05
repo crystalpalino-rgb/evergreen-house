@@ -60,11 +60,12 @@ const TABLESCAPE_PIN = "pin-holiday-hosting-table.jpg";
 /**
  * Product ids for the tablescape pin's pills. Four of the five labels also
  * appear on another pin's disc, so they resolve from the disc map by label; the
- * Spode pitcher appears only here, and its id is the hidden-catalog row that the
- * buy-box audit recorded on 2026-11-04 (holiday-hidden-products.json).
+ * cut crystal pitcher appears only here, and its id is the row that replaced the
+ * Spode pitcher on 2026-11-04 (the Spode piece had no Amazon buy box, so the
+ * owner approved the swap; the disc label changed with it).
  */
 const TABLESCAPE_LABEL_IDS = {
-  "SPODE TREE PITCHER": 483,
+  "CUT CRYSTAL PITCHER": 628,
 };
 
 const apply = process.argv.includes("--apply");
