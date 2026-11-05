@@ -19,6 +19,13 @@
 // collection's membership, display title or order, and before every publish. A
 // write it refuses is never applied: the guard is evaluated against the state
 // the write WOULD produce, so nothing has to be rolled back afterwards.
+//
+// Publishing and retiring are deliberately two different actions (owner decision
+// 27, 2026-11-05). "Publish" on a collection that is already live swaps the
+// published snapshot in place: the row in `edit_publications` is replaced and
+// `edits.status` is already `published`, so the public page never stops being
+// served. "Retire" is the only thing that sets `status = 'draft'`, and it is the
+// one action that takes a page down on purpose.
 
 import { createServerFn } from "@tanstack/react-start";
 import { sql } from "~/db";
@@ -81,6 +88,12 @@ export interface AdminEditDetail {
   items: AdminEditItem[];
   /** Every collection slug and title, for the related-edits picker. */
   others: { slug: string; title: string }[];
+  /**
+   * True when a live collection has draft changes the public page does not show
+   * yet, so the screen can offer "Publish changes" instead of staying silent
+   * about it. Always true for a collection that has never been live.
+   */
+  hasUnpublishedChanges: boolean;
 }
 
 export interface SaveResult {
@@ -116,6 +129,25 @@ const iso = (value: unknown): string | null => {
   const d = value instanceof Date ? value : new Date(String(value));
   return Number.isNaN(d.getTime()) ? null : d.toISOString();
 };
+
+/**
+ * Does this collection have draft work the public page does not show?
+ *
+ * A collection that has never been live always does. A live one does when its
+ * draft has been touched since it last published, which is the exact test the
+ * "Publish changes" button stands on, so the list screen and the editor screen
+ * answer it the same way.
+ */
+function hasUnpublishedChanges(
+  status: "draft" | "published",
+  updatedAt: string | null,
+  publishedAt: string | null,
+): boolean {
+  if (status !== "published") return true;
+  if (!publishedAt) return true;
+  if (!updatedAt) return false;
+  return updatedAt > publishedAt;
+}
 
 interface EditRow {
   id: number;
@@ -232,6 +264,18 @@ function success(pin: PinGuardResult, message: string): SaveResult {
   return { ok: true, pin, message: `${message}${warning}` };
 }
 
+/**
+ * Stamp the draft as touched.
+ *
+ * `edits.updated_at` later than `edits.published_at` is exactly what
+ * `hasUnpublishedChanges` reads, so every write that changes what the public
+ * page would show has to bump it, or a live collection with a pending change
+ * would claim it is up to date.
+ */
+async function touchEdit(editId: number): Promise<void> {
+  await sql().query(`UPDATE edits SET updated_at = NOW() WHERE id = $1`, [editId]);
+}
+
 /** Positions may be sparse after a removal; this keeps the order contiguous. */
 async function normalisePositions(editId: number): Promise<void> {
   await sql().query(
@@ -283,8 +327,7 @@ export const listAdminEdits = createServerFn({ method: "GET" })
         itemCount: Number(row.item_count),
         updatedAt,
         publishedAt,
-        hasUnpublishedChanges:
-          row.status !== "published" || !publishedAt || updatedAt > publishedAt,
+        hasUnpublishedChanges: hasUnpublishedChanges(row.status, updatedAt, publishedAt),
       };
     });
   });
@@ -358,6 +401,11 @@ export const getAdminEdit = createServerFn({ method: "GET" })
         };
       }),
       others: otherRows,
+      hasUnpublishedChanges: hasUnpublishedChanges(
+        edit.status,
+        iso(edit.updated_at),
+        iso(edit.published_at),
+      ),
     };
   });
 
@@ -471,37 +519,62 @@ export const saveEditMeta = createServerFn({ method: "POST" })
       ok: true,
       message:
         edit.status === "published"
-          ? "Saved to the draft. The live page still shows the published version until you switch it live."
+          ? "Saved to the draft. The live page still shows the published version until you publish your changes."
           : "Saved to the draft. This collection is not live yet.",
     };
   });
 
 /**
- * The one control that changes what the public sees.
+ * Publishing: put the draft on the public page.
  *
- * Going live writes the snapshot FIRST and flips the status second, so a failure
- * between the two leaves the collection unpublished rather than published with
- * no page. The pin guard runs first, against the exact snapshot that would go
- * live, so a collection that would break or stale a pin page is never published.
+ * Two actions, never one control with two meanings (owner decision 27,
+ * 2026-11-05):
+ *
+ *   - `publish` writes the draft snapshot into `edit_publications` and leaves
+ *     `edits.status` at `published`. On a collection that is already live that is
+ *     an in-place snapshot swap: the row the public page reads is replaced in one
+ *     statement, so there is no moment in which the page is not served. On a
+ *     collection that has never been live it is the switch that makes it live.
+ *     Nothing in this path ever writes `status = 'draft'`.
+ *   - `retire` is the only path that sets `status = 'draft'`, and it is the one
+ *     action that takes a page down on purpose. It is refused when a pin page
+ *     points at this collection, because the pin build fails without its
+ *     destination.
+ *
+ * The pin guard runs before either write, against the exact snapshot that would
+ * go live, and a refusal returns before a single row is touched, so a refused
+ * publish writes nothing.
+ *
+ * The snapshot is written before the status flip so a failure between the two
+ * leaves a draft collection unpublished rather than published with no page. For
+ * an already-live collection the status is already `published`, so the same
+ * order means the page keeps serving the old snapshot until the new one lands.
  */
-export const setEditPublished = createServerFn({ method: "POST" })
+export const setEditPublication = createServerFn({ method: "POST" })
   .middleware([adminOnly])
-  .validator((data: { slug?: unknown; live?: unknown }) => ({
+  .validator((data: { slug?: unknown; action?: unknown }) => ({
     slug: typeof data?.slug === "string" ? data.slug : "",
-    live: data?.live === true,
+    action:
+      data?.action === "publish" ? "publish" : data?.action === "retire" ? "retire" : "",
   }))
   .handler(async ({ data }): Promise<SaveResult> => {
     const edit = await readEditRowBySlug(data.slug);
     if (!edit) return { ok: false, message: "That collection no longer exists." };
+    if (!data.action) return { ok: false, message: "Choose publish or retire." };
 
-    const snapshot = toSnapshot(edit, await readItems(edit.id));
+    const wasLive = edit.status === "published";
 
-    if (data.live) {
+    if (data.action === "publish") {
       const pin = await runPinGuard(edit);
       if (!pin.ok) return refusal(pin);
+
+      const snapshot = toSnapshot(edit, await readItems(edit.id));
       if (snapshot.items.length === 0) {
         return { ok: false, message: "An empty collection cannot go live. Add at least one piece." };
       }
+
+      /* One statement, so the public read path swaps from the old snapshot to
+       * the new one without ever seeing a missing row. */
       await sql().query(
         `INSERT INTO edit_publications (edit_id, published_at, snapshot)
          VALUES ($1, NOW(), $2::jsonb)
@@ -509,16 +582,31 @@ export const setEditPublished = createServerFn({ method: "POST" })
            SET published_at = NOW(), snapshot = EXCLUDED.snapshot`,
         [edit.id, JSON.stringify(snapshot)],
       );
+      /* `status` is set to the value it already holds on a live collection: this
+       * is written as an explicit assignment rather than a conditional so the
+       * published state is asserted, not assumed. */
       await sql().query(
         `UPDATE edits SET status = 'published', published_at = NOW() WHERE id = $1`,
         [edit.id],
       );
-      return success(pin, "This collection is live. The public page now shows exactly what you saved.");
+
+      return success(
+        pin,
+        wasLive
+          ? "Published. The live page now shows exactly what you saved, and it stayed online the whole time."
+          : "This collection is live. The public page now shows exactly what you saved.",
+      );
     }
 
-    /* Taking a collection offline is a public change too: refuse it when a pin
-     * page points at this collection, because the pin build fails without its
+    /* Retire. Refuse on a collection that is already off the site, and refuse
+     * when a pin page points here, because the pin build fails without its
      * destination. */
+    if (!wasLive) {
+      return {
+        ok: false,
+        message: "This collection is already not on the site. There is nothing to retire.",
+      };
+    }
     const pin = await runPinGuard(edit);
     const pinErrors = pin.errors.filter((error) => error.includes("would not be live"));
     if (pinErrors.length > 0) {
@@ -526,12 +614,18 @@ export const setEditPublished = createServerFn({ method: "POST" })
         ok: false,
         pin,
         message:
-          `Not taken offline. ${pinErrors.length} Pinterest landing page(s) point at this ` +
+          `Not retired. ${pinErrors.length} Pinterest landing page(s) point at this ` +
           `collection and would break. ${pinErrors.join(" ")}`,
       };
     }
     await sql().query(`UPDATE edits SET status = 'draft' WHERE id = $1`, [edit.id]);
-    return { ok: true, pin, message: "This collection is offline. Its page is no longer served." };
+    return {
+      ok: true,
+      pin,
+      message:
+        "Retired. This collection is off the site on purpose and its page now returns 404. " +
+        "Every piece is kept, so you can publish it again whenever you want it back.",
+    };
   });
 
 // ── Writes: the products in it ──
@@ -597,6 +691,9 @@ export const addEditItem = createServerFn({ method: "POST" })
        VALUES ($1, $2, $3, $4, '', $5, $6, true)`,
       [edit.id, data.productId, position, name, slug, name],
     );
+    /* Membership changed, so the draft is now ahead of the published snapshot
+     * and the screen must offer "Publish changes". */
+    await touchEdit(edit.id);
     return success(pin, "Added to the draft at the end of the order.");
   });
 
@@ -632,6 +729,7 @@ export const removeEditItem = createServerFn({ method: "POST" })
       [edit.id, data.productId],
     );
     await normalisePositions(edit.id);
+    await touchEdit(edit.id);
     return success(pin, "Removed from the draft.");
   });
 
@@ -686,6 +784,7 @@ export const moveEditItem = createServerFn({ method: "POST" })
       [edit.id, Number(a.product_id), Number(b.product_id), Number(b.position), Number(a.position)],
     );
     await normalisePositions(edit.id);
+    await touchEdit(edit.id);
     return success(pin, "Order saved in the draft.");
   });
 
@@ -751,7 +850,7 @@ export const saveEditItem = createServerFn({ method: "POST" })
         WHERE edit_id = $1 AND product_id = $2`,
       [edit.id, data.productId, data.displayTitle, data.hook, data.price, setAt],
     );
-    await sql().query(`UPDATE edits SET updated_at = NOW() WHERE id = $1`, [edit.id]);
+    await touchEdit(edit.id);
 
     const note =
       data.price === null
