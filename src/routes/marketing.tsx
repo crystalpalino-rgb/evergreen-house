@@ -209,7 +209,9 @@ function MarketingDashboard() {
       // deployed build.
       const updated = await updateDraft({ data: { id, status: "published" } });
       setDrafts((prev) => prev.map((d) => (d.id === id ? updated : d)));
-      setStatusMsg("Post published! It's now live on the blog.");
+      setStatusMsg(
+        "Marked as published. This only updates the draft status: no blog page is created, so the post still has to be built into the site.",
+      );
       refreshDashboard();
       refreshAgentSummary();
     } catch (err: any) {
@@ -759,8 +761,9 @@ function DraftCard({
               onClick={() => onPublish(draft.id)}
               disabled={loading}
               className="rounded-lg bg-terracotta px-3 py-1.5 text-xs font-medium text-white transition hover:bg-terracotta-dark disabled:opacity-50"
+              title="Sets the draft status to published. It does not create a blog page."
             >
-              Publish
+              Mark published
             </button>
           )}
           {!editing && draft.status === "published" && (
