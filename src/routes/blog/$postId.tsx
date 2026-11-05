@@ -4,6 +4,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateBlogMetadata } from "~/lib/seo";
 import { getArticleSchema, SITE_URL } from "~/lib/schema";
 import { getBlogPost, deleteBlogPost, type BlogPost } from "~/lib/blog";
+import { getAdminSession } from "~/lib/admin-fns";
 
 export const Route = createFileRoute("/blog/$postId")({
   head: ({ loaderData }) => {
@@ -31,7 +32,8 @@ export const Route = createFileRoute("/blog/$postId")({
       const id = parseInt(params.postId, 10);
       const post = await getBlogPost({ data: id });
       if (!post) throw notFound();
-      return { post };
+      const session = await getAdminSession();
+      return { post, isAdmin: session.authenticated };
     } catch (err) {
       if (isNotFound(err)) throw err;
       console.error("Blog post loader error:", err);
@@ -145,12 +147,9 @@ function TrashIcon() {
 }
 
 function BlogPostPage() {
-  const { post } = Route.useLoaderData();
+  const { post, isAdmin } = Route.useLoaderData();
   const navigate = useNavigate();
   const [deleting, setDeleting] = useState(false);
-  const isAdmin =
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("admin") === "true";
 
   const handleDelete = async () => {
     if (!post) return;

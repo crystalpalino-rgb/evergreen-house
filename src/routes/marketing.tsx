@@ -14,8 +14,17 @@ import {
   type MarketingTask,
   type AgentSummary,
 } from "~/lib/marketing";
+import { requireAdmin } from "~/lib/admin-guard";
+import { AdminSignOut } from "~/components/AdminSignOut";
 
 export const Route = createFileRoute("/marketing")({
+  beforeLoad: ({ location }) => requireAdmin(location),
+  head: () => ({
+    meta: [
+      { title: "Marketing | Evergreen House" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   loader: async () => {
     try {
       await ensureMarketingTable();
@@ -303,6 +312,7 @@ function MarketingDashboard() {
             >
               View Site
             </a>
+            <AdminSignOut />
           </div>
         </div>
       </header>

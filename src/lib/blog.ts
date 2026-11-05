@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { sql } from "~/db";
+import { adminOnly } from "~/lib/admin-fns";
 
 export interface BlogPost {
   id: number;
@@ -59,7 +60,7 @@ export const getBlogPost = createServerFn({ method: "GET" })
     }
   });
 
-export const deleteBlogPost = createServerFn({ method: "DELETE" })
+export const deleteBlogPost = createServerFn({ method: "DELETE" }).middleware([adminOnly])
   .validator((id: number) => id)
   .handler(async ({ data: id }): Promise<{ success: boolean; error?: string }> => {
     try {

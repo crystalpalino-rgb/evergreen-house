@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
+import { AdminSignOut } from "~/components/AdminSignOut";
+import { requireAdmin } from "~/lib/admin-guard";
 
 interface ProductSummary {
   id: number;
@@ -38,7 +40,14 @@ interface AdminSummary {
   needsAttention: ProductSummary[];
 }
 
-export const Route = createFileRoute("/admin")({
+export const Route = createFileRoute("/admin/")({
+  beforeLoad: ({ location }) => requireAdmin(location),
+  head: () => ({
+    meta: [
+      { title: "Admin | Evergreen House" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
   component: AdminDashboard,
 });
 
@@ -191,6 +200,7 @@ export default function AdminDashboard() {
             >
               View Site
             </a>
+            <AdminSignOut />
           </div>
         </div>
       </header>

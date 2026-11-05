@@ -1,5 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { AdminSignOut } from "~/components/AdminSignOut";
+import { requireAdmin } from "~/lib/admin-guard";
+import { getSubscriberList } from "~/lib/admin-fns";
 
 interface Subscriber {
   id: number;
@@ -9,29 +11,24 @@ interface Subscriber {
 }
 
 export const Route = createFileRoute("/admin/subscribers")({
+  beforeLoad: ({ location }) => requireAdmin(location),
+  head: () => ({
+    meta: [
+      { title: "Subscribers | Evergreen House" },
+      { name: "robots", content: "noindex, nofollow" },
+    ],
+  }),
+  loader: async (): Promise<Subscriber[]> => {
+    // Authenticated server function: the adminOnly middleware rejects the call
+    // before handleGetSubscribers runs, so the list is never served to a
+    // request without a valid session.
+    return getSubscriberList();
+  },
   component: SubscriberList,
 });
 
 function SubscriberList() {
-  const [subscribers, setSubscribers] = useState<Subscriber[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    fetch("/api/subscribers")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch subscribers");
-        return res.json();
-      })
-      .then((data: Subscriber[]) => {
-        setSubscribers(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
+  const subscribers = Route.useLoaderData();
 
   const formatDate = (iso: string): string => {
     const d = new Date(iso);
@@ -55,44 +52,28 @@ function SubscriberList() {
               Email subscribers from the Evergreen House signup form
             </p>
           </div>
-          <a
-            href="/"
-            className="rounded-lg bg-warm-dark px-4 py-2 text-sm text-white transition hover:opacity-90"
-          >
-            View Site
-          </a>
+          <div className="flex items-center gap-3">
+            <a
+              href="/"
+              className="rounded-lg bg-warm-dark px-4 py-2 text-sm text-white transition hover:opacity-90"
+            >
+              View Site
+            </a>
+            <AdminSignOut />
+          </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-5xl px-6 py-8">
         {/* Count */}
-        {!loading && !error && (
-          <p className="mb-6 font-serif text-lg text-warm-dark">
-            {subscribers.length}{" "}
-            {subscribers.length === 1 ? "subscriber" : "subscribers"}
-          </p>
-        )}
-
-        {/* Loading state */}
-        {loading && (
-          <div className="flex items-center justify-center py-20">
-            <p className="text-warm-gray">Loading subscribers&hellip;</p>
-          </div>
-        )}
-
-        {/* Error state */}
-        {error && (
-          <div className="rounded-lg border border-terracotta/30 bg-terracotta/5 px-6 py-4 text-sm text-terracotta">
-            {error}
-          </div>
-        )}
+        <p className="mb-6 font-serif text-lg text-warm-dark">
+          {subscribers.length} {subscribers.length === 1 ? "subscriber" : "subscribers"}
+        </p>
 
         {/* Empty state */}
-        {!loading && !error && subscribers.length === 0 && (
+        {subscribers.length === 0 && (
           <div className="rounded-xl border border-beige/30 bg-white px-6 py-16 text-center shadow-sm">
-            <p className="font-serif text-lg text-warm-dark">
-              No subscribers yet
-            </p>
+            <p className="font-serif text-lg text-warm-dark">No subscribers yet</p>
             <p className="mt-2 text-sm text-warm-gray">
               Subscribers will appear here once visitors sign up through the email form.
             </p>
@@ -100,8 +81,8 @@ function SubscriberList() {
         )}
 
         {/* Table */}
-        {!loading && !error && subscribers.length > 0 && (
-          <div className="overflow-hidden rounded-xl border border-beige/30 bg-white shadow-sm">
+        {subscribers.length > 0 && (
+          <div className="overflow-x-auto rounded-xl border border-beige/30 bg-white shadow-sm">
             <table className="w-full">
               <thead>
                 <tr className="border-b border-beige/20 bg-cream-dark/50">
@@ -118,17 +99,12 @@ function SubscriberList() {
               </thead>
               <tbody className="divide-y divide-beige/10">
                 {subscribers.map((sub) => (
-                  <tr
-                    key={sub.id}
-                    className="transition-colors hover:bg-cream-dark/30"
-                  >
+                  <tr key={sub.id} className="transition-colors hover:bg-cream-dark/30">
                     <td className="whitespace-nowrap px-6 py-3 text-sm text-warm-dark">
                       {sub.email}
                     </td>
                     <td className="whitespace-nowrap px-6 py-3 text-sm text-warm-dark">
-                      {sub.name || (
-                        <span className="italic text-taupe">-</span>
-                      )}
+                      {sub.name || <span className="italic text-taupe">-</span>}
                     </td>
                     <td className="whitespace-nowrap px-6 py-3 text-sm text-warm-gray">
                       {formatDate(sub.created_at)}

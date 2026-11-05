@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { sql } from "~/db";
+import { adminOnly } from "~/lib/admin-fns";
 
 // ── Types ──
 
@@ -44,7 +45,7 @@ export interface GeneratedDraft {
 
 // ── Table Setup ──
 
-export const ensureMarketingTable = createServerFn({ method: "GET" }).handler(async () => {
+export const ensureMarketingTable = createServerFn({ method: "GET" }).middleware([adminOnly]).handler(async () => {
   await sql()`
     CREATE TABLE IF NOT EXISTS marketing_tasks (
       id SERIAL PRIMARY KEY,
@@ -67,7 +68,7 @@ export const ensureMarketingTable = createServerFn({ method: "GET" }).handler(as
 
 // ── Dashboard ──
 
-export const getDashboardData = createServerFn({ method: "GET" }).handler(async () => {
+export const getDashboardData = createServerFn({ method: "GET" }).middleware([adminOnly]).handler(async () => {
   await ensureMarketingTable();
 
   const [
@@ -195,7 +196,7 @@ export const getDashboardData = createServerFn({ method: "GET" }).handler(async 
 
 // ── Draft Generation ──
 
-export const generateDraft = createServerFn({ method: "POST" })
+export const generateDraft = createServerFn({ method: "POST" }).middleware([adminOnly])
   .validator((data: GenerateRequest) => data)
   .handler(async ({ data }) => {
     await ensureMarketingTable();
@@ -235,7 +236,7 @@ export const generateDraft = createServerFn({ method: "POST" })
 
 // ── Draft Management ──
 
-export const getDrafts = createServerFn({ method: "GET" })
+export const getDrafts = createServerFn({ method: "GET" }).middleware([adminOnly])
   .validator((filters?: { channel?: string; status?: string }) => filters ?? {})
   .handler(async ({ data }) => {
     await ensureMarketingTable();
@@ -268,7 +269,7 @@ export const getDrafts = createServerFn({ method: "GET" })
     return filtered.map(formatTask);
   });
 
-export const approveDraft = createServerFn({ method: "POST" })
+export const approveDraft = createServerFn({ method: "POST" }).middleware([adminOnly])
   .validator((id: number) => id)
   .handler(async ({ data: id }) => {
     await ensureMarketingTable();
@@ -281,7 +282,7 @@ export const approveDraft = createServerFn({ method: "POST" })
     return formatTask(result[0]);
   });
 
-export const deleteDraft = createServerFn({ method: "POST" })
+export const deleteDraft = createServerFn({ method: "POST" }).middleware([adminOnly])
   .validator((id: number) => id)
   .handler(async ({ data: id }) => {
     await ensureMarketingTable();
@@ -289,7 +290,7 @@ export const deleteDraft = createServerFn({ method: "POST" })
     return { success: true };
   });
 
-export const updateDraft = createServerFn({ method: "POST" })
+export const updateDraft = createServerFn({ method: "POST" }).middleware([adminOnly])
   .validator((data: { id: number; title?: string; content?: string }) => data)
   .handler(async ({ data }) => {
     await ensureMarketingTable();
@@ -320,7 +321,7 @@ export interface AgentRunResult {
   rooms: string[];
 }
 
-export const runAgent = createServerFn({ method: "POST" }).handler(async () => {
+export const runAgent = createServerFn({ method: "POST" }).middleware([adminOnly]).handler(async () => {
   await ensureMarketingTable();
   await ensureAgentRunsTable();
 
@@ -425,7 +426,7 @@ export const runAgent = createServerFn({ method: "POST" }).handler(async () => {
   } as AgentRunResult;
 });
 
-export const getAgentSummary = createServerFn({ method: "GET" }).handler(async (): Promise<AgentSummary> => {
+export const getAgentSummary = createServerFn({ method: "GET" }).middleware([adminOnly]).handler(async (): Promise<AgentSummary> => {
   await ensureAgentRunsTable();
 
   const lastRun = await sql()`SELECT created_at, drafts_generated, channels, rooms FROM agent_runs ORDER BY created_at DESC LIMIT 1`;
