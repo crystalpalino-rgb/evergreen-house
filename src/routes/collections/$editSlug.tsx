@@ -13,9 +13,11 @@ import {
   artSources,
   getEdit,
   getEditProducts,
+  getEditSummaries,
   getRelatedEdits,
   type EditCollection,
   type EditProduct,
+  type EditSummary,
 } from "~/lib/edits";
 import { generateStaticMetadata, SITE_URL } from "~/lib/seo";
 import { CARD_DATA_CHECKED_AT } from "~/components/AmazonDisclosure";
@@ -25,11 +27,10 @@ import { getCollectionPageSchema } from "~/lib/schema";
 /**
  * "Shop the Edit" landing page: /collections/<edit-slug>.
  *
- * Editorial copy and the product order come from the checked-in curation
- * manifest (src/data/edits/manifest.json); the live product facts come from the
- * products table by id. Only the four published edits have a page: an unknown or
- * unpublished slug (the retired winter-capsule-wardrobe for instance) throws
- * notFound, so it is a real 404 rather than an empty shell.
+ * Editorial copy and the product order come from the `edits` and `edit_items`
+ * tables (collection admin, phase 1); the live product facts come from the
+ * products table by id. Only the published edits have a page: an unknown or
+ * draft slug throws notFound, so it is a real 404 rather than an empty shell.
  *
  * Mobile first, per the owner brief: the header is a compact art band with the
  * eyebrow, serif title, the two-sentence intro and the affiliate disclosure over
@@ -40,7 +41,7 @@ import { getCollectionPageSchema } from "~/lib/schema";
 type EditLoaderData = {
   edit: EditCollection;
   products: EditProduct[];
-  related: EditCollection[];
+  related: EditSummary[];
 };
 
 /** Meta description: edit title plus the one-line headline, capped at 158. */
@@ -53,15 +54,26 @@ function metaDescription(edit: EditCollection): string {
 
 export const Route = createFileRoute("/collections/$editSlug")({
   loader: async ({ params }): Promise<EditLoaderData> => {
-    const edit = getEdit(params.editSlug);
+    /* getEdit filters on status = 'published', so a draft slug lands here as
+       null and 404s. It also carries its own outage fallback, which is why it is
+       called outside the try below: a database blip must not turn a live edit
+       page into a 404. */
+    const edit = await getEdit(params.editSlug);
     if (!edit) throw notFound();
+    let related: EditSummary[] = [];
+    try {
+      related = getRelatedEdits(edit.slug, await getEditSummaries());
+    } catch (err) {
+      if (isNotFound(err)) throw err;
+      console.error("Related edits error:", err);
+    }
     try {
       const products = await getEditProducts(edit);
-      return { edit, products, related: getRelatedEdits(edit.slug) };
+      return { edit, products, related };
     } catch (err) {
       if (isNotFound(err)) throw err;
       console.error("Edit loader error:", err);
-      return { edit, products: [], related: getRelatedEdits(edit.slug) };
+      return { edit, products: [], related };
     }
   },
   head: ({ loaderData }) => {

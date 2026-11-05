@@ -35,6 +35,10 @@ import { generateStaticMetadata, SITE_URL } from "~/lib/seo";
 type PinLoaderData = {
   pin: PinPage;
   products: EditProduct[];
+  /** Title of the edit the pin points at, for the CTA. Resolved in the loader
+   *  because the edit list is database-backed since the collection admin work
+   *  (phase 1) and can no longer be read synchronously during render. */
+  editTitle: string;
 };
 
 export const Route = createFileRoute("/pin/$slug")({
@@ -49,6 +53,17 @@ export const Route = createFileRoute("/pin/$slug")({
     if (resolution.kind === "unknown") throw notFound();
 
     const pin = resolution.pin;
+    /* The edit behind the pin, so the CTA can name it rather than say "here".
+       A lookup that finds nothing (or cannot reach the database) keeps the old
+       generic wording rather than failing the page. */
+    let editTitle = "the full edit";
+    try {
+      const edit = await getEdit(pin.destination.replace(/^\/collections\//, ""));
+      if (edit) editTitle = edit.title;
+    } catch (err) {
+      if (isNotFound(err)) throw err;
+      console.error("Pin page edit lookup error:", err);
+    }
     try {
       const products = await getCuratedProducts(
         pin.numbers.map((n) => ({
@@ -58,13 +73,13 @@ export const Route = createFileRoute("/pin/$slug")({
           hook: n.hook ?? "",
         })),
       );
-      return { pin, products };
+      return { pin, products, editTitle };
     } catch (err) {
       if (isNotFound(err)) throw err;
       /* Database down: the page still renders every number, with its label and
          its numeral, rather than an empty shell or a shorter list. */
       console.error("Pin page loader error:", err);
-      return { pin, products: [] };
+      return { pin, products: [], editTitle };
     }
   },
   head: ({ loaderData }) => {
@@ -92,14 +107,9 @@ export const Route = createFileRoute("/pin/$slug")({
 });
 
 function PinLandingPage() {
-  const { pin, products } = Route.useLoaderData();
+  const { pin, products, editTitle } = Route.useLoaderData();
   const url = `${SITE_URL}/pin/${pin.slug}`;
   const byId = new Map(products.map((product) => [product.id, product]));
-
-  /* The edit behind the pin, so the CTA can name it rather than say "here". */
-  const destinationSlug = pin.destination.replace(/^\/collections\//, "");
-  const edit = getEdit(destinationSlug);
-  const editTitle = edit?.title ?? "the full edit";
 
   /* The numbered cards, in pin order. The number is the manifest's, never the
      index, so a product that goes off sale keeps its number and its slot. */

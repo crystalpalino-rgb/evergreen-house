@@ -16,7 +16,7 @@ import {
 } from "~/lib/homepage-sections";
 import { generateHomeMetadata } from "~/lib/seo";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
-import type { EditProduct } from "~/lib/edits";
+import { getEditSummaries, type EditCardData, type EditProduct } from "~/lib/edits";
 
 type HomeSearch = { hero?: "b" | "c" };
 
@@ -36,6 +36,16 @@ export const Route = createFileRoute("/")({
     };
   },
   loader: async () => {
+    /* The SHOP THE EDITS row is now database-backed (collection admin, phase 1),
+       so the list is loaded here and handed to the component rather than read
+       from a module-level constant. A failed edits read degrades to an empty row
+       the way the two curated grids below already do. */
+    let edits: EditCardData[] = [];
+    try {
+      edits = await getEditSummaries();
+    } catch (err) {
+      console.error("Edits loader error:", err);
+    }
     try {
       /* Two curated grids, fetched by id from the checked-in curation file.
          The old getTrendingProducts(6) auto-pick is gone: nothing above the
@@ -44,10 +54,11 @@ export const Route = createFileRoute("/")({
         getSectionProducts(SHOP_THE_LOOK),
         getSectionProducts(CURRENT_EDIT),
       ]);
-      return { shopTheLook, currentEdit };
+      return { edits, shopTheLook, currentEdit };
     } catch (err) {
       console.error("Loader error:", err);
       return {
+        edits,
         shopTheLook: [] as EditProduct[],
         currentEdit: [] as EditProduct[],
       };
@@ -57,7 +68,7 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { shopTheLook, currentEdit } = Route.useLoaderData();
+  const { edits, shopTheLook, currentEdit } = Route.useLoaderData();
   const { hero } = Route.useSearch();
   const heroConcept = hero ?? "a";
 
@@ -111,7 +122,7 @@ function Home() {
             7 email signup. Sections 3 and 4 are curated from the checked-in
             homepage merchandising file, so no row on this page is query-picked. */}
         <Hero concept={heroConcept} />
-        <ShopTheEdits />
+        <ShopTheEdits edits={edits} />
         <ShopTheLook products={shopTheLook} />
         <TheCurrentEdit products={currentEdit} />
         {/* One Amazon Associates disclosure for the whole page, under the last
