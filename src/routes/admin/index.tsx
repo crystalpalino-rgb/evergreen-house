@@ -2,43 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { AdminSignOut } from "~/components/AdminSignOut";
 import { requireAdmin } from "~/lib/admin-guard";
+import { getAdminLowQuality, getAdminSummary } from "~/lib/admin-data";
+import type { AdminLowQualityProduct, AdminSummary } from "~/lib/admin-data";
 
-interface ProductSummary {
-  id: number;
-  name: string;
-  fullName: string | null;
-  room: string;
-  price: number | null;
-  rating: number | null;
-  completenessScore: number;
-  qualityScore: number;
-  imageUrl: string | null;
-  aiSummary: string | null;
-  editorNote: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-}
-
-interface LowQualityProduct extends ProductSummary {
-  seoTitle?: string | null;
-  pinterestTitle?: string | null;
-  issues: string[];
-}
-
-interface AdminSummary {
-  totalProducts: number;
-  activeProducts: number;
-  avgCompleteness: number;
-  avgQuality: number;
-  missingImages: number;
-  missingSEO: number;
-  missingAI: number;
-  missingPinterest: number;
-  collections: number;
-  collectionRules: number;
-  recentlyAdded: ProductSummary[];
-  needsAttention: ProductSummary[];
-}
+type LowQualityProduct = AdminLowQualityProduct;
 
 export const Route = createFileRoute("/admin/")({
   beforeLoad: ({ location }) => requireAdmin(location),
@@ -134,6 +101,17 @@ function ProgressBar({
   );
 }
 
+function adminErrorMessage(err: unknown, what: string): string {
+  const raw = err instanceof Error ? err.message : String(err);
+  // adminOnly answers a missing or expired session with a 401 whose body is
+  // {"error":"Unauthorized"}; the server function client rethrows that body as
+  // the error message.
+  if (/unauthorized|"error":\s*401|\b401\b/i.test(raw)) {
+    return "Your admin session has expired. Sign in again to load the dashboard.";
+  }
+  return `${what} could not be loaded: ${raw}`;
+}
+
 export default function AdminDashboard() {
   const [summary, setSummary] = useState<AdminSummary | null>(null);
   const [lowQuality, setLowQuality] = useState<LowQualityProduct[]>([]);
@@ -144,18 +122,14 @@ export default function AdminDashboard() {
     setLoading(true);
     setError("");
     try {
-      const [sumResp, lqResp] = await Promise.all([
-        fetch("/api/admin/summary"),
-        fetch("/api/admin/low-quality"),
-      ]);
-      if (!sumResp.ok) throw new Error("Summary fetch failed: " + (await sumResp.text()));
-      if (!lqResp.ok) throw new Error("Low-quality fetch failed: " + (await lqResp.text()));
-      const sumData = await sumResp.json();
-      const lqData = await lqResp.json();
+      // Server functions, not fetch(): the dashboards used to call the
+      // /api/admin/* routes, which only exist in the local sandbox server and
+      // came back as HTML on the deployed build.
+      const [sumData, lqData] = await Promise.all([getAdminSummary(), getAdminLowQuality()]);
       setSummary(sumData);
       setLowQuality(lqData.products ?? []);
     } catch (err: any) {
-      setError(err.message);
+      setError(adminErrorMessage(err, "Dashboard data"));
     } finally {
       setLoading(false);
     }

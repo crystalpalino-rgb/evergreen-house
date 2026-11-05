@@ -291,13 +291,13 @@ export const deleteDraft = createServerFn({ method: "POST" }).middleware([adminO
   });
 
 export const updateDraft = createServerFn({ method: "POST" }).middleware([adminOnly])
-  .validator((data: { id: number; title?: string; content?: string }) => data)
+  .validator((data: { id: number; title?: string; content?: string; status?: string }) => data)
   .handler(async ({ data }) => {
     await ensureMarketingTable();
     const db = sql();
     const result = await db.query(
-      "UPDATE marketing_tasks SET title = COALESCE($1, title), content = COALESCE($2, content), updated_at = NOW() WHERE id = $3 RETURNING *",
-      [data.title ?? null, data.content ?? null, data.id],
+      "UPDATE marketing_tasks SET title = COALESCE($1, title), content = COALESCE($2, content), status = COALESCE($3, status), updated_at = NOW() WHERE id = $4 RETURNING *",
+      [data.title ?? null, data.content ?? null, data.status ?? null, data.id],
     );
     if (result.length === 0) throw new Error(`Draft ${data.id} not found`);
     return formatTask(result[0]);

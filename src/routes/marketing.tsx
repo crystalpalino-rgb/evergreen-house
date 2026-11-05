@@ -204,13 +204,10 @@ function MarketingDashboard() {
   const handlePublish = async (id: number) => {
     setLoading(true);
     try {
-      const resp = await fetch(`/api/marketing/drafts/${id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "published" }),
-      });
-      if (!resp.ok) throw new Error((await resp.json()).error ?? "Publish failed");
-      const updated = await resp.json();
+      // Server function, not fetch(): the PATCH /api/marketing/drafts/:id route
+      // only exists in the local sandbox server and returned HTML on the
+      // deployed build.
+      const updated = await updateDraft({ data: { id, status: "published" } });
       setDrafts((prev) => prev.map((d) => (d.id === id ? updated : d)));
       setStatusMsg("Post published! It's now live on the blog.");
       refreshDashboard();
