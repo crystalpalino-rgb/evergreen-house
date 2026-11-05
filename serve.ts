@@ -80,6 +80,22 @@ function hasAdminSession(req: Request): boolean {
   return isAuthenticatedCookieHeader(req.headers.get("cookie"));
 }
 
+/**
+ * True when a /_serverFn/<id> path addresses a server function that lives in the
+ * admin module. The id is base64 JSON naming the module and the export, so the
+ * module name is the test. An id that does not decode counts as not admin: the
+ * function's own middleware still gates it, this is only a second lock.
+ */
+function isAdminServerFnPath(pathname: string): boolean {
+  const id = pathname.slice("/_serverFn/".length).split("/")[0];
+  if (!id) return false;
+  try {
+    return Buffer.from(id, "base64").toString("utf8").includes("admin-fns");
+  } catch {
+    return false;
+  }
+}
+
 function cacheHeaderFor(path: string, contentType: string): string {
   const ext = path.slice(path.lastIndexOf(".")).toLowerCase();
   if (IMMUTABLE_EXTS.has(ext) || STATIC_MEDIA_EXTS.has(ext)) {
@@ -484,6 +500,15 @@ for (let attempt = 1; ; attempt++) {
           pathname === "/api/import-v3"
         ) {
           if (!hasAdminSession(req)) {
+            return jsonResponse({ error: "Unauthorized" }, 401);
+          }
+        }
+
+        // Admin server functions reached directly. This runs before TanStack
+        // checks the HTTP method, so a hand written request of any verb gets the
+        // same clean 401 instead of a 405 that names the right one.
+        if (pathname.startsWith("/_serverFn/")) {
+          if (isAdminServerFnPath(pathname) && !hasAdminSession(req)) {
             return jsonResponse({ error: "Unauthorized" }, 401);
           }
         }
