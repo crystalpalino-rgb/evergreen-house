@@ -114,6 +114,12 @@ function CollectionEditor() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  /**
+   * Notes on a save that went through anyway. Kept apart from `notice` so a
+   * caveat reads as its own thing: amber, not green (a save) and not red (a
+   * refusal).
+   */
+  const [notes, setNotes] = useState<string[]>([]);
   const [busy, setBusy] = useState(false);
   /** The retire panel: a deliberate second step, because it takes a page down. */
   const [retireConfirm, setRetireConfirm] = useState(false);
@@ -147,10 +153,12 @@ function CollectionEditor() {
       setBusy(true);
       setNotice("");
       setError("");
+      setNotes([]);
       try {
         const result = await action();
         if (result.ok) {
           setNotice(result.message || what);
+          setNotes(result.warnings ?? []);
           await load();
         } else {
           setError(result.message);
@@ -201,6 +209,19 @@ function CollectionEditor() {
         {notice && (
           <div className="mb-6 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm leading-relaxed text-green-900">
             {notice}
+          </div>
+        )}
+        {notes.length > 0 && (
+          <div
+            className="mb-6 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm leading-relaxed text-amber-900"
+            data-notice="went-through-with-a-note"
+          >
+            <p className="font-semibold">Saved, with one thing to know</p>
+            {notes.map((note) => (
+              <p key={note} className="mt-1">
+                {note}
+              </p>
+            ))}
           </div>
         )}
 
