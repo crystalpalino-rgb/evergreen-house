@@ -1,5 +1,5 @@
 import { trackAffiliateClick, trackSelectItem } from "~/lib/analytics";
-import { cardPrice, cardRating, cardReviewCount, cardSetDate } from "~/lib/card-copy";
+import { cardPrice, cardRating, cardReviewCount, cardHandSetPrice } from "~/lib/card-copy";
 import { useAnalyticsList } from "./AnalyticsList";
 import type { EditProduct } from "~/lib/edits";
 
@@ -81,7 +81,9 @@ export function EditProductCard({
      typed price the markup below is byte for byte what it was before. */
   const typedPrice = product.priceOverride != null ? product.priceOverride : null;
   const priceLabel = cardPrice(typedPrice != null ? typedPrice : product.price);
-  const priceSetLabel = typedPrice != null ? cardSetDate(product.priceSetAt) : null;
+  /* "Price set by hand · Nov 5, 2026" when the owner typed the figure, null
+     when the price is the verified one. */
+  const priceHandLabel = typedPrice != null ? cardHandSetPrice(product.priceSetAt) : null;
 
   function trackAmazonClick() {
     trackAffiliateClick({
@@ -183,14 +185,25 @@ export function EditProductCard({
                 )}
               </span>
             )}
-            {priceLabel && (
-              <span className="ml-auto text-[11px] font-medium text-warm-dark">
-                {priceLabel}
-                {priceSetLabel && (
-                  <span className="ml-1 font-normal text-taupe">set {priceSetLabel}</span>
-                )}
-              </span>
-            )}
+            {priceLabel &&
+              (priceHandLabel ? (
+                /* A typed price is not an Amazon price. The figure prints
+                   lighter than a verified one and the provenance sits under it
+                   in words, so no shopper can read it as the Amazon price
+                   (owner, 2026-11-05). The block wraps under the stars rather
+                   than crowding them at 375px. */
+                <span className="ml-auto flex max-w-full flex-col items-end text-right">
+                  <span className="text-[11px] font-normal text-warm-gray">{priceLabel}</span>
+                  <span className="mt-0.5 text-[10px] font-normal leading-snug text-warm-gray">
+                    {priceHandLabel.words}{" "}
+                    <span className="whitespace-nowrap">{priceHandLabel.day}</span>
+                  </span>
+                </span>
+              ) : (
+                <span className="ml-auto text-[11px] font-medium text-warm-dark">
+                  {priceLabel}
+                </span>
+              ))}
           </div>
         )}
         <div className="mt-auto pt-3">
