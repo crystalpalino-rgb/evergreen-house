@@ -11,7 +11,11 @@
     "go-live": "bash ./go-live.sh",
     "format": "prettier --write .",
     "generate-sitemaps": "bun run scripts/generate-sitemaps.ts",
-    "generate-merchant-feed": "bun run scripts/generate-merchant-feed.ts"
+    "generate-merchant-feed": "bun run scripts/generate-merchant-feed.ts",
+    "edits:dump": "bun run scripts/dump-edits-manifest.ts",
+    "edits:check": "bun run scripts/dump-edits-manifest.ts --check",
+    "pin:rebuild": "bun run scripts/dump-edits-manifest.ts && node scripts/build-pin-pages.mjs --apply",
+    "hero-images": "bun run scripts/list-hero-images.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
