@@ -4,6 +4,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
 import { SITE_URL } from "~/lib/schema";
 import { getBlogPosts, deleteBlogPost, type BlogPost } from "~/lib/blog";
+import { getAdminSession } from "~/lib/admin-fns";
 
 export const Route = createFileRoute("/blog/")({
   head: () => {
@@ -15,12 +16,15 @@ export const Route = createFileRoute("/blog/")({
     return { meta: seo.meta, links: seo.links };
   },
   loader: async () => {
+    // The delete control is admin only. It is shown when a real admin session
+    // exists, never from a query string.
+    const session = await getAdminSession();
     try {
       const posts = await getBlogPosts();
-      return { posts };
+      return { posts, isAdmin: session.authenticated };
     } catch (err) {
       console.error("Blog loader error:", err);
-      return { posts: [] as BlogPost[] };
+      return { posts: [] as BlogPost[], isAdmin: session.authenticated };
     }
   },
   component: BlogIndex,
@@ -155,12 +159,9 @@ const EDITOR_PICKS: Array<{
 ];
 
 function BlogIndex() {
-  const { posts: initialPosts } = Route.useLoaderData();
+  const { posts: initialPosts, isAdmin } = Route.useLoaderData();
   const [posts, setPosts] = useState(initialPosts);
   const [deleting, setDeleting] = useState<number | null>(null);
-  const isAdmin =
-    typeof window !== "undefined" &&
-    new URLSearchParams(window.location.search).get("admin") === "true";
 
   const handleDelete = async (postId: number, title: string) => {
     if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;

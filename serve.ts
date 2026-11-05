@@ -10,6 +10,7 @@
 // with an already-running server. Every sandbox user has passwordless sudo, so
 // the takeover works across user boundaries.
 import handler from "./dist/server/server.js";
+import { isAuthenticatedCookieHeader } from "./src/lib/admin-auth.ts";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -56,6 +57,45 @@ const STATIC_MEDIA_EXTS = new Set([
 ]);
 const HTML_CONTENT_TYPES = new Set(["text/html", "text/html; charset=utf-8"]);
 
+// ── Private pages ──
+// /admin and /marketing are the owner's private area. Every response for them
+// carries noindex and no-store, including the redirect to the sign in page, so
+// neither a crawler nor a shared cache ever keeps a copy.
+const PRIVATE_PATHS = ["/admin", "/marketing"];
+
+function isPrivatePath(pathname: string): boolean {
+  const clean = pathname.replace(/\/+$/, "") || "/";
+  return PRIVATE_PATHS.some((p) => clean === p || clean.startsWith(`${p}/`));
+}
+
+function jsonResponse(body: unknown, status = 200): Response {
+  return new Response(JSON.stringify(body), {
+    status,
+    headers: { "Content-Type": "application/json", "Cache-Control": "no-store" },
+  });
+}
+
+/** True when the request carries a valid admin session cookie. */
+function hasAdminSession(req: Request): boolean {
+  return isAuthenticatedCookieHeader(req.headers.get("cookie"));
+}
+
+/**
+ * True when a /_serverFn/<id> path addresses a server function that lives in the
+ * admin module. The id is base64 JSON naming the module and the export, so the
+ * module name is the test. An id that does not decode counts as not admin: the
+ * function's own middleware still gates it, this is only a second lock.
+ */
+function isAdminServerFnPath(pathname: string): boolean {
+  const id = pathname.slice("/_serverFn/".length).split("/")[0];
+  if (!id) return false;
+  try {
+    return Buffer.from(id, "base64").toString("utf8").includes("admin-fns");
+  } catch {
+    return false;
+  }
+}
+
 function cacheHeaderFor(path: string, contentType: string): string {
   const ext = path.slice(path.lastIndexOf(".")).toLowerCase();
   if (IMMUTABLE_EXTS.has(ext) || STATIC_MEDIA_EXTS.has(ext)) {
@@ -74,6 +114,10 @@ function applyHeaders(response: Response, pathname: string): Response {
   const ct = headers.get("content-type") || "";
   headers.set("Cache-Control", cacheHeaderFor(pathname, ct));
   headers.set("Content-Security-Policy", CSP_HEADER);
+  if (isPrivatePath(pathname)) {
+    headers.set("Cache-Control", "no-store, max-age=0");
+    headers.set("X-Robots-Tag", "noindex, nofollow");
+  }
   return new Response(response.body, {
     status: response.status,
     statusText: response.statusText,
@@ -84,6 +128,9 @@ function applyHeaders(response: Response, pathname: string): Response {
 // ── Admin API middleware ──
 async function handleAdminApi(req: Request): Promise<Response | null> {
   const { pathname } = new URL(req.url);
+
+  // Fail closed: no valid admin session means no admin data, whatever the route.
+  if (!hasAdminSession(req)) return jsonResponse({ error: "Unauthorized" }, 401);
 
   // GET /api/admin/summary
   if (pathname === "/api/admin/summary" && req.method === "GET") {
@@ -271,6 +318,9 @@ async function getMarketingApi() {
 async function handleMarketingApi(req: Request): Promise<Response | null> {
   const { pathname } = new URL(req.url);
 
+  // Fail closed: the marketing dashboard and draft tools are owner only.
+  if (!hasAdminSession(req)) return jsonResponse({ error: "Unauthorized" }, 401);
+
   // GET /api/marketing/dashboard
   if (pathname === "/api/marketing/dashboard" && req.method === "GET") {
     try {
@@ -439,6 +489,28 @@ for (let attempt = 1; ; attempt++) {
         if (pathname !== "/") {
           const file = Bun.file(CLIENT_DIR + pathname);
           if (await file.exists()) return applyHeaders(new Response(file), pathname);
+        }
+
+        // Private API surface. Nothing under /api/admin or /api/marketing and
+        // no import endpoint answers a request without a valid admin session,
+        // so the sandbox server is not an open door either.
+        if (
+          pathname.startsWith("/api/admin/") ||
+          pathname.startsWith("/api/marketing/") ||
+          pathname === "/api/import-v3"
+        ) {
+          if (!hasAdminSession(req)) {
+            return jsonResponse({ error: "Unauthorized" }, 401);
+          }
+        }
+
+        // Admin server functions reached directly. This runs before TanStack
+        // checks the HTTP method, so a hand written request of any verb gets the
+        // same clean 401 instead of a 405 that names the right one.
+        if (pathname.startsWith("/_serverFn/")) {
+          if (isAdminServerFnPath(pathname) && !hasAdminSession(req)) {
+            return jsonResponse({ error: "Unauthorized" }, 401);
+          }
         }
 
         // Admin API routes
@@ -654,8 +726,12 @@ for (let attempt = 1; ; attempt++) {
         }
 
         // Subscriber list API removed on 2026-11-05: it answered unauthenticated
-        // requests with the subscriber list. Reading subscribers goes through an
-        // authenticated server function once the admin login lands.
+        // requests with the subscriber list. Reading subscribers now goes through
+        // the authenticated getSubscriberList server function. Any call to the old
+        // path is a plain 404, with no data in the body.
+        if (pathname === "/api/subscribers") {
+          return jsonResponse({ error: "Not found" }, 404);
+        }
 
         const ssrResponse = await (
           handler as { fetch: (r: Request) => Response | Promise<Response> }
