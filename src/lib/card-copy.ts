@@ -498,6 +498,26 @@ export function cardSetDate(date: string | Date | null | undefined): string | nu
   });
 }
 
+/**
+ * The provenance line for a price the owner typed on a card:
+ * "Price set by hand · Nov 5, 2026".
+ *
+ * A typed price is not a verified Amazon price, so the card says where the
+ * figure came from in words instead of leaving a shopper to infer it from font
+ * weight (owner, 2026-11-05). The separator is a middle dot, never a hyphen or
+ * a dash. Returned in two parts so the card can keep the day on one line when
+ * the label wraps at 375px: the dot closes the words, the date never splits
+ * across "Nov 5," and "2026". Null when there is no date, so the card falls
+ * back to the figure alone rather than printing a label with no day in it.
+ */
+export function cardHandSetPrice(
+  date: string | Date | null | undefined,
+): { words: string; day: string } | null {
+  const day = cardSetDate(date);
+  if (!day) return null;
+  return { words: "Price set by hand ·", day };
+}
+
 /** The card's title: the clean human title when set, the listing name otherwise. */
 export function cardTitle(
   displayTitle: string | null | undefined,
