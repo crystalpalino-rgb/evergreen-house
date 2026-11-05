@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { AdminSignOut } from "~/components/AdminSignOut";
 import { requireAdmin } from "~/lib/admin-guard";
 import {
@@ -33,6 +33,11 @@ import heroImages from "~/data/hero-images.json";
  *
  * A price typed on a card is stored with the day it was set, on the item, never
  * in the product row (owner decision 21).
+ *
+ * Save reads the three boxes on the card from the page itself, not from React
+ * state. A controlled input whose state missed a keystroke would otherwise write
+ * the figure from before the typing and print a green "Saved" over it, which is
+ * invisible data loss (owner decision 29, 2026-11-05).
  *
  * Every write goes through an adminOnly server function. A save that would leave
  * a Pinterest landing page out of date is refused, and the refusal is shown
@@ -100,7 +105,9 @@ function toItemForms(detail: AdminEditDetail): Record<number, ItemForm> {
     out[item.productId] = {
       displayTitle: item.displayTitle,
       hook: item.hook,
-      price: item.priceOverride == null ? "" : String(item.priceOverride),
+      /* Two decimals, so a figure she set reads back as she typed it: 1299.00,
+       * never 1299. */
+      price: item.priceOverride == null ? "" : item.priceOverride.toFixed(2),
     };
   }
   return out;
@@ -123,6 +130,20 @@ function CollectionEditor() {
   const [busy, setBusy] = useState(false);
   /** The retire panel: a deliberate second step, because it takes a page down. */
   const [retireConfirm, setRetireConfirm] = useState(false);
+  /**
+   * The title, line and price boxes on each card, held by element so Save can
+   * read what is in the box at the moment she clicks.
+   */
+  const boxes = useRef<
+    Record<number, { title?: HTMLInputElement | null; hook?: HTMLInputElement | null; price?: HTMLInputElement | null }>
+  >({});
+
+  /** What the box holds right now, falling back to state if the box is gone. */
+  const boxValue = useCallback(
+    (productId: number, which: "title" | "hook" | "price", fallback: string) =>
+      boxes.current[productId]?.[which]?.value ?? fallback,
+    [],
+  );
 
   const load = useCallback(async () => {
     try {
@@ -162,9 +183,12 @@ function CollectionEditor() {
           await load();
         } else {
           setError(result.message);
+          /* A refusal is only loud if she can see it: the notice is at the top. */
+          window.scrollTo({ top: 0, behavior: "smooth" });
         }
       } catch (err) {
         setError(adminErrorMessage(err, what));
+        window.scrollTo({ top: 0, behavior: "smooth" });
       } finally {
         setBusy(false);
       }
@@ -490,6 +514,9 @@ function CollectionEditor() {
                         )}
                         <div className="min-w-0 flex-1 space-y-2">
                           <input
+                            ref={(el) => {
+                              boxes.current[item.productId] = { ...boxes.current[item.productId], title: el };
+                            }}
                             value={form.displayTitle}
                             onChange={(e) =>
                               setItems({
@@ -501,6 +528,9 @@ function CollectionEditor() {
                             aria-label={`Display title for piece ${index + 1}`}
                           />
                           <input
+                            ref={(el) => {
+                              boxes.current[item.productId] = { ...boxes.current[item.productId], hook: el };
+                            }}
                             value={form.hook}
                             onChange={(e) =>
                               setItems({ ...items, [item.productId]: { ...form, hook: e.target.value } })
@@ -513,6 +543,9 @@ function CollectionEditor() {
                             <label className="flex items-center gap-2 text-xs text-warm-gray">
                               Price you set
                               <input
+                                ref={(el) => {
+                                  boxes.current[item.productId] = { ...boxes.current[item.productId], price: el };
+                                }}
                                 value={form.price}
                                 onChange={(e) =>
                                   setItems({ ...items, [item.productId]: { ...form, price: e.target.value } })
@@ -539,21 +572,36 @@ function CollectionEditor() {
                           <button
                             type="button"
                             disabled={busy}
-                            onClick={() =>
-                              run(
+                            onClick={() => {
+                              /* What she can see in the three boxes is what gets
+                               * saved, even if a keystroke never reached state. */
+                              const displayTitle = boxValue(item.productId, "title", form.displayTitle);
+                              const hook = boxValue(item.productId, "hook", form.hook);
+                              const price = boxValue(item.productId, "price", form.price);
+                              if (
+                                displayTitle !== form.displayTitle ||
+                                hook !== form.hook ||
+                                price !== form.price
+                              ) {
+                                setItems({
+                                  ...items,
+                                  [item.productId]: { displayTitle, hook, price },
+                                });
+                              }
+                              return run(
                                 () =>
                                   saveEditItem({
                                     data: {
                                       slug,
                                       productId: item.productId,
-                                      displayTitle: form.displayTitle,
-                                      hook: form.hook,
-                                      price: form.price.trim() === "" ? null : form.price.trim(),
+                                      displayTitle,
+                                      hook,
+                                      price: price.trim() === "" ? null : price.trim(),
                                     },
                                   }),
                                 "Saved",
-                              )
-                            }
+                              );
+                            }}
                             className="rounded bg-midnight px-3 py-1.5 text-xs font-medium text-soft-white disabled:opacity-50"
                           >
                             Save

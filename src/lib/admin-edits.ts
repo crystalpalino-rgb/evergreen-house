@@ -811,11 +811,40 @@ export const moveEditItem = createServerFn({ method: "POST" })
   });
 
 /**
+ * Read a price the way a person writes one.
+ *
+ * "$1,299.00", "1299" and "1299.00" are all a price. "abc", "-5" and "1.2.3"
+ * are not. The figure is rounded to whole cents, because whole cents is what the
+ * card prints.
+ */
+function readTypedPrice(raw: string):
+  | { value: number }
+  | { problem: "not-a-number" | "not-positive" | "too-large" } {
+  const cleaned = raw.trim().replace(/^\$/, "").replace(/,/g, "");
+  if (!/^[-+]?\d+(\.\d+)?$/.test(cleaned)) return { problem: "not-a-number" };
+  const value = Number(cleaned);
+  if (!Number.isFinite(value)) return { problem: "not-a-number" };
+  if (value <= 0) return { problem: "not-positive" };
+  if (value > 100000) return { problem: "too-large" };
+  return { value: Math.round(value * 100) / 100 };
+}
+
+/** A figure as the card prints it: 1299 becomes 1,299.00. */
+function money(value: number): string {
+  return value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+/**
  * Save one card: its display title, its hook line, and the price the owner typed.
  *
  * The typed price is stored on the item with the day it was set, never in the
  * product row, so a verification pass that overwrites products.price leaves the
  * owner's figure intact and the card can print which of the two it shows.
+ *
+ * The figure arrives as the exact text she typed and is read here, so a value
+ * the site cannot show is refused out loud, quoting her own figure, instead of
+ * being coerced into something else. Nothing is written on a refusal (owner
+ * decision 29, 2026-11-05).
  */
 export const saveEditItem = createServerFn({ method: "POST" })
   .middleware([adminOnly])
@@ -830,23 +859,45 @@ export const saveEditItem = createServerFn({ method: "POST" })
     productId: Number(data?.productId) || 0,
     displayTitle: typeof data?.displayTitle === "string" ? data.displayTitle.trim() : "",
     hook: typeof data?.hook === "string" ? data.hook.trim() : "",
-    price: data?.price === null || data?.price === "" ? null : Number(data?.price),
+    /* Kept as text, not Number(): a refusal has to be able to quote the figure
+     * she typed. Number("abc") is NaN, and NaN cannot be quoted back to anyone. */
+    price: data?.price == null ? null : String(data.price),
   }))
   .handler(async ({ data }): Promise<SaveResult> => {
     const edit = await readEditRowBySlug(data.slug);
     if (!edit) return { ok: false, message: "That collection no longer exists." };
     if (!data.displayTitle) return { ok: false, message: "The card title cannot be empty." };
-    if (data.price !== null && (!Number.isFinite(data.price) || data.price <= 0 || data.price > 100000)) {
-      return { ok: false, message: "That price is not a number the site can show. Use a figure like 89.99." };
-    }
 
     const current = await readItems(edit.id);
-    const item = current.find((row) => Number(row.product_id) === data.productId);
+    const index = current.findIndex((row) => Number(row.product_id) === data.productId);
+    const item = current[index];
     if (!item) return { ok: false, message: "That product is not in this collection." };
+    const piece = index + 1;
+
+    /* An empty box means "show the Amazon price again"; anything else is read as
+     * a price or refused. */
+    const typed = data.price === null ? "" : data.price.trim();
+    let price: number | null = null;
+    if (typed !== "") {
+      const read = readTypedPrice(typed);
+      if ("problem" in read) {
+        const reason =
+          read.problem === "not-a-number"
+            ? "that is not a number. Type a figure like 1299.00, or clear the box to show the Amazon price again"
+            : read.problem === "not-positive"
+              ? "a price has to be more than zero. Clear the box to show the Amazon price again"
+              : "the site can only show a price up to 100,000";
+        return {
+          ok: false,
+          message: `The price on piece ${piece}, "${typed}", was not saved because ${reason}. Nothing was saved for this card.`,
+        };
+      }
+      price = read.value;
+    }
 
     const previous = num(item.price_override);
-    const priceChanged = (previous ?? null) !== (data.price ?? null);
-    const setAt = data.price === null ? null : priceChanged ? new Date() : item.price_set_at;
+    const priceChanged = (previous ?? null) !== (price ?? null);
+    const setAt = price === null ? null : priceChanged ? new Date() : item.price_set_at;
 
     /* Guard the card as this save would leave it: a new display title on a
      * pinned product is exactly what leaves a pin page stale. */
@@ -858,7 +909,7 @@ export const saveEditItem = createServerFn({ method: "POST" })
               ...row,
               display_title: data.displayTitle,
               hook: data.hook,
-              price_override: data.price,
+              price_override: price,
               price_set_at: setAt,
             }
           : row,
@@ -870,13 +921,17 @@ export const saveEditItem = createServerFn({ method: "POST" })
       `UPDATE edit_items
           SET display_title = $3, hook = $4, price_override = $5, price_set_at = $6
         WHERE edit_id = $1 AND product_id = $2`,
-      [edit.id, data.productId, data.displayTitle, data.hook, data.price, setAt],
+      [edit.id, data.productId, data.displayTitle, data.hook, price, setAt],
     );
     await touchEdit(edit.id);
 
+    /* A save that changes no figure says so, rather than printing a fresh
+     * "Saved" over a row that did not move (owner decision 29). */
     const note =
-      data.price === null
+      price === null
         ? "Saved. The card shows the verified Amazon price again."
-        : `Saved. The card will show ${data.price.toFixed(2)} with the day you set it.`;
+        : priceChanged
+          ? `Saved. The card will show ${money(price)} with the day you set it.`
+          : `Saved. The card already showed ${money(price)}, so the figure and the day it was set are unchanged.`;
     return success(pin, note);
   });
