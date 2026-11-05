@@ -35,7 +35,14 @@ import {
   type SnapshotCollection,
   type SnapshotItem,
 } from "~/lib/edits";
-import { checkPinPages, withEditSubstituted, type PinGuardResult } from "~/lib/pin-guard";
+import {
+  checkPinPages,
+  pinRefusalText,
+  pinRetireRefusalHeadline,
+  withEditSubstituted,
+  type PinGuardResult,
+  type PinRefusalVerb,
+} from "~/lib/pin-guard";
 
 // ── Types ──
 
@@ -98,8 +105,13 @@ export interface AdminEditDetail {
 
 export interface SaveResult {
   ok: boolean;
-  /** What to show the owner. Empty on success unless there is a warning. */
+  /** What to show the owner. On a refusal this is the whole plain refusal. */
   message: string;
+  /**
+   * Notes on a save that went through anyway, shown apart from `message` so a
+   * caveat can never be read as a refusal.
+   */
+  warnings?: string[];
   /** Present when the pin guard ran. */
   pin?: PinGuardResult;
 }
@@ -248,20 +260,28 @@ async function runPinGuard(edit: EditRow): Promise<PinGuardResult> {
   return guardItems(edit, await readItems(edit.id));
 }
 
-function refusal(pin: PinGuardResult): SaveResult {
-  const detail = pin.errors.join(" ");
-  return {
-    ok: false,
-    pin,
-    message:
-      "Not saved. This change would leave a Pinterest landing page out of date, and a pin " +
-      `page that disagrees with the collection it describes is worse than a failed build. ${detail}`,
-  };
+/**
+ * A refused write, in the owner's words.
+ *
+ * `verb` says which of her actions was stopped, so the opening sentence stays
+ * true: publishing a live collection and saving a change to its draft are not
+ * the same thing, and telling her a draft save was "not published" would be a
+ * lie. The second sentence is the same in every refusal, because in every case
+ * the write returned before a single row was touched.
+ */
+function refusal(pin: PinGuardResult, verb: PinRefusalVerb): SaveResult {
+  return { ok: false, pin, message: pinRefusalText(pin, verb) };
 }
 
+/**
+ * A write that went through. Anything the guard only warns about travels in
+ * `warnings`, never glued onto the message, so the screen can show a caveat
+ * without it looking like part of a refusal.
+ */
 function success(pin: PinGuardResult, message: string): SaveResult {
-  const warning = pin.warnings.length > 0 ? ` ${pin.warnings.join(" ")}` : "";
-  return { ok: true, pin, message: `${message}${warning}` };
+  return pin.warnings.length > 0
+    ? { ok: true, pin, message, warnings: [...pin.warnings] }
+    : { ok: true, pin, message };
 }
 
 /**
@@ -566,7 +586,7 @@ export const setEditPublication = createServerFn({ method: "POST" })
 
     if (data.action === "publish") {
       const pin = await runPinGuard(edit);
-      if (!pin.ok) return refusal(pin);
+      if (!pin.ok) return refusal(pin, "published");
 
       const snapshot = toSnapshot(edit, await readItems(edit.id));
       if (snapshot.items.length === 0) {
@@ -599,8 +619,9 @@ export const setEditPublication = createServerFn({ method: "POST" })
     }
 
     /* Retire. Refuse on a collection that is already off the site, and refuse
-     * when a pin page points here, because the pin build fails without its
-     * destination. */
+     * when a pin page points here, because that pin would be left pointing at a
+     * page that is not there. The case is selected by its code, never by the
+     * words the owner reads, so rewriting a message cannot change a decision. */
     if (!wasLive) {
       return {
         ok: false,
@@ -608,14 +629,15 @@ export const setEditPublication = createServerFn({ method: "POST" })
       };
     }
     const pin = await runPinGuard(edit);
-    const pinErrors = pin.errors.filter((error) => error.includes("would not be live"));
+    const pinErrors = pin.errors.filter((error) => error.code === "destination-off-site");
     if (pinErrors.length > 0) {
       return {
         ok: false,
         pin,
-        message:
-          `Not retired. ${pinErrors.length} Pinterest landing page(s) point at this ` +
-          `collection and would break. ${pinErrors.join(" ")}`,
+        message: [
+          pinRetireRefusalHeadline(),
+          ...pinErrors.map((error) => error.message),
+        ].join(" "),
       };
     }
     await sql().query(`UPDATE edits SET status = 'draft' WHERE id = $1`, [edit.id]);
@@ -683,7 +705,7 @@ export const addEditItem = createServerFn({ method: "POST" })
       },
     ];
     const pin = await guardItems(edit, candidateItems);
-    if (!pin.ok) return refusal(pin);
+    if (!pin.ok) return refusal(pin, "saved");
 
     await sql().query(
       `INSERT INTO edit_items
@@ -722,7 +744,7 @@ export const removeEditItem = createServerFn({ method: "POST" })
       edit,
       current.filter((row) => Number(row.product_id) !== data.productId),
     );
-    if (!pin.ok) return refusal(pin);
+    if (!pin.ok) return refusal(pin, "saved");
 
     await sql().query(
       `DELETE FROM edit_items WHERE edit_id = $1 AND product_id = $2`,
@@ -770,7 +792,7 @@ export const moveEditItem = createServerFn({ method: "POST" })
         return row;
       }),
     );
-    if (!pin.ok) return refusal(pin);
+    if (!pin.ok) return refusal(pin, "saved");
 
     /* One statement, so the two positions can never half-swap. */
     await sql().query(
@@ -842,7 +864,7 @@ export const saveEditItem = createServerFn({ method: "POST" })
           : row,
       ),
     );
-    if (!pin.ok) return refusal(pin);
+    if (!pin.ok) return refusal(pin, "saved");
 
     await sql().query(
       `UPDATE edit_items
