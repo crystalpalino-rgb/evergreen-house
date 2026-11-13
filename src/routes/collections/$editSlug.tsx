@@ -9,6 +9,8 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { AnalyticsList } from "~/components/AnalyticsList";
 import { EditProductCard } from "~/components/EditProductCard";
 import { EditCard } from "~/components/EditCard";
+import { StorefrontListCard } from "~/components/StorefrontListCard";
+import { EDIT_STOREFRONT_LISTS } from "~/lib/storefront-lists";
 import {
   artSources,
   getEdit,
@@ -141,6 +143,11 @@ function EditPage() {
   /* GA4 view_item_list payload: id plus the display title the card shows. */
   const analyticsItems = products.map((p) => ({ id: p.id, name: p.title }));
 
+  /* Optional storefront list card, keyed by collection slug in
+     src/lib/storefront-lists.ts. It is not a product row and never enters the
+     published snapshot, so it is rendered by the template instead. */
+  const storefrontList = EDIT_STOREFRONT_LISTS[edit.slug] ?? null;
+
   return (
     <>
       <Header />
@@ -193,6 +200,17 @@ function EditPage() {
             </p>
           </div>
         </section>
+
+        {/* Storefront list card, directly under the hero art so it sits
+            alongside the scene the edit is built around. Not a product: the
+            page's existing disclosure in the hero covers it. */}
+        {storefrontList && (
+          <section className="bg-soft-white pt-5 sm:pt-8">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+              <StorefrontListCard list={storefrontList} level={2} />
+            </div>
+          </section>
+        )}
 
         {/* Products, in manifest order, immediately below the header. */}
         <section className="bg-soft-white pb-10 pt-5 sm:pb-14 sm:pt-8">

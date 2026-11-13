@@ -16,6 +16,7 @@ import {
   SITE_URL,
 } from "~/lib/schema";
 import { getRelatedRooms, ROOM_LABELS } from "~/lib/related";
+import { SHOW_UNDER19_ON_HOLIDAY_ROOM, UNDER19_LIST } from "~/lib/storefront-lists";
 import type { Product } from "~/lib/types";
 
 const roomLabels: Record<string, string> = {
@@ -298,7 +299,11 @@ function RoomPage() {
                 {room === "holiday" ? (
                   /* Three owner-approved sets plus More Christmas Finds, one
                      AnalyticsList each, and one disclosure for the page. */
-                  <HolidaySets products={products} listPrefix={`room-${room}`} />
+                  <HolidaySets
+                    products={products}
+                    listPrefix={`room-${room}`}
+                    giftingList={SHOW_UNDER19_ON_HOLIDAY_ROOM ? UNDER19_LIST : null}
+                  />
                 ) : (
                   <AnalyticsList id={`room-${room}`} name={`${roomLabels[room] || room} products`} items={products}>
                     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">

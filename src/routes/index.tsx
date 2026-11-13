@@ -17,6 +17,7 @@ import {
 import { generateHomeMetadata } from "~/lib/seo";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 import { getEditSummaries, type EditCardData, type EditProduct } from "~/lib/edits";
+import { SHOW_UNDER19_ON_HOMEPAGE, UNDER19_LIST } from "~/lib/storefront-lists";
 
 type HomeSearch = { hero?: "b" | "c" };
 
@@ -124,7 +125,10 @@ function Home() {
         <Hero concept={heroConcept} />
         <ShopTheEdits edits={edits} />
         <ShopTheLook products={shopTheLook} />
-        <TheCurrentEdit products={currentEdit} />
+        <TheCurrentEdit
+          products={currentEdit}
+          storefrontList={SHOW_UNDER19_ON_HOMEPAGE ? UNDER19_LIST : null}
+        />
         {/* One Amazon Associates disclosure for the whole page, under the last
             product grid (owner Room Card Standard). The cards carry none. */}
         <div className="bg-soft-white pb-8">
