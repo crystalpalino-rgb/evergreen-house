@@ -118,7 +118,7 @@ function TermsPage() {
                   the link in any email we send. How we handle your email
                   address is described in our{" "}
                   <a
-                    href="/evergreen-house/privacy"
+                    href="/privacy"
                     className="text-sage underline hover:text-sage-dark"
                   >
                     Privacy Policy

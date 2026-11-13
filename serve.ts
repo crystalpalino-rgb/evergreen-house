@@ -31,6 +31,9 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   // The Moody Tablescape Edit was retired on 2026-11-04 (owner decision 17:
   // one Moody collection) and folded into the Moody Thanksgiving Edit.
   "/collections/moody-tablescape-edit": "/collections/moody-thanksgiving-edit",
+  // The July 2026 privacy policy was replaced by the AdSense-ready policy at
+  // /privacy on 2026-11-12. The old URL must never serve the old text again.
+  "/evergreen-house/privacy": "/privacy",
 };
 
 // ── Content-Security-Policy ──
