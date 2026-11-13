@@ -37,14 +37,48 @@ const LEGACY_REDIRECTS: Record<string, string> = {
 };
 
 // ── Content-Security-Policy ──
+// The Google ad domains are here so an AdSense snippet pasted into the head
+// injection point (see /admin/ads) can actually load and serve: the loader
+// script itself, the ad frames and the beacons they fire. Nothing else about
+// the policy changes.
+const GOOGLE_AD_SCRIPT_SOURCES = [
+  "https://pagead2.googlesyndication.com",
+  "https://*.googlesyndication.com",
+  "https://tpc.googlesyndication.com",
+  "https://www.googletagservices.com",
+  "https://adservice.google.com",
+  "https://*.doubleclick.net",
+  "https://www.google.com",
+  "https://www.gstatic.com",
+];
+const GOOGLE_AD_CONNECT_SOURCES = [
+  "https://pagead2.googlesyndication.com",
+  "https://*.googlesyndication.com",
+  "https://*.doubleclick.net",
+  "https://adservice.google.com",
+  "https://*.google.com",
+];
+const GOOGLE_AD_FRAME_SOURCES = [
+  "https://googleads.g.doubleclick.net",
+  "https://tpc.googlesyndication.com",
+  "https://*.doubleclick.net",
+  "https://*.googlesyndication.com",
+  "https://www.google.com",
+];
 const CSP_HEADER = [
   "default-src 'self'",
-  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://s.pinimg.com https://ct.pinterest.com",
+  [
+    "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://s.pinimg.com https://ct.pinterest.com",
+    ...GOOGLE_AD_SCRIPT_SOURCES,
+  ].join(" "),
   "img-src 'self' data: https:",
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://ct.pinterest.com https://*.pinterest.com",
-  "frame-src https://www.googletagmanager.com",
+  [
+    "connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://ct.pinterest.com https://*.pinterest.com",
+    ...GOOGLE_AD_CONNECT_SOURCES,
+  ].join(" "),
+  ["frame-src https://www.googletagmanager.com", ...GOOGLE_AD_FRAME_SOURCES].join(" "),
 ].join("; ");
 
 // ── Cache-Control helpers ──
@@ -486,6 +520,13 @@ for (let attempt = 1; ; attempt++) {
             status: 308,
             headers: { Location: legacy + search },
           });
+        }
+
+        // ads.txt, from the publisher ID saved in /admin/ads. An empty setting
+        // serves no file at all - a 404 with an empty body, never a placeholder.
+        if (pathname === "/ads.txt") {
+          const { handleAdsTxt } = await import("./src/lib/site-settings.ts");
+          return handleAdsTxt();
         }
 
         // Static files

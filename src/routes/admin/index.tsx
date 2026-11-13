@@ -175,6 +175,12 @@ export default function AdminDashboard() {
               Collections
             </a>
             <a
+              href="/admin/ads"
+              className="rounded-lg border border-beige/40 px-4 py-2 text-sm text-warm-dark transition hover:bg-cream-dark"
+            >
+              Header snippet
+            </a>
+            <a
               href="/"
               className="rounded-lg bg-warm-dark px-4 py-2 text-sm text-white transition hover:opacity-90"
             >
