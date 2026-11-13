@@ -37,6 +37,14 @@ async function handleApiRoutes(req: Request): Promise<Response | null> {
     }
   }
 
+  // GET /ads.txt, from the publisher ID saved in /admin/ads. Same handler as
+  // serve.ts, because production is served by this entry and not by serve.ts:
+  // an empty setting answers 404 with an empty body, never a placeholder line.
+  if (pathname === "/ads.txt") {
+    const { handleAdsTxt } = await import("./src/lib/site-settings");
+    return handleAdsTxt();
+  }
+
   // GET /api/subscribers was removed on 2026-11-05: it answered unauthenticated
   // requests with the subscriber list. Subscriber reading goes through an
   // authenticated server function once the admin login lands. Do not re-add a
