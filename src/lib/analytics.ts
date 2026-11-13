@@ -273,6 +273,81 @@ function trackPinterestLead({
 }
 
 /**
+ * Pinterest ViewContent - fired once per view of a room or collection page.
+ *
+ * The Pinterest base tag is deferred to idle by src/components/ThirdPartyScripts,
+ * so `pintrk` often does not exist yet when a page mounts. This holds the event
+ * until the tag's own queue stub is in place (or core.js has loaded), then fires
+ * it - in order, after the base `page` call, never dropped and never doubled.
+ */
+export type PinterestViewCategory = "room" | "collection";
+
+type PendingViewContent = { contentName: string; contentCategory: PinterestViewCategory };
+
+let pendingViewContent: PendingViewContent[] = [];
+let pintrkWaitTimer: ReturnType<typeof setTimeout> | null = null;
+
+/** Flush held ViewContent events if the tag is ready. True when it fired. */
+function flushViewContent(): boolean {
+  const w = trackingWindow();
+  if (!w || typeof w.pintrk !== "function") return false;
+  const pintrk = w.pintrk;
+  const queued = pendingViewContent;
+  pendingViewContent = [];
+  for (const item of queued) {
+    try {
+      pintrk("track", "ViewContent", {
+        content_name: item.contentName,
+        content_category: item.contentCategory,
+      });
+    } catch {
+      // Never let tracking break a page.
+    }
+  }
+  return true;
+}
+
+/** Poll for the tag for up to ~10s, then drop the held event silently. */
+function waitForPintrk(): void {
+  if (pintrkWaitTimer !== null) return;
+  let attempts = 0;
+  const tick = () => {
+    if (flushViewContent()) {
+      pintrkWaitTimer = null;
+      return;
+    }
+    attempts += 1;
+    if (attempts > 100) {
+      pendingViewContent = [];
+      pintrkWaitTimer = null;
+      return;
+    }
+    pintrkWaitTimer = setTimeout(tick, 100);
+  };
+  tick();
+}
+
+/**
+ * ViewContent for /room/<slug> and /collections/<slug>.
+ * Call from a single mount effect (src/components/PinterestViewContent.tsx).
+ * claimOnce keeps it to one event per page view, including a route change.
+ */
+export function trackPinterestViewContent({
+  contentName,
+  contentCategory,
+}: {
+  contentName: string;
+  contentCategory: PinterestViewCategory;
+}): void {
+  const name = (contentName || "").trim();
+  if (!name) return;
+  if (!trackingWindow()) return;
+  if (!claimOnce(`pinterest-viewcontent|${contentCategory}|${name}`)) return;
+  pendingViewContent.push({ contentName: name, contentCategory });
+  if (!flushViewContent()) waitForPintrk();
+}
+
+/**
  * Dedupe guard for mount effects: true the first time a key is seen inside the
  * window, false for repeats. Protects grid/list events from double emission
  * (StrictMode double-invoked effects, remounts inside one navigation) while

@@ -7,6 +7,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { PinterestViewContent } from "~/components/PinterestViewContent";
 import { EditProductCard } from "~/components/EditProductCard";
 import { EditCard } from "~/components/EditCard";
 import {
@@ -143,6 +144,8 @@ function EditPage() {
 
   return (
     <>
+      {/* Pinterest ViewContent: one event per view of this edit. */}
+      <PinterestViewContent contentName={edit.slug} contentCategory="collection" />
       <Header />
       <main>
         <Breadcrumbs
