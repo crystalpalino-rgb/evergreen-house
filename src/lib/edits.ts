@@ -348,6 +348,8 @@ export interface EditProduct {
   price: number | string | null;
   /** Day the price and rating were last read from the Amazon product page. */
   priceCheckedAt: string | Date | null;
+  /** The row's recorded stock state (products.availability). */
+  availability: string | null;
   /**
    * The price the owner typed on this card and the day she set it (owner
    * decision 21, 2026-11-05). Null means "no typed price": the card prints the
@@ -368,6 +370,7 @@ interface ProductRow {
   review_count: number | string | null;
   price: number | string | null;
   price_checked_at: string | Date | null;
+  availability: string | null;
 }
 
 /** The minimum a curated item list says per item. */
@@ -409,7 +412,7 @@ export async function getCuratedProducts(
      numbers the card prints are the numbers the room card prints. */
   const rows = (await db.query(
     `SELECT id, name, seo_slug, image_url, image_alt, amazon_url,
-            rating, review_count, price, price_checked_at
+            rating, review_count, price, price_checked_at, availability
        FROM products WHERE id IN (${ids.join(",")})`,
     [],
   )) as unknown as ProductRow[];
@@ -440,6 +443,9 @@ export async function getCuratedProducts(
       reviewCount: row.review_count ?? null,
       price: row.price ?? null,
       priceCheckedAt: row.price_checked_at ?? null,
+      // Recorded stock state, passed through untouched so the page can state
+      // an availability it actually knows (see src/lib/product-jsonld.ts).
+      availability: row.availability ?? null,
       // A typed price is the owner's editorial number and wins over the verified
       // one on the card, dated so the reader can see when it was set.
       priceOverride: item.price_override != null ? Number(item.price_override) : null,
