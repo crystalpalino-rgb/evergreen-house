@@ -1,6 +1,8 @@
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { resolveHolidayPage, type ResolvedHolidaySet } from "~/lib/holiday";
+import type { StorefrontList } from "~/lib/storefront-lists";
 import type { Product } from "~/lib/types";
 
 /**
@@ -52,7 +54,21 @@ function SetSection({ set, listPrefix }: { set: ResolvedHolidaySet; listPrefix: 
   );
 }
 
-export function HolidaySets({ products, listPrefix }: { products: Product[]; listPrefix: string }) {
+export function HolidaySets({
+  products,
+  listPrefix,
+  giftingList = null,
+}: {
+  products: Product[];
+  listPrefix: string;
+  /**
+   * Optional storefront list card in a Gifting area after the sets. It is not a
+   * product, so it is not part of any AnalyticsList payload. Only the holiday
+   * room passes one (seasonal, owner flag SHOW_UNDER19_ON_HOLIDAY_ROOM); the
+   * /collection/holiday page passes nothing and renders exactly as before.
+   */
+  giftingList?: StorefrontList | null;
+}) {
   const { sets, more } = resolveHolidayPage(products);
   const anchors = sets.filter((set) => set.products.length > 0);
 
@@ -68,12 +84,30 @@ export function HolidaySets({ products, listPrefix }: { products: Product[]; lis
               </a>
             </li>
           ))}
+          {giftingList && (
+            <li>
+              <a href="#gifting" className="font-medium text-warm-dark underline-offset-4 transition-colors hover:text-terracotta hover:underline">
+                Gifting
+              </a>
+            </li>
+          )}
         </ul>
       </nav>
 
       {anchors.map((set) => (
         <SetSection key={set.id} set={set} listPrefix={listPrefix} />
       ))}
+
+      {giftingList && (
+        <section id="gifting" aria-labelledby="holiday-gifting-heading" className="scroll-mt-24 pt-10">
+          <h2 id="holiday-gifting-heading" className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+            Gifting
+          </h2>
+          <div className="mt-6">
+            <StorefrontListCard list={giftingList} level={3} />
+          </div>
+        </section>
+      )}
 
       {more.length > 0 && (
         <section id="more-christmas-finds" aria-labelledby="holiday-more-heading" className="mt-12 scroll-mt-24 border-t border-beige/20 pt-10">

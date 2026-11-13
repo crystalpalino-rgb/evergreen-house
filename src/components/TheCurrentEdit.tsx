@@ -1,7 +1,9 @@
 import type { EditProduct } from "~/lib/edits";
 import { CURRENT_EDIT, type HomepageSection } from "~/lib/homepage-sections";
+import type { StorefrontList } from "~/lib/storefront-lists";
 import { AnalyticsList } from "./AnalyticsList";
 import { EditProductCard } from "./EditProductCard";
+import { StorefrontListCard } from "./StorefrontListCard";
 
 /**
  * Homepage THE CURRENT EDIT: the six pieces we would buy again, spanning the
@@ -20,9 +22,16 @@ import { EditProductCard } from "./EditProductCard";
 export function TheCurrentEdit({
   products,
   section = CURRENT_EDIT,
+  storefrontList = null,
 }: {
   products: EditProduct[];
   section?: HomepageSection;
+  /**
+   * Optional storefront list card under the grid, while seasonal. It is not a
+   * product, so it sits outside the AnalyticsList payload: the six items in
+   * view_item_list stay exactly the six cards.
+   */
+  storefrontList?: StorefrontList | null;
 }) {
   const { eyebrow, title, subcopy } = section;
   const analyticsItems = products.map((p) => ({ id: p.id, name: p.title }));
@@ -53,6 +62,9 @@ export function TheCurrentEdit({
             ))}
           </div>
         </AnalyticsList>
+        {storefrontList && (
+          <StorefrontListCard list={storefrontList} level={3} className="mt-6 sm:mt-8" />
+        )}
       </div>
     </section>
   );
