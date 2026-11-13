@@ -37,6 +37,13 @@ import type { SnapshotCollection } from "~/lib/edits";
  * membership, display title and order, and the hook is the one pin page field
  * that is cosmetic. The warning says the pin page keeps the line it shows today.
  *
+ * Taking a collection off the site is the one case the guard cannot see: it is
+ * run against the collection's own draft, and a live collection's draft still
+ * resolves its own destination. `pinsPointingAt` answers that question from the
+ * pin manifest instead, and the retire path asks the owner to confirm against
+ * the list it returns (owner decision, 2026-11-05). A collection no pin points
+ * at retires exactly as it always did.
+ *
  * Everything in this file that the owner reads is plain words about her own
  * shop: no build language, no file names, no internal ids. A refusal always
  * opens with the same two sentences, the first of which says in her own words
@@ -124,17 +131,6 @@ export function pinRefusalHeadline(verb: PinRefusalVerb): string {
   );
 }
 
-/**
- * The opening of a refused retire. Taking a collection off the site is not a
- * publish, and the owner is told so in as many words.
- */
-export function pinRetireRefusalHeadline(): string {
-  return (
-    "This collection was not taken off the site because it would break the link on a live " +
-    "Pinterest pin. Nothing on the site changed."
-  );
-}
-
 /** The full refusal text: the opening sentences, then one line per refused case. */
 export function pinRefusalText(result: PinGuardResult, verb: PinRefusalVerb): string {
   if (result.ok) return "";
@@ -144,6 +140,74 @@ export function pinRefusalText(result: PinGuardResult, verb: PinRefusalVerb): st
 /** How a pin page and one of its discs is named to the owner. */
 function pinWhere(pin: string, n: number, label: string): string {
   return n > 0 ? `The pin is ${pin}, number ${n}, ${label}.` : `The pin is ${pin}.`;
+}
+
+/** One pin page that points at a collection, with every numbered disc on it. */
+export interface PinPointingHere {
+  /** The pin page as the public sees it: /pin/<slug>. */
+  pin: string;
+  /** The numbered discs on that page that would break, in the order the page prints them. */
+  numbers: { n: number; label: string }[];
+}
+
+/** The collection a pin page points at, as an edit slug. */
+function destinationSlug(page: PinPageRow): string {
+  return page.destination.replace(/^\/collections\//, "");
+}
+
+/**
+ * Every live pin page that points at one collection, in pin manifest order.
+ *
+ * This is the one answer to "which pins would taking this collection down
+ * break", and it is deliberately read from the pin manifest rather than from
+ * the collection's own draft: a live collection's draft still resolves its own
+ * destination, so a guard run against the draft can never see the case where
+ * retiring the collection breaks a pin. Only the manifest knows that. The
+ * retire confirmation and the guard both come through here, so they cannot
+ * disagree about which pins are at risk.
+ */
+export function pinsPointingAt(collectionSlug: string): PinPointingHere[] {
+  return PAGES.filter((page) => destinationSlug(page) === collectionSlug).map((page) => ({
+    pin: `/pin/${page.slug}`,
+    numbers: page.numbers.map((number) => ({ n: number.n, label: number.label })),
+  }));
+}
+
+/**
+ * How many links a retire would break: the numbered disc lines the panel lists,
+ * not the pin pages that carry them. One pin page can carry six discs, and it is
+ * the six links that stop working.
+ */
+export function pinRetireLineCount(pins: PinPointingHere[]): number {
+  return pins.reduce((total, page) => total + page.numbers.length, 0);
+}
+
+/** The consequence of a retire, in plain words, stated before the list of pins. */
+export function pinRetireConsequence(pins: PinPointingHere[]): string {
+  const count = pinRetireLineCount(pins);
+  if (count === 1) {
+    return (
+      "Taking this collection off the site breaks the link on a live Pinterest pin. " +
+      "It will open a page that no longer exists."
+    );
+  }
+  return (
+    `Taking this collection off the site breaks the link on ${count} live Pinterest ` +
+    `pins. Each one will open a page that no longer exists.`
+  );
+}
+
+/** Every pin and every number a retire would break, one plain line each. */
+export function pinRetireList(pins: PinPointingHere[]): string[] {
+  return pins.flatMap((page) =>
+    page.numbers.map((number) => pinWhere(page.pin, number.n, number.label)),
+  );
+}
+
+/** The confirm button: it carries the consequence, never a bare "yes". */
+export function pinRetireConfirmLabel(pins: PinPointingHere[]): string {
+  const count = pinRetireLineCount(pins);
+  return count === 1 ? "Retire it and break this pin" : `Retire it and break these ${count} pins`;
 }
 
 /**
@@ -161,7 +225,7 @@ export function checkPinPages(published: SnapshotCollection[]): PinGuardResult {
   let unchanged = 0;
 
   for (const page of PAGES) {
-    const editSlug = page.destination.replace(/^\/collections\//, "");
+    const editSlug = destinationSlug(page);
     const edit = bySlug.get(editSlug);
     const pin = `/pin/${page.slug}`;
     let pageTouched = false;

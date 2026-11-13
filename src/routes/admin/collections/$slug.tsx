@@ -5,6 +5,7 @@ import { requireAdmin } from "~/lib/admin-guard";
 import {
   addEditItem,
   getAdminEdit,
+  getRetirePins,
   moveEditItem,
   removeEditItem,
   saveEditItem,
@@ -15,6 +16,12 @@ import {
   type ProductSearchResult,
   type SaveResult,
 } from "~/lib/admin-edits";
+import {
+  pinRetireConfirmLabel,
+  pinRetireConsequence,
+  pinRetireList,
+  type PinPointingHere,
+} from "~/lib/pin-guard";
 import heroImages from "~/data/hero-images.json";
 
 /**
@@ -29,7 +36,11 @@ import heroImages from "~/data/hero-images.json";
  *     resolving. A draft collection gets the same publish action, which is what
  *     makes it live.
  *   - "Retire from the site" is the only action that takes a page down, it says
- *     so plainly, and it asks first.
+ *     so plainly, and it asks first. When live pins point at the collection it
+ *     names every one of them, with its number, before the confirm button, and
+ *     the server will not retire until that click-through has happened (owner
+ *     decision, 2026-11-05). A collection no pin points at retires as it always
+ *     did, in one step.
  *
  * A price typed on a card is stored with the day it was set, on the item, never
  * in the product row (owner decision 21).
@@ -131,6 +142,12 @@ function CollectionEditor() {
   /** The retire panel: a deliberate second step, because it takes a page down. */
   const [retireConfirm, setRetireConfirm] = useState(false);
   /**
+   * The live pins that point at this collection, for the retire panel. `null`
+   * means the list has not come back yet, so the panel can say it is checking
+   * rather than claim there are none.
+   */
+  const [retirePins, setRetirePins] = useState<PinPointingHere[] | null>(null);
+  /**
    * The title, line and price boxes on each card, held by element so Save can
    * read what is in the box at the moment she clicks.
    */
@@ -198,6 +215,75 @@ function CollectionEditor() {
 
   const isLive = detail?.status === "published";
   const hasPending = detail?.hasUnpublishedChanges ?? false;
+
+  /**
+   * Open the retire panel, and read from the server every live pin that points
+   * at this collection. The list is not kept anywhere in the screen: it comes
+   * from the pin manifest through the same helper the server checks, so what she
+   * is shown and what the server enforces cannot drift apart.
+   */
+  const openRetire = useCallback(async () => {
+    setNotice("");
+    setError("");
+    setNotes([]);
+    setRetireConfirm(true);
+    setRetirePins(null);
+    try {
+      setRetirePins(await getRetirePins({ data: { slug } }));
+    } catch (err) {
+      /* The list on the way in is a courtesy: the server checks the same list
+       * before it retires anything, so a failed read can never let a pinned page
+       * go down silently. Say the read failed and leave the panel closed. */
+      setRetirePins(null);
+      setRetireConfirm(false);
+      setError(adminErrorMessage(err, "The list of pins pointing at this collection"));
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [slug]);
+
+  /**
+   * Retire. `confirmBreakPins` is the acknowledgement, and it is only ever true
+   * from the button that names the consequence after the pin list has been read
+   * and shown. A collection with no live pins sends false, exactly as before.
+   */
+  const retireNow = useCallback(
+    async (confirmBreakPins: boolean) => {
+      if (busy) return;
+      setBusy(true);
+      setNotice("");
+      setError("");
+      setNotes([]);
+      try {
+        const result = await setEditPublication({
+          data: { slug, action: "retire", confirmBreakPins },
+        });
+        if (result.ok) {
+          setNotice(result.message || "Retired.");
+          setNotes(result.warnings ?? []);
+          setRetireConfirm(false);
+          setRetirePins([]);
+          await load();
+          return;
+        }
+        if (result.code === "retire-would-break-pins") {
+          /* Nothing was written. The server answered with the pins that point
+           * here, so the panel now names every one of them and only her next
+           * click retires the collection. */
+          setRetirePins(result.pins ?? []);
+          setRetireConfirm(true);
+          return;
+        }
+        setError(result.message);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } catch (err) {
+        setError(adminErrorMessage(err, "Retiring this collection"));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } finally {
+        setBusy(false);
+      }
+    },
+    [busy, load, slug],
+  );
 
   return (
     <div className="min-h-screen bg-cream font-sans">
@@ -267,7 +353,9 @@ function CollectionEditor() {
                   </p>
                   <p className="mt-1 max-w-xl text-xs leading-relaxed text-warm-gray">
                     {!isLive
-                      ? "This collection has never been live. Publishing it puts it on the site."
+                      ? detail?.hasPublication
+                        ? "This collection is not on the site. Publishing it puts it back on the same address, so every link and pin to it works again."
+                        : "This collection has never been live. Publishing it puts it on the site."
                       : hasPending
                         ? "The page is serving the version you last published. Publishing changes swaps the new version in without taking the page down, so anyone following a pin keeps landing on a live page."
                         : `Published ${detail.publishedAt ? new Date(detail.publishedAt).toLocaleString() : "earlier"}. Everything you have saved is already on the page.`}
@@ -299,11 +387,7 @@ function CollectionEditor() {
                       type="button"
                       disabled={busy}
                       data-action="retire-open"
-                      onClick={() => {
-                        setNotice("");
-                        setError("");
-                        setRetireConfirm(true);
-                      }}
+                      onClick={openRetire}
                       className="rounded-lg border border-red-300 px-4 py-3 text-sm text-red-700 transition hover:bg-red-50 disabled:opacity-50"
                     >
                       Retire from the site
@@ -317,39 +401,88 @@ function CollectionEditor() {
                   className="mt-4 rounded-lg border border-red-300 bg-red-50 p-4"
                   data-testid="retire-confirm"
                 >
-                  <p className="font-semibold text-red-900">
-                    Retiring takes this page down on purpose. It is not a publish.
-                  </p>
-                  <p className="mt-1 text-sm leading-relaxed text-red-800">
-                    /collections/{slug} stops being served the moment you confirm, and anyone who
-                    follows a link or a pin to it gets a 404. Nothing is deleted: every piece stays
-                    here, and you can publish the collection again whenever you want it back.
-                  </p>
-                  <div className="mt-3 flex flex-wrap items-center gap-2">
-                    <button
-                      type="button"
-                      disabled={busy}
-                      data-action="retire-confirm"
-                      onClick={async () => {
-                        await run(
-                          () => setEditPublication({ data: { slug, action: "retire" } }),
-                          "Retired",
-                        );
-                        setRetireConfirm(false);
-                      }}
-                      className="rounded-lg bg-red-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-800 disabled:opacity-50"
-                    >
-                      Yes, take the page down
-                    </button>
-                    <button
-                      type="button"
-                      data-action="retire-cancel"
-                      onClick={() => setRetireConfirm(false)}
-                      className="rounded-lg border border-beige/60 bg-white px-4 py-2.5 text-sm text-warm-dark transition hover:bg-cream-dark"
-                    >
-                      Keep it live
-                    </button>
-                  </div>
+                  {retirePins === null ? (
+                    <p className="text-sm leading-relaxed text-red-900">
+                      Checking whether any Pinterest pin points at this collection...
+                    </p>
+                  ) : retirePins.length > 0 ? (
+                    <>
+                      {/* The consequence first, then every pin and its number,
+                          then a button that carries the consequence too. */}
+                      <p className="font-semibold text-red-900" data-testid="retire-pin-consequence">
+                        {pinRetireConsequence(retirePins)}
+                      </p>
+                      <ul
+                        className="mt-2 space-y-1 text-sm leading-relaxed text-red-800"
+                        data-testid="retire-pin-list"
+                      >
+                        {pinRetireList(retirePins).map((line) => (
+                          <li key={line}>{line}</li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 text-sm leading-relaxed text-red-800">
+                        Nothing is deleted: every piece stays here, and you can publish the
+                        collection again whenever you want it back. The pictures on the pins
+                        themselves do not change.
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          data-action="retire-confirm"
+                          onClick={() => retireNow(true)}
+                          className="rounded-lg bg-red-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-800 disabled:opacity-50"
+                        >
+                          {pinRetireConfirmLabel(retirePins)}
+                        </button>
+                        <button
+                          type="button"
+                          data-action="retire-cancel"
+                          onClick={() => {
+                            setRetireConfirm(false);
+                            setRetirePins(null);
+                          }}
+                          className="rounded-lg border border-beige/60 bg-white px-4 py-2.5 text-sm text-warm-dark transition hover:bg-cream-dark"
+                        >
+                          Keep it live
+                        </button>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <p className="font-semibold text-red-900">
+                        Retiring takes this page down on purpose. It is not a publish.
+                      </p>
+                      <p className="mt-1 text-sm leading-relaxed text-red-800">
+                        /collections/{slug} stops being served the moment you confirm, and anyone
+                        who follows a link or a pin to it gets a 404. Nothing is deleted: every
+                        piece stays here, and you can publish the collection again whenever you
+                        want it back.
+                      </p>
+                      <div className="mt-3 flex flex-wrap items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={busy}
+                          data-action="retire-confirm"
+                          onClick={() => retireNow(false)}
+                          className="rounded-lg bg-red-700 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-red-800 disabled:opacity-50"
+                        >
+                          Yes, take the page down
+                        </button>
+                        <button
+                          type="button"
+                          data-action="retire-cancel"
+                          onClick={() => {
+                            setRetireConfirm(false);
+                            setRetirePins(null);
+                          }}
+                          className="rounded-lg border border-beige/60 bg-white px-4 py-2.5 text-sm text-warm-dark transition hover:bg-cream-dark"
+                        >
+                          Keep it live
+                        </button>
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
             </section>
