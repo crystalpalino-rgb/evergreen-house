@@ -173,16 +173,26 @@ export function pinsPointingAt(collectionSlug: string): PinPointingHere[] {
   }));
 }
 
+/**
+ * How many links a retire would break: the numbered disc lines the panel lists,
+ * not the pin pages that carry them. One pin page can carry six discs, and it is
+ * the six links that stop working.
+ */
+export function pinRetireLineCount(pins: PinPointingHere[]): number {
+  return pins.reduce((total, page) => total + page.numbers.length, 0);
+}
+
 /** The consequence of a retire, in plain words, stated before the list of pins. */
 export function pinRetireConsequence(pins: PinPointingHere[]): string {
-  if (pins.length === 1) {
+  const count = pinRetireLineCount(pins);
+  if (count === 1) {
     return (
       "Taking this collection off the site breaks the link on a live Pinterest pin. " +
       "It will open a page that no longer exists."
     );
   }
   return (
-    `Taking this collection off the site breaks the link on ${pins.length} live Pinterest ` +
+    `Taking this collection off the site breaks the link on ${count} live Pinterest ` +
     `pins. Each one will open a page that no longer exists.`
   );
 }
@@ -196,7 +206,8 @@ export function pinRetireList(pins: PinPointingHere[]): string[] {
 
 /** The confirm button: it carries the consequence, never a bare "yes". */
 export function pinRetireConfirmLabel(pins: PinPointingHere[]): string {
-  return pins.length === 1 ? "Retire it and break this pin" : "Retire it and break these pins";
+  const count = pinRetireLineCount(pins);
+  return count === 1 ? "Retire it and break this pin" : `Retire it and break these ${count} pins`;
 }
 
 /**
