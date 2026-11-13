@@ -138,7 +138,18 @@ export const Route = createFileRoute(
   "/blog/divorce-organization-paperwork-system"
 )({
   head: () => {
-    const seo = generateStaticMetadata(BLOG_TITLE, BLOG_DESCRIPTION, BLOG_PATH);
+    const seo = generateStaticMetadata(
+      BLOG_TITLE,
+      BLOG_DESCRIPTION,
+      BLOG_PATH,
+      {
+        // Journal post: article Open Graph tags plus the byline and
+        // publish date the scrapers read off the head.
+        ogType: "article",
+        publishedTime: DATE_PUBLISHED,
+        author: AUTHOR_NAME,
+      }
+    );
     return { meta: seo.meta, links: seo.links };
   },
   component: BlogPost,

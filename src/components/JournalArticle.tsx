@@ -65,7 +65,16 @@ export function journalArticleMeta(config: JournalArticleConfig) {
     config.title,
     config.description,
     `/blog/${config.slug}`,
-    { image: config.hero.jpg, imageWidth: 1200, imageHeight: 800 }
+    {
+      image: config.hero.jpg,
+      imageWidth: 1200,
+      imageHeight: 800,
+      // A Journal post is an article: og:type plus the publish date and byline
+      // Pinterest and other scrapers read off the head.
+      ogType: "article",
+      publishedTime: config.datePublished,
+      author: config.authorName || "Crystal Costa",
+    }
   );
   return { meta: seo.meta, links: seo.links };
 }

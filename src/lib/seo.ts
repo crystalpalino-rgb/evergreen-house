@@ -5,7 +5,20 @@
 
 const SITE_URL = "https://evergreenhouse.co";
 const SITE_NAME = "Evergreen House";
+/** Site-wide social card. The file is public/og-image.jpg, 1200x800. */
 const OG_IMAGE_URL = `${SITE_URL}/og-image.jpg`;
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 800;
+
+/**
+ * Absolute-ise a site path. Pinterest (and every other scraper) cannot resolve
+ * a relative og:image, so anything not already a full URL is prefixed with the
+ * site origin.
+ */
+export function absoluteUrl(url: string): string {
+  if (/^https?:\/\//i.test(url)) return url;
+  return `${SITE_URL}${url.startsWith("/") ? "" : "/"}${url}`;
+}
 
 /** Shared OG/Twitter boilerplate merged into every page's meta */
 function baseMeta(overrides: {
@@ -21,12 +34,36 @@ function baseMeta(overrides: {
   /** Real pixel size of ogImage, so the declared dimensions stay truthful. */
   ogImageWidth?: number;
   ogImageHeight?: number;
+  /**
+   * Open Graph article metadata. Present only on blog posts, which is what
+   * makes og:type=article plus article:published_time / article:author.
+   */
+  article?: { publishedTime?: string | null; author?: string | null };
 }) {
   const ogTitle = overrides.ogTitle || overrides.title;
   const ogDesc = overrides.ogDescription || overrides.description;
   const ogType = overrides.ogType || "website";
   const twitterCard = overrides.twitterCard || "summary_large_image";
-  const ogImage = overrides.ogImage || OG_IMAGE_URL;
+  const ogImage = absoluteUrl(overrides.ogImage || OG_IMAGE_URL);
+  // Declared dimensions follow the file actually referenced: the site-wide
+  // card is 1200x800, per-page art states its own size.
+  const ogImageWidth = overrides.ogImageWidth || OG_IMAGE_WIDTH;
+  const ogImageHeight = overrides.ogImageHeight || OG_IMAGE_HEIGHT;
+  const articleMeta = overrides.article
+    ? [
+        ...(overrides.article.publishedTime
+          ? [
+              {
+                property: "article:published_time",
+                content: overrides.article.publishedTime,
+              },
+            ]
+          : []),
+        ...(overrides.article.author
+          ? [{ property: "article:author", content: overrides.article.author }]
+          : []),
+      ]
+    : [];
 
   return {
     meta: [
@@ -38,8 +75,9 @@ function baseMeta(overrides: {
       { property: "og:type", content: ogType },
       { property: "og:url", content: overrides.ogUrl || SITE_URL },
       { property: "og:image", content: ogImage },
-      { property: "og:image:width", content: String(overrides.ogImageWidth || 1200) },
-      { property: "og:image:height", content: String(overrides.ogImageHeight || 630) },
+      { property: "og:image:width", content: String(ogImageWidth) },
+      { property: "og:image:height", content: String(ogImageHeight) },
+      ...articleMeta,
       { property: "og:site_name", content: SITE_NAME },
       { property: "og:locale", content: "en_US" },
       // Twitter
@@ -165,12 +203,18 @@ export function generateBlogMetadata(post: {
         .trim()
         .slice(0, 160)
     : "A blog post from Evergreen House.";
+  // article:published_time wants an ISO 8601 stamp; a stored date that will not
+  // parse is left out rather than shipped as a broken value.
+  const stored = post.created_at ? new Date(post.created_at) : null;
+  const publishedTime =
+    stored && !Number.isNaN(stored.getTime()) ? stored.toISOString() : undefined;
   return baseMeta({
     title,
     description: excerpt,
     ogType: "article",
     ogUrl: post.id ? `${SITE_URL}/blog/${post.id}` : `${SITE_URL}/blog`,
     twitterCard: "summary",
+    article: { publishedTime, author: SITE_NAME },
   });
 }
 
@@ -195,18 +239,33 @@ export function generateStaticMetadata(
   pageTitle: string,
   pageDescription: string,
   path: string,
-  options?: { image?: string; imageWidth?: number; imageHeight?: number }
+  options?: {
+    image?: string;
+    imageWidth?: number;
+    imageHeight?: number;
+    /** "article" on blog posts; omit for ordinary pages. */
+    ogType?: "article" | "website";
+    /** ISO publish date, e.g. "2026-10-18". Blog posts only. */
+    publishedTime?: string;
+    /** Byline, e.g. "Crystal Costa". Blog posts only. */
+    author?: string;
+  }
 ) {
   const title = `${pageTitle} | Evergreen House`;
   return baseMeta({
     title,
     description: pageDescription,
     ogUrl: `${SITE_URL}${path}`,
+    ogType: options?.ogType,
     // Per-post art (Journal heroes) overrides the site-wide og-image.jpg; the
     // declared dimensions follow the file so the tags stay truthful.
     ogImage: options?.image,
     ogImageWidth: options?.imageWidth,
     ogImageHeight: options?.imageHeight,
+    article:
+      options?.publishedTime || options?.author
+        ? { publishedTime: options.publishedTime, author: options.author }
+        : undefined,
   });
 }
 
