@@ -127,7 +127,7 @@ function AffiliateDisclosurePage() {
                   </a>{" "}
                   and{" "}
                   <a
-                    href="/evergreen-house/privacy"
+                    href="/privacy"
                     className="text-sage underline hover:text-sage-dark"
                   >
                     Privacy Policy

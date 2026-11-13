@@ -50,6 +50,11 @@ cat > .vercel/output/config.json <<'JSON'
       "source": "/collections/moody-tablescape-edit",
       "destination": "/collections/moody-thanksgiving-edit",
       "permanent": true
+    },
+    {
+      "source": "/evergreen-house/privacy",
+      "destination": "/privacy",
+      "permanent": true
     }
   ],
   "routes": [

@@ -55,7 +55,7 @@ export function Footer() {
                 { label: "Journal", href: "/blog" },
                 { label: "About", href: "/about" },
                 { label: "Contact", href: "/contact" },
-                { label: "Privacy", href: "/evergreen-house/privacy" },
+                { label: "Privacy Policy", href: "/privacy" },
                 { label: "Terms", href: "/terms" },
                 { label: "Affiliate Disclosure", href: "/affiliate-disclosure" },
               ].map((link) => (
