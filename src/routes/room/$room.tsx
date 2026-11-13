@@ -17,6 +17,8 @@ import {
   SITE_URL,
 } from "~/lib/schema";
 import { getRelatedRooms, ROOM_LABELS } from "~/lib/related";
+import { getProductGraphSchema } from "~/lib/product-jsonld";
+import { canonicalProductSlug } from "~/lib/product-slug";
 import { SHOW_UNDER19_ON_HOLIDAY_ROOM, UNDER19_LIST } from "~/lib/storefront-lists";
 import type { Product } from "~/lib/types";
 
@@ -216,6 +218,22 @@ function RoomPage() {
     `${SITE_URL}/room/${room}`
   );
   const relatedRooms = getRelatedRooms(room);
+  /* Product JSON-LD, built from the cards this page actually renders: a card
+     with no price on it is left unmarked (Pinterest brief, item 4). Nothing
+     here changes a card, a price or a layout. */
+  const productSchema = getProductGraphSchema(
+    products.map((product) => ({
+      name: product.name,
+      displayTitle: product.display_title,
+      cardHook: product.card_hook,
+      editorNote: product.editor_note,
+      room: product.room,
+      imageUrl: product.image_url,
+      price: product.price,
+      availability: product.availability,
+      productUrl: `${SITE_URL}/product/${canonicalProductSlug(product)}`,
+    })),
+  );
 
   return (
     <>
@@ -230,6 +248,14 @@ function RoomPage() {
             __html: JSON.stringify(collectionSchema),
           }}
         />
+        {productSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(productSchema),
+            }}
+          />
+        )}
         <section className="relative overflow-hidden">
             {roomPhoto ? (
               <>

@@ -26,6 +26,7 @@ import { generateStaticMetadata, SITE_URL } from "~/lib/seo";
 import { CARD_DATA_CHECKED_AT } from "~/components/AmazonDisclosure";
 import { cardVerifiedMonth } from "~/lib/card-copy";
 import { getCollectionPageSchema } from "~/lib/schema";
+import { getProductGraphSchema } from "~/lib/product-jsonld";
 
 /**
  * "Shop the Edit" landing page: /collections/<edit-slug>.
@@ -149,6 +150,23 @@ function EditPage() {
      published snapshot, so it is rendered by the template instead. */
   const storefrontList = EDIT_STOREFRONT_LISTS[edit.slug] ?? null;
 
+  /* Product JSON-LD, built from the cards this page actually renders. A card
+     with no price on it is left unmarked, and a price the owner typed on a card
+     is the price the card prints, so it is the price the offer carries
+     (Pinterest brief, item 4). Nothing here changes a card or a layout. */
+  const productSchema = getProductGraphSchema(
+    products.map((product) => ({
+      name: product.title,
+      displayTitle: product.title,
+      cardHook: product.hook,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      priceOverride: product.priceOverride,
+      availability: product.availability,
+      productUrl: `${SITE_URL}/product/${product.slug}`,
+    })),
+  );
+
   return (
     <>
       {/* Pinterest ViewContent: one event per view of this edit. */}
@@ -166,6 +184,12 @@ function EditPage() {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: schema }}
         />
+        {productSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+          />
+        )}
         {/* Compact editorial header. Mobile gets a 16:9 band; the desktop band is
             taller, and the copy stays in the quiet left third of the art. */}
         <section className="relative isolate overflow-hidden bg-midnight">
