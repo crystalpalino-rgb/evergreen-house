@@ -95,6 +95,13 @@ export interface AdminEditDetail {
   sortOrder: number;
   updatedAt: string;
   publishedAt: string | null;
+  /**
+   * True when this collection has a published snapshot at all, live or retired.
+   * A retired collection keeps its snapshot, so this is what tells the screen
+   * "it was on the site and publishing puts it back" apart from "never been
+   * live".
+   */
+  hasPublication: boolean;
   items: AdminEditItem[];
   /** Every collection slug and title, for the related-edits picker. */
   others: { slug: string; title: string }[];
@@ -257,24 +264,47 @@ function toSnapshot(edit: EditRow, items: ItemRow[]): SnapshotCollection {
 }
 
 /**
+ * The published set with this collection in it, whatever its status.
+ *
+ * Publishing is the action that puts a retired collection back, so the set the
+ * pin build is run against has to contain it: a retired collection is absent
+ * from `getPublishedCollections()`, and guarding without it would report its own
+ * destination as off-site and refuse the very publish that restores it.
+ */
+function withEditPublished(
+  published: SnapshotCollection[],
+  draft: SnapshotCollection,
+): SnapshotCollection[] {
+  const known = published.some((edit) => edit.slug === draft.slug);
+  return known
+    ? published.map((edit) => (edit.slug === draft.slug ? draft : edit))
+    : [...published, draft];
+}
+
+/**
  * Run the pin build against the state this edit would publish.
  *
- * A collection that is not live is not substituted in: no pin page points at a
- * draft, and the published set is what the pin pages are built from.
+ * A collection that is not live is not substituted in for a draft save: no pin
+ * page points at a draft, and the published set is what the pin pages are built
+ * from. `publishing` says the change being guarded IS the publish, so the
+ * candidate is the set as it would be published, live today or not.
  */
-async function guardItems(edit: EditRow, items: ItemRow[]): Promise<PinGuardResult> {
+async function guardItems(
+  edit: EditRow,
+  items: ItemRow[],
+  publishing = false,
+): Promise<PinGuardResult> {
   const published = await getPublishedCollections();
-  const candidate = withEditSubstituted(
-    published,
-    edit.status === "published",
-    toSnapshot(edit, items),
-  );
+  const draft = toSnapshot(edit, items);
+  const candidate = publishing
+    ? withEditPublished(published, draft)
+    : withEditSubstituted(published, edit.status === "published", draft);
   return checkPinPages(candidate);
 }
 
-/** The guard against the draft as it stands, with no change applied. */
+/** The guard against the draft as it would be published. */
 async function runPinGuard(edit: EditRow): Promise<PinGuardResult> {
-  return guardItems(edit, await readItems(edit.id));
+  return guardItems(edit, await readItems(edit.id), true);
 }
 
 /**
@@ -403,6 +433,13 @@ export const getAdminEdit = createServerFn({ method: "GET" })
       [edit.id],
     )) as unknown as { slug: string; title: string }[];
 
+    /* A retired collection is a draft with a snapshot still on file, so the
+     * publication row is the only fact that says it was once live. */
+    const publicationRows = (await sql().query(
+      `SELECT 1 FROM edit_publications WHERE edit_id = $1 LIMIT 1`,
+      [edit.id],
+    )) as unknown as unknown[];
+
     return {
       id: Number(edit.id),
       slug: edit.slug,
@@ -417,6 +454,7 @@ export const getAdminEdit = createServerFn({ method: "GET" })
       sortOrder: Number(edit.sort_order),
       updatedAt: iso(edit.updated_at) ?? "",
       publishedAt: iso(edit.published_at),
+      hasPublication: publicationRows.length > 0,
       items: items.map((item) => {
         const product = byId.get(Number(item.product_id));
         return {

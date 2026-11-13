@@ -353,7 +353,9 @@ function CollectionEditor() {
                   </p>
                   <p className="mt-1 max-w-xl text-xs leading-relaxed text-warm-gray">
                     {!isLive
-                      ? "This collection has never been live. Publishing it puts it on the site."
+                      ? detail?.hasPublication
+                        ? "This collection is not on the site. Publishing it puts it back on the same address, so every link and pin to it works again."
+                        : "This collection has never been live. Publishing it puts it on the site."
                       : hasPending
                         ? "The page is serving the version you last published. Publishing changes swaps the new version in without taking the page down, so anyone following a pin keeps landing on a live page."
                         : `Published ${detail.publishedAt ? new Date(detail.publishedAt).toLocaleString() : "earlier"}. Everything you have saved is already on the page.`}
