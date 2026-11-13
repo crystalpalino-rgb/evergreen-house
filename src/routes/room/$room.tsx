@@ -3,6 +3,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
 import { AnalyticsList } from "~/components/AnalyticsList";
+import { PinterestViewContent } from "~/components/PinterestViewContent";
 import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { ContentUnavailable } from "~/components/ContentUnavailable";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
@@ -218,6 +219,8 @@ function RoomPage() {
 
   return (
     <>
+      {/* Pinterest ViewContent: one event per view of this room. */}
+      <PinterestViewContent contentName={room} contentCategory="room" />
       <Header />
       <main>
         <Breadcrumbs items={breadcrumbItems} />
