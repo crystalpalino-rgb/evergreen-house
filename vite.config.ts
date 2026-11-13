@@ -1,8 +1,40 @@
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import viteReact from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import tsConfigPaths from "vite-tsconfig-paths";
+
+/**
+ * /ads.txt in the dev server, mirroring what serve.ts does in production: the
+ * publisher ID saved in /admin/ads, and a 404 with an empty body while it is
+ * empty. Without this the working site would answer /ads.txt from the router
+ * and the owner could not see the file she just switched on.
+ */
+function adsTxtDevRoute(): Plugin {
+  return {
+    name: "ads-txt-dev-route",
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const path = (req.url || "").split("?")[0];
+        if (path !== "/ads.txt") return next();
+        void (async () => {
+          try {
+            const mod = await server.ssrLoadModule("/src/lib/site-settings.ts");
+            const response: Response = await mod.handleAdsTxt();
+            const body = await response.text();
+            res.statusCode = response.status;
+            response.headers.forEach((value, key) => res.setHeader(key, value));
+            res.end(body);
+          } catch {
+            res.statusCode = 404;
+            res.setHeader("Content-Type", "text/plain; charset=utf-8");
+            res.end("");
+          }
+        })();
+      });
+    },
+  };
+}
 
 export default defineConfig({
   server: {
@@ -20,6 +52,7 @@ export default defineConfig({
     }),
     tanstackStart(),
     viteReact(),
+    adsTxtDevRoute(),
   ],
   build: {
     rollupOptions: {

@@ -11,6 +11,8 @@ import { ThirdPartyScripts } from "~/components/ThirdPartyScripts";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
+import { getHeadScripts } from "~/lib/ads-fns";
+import type { HeadScript } from "~/lib/head-snippet";
 
 const SITE_NAME = "Evergreen House";
 const SITE_TAGLINE = "Beautiful Things That Never Go Out of Style";
@@ -103,16 +105,44 @@ export const Route = createRootRoute({
       },
     ],
   }),
+  /**
+   * The head injection point. The owner pastes an ad snippet in /admin/ads; the
+   * server reads it here on every render and answers with the exact script tags
+   * to put in the head. It answers an empty list when nothing is saved, when the
+   * saved paste no longer parses, or when the settings cannot be read - so a bad
+   * paste can never take a page down.
+   */
+  loader: async (): Promise<{ headScripts: HeadScript[] }> => {
+    return { headScripts: await getHeadScripts() };
+  },
   notFoundComponent: NotFoundPage,
   component: RootComponent,
 });
 
 function RootComponent() {
+  const { headScripts } = Route.useLoaderData();
   return (
-    <RootDocument>
+    <RootDocument headScripts={headScripts}>
       <Outlet />
     </RootDocument>
   );
+}
+
+/**
+ * React prop names for the attributes the snippet parser allows. Everything the
+ * parser produces is a plain script attribute, so this is the whole mapping.
+ */
+function headScriptProps(attrs: Record<string, string | boolean>): Record<string, unknown> {
+  const props: Record<string, unknown> = {};
+  for (const [name, value] of Object.entries(attrs)) {
+    if (name === "crossorigin") props.crossOrigin = value === true ? "anonymous" : value;
+    else if (name === "referrerpolicy") props.referrerPolicy = value;
+    else if (name === "charset") props.charSet = value;
+    else if (name === "nomodule") props.noModule = true;
+    else if (value === true) props[name] = true;
+    else props[name] = value;
+  }
+  return props;
 }
 
 /**
@@ -155,11 +185,30 @@ function NotFoundPage() {
   );
 }
 
-function RootDocument({ children }: { children: ReactNode }) {
+function RootDocument({
+  children,
+  headScripts = [],
+}: {
+  children: ReactNode;
+  headScripts?: HeadScript[];
+}) {
   return (
     <html lang="en">
       <head>
         <HeadContent />
+        {/* Injected by the owner from /admin/ads. Empty unless she saved a
+            snippet there, and only ever script tags the parser approved. */}
+        {headScripts.map((script, index) =>
+          script.body ? (
+            <script
+              key={`head-inject-${index}`}
+              {...headScriptProps(script.attrs)}
+              dangerouslySetInnerHTML={{ __html: script.body }}
+            />
+          ) : (
+            <script key={`head-inject-${index}`} {...headScriptProps(script.attrs)} />
+          ),
+        )}
         {/* JSON-LD structured data - rendered inline in <head> for SEO */}
         <script
           type="application/ld+json"
