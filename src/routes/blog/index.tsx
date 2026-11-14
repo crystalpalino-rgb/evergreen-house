@@ -62,6 +62,13 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title: "The Reset List: 17 Finds for a Home That Runs Itself",
+    description:
+      "One list that resets the systems instead of the house: 16 planners, meal prep pieces and small organizers that make a home run itself.",
+    href: "/blog/the-reset-list-17-finds",
+    date: "November 14, 2026",
+  },
+  {
     title: "The Sunday Reset: Meal Plan + Tidy House in 2 Hours",
     description:
       "The 2-hour Sunday reset: a step-by-step plan to walk into Monday with meals planned and the house under control.",
