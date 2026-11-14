@@ -63,6 +63,34 @@ const HERO_CONCEPTS: Record<string, HeroConcept> = {
 
 export const DEFAULT_HERO_CONCEPT = "a";
 
+/**
+ * The preload links for the art a concept actually renders. The hero is a
+ * <picture>: the 4:5 mobile crop below 768px and the 16:9 desktop crop from
+ * 768px up, so each preload carries the same media query as its source and a
+ * phone never fetches the desktop file (or the other way round).
+ */
+export function heroArtPreloadLinks(concept: string = DEFAULT_HERO_CONCEPT) {
+  const art = HERO_CONCEPTS[concept] ?? HERO_CONCEPTS[DEFAULT_HERO_CONCEPT];
+  return [
+    {
+      rel: "preload",
+      as: "image",
+      href: art.mobileWebp,
+      type: "image/webp",
+      media: "(max-width: 767px)",
+      fetchpriority: "high",
+    },
+    {
+      rel: "preload",
+      as: "image",
+      href: art.desktopWebp,
+      type: "image/webp",
+      media: "(min-width: 768px)",
+      fetchpriority: "high",
+    },
+  ];
+}
+
 export function Hero({ concept = DEFAULT_HERO_CONCEPT }: { concept?: string }) {
   const art = HERO_CONCEPTS[concept] ?? HERO_CONCEPTS[DEFAULT_HERO_CONCEPT];
   const light = art.tone === "light";

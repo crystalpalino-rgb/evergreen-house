@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
-import { Hero } from "~/components/Hero";
+import {
+  DEFAULT_HERO_CONCEPT,
+  Hero,
+  heroArtPreloadLinks,
+} from "~/components/Hero";
 import { ShopTheEdits } from "~/components/ShopTheEdits";
 import { ShopTheLook } from "~/components/ShopTheLook";
 import { TheCurrentEdit } from "~/components/TheCurrentEdit";
@@ -35,11 +39,16 @@ export const Route = createFileRoute("/")({
     if (raw === "b" || raw === "c") return { hero: raw };
     return {};
   },
-  head: () => {
+  head: ({ match }) => {
     const seo = generateHomeMetadata();
+    /* LCP: the hero photograph is the first paint element, so the art the page
+       actually renders is preloaded, media scoped to the same 768px breakpoint
+       the <picture> switches on. The preload used to sit in the root head and
+       pointed at retired art nothing rendered. */
+    const hero = (match.search as HomeSearch | undefined)?.hero;
     return {
       meta: seo.meta,
-      links: seo.links,
+      links: [...seo.links, ...heroArtPreloadLinks(hero ?? DEFAULT_HERO_CONCEPT)],
     };
   },
   loader: async () => {
