@@ -11,10 +11,15 @@ import { EditProductCard } from "./EditProductCard";
  * not a stack of mini collection cards: every product in the list physically sits
  * on that one table, so the picture and the list are the same idea.
  *
- * Art: Crystal's own bright hosting photograph, webp first with a jpg fallback,
- * both shipped sizes used. The 4:5 crop (800x1000) carries the band on phones,
- * where it stays tall enough to read; the 16:9 hero (1600x900) takes over from
- * the sm breakpoint.
+ * Art: Crystal's own bright hosting photograph (the regraded bright2 files),
+ * webp first with a jpg fallback, both shipped sizes used. The 4:5 crop
+ * (800x1000) carries the band on phones; the 16:9 hero (1600x900) takes over
+ * from the sm breakpoint.
+ *
+ * Height: a fixed banner height, not the art's aspect ratio. The 16:9 frame at
+ * 1280 wide rendered 720px tall and outranked the 680px hero, so the band is
+ * capped at 420px on phones and 435px from sm up, with object-cover holding the
+ * crop. Nothing distorts, and the section stays clearly under the hero.
  *
  * Type over the art: the headline sits left aligned over the photograph behind
  * the same midnight gradient the Holiday Hosting edit hero wears over this same
@@ -39,17 +44,17 @@ export function ShopTheLook({
   return (
     <section className="bg-midnight">
       <div className="relative isolate">
-        <div className="relative aspect-[4/5] w-full sm:aspect-[16/9]">
+        <div className="relative h-[420px] w-full sm:h-[435px]">
           <picture>
             <source
               media="(max-width: 639px)"
-              srcSet="/images/home-shop-the-look-card-bright.webp"
+              srcSet="/images/home-shop-the-look-card-bright2.webp"
               type="image/webp"
             />
-            <source media="(max-width: 639px)" srcSet="/images/home-shop-the-look-card-bright.jpg" />
-            <source srcSet="/images/home-shop-the-look-hero-bright.webp" type="image/webp" />
+            <source media="(max-width: 639px)" srcSet="/images/home-shop-the-look-card-bright2.jpg" />
+            <source srcSet="/images/home-shop-the-look-hero-bright2.webp" type="image/webp" />
             <img
-              src="/images/home-shop-the-look-hero-bright.jpg"
+              src="/images/home-shop-the-look-hero-bright2.jpg"
               alt="A Christmas dining table set with holly banded china, a berry and evergreen centerpiece in a stoneware urn, brass taper candlesticks and plaid placemats, with a lit tree behind."
               width={1600}
               height={900}
