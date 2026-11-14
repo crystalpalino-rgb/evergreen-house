@@ -8,6 +8,12 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-cozy-christmas-bedroom-edit-card-bright",
+      "thumb": "/images/edit-cozy-christmas-bedroom-edit-card-bright.jpg",
+      "label": "Cozy Christmas Bedroom Edit Card Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-cozy-christmas-bedroom-edit-card-light",
       "thumb": "/images/edit-cozy-christmas-bedroom-edit-card-light.jpg",
       "label": "Cozy Christmas Bedroom Edit Card Light",
@@ -17,6 +23,12 @@
       "path": "/images/edit-cozy-christmas-bedroom-edit-hero",
       "thumb": "/images/edit-cozy-christmas-bedroom-edit-hero.jpg",
       "label": "Cozy Christmas Bedroom Edit Hero",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-cozy-christmas-bedroom-edit-hero-bright",
+      "thumb": "/images/edit-cozy-christmas-bedroom-edit-hero-bright.jpg",
+      "label": "Cozy Christmas Bedroom Edit Hero Bright",
       "group": "Collection art"
     },
     {
@@ -98,6 +110,12 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-luxe-christmas-tree-edit-card-bright",
+      "thumb": "/images/edit-luxe-christmas-tree-edit-card-bright.jpg",
+      "label": "Luxe Christmas Tree Edit Card Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-luxe-christmas-tree-edit-card-light",
       "thumb": "/images/edit-luxe-christmas-tree-edit-card-light.jpg",
       "label": "Luxe Christmas Tree Edit Card Light",
@@ -107,6 +125,12 @@
       "path": "/images/edit-luxe-christmas-tree-edit-hero",
       "thumb": "/images/edit-luxe-christmas-tree-edit-hero.jpg",
       "label": "Luxe Christmas Tree Edit Hero",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-luxe-christmas-tree-edit-hero-bright",
+      "thumb": "/images/edit-luxe-christmas-tree-edit-hero-bright.jpg",
+      "label": "Luxe Christmas Tree Edit Hero Bright",
       "group": "Collection art"
     },
     {
@@ -134,15 +158,33 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-moody-thanksgiving-edit-card-dark",
+      "thumb": "/images/edit-moody-thanksgiving-edit-card-dark.jpg",
+      "label": "Moody Thanksgiving Edit Card Dark",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-moody-thanksgiving-edit-card-light",
       "thumb": "/images/edit-moody-thanksgiving-edit-card-light.jpg",
       "label": "Moody Thanksgiving Edit Card Light",
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-moody-thanksgiving-edit-hero-dark",
+      "thumb": "/images/edit-moody-thanksgiving-edit-hero-dark.jpg",
+      "label": "Moody Thanksgiving Edit Hero Dark",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-moody-thanksgiving-edit-hero-light",
       "thumb": "/images/edit-moody-thanksgiving-edit-hero-light.jpg",
       "label": "Moody Thanksgiving Edit Hero Light",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-thanksgiving-hosting-edit-card-bright",
+      "thumb": "/images/edit-thanksgiving-hosting-edit-card-bright.jpg",
+      "label": "Thanksgiving Hosting Edit Card Bright",
       "group": "Collection art"
     },
     {
@@ -158,9 +200,21 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-thanksgiving-hosting-edit-hero-bright",
+      "thumb": "/images/edit-thanksgiving-hosting-edit-hero-bright.jpg",
+      "label": "Thanksgiving Hosting Edit Hero Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-thanksgiving-hosting-edit-hero-light",
       "thumb": "/images/edit-thanksgiving-hosting-edit-hero-light.jpg",
       "label": "Thanksgiving Hosting Edit Hero Light",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-thanksgiving-table-edit-card-bright",
+      "thumb": "/images/edit-thanksgiving-table-edit-card-bright.jpg",
+      "label": "Thanksgiving Table Edit Card Bright",
       "group": "Collection art"
     },
     {
@@ -170,15 +224,33 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-thanksgiving-table-edit-hero-bright",
+      "thumb": "/images/edit-thanksgiving-table-edit-hero-bright.jpg",
+      "label": "Thanksgiving Table Edit Hero Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-thanksgiving-table-edit-hero-light",
       "thumb": "/images/edit-thanksgiving-table-edit-hero-light.jpg",
       "label": "Thanksgiving Table Edit Hero Light",
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-thanksgiving-welcome-edit-card-bright",
+      "thumb": "/images/edit-thanksgiving-welcome-edit-card-bright.jpg",
+      "label": "Thanksgiving Welcome Edit Card Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-thanksgiving-welcome-edit-card-light",
       "thumb": "/images/edit-thanksgiving-welcome-edit-card-light.jpg",
       "label": "Thanksgiving Welcome Edit Card Light",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-thanksgiving-welcome-edit-hero-bright",
+      "thumb": "/images/edit-thanksgiving-welcome-edit-hero-bright.jpg",
+      "label": "Thanksgiving Welcome Edit Hero Bright",
       "group": "Collection art"
     },
     {
@@ -194,15 +266,33 @@
       "group": "Site art"
     },
     {
+      "path": "/images/blog-adhd-home-reset-v2",
+      "thumb": "/images/blog-adhd-home-reset-v2.jpg",
+      "label": "Blog Adhd Home Reset V2",
+      "group": "Site art"
+    },
+    {
       "path": "/images/blog-cleaning-systems-adhd",
       "thumb": "/images/blog-cleaning-systems-adhd.jpg",
       "label": "Blog Cleaning Systems Adhd",
       "group": "Site art"
     },
     {
+      "path": "/images/blog-cleaning-systems-adhd-v2",
+      "thumb": "/images/blog-cleaning-systems-adhd-v2.jpg",
+      "label": "Blog Cleaning Systems Adhd V2",
+      "group": "Site art"
+    },
+    {
       "path": "/images/blog-cut-grocery-bill",
       "thumb": "/images/blog-cut-grocery-bill.jpg",
       "label": "Blog Cut Grocery Bill",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/blog-cut-grocery-bill-v2",
+      "thumb": "/images/blog-cut-grocery-bill-v2.jpg",
+      "label": "Blog Cut Grocery Bill V2",
       "group": "Site art"
     },
     {
@@ -221,6 +311,12 @@
       "path": "/images/blog-sunday-reset",
       "thumb": "/images/blog-sunday-reset.jpg",
       "label": "Blog Sunday Reset",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/blog-sunday-reset-v2",
+      "thumb": "/images/blog-sunday-reset-v2.jpg",
+      "label": "Blog Sunday Reset V2",
       "group": "Site art"
     },
     {
@@ -287,6 +383,12 @@
       "path": "/images/holiday-edit-hero-2026",
       "thumb": "/images/holiday-edit-hero-2026.jpg",
       "label": "Holiday Edit Hero 2026",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/room-holiday-hero-bright",
+      "thumb": "/images/room-holiday-hero-bright.jpg",
+      "label": "Room Holiday Hero Bright",
       "group": "Site art"
     },
     {

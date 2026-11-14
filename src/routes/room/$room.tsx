@@ -63,7 +63,7 @@ const roomPhotos: Record<string, string> = {
   /* The seasonal and organizing rooms reuse the collection art they are
      siblings of, so /room/<slug> and /collection/<slug> open on the same photo. */
   fall: "/images/collection-autumn-warmth-hero.jpg",
-  holiday: "/images/holiday-edit-hero-2026.jpg",
+  holiday: "/images/room-holiday-hero-bright.jpg",
   organization: "/images/organization.jpg",
   spring: "/images/living-room.jpg",
   summer: "/images/patio.jpg",

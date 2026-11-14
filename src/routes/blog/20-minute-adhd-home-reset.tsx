@@ -40,9 +40,9 @@ const CONFIG: JournalArticleConfig = {
   datePublished: "2026-10-18",
   datePublishedLabel: "October 18, 2026",
   hero: {
-    jpg: "/images/blog-adhd-home-reset.jpg",
-    webp: "/images/blog-adhd-home-reset.webp",
-    alt: "A round kitchen timer with a plain face beside a woven basket holding a folded linen cloth and a small amber spray bottle on a clean pale counter",
+    jpg: "/images/blog-adhd-home-reset-v2.jpg",
+    webp: "/images/blog-adhd-home-reset-v2.webp",
+    alt: "A cream visual timer beside a woven basket of keys on an oak coffee table, with a candle, eucalyptus and a sofa behind",
   },
   intro: [
     "Traditional cleaning advice fails ADHD brains because it assumes sustained attention, working memory, and task initiation all work on command. This reset is built for the brain you have.",
