@@ -8,6 +8,46 @@
       "permanent": true
     },
     {
+      "source": "/collections/luxe-christmas-tree",
+      "destination": "/collections/luxe-christmas-tree-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/cozy-christmas-bedroom",
+      "destination": "/collections/cozy-christmas-bedroom-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/heritage-christmas",
+      "destination": "/collections/heritage-christmas-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/holiday-hosting",
+      "destination": "/collections/holiday-hosting-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/thanksgiving-table",
+      "destination": "/collections/thanksgiving-table-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/moody-thanksgiving",
+      "destination": "/collections/moody-thanksgiving-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/thanksgiving-hosting",
+      "destination": "/collections/thanksgiving-hosting-edit",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/thanksgiving-welcome",
+      "destination": "/collections/thanksgiving-welcome-edit",
+      "statusCode": 301
+    },
+    {
       "source": "/evergreen-house/privacy",
       "destination": "/privacy",
       "permanent": true
