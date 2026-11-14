@@ -25,6 +25,12 @@ export interface StorefrontList {
   line: string;
   /** The owner's storefront list URL, byte for byte. */
   href: string;
+  /**
+   * The list's own page on this site, when it has one (owner, 2026-11-14).
+   * Where it is set, the card opens that page instead of Amazon, and the page
+   * itself carries the link out to the storefront list.
+   */
+  pageHref?: string;
 }
 
 /** Secret Santa and Stocking Stuffers Under $19. */
@@ -33,6 +39,9 @@ export const UNDER19_LIST: StorefrontList = {
   name: "Secret Santa and Stocking Stuffers Under $19",
   line: "Everything on this list is under $19, and none of it looks it.",
   href: "https://www.amazon.com/shop/evergreenhouseco/list/3PLWY2F3JA9TR?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  // The list has its own page since 2026-11-14 (owner decision 34). Both
+  // placements open the page; the page carries the Amazon link.
+  pageHref: "/stocking-stuffers",
 };
 
 /** Heritage Nativity and Mantel Gifts. */
