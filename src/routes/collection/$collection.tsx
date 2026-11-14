@@ -129,6 +129,24 @@ function CollectionPage() {
   const faqItems = getCollectionFAQs(label, collectionType || "room", description);
   const faqSchema = getFAQSchema(faqItems);
 
+  /* One header body for both hero states: the title, description and count do
+     not change when the image is missing, only the band around them. */
+  const heroBody = (
+    <>
+      <a href="/collections" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
+        All Collections
+      </a>
+      <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{label}</h1>
+      {description && <p className="mt-4 max-w-2xl text-lg text-warm-gray">{description}</p>}
+      {unavailable ? (
+        <p className="mt-2 text-sm text-taupe">Our product library is temporarily unavailable. Please try this page again in a moment.</p>
+      ) : (
+        <p className="mt-2 text-sm text-taupe">{products.length} {products.length === 1 ? "product" : "products"} in this curated collection</p>
+      )}
+    </>
+  );
+
   return (
     <>
       <Header />
@@ -136,43 +154,35 @@ function CollectionPage() {
         <Breadcrumbs items={breadcrumbItems} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ "@context": "https://schema.org", "@graph": [collectionSchema, faqSchema] }) }} />
 
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          {imageUrl ? (
-            <>
-              <img
-                src={imageUrl}
-                alt={`${label} - Evergreen House`}
-                width={1200}
-                height={800}
-                fetchpriority="high"
-                loading="eager"
-                decoding="sync"
-                className="absolute inset-0 h-full w-full object-cover"
-              />
-              <div className="absolute inset-0 bg-white/50" />
-            </>
-          ) : (
-            <>
-              <div className="absolute inset-0 bg-cream-dark" />
-              <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
-            </>
-          )}
-          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-            <a href="/collections" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12" /><polyline points="12 19 5 12 12 5" /></svg>
-              All Collections
-            </a>
-            <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{label}</h1>
-            {description && <p className="mt-4 max-w-2xl text-lg text-warm-gray">{description}</p>}
-            {unavailable ? (
-              <p className="mt-2 text-sm text-taupe">Our product library is temporarily unavailable. Please try this page again in a moment.</p>
-            ) : (
-              <p className="mt-2 text-sm text-taupe">{products.length} {products.length === 1 ? "product" : "products"} in this curated collection</p>
-            )}
-          </div>
-        </section>
-
+        {/* Hero. With a hero image the photo runs full width behind the title,
+            kept centered so a wide panorama is cropped evenly, and a soft
+            left-hand white scrim carries the dark type over both bright and
+            dark art. With no image the header is a compact text band, never a
+            tall empty cream panel. */}
+        {imageUrl ? (
+          <section className="relative overflow-hidden">
+            <img
+              src={imageUrl}
+              alt={`${label} - Evergreen House`}
+              width={1200}
+              height={800}
+              fetchpriority="high"
+              loading="eager"
+              decoding="sync"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-white/60 sm:bg-white/35" />
+            <div
+              className="absolute inset-0"
+              style={{ backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.72) 45%, rgba(255,255,255,0.32) 74%, rgba(255,255,255,0) 100%)" }}
+            />
+            <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">{heroBody}</div>
+          </section>
+        ) : (
+          <section className="border-b border-beige/20 bg-cream/40">
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">{heroBody}</div>
+          </section>
+        )}
 
         {/* Product grid */}
         <section className="py-8 sm:py-12">

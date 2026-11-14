@@ -165,18 +165,10 @@ function CollectionsPage() {
             { label: "Collections" },
           ]}
         />
-        {/* Hero */}
-        <section className="relative overflow-hidden">
-          <div className="absolute inset-0 bg-cream-dark" />
-          <div
-            className="absolute inset-0 opacity-[0.04]"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle at 20% 30%, #3d322c 1px, transparent 1px), radial-gradient(circle at 80% 70%, #3d322c 1px, transparent 1px)",
-              backgroundSize: "60px 60px",
-            }}
-          />
-          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
+        {/* Header. This page has no hero photo, so it gets the compact text
+            band rather than a tall empty cream panel. */}
+        <section className="border-b border-beige/20 bg-cream/40">
+          <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">
             <a
               href="/"
               className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6"
