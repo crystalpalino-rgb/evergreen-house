@@ -11,6 +11,7 @@
 // the takeover works across user boundaries.
 import handler from "./dist/server/server.js";
 import { isAuthenticatedCookieHeader } from "./src/lib/admin-auth.ts";
+import { LEGACY_COLLECTION_REDIRECTS } from "./src/lib/legacy-redirects.ts";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -34,6 +35,9 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   // The July 2026 privacy policy was replaced by the AdSense-ready policy at
   // /privacy on 2026-11-12. The old URL must never serve the old text again.
   "/evergreen-house/privacy": "/privacy",
+  // The eight collections that moved from /collections/<short> to
+  // /collections/<short>-edit. Live pins still point at the short form.
+  ...LEGACY_COLLECTION_REDIRECTS,
 };
 
 // ── Content-Security-Policy ──
