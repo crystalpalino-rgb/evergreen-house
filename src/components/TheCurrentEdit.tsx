@@ -22,16 +22,16 @@ import { StorefrontListCard } from "./StorefrontListCard";
 export function TheCurrentEdit({
   products,
   section = CURRENT_EDIT,
-  storefrontList = null,
+  storefrontLists = [],
 }: {
   products: EditProduct[];
   section?: HomepageSection;
   /**
-   * Optional storefront list card under the grid, while seasonal. It is not a
-   * product, so it sits outside the AnalyticsList payload: the six items in
+   * Optional storefront list cards under the grid, while seasonal. They are not
+   * products, so they sit outside the AnalyticsList payload: the six items in
    * view_item_list stay exactly the six cards.
    */
-  storefrontList?: StorefrontList | null;
+  storefrontLists?: StorefrontList[];
 }) {
   const { eyebrow, title, subcopy } = section;
   const analyticsItems = products.map((p) => ({ id: p.id, name: p.title }));
@@ -62,9 +62,14 @@ export function TheCurrentEdit({
             ))}
           </div>
         </AnalyticsList>
-        {storefrontList && (
-          <StorefrontListCard list={storefrontList} level={3} className="mt-6 sm:mt-8" />
-        )}
+        {storefrontLists.map((list) => (
+          <StorefrontListCard
+            key={list.key}
+            list={list}
+            level={3}
+            className="mt-6 sm:mt-8"
+          />
+        ))}
       </div>
     </section>
   );

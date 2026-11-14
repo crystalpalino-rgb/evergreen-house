@@ -17,7 +17,13 @@ import {
 import { generateHomeMetadata } from "~/lib/seo";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 import { getEditSummaries, type EditCardData, type EditProduct } from "~/lib/edits";
-import { SHOW_UNDER19_ON_HOMEPAGE, UNDER19_LIST } from "~/lib/storefront-lists";
+import {
+  RESET_LIST,
+  SHOW_RESET_LIST,
+  SHOW_UNDER19_ON_HOMEPAGE,
+  UNDER19_LIST,
+  type StorefrontList,
+} from "~/lib/storefront-lists";
 
 type HomeSearch = { hero?: "b" | "c" };
 
@@ -73,6 +79,14 @@ function Home() {
   const { hero } = Route.useSearch();
   const heroConcept = hero ?? "a";
 
+  /* Storefront list cards under THE CURRENT EDIT. Not products, so they never
+     enter the view_item_list payload. The Under $19 card is seasonal; The
+     Reset List is not. */
+  const currentEditLists: StorefrontList[] = [
+    ...(SHOW_UNDER19_ON_HOMEPAGE ? [UNDER19_LIST] : []),
+    ...(SHOW_RESET_LIST ? [RESET_LIST] : []),
+  ];
+
   // Homepage-specific JSON-LD
   const homeSchema = JSON.stringify(
     {
@@ -127,7 +141,7 @@ function Home() {
         <ShopTheLook products={shopTheLook} />
         <TheCurrentEdit
           products={currentEdit}
-          storefrontList={SHOW_UNDER19_ON_HOMEPAGE ? UNDER19_LIST : null}
+          storefrontLists={currentEditLists}
         />
         {/* One Amazon Associates disclosure for the whole page, under the last
             product grid (owner Room Card Standard). The cards carry none. */}
