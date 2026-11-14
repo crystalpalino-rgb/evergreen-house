@@ -224,11 +224,13 @@ function RoomPage() {
     `${SITE_URL}/room/${room}`
   );
   const relatedRooms = getRelatedRooms(room);
-  /* The Reset List card, on the kitchen page only. Not seasonal: one flag, no
-     switch-off date. A list is not a product, so it sits outside the room's
-     AnalyticsList payload and carries no rating, review count or price. */
+  /* The Reset List card, on the kitchen and office pages. Not seasonal: one
+     flag, no switch-off date. A list is not a product, so it sits outside the
+     room's AnalyticsList payload and carries no rating, review count or price. */
   const roomStorefrontList =
-    room === "kitchen" && SHOW_RESET_LIST ? RESET_LIST : null;
+    (room === "kitchen" || room === "office") && SHOW_RESET_LIST
+      ? RESET_LIST
+      : null;
   /* Product JSON-LD, built from the cards this page actually renders: a card
      with no price on it is left unmarked (Pinterest brief, item 4). Nothing
      here changes a card, a price or a layout. */
