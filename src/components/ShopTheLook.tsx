@@ -11,15 +11,17 @@ import { EditProductCard } from "./EditProductCard";
  * not a stack of mini collection cards: every product in the list physically sits
  * on that one table, so the picture and the list are the same idea.
  *
- * Art: webp first with a jpg fallback, both shipped sizes used. The 4:5 crop
- * (1200x1500) carries the band on phones, where it stays tall enough to read;
- * the 16:9 hero (1600x900) takes over from the sm breakpoint.
+ * Art: Crystal's own bright hosting photograph, webp first with a jpg fallback,
+ * both shipped sizes used. The 4:5 crop (800x1000) carries the band on phones,
+ * where it stays tall enough to read; the 16:9 hero (1600x900) takes over from
+ * the sm breakpoint.
  *
- * Type over the art: the delivered hero keeps its LEFT third quiet (measured
- * mean L 72, white type at 9.1:1), so the headline sits left aligned over the
- * photograph with no scrim. On phones the copy drops below the art instead of
- * sitting on a 4:5 crop the designer did not measure, and the band turns into a
- * midnight block. No text is baked into the image.
+ * Type over the art: the headline sits left aligned over the photograph behind
+ * the same midnight gradient the Holiday Hosting edit hero wears over this same
+ * frame, because the bright left third cannot carry white type on its own. On
+ * phones the copy drops below the art instead of sitting on the 4:5 crop, so the
+ * gradient is desktop only and the art stays clean. No text is baked into the
+ * image.
  *
  * All copy comes from the curation file via src/lib/homepage-sections.ts.
  */
@@ -41,22 +43,27 @@ export function ShopTheLook({
           <picture>
             <source
               media="(max-width: 639px)"
-              srcSet="/images/shop-the-look-card.webp"
+              srcSet="/images/home-shop-the-look-card-bright.webp"
               type="image/webp"
             />
-            <source media="(max-width: 639px)" srcSet="/images/shop-the-look-card.jpg" />
-            <source srcSet="/images/shop-the-look-hero.webp" type="image/webp" />
+            <source media="(max-width: 639px)" srcSet="/images/home-shop-the-look-card-bright.jpg" />
+            <source srcSet="/images/home-shop-the-look-hero-bright.webp" type="image/webp" />
             <img
-              src="/images/shop-the-look-hero.jpg"
-              alt="A holiday hosting table set with holly banded china, a Christmas tree glass pitcher, a tree shaped wooden platter, walnut taper candlesticks and a run of votive candlelight."
+              src="/images/home-shop-the-look-hero-bright.jpg"
+              alt="A Christmas dining table set with holly banded china, a berry and evergreen centerpiece in a stoneware urn, brass taper candlesticks and plaid placemats, with a lit tree behind."
               width={1600}
               height={900}
               loading="lazy"
               decoding="async"
               className="absolute inset-0 h-full w-full object-cover"
-              data-pin-description="The Holiday Hosting Table: holly banded china, walnut tapers and candlelight. Shop the look at Evergreen House."
+              data-pin-description="The Holiday Hosting Table: holly banded china, brass tapers, a berry centerpiece and candlelight. Shop the look at Evergreen House."
             />
           </picture>
+          {/* Scrim: Crystal's bright photograph is not the moody art the copy
+              was measured against, so the left band needs the same midnight
+              gradient the Holiday Hosting edit hero wears over this frame.
+              Phones keep the art clean: the copy sits below it there. */}
+          <div className="pointer-events-none absolute inset-0 hidden bg-gradient-to-r from-midnight/85 via-midnight/50 to-midnight/15 sm:block" />
         </div>
         {/* Copy: in the quiet left band over the art from sm up, below the art on
             phones. No scrim (measured 9.1:1 against white type). */}

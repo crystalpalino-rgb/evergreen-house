@@ -24,9 +24,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/sunday-reset-meal-plan-tidy",
     excerpt:
       "Two hours, one block: five dinners planned, the kitchen reset and the house back in order before Monday.",
-    image: "/images/blog-sunday-reset.jpg",
+    image: "/images/blog-sunday-reset-v2.jpg",
     imageAlt:
-      "An open blank planner with a brass pen and a mug of coffee on an oak counter with folded dish towels, stacked plates and a bread basket in soft morning light",
+      "An open weekly planner with a gold pen and a latte on a marble kitchen island, with autumn blooms, a woven tray and a lit amber candle beside it",
     date: "October 18, 2026",
   },
   {
@@ -36,9 +36,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/cut-grocery-bill-200",
     excerpt:
       "Nine strategies, no coupons: the list-first system that quietly moves $200 a month back into your budget.",
-    image: "/images/blog-cut-grocery-bill.jpg",
+    image: "/images/blog-cut-grocery-bill-v2.jpg",
     imageAlt:
-      "A canvas tote of crisp apples, a yellow onion and leafy greens on a warm oak counter beside glass jars of pantry staples, folded paper freezer packages and a blank meal planning notepad",
+      "A tablet showing a meal plan for the week on a marble counter with a gold pen, butternut squash and brussels sprouts on a wooden board, a cream Dutch oven and a lit candle",
     date: "October 18, 2026",
   },
   {
@@ -47,9 +47,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/20-minute-adhd-home-reset",
     excerpt:
       "Four rounds, five minutes each, one visible timer: the reset built for the brain you actually have.",
-    image: "/images/blog-adhd-home-reset.jpg",
+    image: "/images/blog-adhd-home-reset-v2.jpg",
     imageAlt:
-      "A round kitchen timer with a plain face beside a woven basket holding a folded linen cloth and a small amber spray bottle on a clean pale counter",
+      "A cream visual timer beside a woven basket of keys on an oak coffee table, with a candle, eucalyptus and a sofa behind",
     date: "October 18, 2026",
   },
   {
@@ -58,9 +58,9 @@ const POSTS: JournalPost[] = [
     href: "/blog/cleaning-systems-adhd-brains",
     excerpt:
       "Body doubling, landing pads and a ten-thing pickup: ten systems that work with the way you clean.",
-    image: "/images/blog-cleaning-systems-adhd.jpg",
+    image: "/images/blog-cleaning-systems-adhd-v2.jpg",
     imageAlt:
-      "Open woven storage baskets and a clear bin of folded linens on an oak shelf above a bench with a tray holding keys and a wallet",
+      "A spray bottle of clear cleaner and a dish of keys on an oak island, with open shelving, a bench with a tote and the door in the background",
     date: "October 18, 2026",
   },
 ];
