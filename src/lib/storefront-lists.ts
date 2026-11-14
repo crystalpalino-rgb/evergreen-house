@@ -43,6 +43,20 @@ export const HERITAGE_NATIVITY_LIST: StorefrontList = {
   href: "https://www.amazon.com/shop/evergreenhouseco/list/1Y71DS50M16G8?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
 };
 
+/** The Reset List. Not seasonal: it stays up all year. */
+export const RESET_LIST: StorefrontList = {
+  key: "reset-list",
+  name: "The Reset List",
+  line: "Planners, meal prep, and a home that runs itself.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/2166TVSTETD4A?tag=crystalpalino-20",
+};
+
+/**
+ * The Reset List is not seasonal, so it has ONE flag with no switch-off date.
+ * It governs both placements: homepage THE CURRENT EDIT and /room/kitchen.
+ */
+export const SHOW_RESET_LIST = true;
+
 /**
  * Placement 1, homepage THE CURRENT EDIT. Seasonal: de-featured at the
  * Christmas flip, 2026-12-26. One edit turns it off.

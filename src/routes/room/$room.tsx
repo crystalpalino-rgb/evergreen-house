@@ -8,6 +8,7 @@ import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { ContentUnavailable } from "~/components/ContentUnavailable";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { HolidaySets } from "~/components/HolidaySets";
+import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getProductsByRoom } from "~/lib/intelligence";
 import { isRoomPublic } from "~/lib/room-visibility";
@@ -19,7 +20,12 @@ import {
 import { getRelatedRooms, ROOM_LABELS } from "~/lib/related";
 import { getProductGraphSchema } from "~/lib/product-jsonld";
 import { canonicalProductSlug } from "~/lib/product-slug";
-import { SHOW_UNDER19_ON_HOLIDAY_ROOM, UNDER19_LIST } from "~/lib/storefront-lists";
+import {
+  RESET_LIST,
+  SHOW_RESET_LIST,
+  SHOW_UNDER19_ON_HOLIDAY_ROOM,
+  UNDER19_LIST,
+} from "~/lib/storefront-lists";
 import type { Product } from "~/lib/types";
 
 const roomLabels: Record<string, string> = {
@@ -218,6 +224,11 @@ function RoomPage() {
     `${SITE_URL}/room/${room}`
   );
   const relatedRooms = getRelatedRooms(room);
+  /* The Reset List card, on the kitchen page only. Not seasonal: one flag, no
+     switch-off date. A list is not a product, so it sits outside the room's
+     AnalyticsList payload and carries no rating, review count or price. */
+  const roomStorefrontList =
+    room === "kitchen" && SHOW_RESET_LIST ? RESET_LIST : null;
   /* Product JSON-LD, built from the cards this page actually renders: a card
      with no price on it is left unmarked (Pinterest brief, item 4). Nothing
      here changes a card, a price or a layout. */
@@ -339,6 +350,11 @@ function RoomPage() {
                       {products.map((product) => (<ProductCard key={product.id} product={product} />))}
                     </div>
                   </AnalyticsList>
+                )}
+                {roomStorefrontList && (
+                  <div className="mt-8">
+                    <StorefrontListCard list={roomStorefrontList} level={2} />
+                  </div>
                 )}
                 {/* One disclosure for the whole page (Room Card Standard). */}
                 <div className="mt-8">
