@@ -14,13 +14,23 @@ export function StorefrontListCard({
   list,
   level = 3,
   className = "",
+  toPage = true,
 }: {
   list: StorefrontList;
   /** Heading level: 2 where the card leads a page section, 3 under a section h2. */
   level?: 2 | 3;
   className?: string;
+  /**
+   * When the list has its own page on this site, the card opens that page
+   * rather than Amazon (owner, 2026-11-14). Pass false on the page itself, so
+   * the card there is the one link out to the storefront list.
+   */
+  toPage?: boolean;
 }) {
   const Heading = level === 2 ? "h2" : "h3";
+  const onSite = toPage && Boolean(list.pageHref);
+  const href = onSite ? (list.pageHref as string) : list.href;
+  const label = onSite ? "See the gift guide" : "See the list on Amazon";
   return (
     <div
       id={`storefront-list-${list.key}`}
@@ -33,12 +43,13 @@ export function StorefrontListCard({
         {list.line}
       </p>
       <a
-        href={list.href}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
+        href={href}
+        {...(onSite
+          ? {}
+          : { target: "_blank", rel: "noopener noreferrer sponsored" })}
         className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-burgundy underline-offset-4 transition-colors hover:text-burgundy-deep hover:underline"
       >
-        See the list on Amazon
+        {label}
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"
