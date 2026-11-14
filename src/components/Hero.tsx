@@ -31,13 +31,13 @@ interface HeroConcept {
 const HERO_CONCEPTS: Record<string, HeroConcept> = {
   a: {
     id: "a",
-    desktopWebp: "/images/hero-a-heritage-desktop-light.webp",
-    desktopJpg: "/images/hero-a-heritage-desktop-light.jpg",
-    mobileWebp: "/images/hero-a-heritage-mobile-light.webp",
-    mobileJpg: "/images/hero-a-heritage-mobile-light.jpg",
+    desktopWebp: "/images/hero-d-heritage-desktop.webp",
+    desktopJpg: "/images/hero-d-heritage-desktop.jpg",
+    mobileWebp: "/images/hero-d-heritage-mobile.webp",
+    mobileJpg: "/images/hero-d-heritage-mobile.jpg",
     tone: "light",
     scrim: "light",
-    alt: "Heirloom holiday drawing room with an oxblood velvet sofa, tartan throw, brass candlesticks and a lit stone fireplace under an evergreen garland",
+    alt: "Bright Christmas living room with a garlanded sideboard, brass candlesticks, a red-berry arrangement, a lit fireplace and a decorated tree",
   },
   b: {
     id: "b",

@@ -33,9 +33,10 @@ const DATE_PUBLISHED = "2026-11-14";
 const DATE_PUBLISHED_LABEL = "November 14, 2026";
 const AUTHOR_NAME = "Crystal Costa";
 
-const HERO_JPG = "/images/blog-reset-list.jpg";
+const HERO_JPG = "/images/blog-reset-list-v2.jpg";
+const HERO_WEBP = "/images/blog-reset-list-v2.webp";
 const HERO_ALT =
-  "An open grid-lined planner with a gold pen on a pale oak counter, glass jars of grains and a stoneware crock on a shelf behind it, a folded linen towel and a eucalyptus sprig in soft window light";
+  "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight";
 
 /** Day every rating, review count and price below was read on Amazon. */
 const VERIFIED_DATE = "2026-11-14";
@@ -271,10 +272,10 @@ export const Route = createFileRoute("/blog/the-reset-list-17-finds")({
       {
         // Journal post: article Open Graph tags plus the byline and publish
         // date the scrapers read off the head, and this post's own hero art
-        // (public/images/blog-reset-list.jpg, 1600x900) as the og:image.
+        // (public/images/blog-reset-list-v2.jpg, 2000x667) as the og:image.
         image: HERO_JPG,
-        imageWidth: 1600,
-        imageHeight: 900,
+        imageWidth: 2000,
+        imageHeight: 667,
         ogType: "article",
         publishedTime: DATE_PUBLISHED,
         author: AUTHOR_NAME,
@@ -402,15 +403,18 @@ function BlogPost() {
               </span>
               <span>By {AUTHOR_NAME}</span>
             </p>
-            <img
-              src={HERO_JPG}
-              alt={HERO_ALT}
-              width={1600}
-              height={900}
-              loading="eager"
-              decoding="async"
-              className="mt-8 aspect-[16/9] w-full rounded-2xl object-cover"
-            />
+            <picture>
+              <source srcSet={HERO_WEBP} type="image/webp" />
+              <img
+                src={HERO_JPG}
+                alt={HERO_ALT}
+                width={2000}
+                height={667}
+                loading="eager"
+                decoding="async"
+                className="mt-8 aspect-[3/1] w-full rounded-2xl object-cover"
+              />
+            </picture>
             {INTRO_PARAGRAPHS.map((paragraph) => (
               <p
                 key={paragraph.slice(0, 40)}

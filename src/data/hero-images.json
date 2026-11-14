@@ -32,6 +32,12 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-heritage-christmas-edit-card-bright",
+      "thumb": "/images/edit-heritage-christmas-edit-card-bright.jpg",
+      "label": "Heritage Christmas Edit Card Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-heritage-christmas-edit-card-light",
       "thumb": "/images/edit-heritage-christmas-edit-card-light.jpg",
       "label": "Heritage Christmas Edit Card Light",
@@ -41,6 +47,12 @@
       "path": "/images/edit-heritage-christmas-edit-hero",
       "thumb": "/images/edit-heritage-christmas-edit-hero.jpg",
       "label": "Heritage Christmas Edit Hero",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-heritage-christmas-edit-hero-bright",
+      "thumb": "/images/edit-heritage-christmas-edit-hero-bright.jpg",
+      "label": "Heritage Christmas Edit Hero Bright",
       "group": "Collection art"
     },
     {
@@ -65,6 +77,12 @@
       "path": "/images/edit-holiday-hosting-edit-hero",
       "thumb": "/images/edit-holiday-hosting-edit-hero.jpg",
       "label": "Holiday Hosting Edit Hero",
+      "group": "Collection art"
+    },
+    {
+      "path": "/images/edit-holiday-hosting-edit-hero-bright",
+      "thumb": "/images/edit-holiday-hosting-edit-hero-bright.jpg",
+      "label": "Holiday Hosting Edit Hero Bright",
       "group": "Collection art"
     },
     {
@@ -194,6 +212,12 @@
       "group": "Site art"
     },
     {
+      "path": "/images/blog-reset-list-v2",
+      "thumb": "/images/blog-reset-list-v2.jpg",
+      "label": "Blog Reset List V2",
+      "group": "Site art"
+    },
+    {
       "path": "/images/blog-sunday-reset",
       "thumb": "/images/blog-sunday-reset.jpg",
       "label": "Blog Sunday Reset",
@@ -245,6 +269,18 @@
       "path": "/images/hero-c-timeless-mobile",
       "thumb": "/images/hero-c-timeless-mobile.jpg",
       "label": "Hero C Timeless Mobile",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/hero-d-heritage-desktop",
+      "thumb": "/images/hero-d-heritage-desktop.jpg",
+      "label": "Hero D Heritage Desktop",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/hero-d-heritage-mobile",
+      "thumb": "/images/hero-d-heritage-mobile.jpg",
+      "label": "Hero D Heritage Mobile",
       "group": "Site art"
     },
     {
