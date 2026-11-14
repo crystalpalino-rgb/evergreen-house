@@ -31,3 +31,61 @@ export const LEGACY_COLLECTION_REDIRECTS: Record<string, string> = {
   "/collections/thanksgiving-welcome":
     "/collections/thanksgiving-welcome-edit",
 };
+
+/**
+ * By Style is retired (owner decision 37, 2026-11-14): the site has one point
+ * of view, not five styles, so Rooms and the Edits carry the shopping.
+ *
+ * Both halves of every style URL answer a permanent redirect, and they all land
+ * on /collections. No style maps cleanly onto one room page: each style mixes
+ * products across rooms (Coastal carries coolers, garden tools and bedding), so
+ * a room target would drop most of the set and show a shopper a different
+ * collection from the one the URL promised. Organic Modern holds 0 products, so
+ * it must land on /collections and never on an empty page.
+ *
+ * The style pages the app used to serve are /style/<style> (from the hardcoded
+ * style list, which also carried modern, boho, glam and traditional) and the
+ * /collection/<style> rows in the collections table, plus the /styles index.
+ */
+export const RETIRED_STYLE_REDIRECTS: Record<string, string> = {
+  "/styles": "/collections",
+  "/style/organic-modern": "/collections",
+  "/style/minimalist": "/collections",
+  "/style/farmhouse": "/collections",
+  "/style/coastal": "/collections",
+  "/style/cozy": "/collections",
+  "/style/modern": "/collections",
+  "/style/boho": "/collections",
+  "/style/glam": "/collections",
+  "/style/traditional": "/collections",
+  "/collection/organic-modern": "/collections",
+  "/collection/minimalist": "/collections",
+  "/collection/farmhouse": "/collections",
+  "/collection/coastal": "/collections",
+  "/collection/cozy": "/collections",
+};
+
+/**
+ * Outdoor Living and Patio & Outdoor were two tiles over the same 18 products
+ * and the same photo (owner decision 37, 2026-11-14). "Patio & Outdoor" is the
+ * survivor: its slug is the room value every one of the 18 rows carries, and
+ * /room/patio is already the page the header links. The Outdoor Living tile and
+ * the empty /room/outdoor page (0 rows carry room = 'outdoor') redirect here.
+ */
+export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
+  "/collection/outdoor": "/collection/patio",
+  "/room/outdoor": "/room/patio",
+};
+
+/**
+ * Collection slugs whose /collection/<slug> page is retired and answers a
+ * redirect. The /collections index reads this so it can never link a tile the
+ * shopper cannot land on. Derived from the two maps above, so adding a redirect
+ * also takes the tile off the index.
+ */
+export const RETIRED_COLLECTION_SLUGS: readonly string[] = [
+  ...Object.keys(RETIRED_STYLE_REDIRECTS),
+  ...Object.keys(MERGED_COLLECTION_REDIRECTS),
+]
+  .filter((path) => path.startsWith("/collection/"))
+  .map((path) => path.slice("/collection/".length));

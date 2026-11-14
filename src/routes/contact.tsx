@@ -62,7 +62,7 @@ function Contact() {
                   <p className="text-sm leading-relaxed text-warm-gray/60">
                     We read every message and typically respond within 1–2 business days. In the meantime, you might find what you're looking for in our{" "}
                     <a
-                      href="/styles"
+                      href="/collections"
                       className="text-taupe underline decoration-beige/40 underline-offset-2 transition-colors hover:text-terracotta"
                     >
                       curated collections

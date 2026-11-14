@@ -51,15 +51,6 @@ const SHOP_CATEGORIES: ShopCategory[] = [
     ],
   },
   {
-    category: "By Style",
-    items: [
-      { label: "Organic Modern", href: "/style/modern" },
-      { label: "Minimalist & Modern", href: "/style/minimalist" },
-      { label: "Everyday Luxury", href: "/style/glam" },
-      { label: "Cozy Style", href: "/style/cozy" },
-    ],
-  },
-  {
     category: "By Lifestyle",
     items: [
       { label: "Small Space Living", href: "/lifestyle/small-spaces" },

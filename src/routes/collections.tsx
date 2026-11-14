@@ -5,8 +5,26 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { EditCard } from "~/components/EditCard";
 import { getEditSummaries, type EditCardData } from "~/lib/edits";
 import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
+import { RETIRED_COLLECTION_SLUGS } from "~/lib/legacy-redirects";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
+
+/* Which collection sits in which group on this index (owner decision 37,
+   2026-11-14). Grouping only: no URL changes, so every one of these pages keeps
+   the path it already had.
+
+   - By Style is retired (one point of view, not five styles), so the index
+     never renders a style group or a style collection.
+   - Autumn Warmth, Spring Refresh, Summer Living and Winter Nesting are
+     seasons, not rooms, so they get their own "By Season" group. The order is
+     the order the owner listed them in.
+   - Home Essentials is neither a room nor a season: it gets its own group.
+   - A collection with 0 products gets no tile (the empty Nursery tile), and
+     neither does one whose page is retired and redirects (Outdoor Living). */
+const SEASON_SLUGS: readonly string[] = ["fall", "spring", "summer", "holiday"];
+const ESSENTIALS_SLUGS: readonly string[] = ["home-essentials"];
+
+type CollectionWithCount = Collection & { productCount: number };
 
 export const Route = createFileRoute("/collections")({
   loader: async () => {
@@ -34,21 +52,42 @@ export const Route = createFileRoute("/collections")({
         })
       );
 
-      // Group by type
-      const roomCollections = withCounts.filter((c) => c.type === "room");
-      const styleCollections = withCounts.filter((c) => c.type === "style");
-      const otherCollections = withCounts.filter(
-        (c) => c.type !== "room" && c.type !== "style"
+      const retired = new Set(RETIRED_COLLECTION_SLUGS);
+      const live = withCounts.filter(
+        (c) =>
+          c.type !== "style" && c.productCount > 0 && !retired.has(c.slug)
       );
 
-      return { edits, roomCollections, styleCollections, otherCollections };
+      // Group for the page
+      const roomCollections = live.filter(
+        (c) =>
+          c.type === "room" &&
+          !SEASON_SLUGS.includes(c.slug) &&
+          !ESSENTIALS_SLUGS.includes(c.slug)
+      );
+      const seasonCollections = SEASON_SLUGS.map((slug) =>
+        live.find((c) => c.slug === slug)
+      ).filter((c): c is CollectionWithCount => Boolean(c));
+      const essentialsCollections = live.filter((c) =>
+        ESSENTIALS_SLUGS.includes(c.slug)
+      );
+      const otherCollections = live.filter((c) => c.type !== "room");
+
+      return {
+        edits,
+        roomCollections,
+        seasonCollections,
+        essentialsCollections,
+        otherCollections,
+      };
     } catch (err) {
       console.error("Collections loader error:", err);
       return {
         edits,
-        roomCollections: [] as (Collection & { productCount: number })[],
-        styleCollections: [] as (Collection & { productCount: number })[],
-        otherCollections: [] as (Collection & { productCount: number })[],
+        roomCollections: [] as CollectionWithCount[],
+        seasonCollections: [] as CollectionWithCount[],
+        essentialsCollections: [] as CollectionWithCount[],
+        otherCollections: [] as CollectionWithCount[],
       };
     }
   },
@@ -69,7 +108,7 @@ export const Route = createFileRoute("/collections")({
     if (editPageMatched) return {};
     const seo = generateStaticMetadata(
       "Collections",
-      "Browse all Evergreen House collections - thoughtfully curated finds for every room, style, and season.",
+      "Browse all Evergreen House collections - thoughtfully curated finds for every room and season.",
       "/collections"
     );
     return { meta: seo.meta, links: seo.links };
@@ -79,11 +118,17 @@ export const Route = createFileRoute("/collections")({
 
 const typeLabels: Record<string, string> = {
   room: "By Room",
-  style: "By Style",
+  season: "By Season",
   guide: "Buying Guides",
 };
 
-function CollectionCard({ col }: { col: Collection & { productCount: number } }) {
+function CollectionCard({
+  col,
+  eyebrow,
+}: {
+  col: Collection & { productCount: number };
+  eyebrow?: string;
+}) {
   const label = col.display_name || col.name;
   return (
     <a
@@ -108,7 +153,7 @@ function CollectionCard({ col }: { col: Collection & { productCount: number } })
       {/* Content */}
       <div className="p-5">
         <span className="text-xs font-semibold uppercase tracking-wider text-taupe">
-          {typeLabels[col.type] || col.type}
+          {eyebrow || typeLabels[col.type] || col.type}
         </span>
         <h2 className="mt-1 font-serif text-xl font-semibold text-warm-dark">
           {label}
@@ -146,8 +191,13 @@ function CollectionCard({ col }: { col: Collection & { productCount: number } })
 }
 
 function CollectionsPage() {
-  const { edits, roomCollections, styleCollections, otherCollections } =
-    Route.useLoaderData();
+  const {
+    edits,
+    roomCollections,
+    seasonCollections,
+    essentialsCollections,
+    otherCollections,
+  } = Route.useLoaderData();
   /* /collections is also the parent of /collections/<edit-slug>. When an edit
      page is matched, this index renders only the outlet. */
   const matches = useMatches();
@@ -193,7 +243,7 @@ function CollectionsPage() {
               Collections
             </h1>
             <p className="mt-4 text-lg text-warm-gray max-w-2xl">
-              Thoughtfully curated collections for every room, style, and season.
+              Thoughtfully curated collections for every room and season.
               Each piece is editor-approved - chosen for quality, longevity, and
               the way it makes a space feel.
             </p>
@@ -236,15 +286,40 @@ function CollectionsPage() {
               </div>
             )}
 
-            {/* Style collections */}
-            {styleCollections.length > 0 && (
+            {/* Season collections. Not rooms: they get their own group and the
+                tile says so, even though the rows carry type "room" in the
+                database. Grouping only - every URL here is unchanged. */}
+            {seasonCollections.length > 0 && (
               <div className="mb-14">
                 <h2 className="font-serif text-2xl font-semibold text-warm-dark mb-6">
-                  By Style
+                  By Season
                 </h2>
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {styleCollections.map((col) => (
-                    <CollectionCard key={col.slug} col={col} />
+                  {seasonCollections.map((col) => (
+                    <CollectionCard
+                      key={col.slug}
+                      col={col}
+                      eyebrow="By Season"
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Home Essentials: the everyday-utility set. Its own group rather
+                than a room, because it spans rooms. */}
+            {essentialsCollections.length > 0 && (
+              <div className="mb-14">
+                <h2 className="font-serif text-2xl font-semibold text-warm-dark mb-6">
+                  Home Essentials
+                </h2>
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                  {essentialsCollections.map((col) => (
+                    <CollectionCard
+                      key={col.slug}
+                      col={col}
+                      eyebrow="Home Essentials"
+                    />
                   ))}
                 </div>
               </div>
@@ -266,7 +341,8 @@ function CollectionsPage() {
 
             {/* Empty state */}
             {roomCollections.length === 0 &&
-              styleCollections.length === 0 &&
+              seasonCollections.length === 0 &&
+              essentialsCollections.length === 0 &&
               otherCollections.length === 0 && (
                 <div className="py-10 text-center">
                   <p className="text-lg text-warm-gray">No collections yet.</p>

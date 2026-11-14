@@ -47,6 +47,91 @@ cat > .vercel/output/config.json <<'JSON'
   "version": 3,
   "redirects": [
     {
+      "source": "/styles",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/organic-modern",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/minimalist",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/farmhouse",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/coastal",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/cozy",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/modern",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/boho",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/glam",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/style/traditional",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/organic-modern",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/minimalist",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/farmhouse",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/coastal",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/cozy",
+      "destination": "/collections",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/outdoor",
+      "destination": "/collection/patio",
+      "statusCode": 301
+    },
+    {
+      "source": "/room/outdoor",
+      "destination": "/room/patio",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/moody-tablescape-edit",
       "destination": "/collections/moody-thanksgiving-edit",
       "permanent": true
