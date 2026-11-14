@@ -40,9 +40,9 @@ const CONFIG: JournalArticleConfig = {
   datePublished: "2026-10-18",
   datePublishedLabel: "October 18, 2026",
   hero: {
-    jpg: "/images/blog-sunday-reset.jpg",
-    webp: "/images/blog-sunday-reset.webp",
-    alt: "An open blank planner with a brass pen and a mug of coffee on an oak counter with folded dish towels, stacked plates and a bread basket in soft morning light",
+    jpg: "/images/blog-sunday-reset-v2.jpg",
+    webp: "/images/blog-sunday-reset-v2.webp",
+    alt: "An open weekly planner with a gold pen and a latte on a marble kitchen island, with autumn blooms, a woven tray and a lit amber candle beside it",
   },
   intro: [
     "Sunday resets work because they front-load the week's two biggest stressors, food decisions and household chaos, into one focused block. Two hours, then you're done.",

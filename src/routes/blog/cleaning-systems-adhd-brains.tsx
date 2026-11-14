@@ -40,9 +40,9 @@ const CONFIG: JournalArticleConfig = {
   datePublished: "2026-10-18",
   datePublishedLabel: "October 18, 2026",
   hero: {
-    jpg: "/images/blog-cleaning-systems-adhd.jpg",
-    webp: "/images/blog-cleaning-systems-adhd.webp",
-    alt: "Open woven storage baskets and a clear bin of folded linens on an oak shelf above a bench with a tray holding keys and a wallet",
+    jpg: "/images/blog-cleaning-systems-adhd-v2.jpg",
+    webp: "/images/blog-cleaning-systems-adhd-v2.webp",
+    alt: "A spray bottle of clear cleaner and a dish of keys on an oak island, with open shelving, a bench with a tote and the door in the background",
   },
   intro: [
     'Most cleaning systems were designed by people who\'ve never lost 40 minutes to reorganizing a drawer they opened "for one second." These ten were chosen because they work with ADHD traits, not against them.',

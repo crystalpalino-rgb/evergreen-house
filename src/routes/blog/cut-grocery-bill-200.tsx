@@ -33,9 +33,9 @@ const CONFIG: JournalArticleConfig = {
   datePublished: "2026-10-18",
   datePublishedLabel: "October 18, 2026",
   hero: {
-    jpg: "/images/blog-cut-grocery-bill.jpg",
-    webp: "/images/blog-cut-grocery-bill.webp",
-    alt: "A canvas tote of crisp apples, a yellow onion and leafy greens on a warm oak counter beside glass jars of pantry staples, folded paper freezer packages and a blank meal planning notepad",
+    jpg: "/images/blog-cut-grocery-bill-v2.jpg",
+    webp: "/images/blog-cut-grocery-bill-v2.webp",
+    alt: "A tablet showing a meal plan for the week on a marble counter with a gold pen, butternut squash and brussels sprouts on a wooden board, a cream Dutch oven and a lit candle",
   },
   intro: [
     "Groceries are one of the biggest flexible expenses in any household, which means they're also one of the biggest opportunities. Most families can cut $150-$250 a month without eating worse. Here's how.",
