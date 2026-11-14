@@ -73,12 +73,31 @@ for (const s of sections) {
 }
 ok(html.includes("Shop the full edit") && html.includes('href="/collections/holiday-hosting-edit"'), "full edit link");
 
-// Art.
-ok(html.includes('/images/home-shop-the-look-hero-bright.webp'), "hero webp source");
-ok(html.includes('/images/home-shop-the-look-hero-bright.jpg'), "hero jpg fallback");
-ok(html.includes('/images/home-shop-the-look-card-bright.webp'), "4:5 card webp for phones");
+// Art: the regraded bright2 files.
+ok(html.includes('/images/home-shop-the-look-hero-bright2.webp'), "hero webp source");
+ok(html.includes('/images/home-shop-the-look-hero-bright2.jpg'), "hero jpg fallback");
+ok(html.includes('/images/home-shop-the-look-card-bright2.webp'), "4:5 card webp for phones");
+ok(html.includes('/images/home-shop-the-look-card-bright2.jpg'), "4:5 card jpg for phones");
+ok(!/home-shop-the-look-hero-bright\./.test(html), "no stale hero-bright on the homepage");
+ok(!/home-shop-the-look-card-bright\./.test(html), "no stale card-bright on the homepage");
 ok(/width="1600" height="900"/.test(html), "explicit dimensions on the art");
 ok(html.includes('data-pin-description="The Holiday Hosting Table'), "pin description on the art");
+
+// Banner height: a fixed band, not the art's 16:9 ratio, so the section stops
+// outranking the 680px hero. 420px on phones, 435px from sm up.
+ok(
+  /relative h-\[420px\] w-full sm:h-\[435px\]/.test(html),
+  "banner band is height-capped (420px phones, 435px desktop)",
+);
+
+// The /collections Holiday Hosting tile wears the same regraded card art.
+const collections = await get("/collections");
+const colHtml = await collections.text();
+ok(collections.status === 200, "/collections 200", `status=${collections.status}`);
+ok(
+  colHtml.includes("/images/home-shop-the-look-card-bright2.jpg"),
+  "/collections Holiday Hosting tile uses the regraded card art",
+);
 
 // Nothing stale.
 ok(!html.includes("Trending Finds"), "no 'Trending Finds' heading");
