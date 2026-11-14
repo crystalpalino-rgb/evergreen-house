@@ -53,7 +53,8 @@ export const RESET_LIST: StorefrontList = {
 
 /**
  * The Reset List is not seasonal, so it has ONE flag with no switch-off date.
- * It governs both placements: homepage THE CURRENT EDIT and /room/kitchen.
+ * It governs every placement: homepage THE CURRENT EDIT, /room/kitchen and
+ * /room/office.
  */
 export const SHOW_RESET_LIST = true;
 
