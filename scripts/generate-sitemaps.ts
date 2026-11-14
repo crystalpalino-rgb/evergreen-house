@@ -164,6 +164,11 @@ async function main() {
     { loc: "/privacy", priority: "0.4", changefreq: "monthly" },
     { loc: "/blog", priority: "0.8", changefreq: "weekly" },
     {
+      loc: "/blog/the-reset-list-17-finds",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
       loc: "/blog/cheap-things-that-make-your-home-look-expensive",
       priority: "0.7",
       changefreq: "monthly",
