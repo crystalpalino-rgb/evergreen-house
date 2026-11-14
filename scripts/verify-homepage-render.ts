@@ -74,9 +74,9 @@ for (const s of sections) {
 ok(html.includes("Shop the full edit") && html.includes('href="/collections/holiday-hosting-edit"'), "full edit link");
 
 // Art.
-ok(html.includes('/images/shop-the-look-hero.webp'), "hero webp source");
-ok(html.includes('/images/shop-the-look-hero.jpg'), "hero jpg fallback");
-ok(html.includes('/images/shop-the-look-card.webp'), "4:5 card webp for phones");
+ok(html.includes('/images/home-shop-the-look-hero-bright.webp'), "hero webp source");
+ok(html.includes('/images/home-shop-the-look-hero-bright.jpg'), "hero jpg fallback");
+ok(html.includes('/images/home-shop-the-look-card-bright.webp'), "4:5 card webp for phones");
 ok(/width="1600" height="900"/.test(html), "explicit dimensions on the art");
 ok(html.includes('data-pin-description="The Holiday Hosting Table'), "pin description on the art");
 

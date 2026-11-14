@@ -86,6 +86,12 @@
       "group": "Collection art"
     },
     {
+      "path": "/images/edit-holiday-hosting-edit-card-bright",
+      "thumb": "/images/edit-holiday-hosting-edit-card-bright.jpg",
+      "label": "Holiday Hosting Edit Card Bright",
+      "group": "Collection art"
+    },
+    {
       "path": "/images/edit-holiday-hosting-edit-hero",
       "thumb": "/images/edit-holiday-hosting-edit-hero.jpg",
       "label": "Holiday Hosting Edit Hero",
@@ -383,6 +389,18 @@
       "path": "/images/holiday-edit-hero-2026",
       "thumb": "/images/holiday-edit-hero-2026.jpg",
       "label": "Holiday Edit Hero 2026",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/home-shop-the-look-card-bright",
+      "thumb": "/images/home-shop-the-look-card-bright.jpg",
+      "label": "Home Shop The Look Card Bright",
+      "group": "Site art"
+    },
+    {
+      "path": "/images/home-shop-the-look-hero-bright",
+      "thumb": "/images/home-shop-the-look-hero-bright.jpg",
+      "label": "Home Shop The Look Hero Bright",
       "group": "Site art"
     },
     {
