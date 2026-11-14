@@ -60,6 +60,13 @@ const roomPhotos: Record<string, string> = {
   entryway: "/images/living-room.jpg",
   laundry: "/images/organization.jpg",
   pantry: "/images/kitchen.jpg",
+  /* The seasonal and organizing rooms reuse the collection art they are
+     siblings of, so /room/<slug> and /collection/<slug> open on the same photo. */
+  fall: "/images/collection-autumn-warmth-hero.jpg",
+  holiday: "/images/holiday-edit-hero-2026.jpg",
+  organization: "/images/organization.jpg",
+  spring: "/images/living-room.jpg",
+  summer: "/images/patio.jpg",
 };
 
 const roomEditorial: Record<string, { intro: string; whatToLookFor: string[] }> = {
@@ -248,6 +255,33 @@ function RoomPage() {
     })),
   );
 
+  /* One header body for both hero states: only the band around the title
+     changes when a room has no photo. */
+  const heroBody = (
+    <>
+      <a href="/" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12" />
+          <polyline points="12 19 5 12 12 5" />
+        </svg>
+        Back to Home
+      </a>
+      <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{roomName}</h1>
+      {unavailable ? (
+        <p className="mt-4 text-lg text-warm-gray">
+          Our product library is temporarily unavailable. Please try this page again in a moment.
+        </p>
+      ) : (
+        <p className="mt-4 text-lg text-warm-gray">{products.length} {products.length === 1 ? "product" : "products"} curated for your {roomName.toLowerCase()}</p>
+      )}
+      {editorial && (
+        <p className="mt-6 max-w-3xl text-base leading-relaxed text-warm-gray">
+          {editorial.intro}
+        </p>
+      )}
+    </>
+  );
+
   return (
     <>
       {/* Pinterest ViewContent: one event per view of this room. */}
@@ -269,47 +303,34 @@ function RoomPage() {
             }}
           />
         )}
-        <section className="relative overflow-hidden">
-            {roomPhoto ? (
-              <>
-                <img
-                  src={roomPhoto}
-                  alt={`${roomName} - Evergreen House`}
-                  width={1200}
-                  height={800}
-                  fetchpriority="high"
-                  loading="eager"
-                  decoding="sync"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-white/50" />
-              </>
-            ) : (
-              <div className="absolute inset-0 bg-cream" />
-            )}
-          <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">
-            <a href="/" className="inline-flex items-center gap-1.5 text-sm text-taupe transition-colors hover:text-terracotta mb-6">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12" />
-                <polyline points="12 19 5 12 12 5" />
-              </svg>
-              Back to Home
-            </a>
-            <h1 className="font-serif text-4xl font-bold leading-tight text-warm-dark sm:text-5xl lg:text-6xl">{roomName}</h1>
-            {unavailable ? (
-              <p className="mt-4 text-lg text-warm-gray">
-                Our product library is temporarily unavailable. Please try this page again in a moment.
-              </p>
-            ) : (
-              <p className="mt-4 text-lg text-warm-gray">{products.length} {products.length === 1 ? "product" : "products"} curated for your {roomName.toLowerCase()}</p>
-            )}
-            {editorial && (
-              <p className="mt-6 max-w-3xl text-base leading-relaxed text-warm-gray">
-                {editorial.intro}
-              </p>
-            )}
-          </div>
-        </section>
+        {/* Hero. With a room photo the picture runs full width behind the
+            title, kept centered, with a soft left-hand white scrim so the dark
+            type holds on bright and dark art alike. With no photo the header
+            is a compact text band, never a tall empty cream panel. */}
+        {roomPhoto ? (
+          <section className="relative overflow-hidden">
+            <img
+              src={roomPhoto}
+              alt={`${roomName} - Evergreen House`}
+              width={1200}
+              height={800}
+              fetchpriority="high"
+              loading="eager"
+              decoding="sync"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-white/60 sm:bg-white/35" />
+            <div
+              className="absolute inset-0"
+              style={{ backgroundImage: "linear-gradient(90deg, rgba(255,255,255,0.88) 0%, rgba(255,255,255,0.72) 45%, rgba(255,255,255,0.32) 74%, rgba(255,255,255,0) 100%)" }}
+            />
+            <div className="relative mx-auto max-w-7xl px-4 py-10 sm:px-6 sm:py-14 lg:py-16">{heroBody}</div>
+          </section>
+        ) : (
+          <section className="border-b border-beige/20 bg-cream/40">
+            <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-8">{heroBody}</div>
+          </section>
+        )}
 
         {/* What to Look For */}
         {editorial && editorial.whatToLookFor.length > 0 && (
