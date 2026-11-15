@@ -28,6 +28,12 @@
 export const HIDDEN_ROOMS: readonly string[] = [
   "loungewear", // 30 active clothing rows, waiting on owner approval
   "thanksgiving", // 52 seasonal collection rows, live on the Thanksgiving edits
+  /* 2026-11-15, shop audit item 4: the books and the board game came off the
+     Bedroom and Living Room pages. They are real, active, buyable rows with no
+     room page of their own, so they park here until a books or games
+     collection is approved. */
+  "books",
+  "games",
 ];
 
 const HIDDEN_ROOM_SET = new Set<string>(HIDDEN_ROOMS);

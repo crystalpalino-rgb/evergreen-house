@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound, redirect } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -11,6 +11,7 @@ import { HolidaySets } from "~/components/HolidaySets";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getProductsByRoom } from "~/lib/intelligence";
+import { MERGED_COLLECTION_REDIRECTS } from "~/lib/legacy-redirects";
 import { isRoomPublic } from "~/lib/room-visibility";
 import { generateRoomMetadata } from "~/lib/seo";
 import {
@@ -163,6 +164,14 @@ const roomEditorial: Record<string, { intro: string; whatToLookFor: string[] }> 
 };
 
 export const Route = createFileRoute("/room/$room")({
+  /* A room that has been merged into another answers a permanent redirect here,
+     from the same map /collection/<slug> and serve.ts read, so the dev server
+     and the published server agree instead of one redirecting and the other
+     rendering an empty page (shop audit item 4: Laundry into Bathroom). */
+  beforeLoad: ({ params }) => {
+    const target = MERGED_COLLECTION_REDIRECTS[`/room/${params.room}`];
+    if (target) throw redirect({ href: target, statusCode: 301 });
+  },
   loader: async ({ params }) => {
     // One source of truth decides whether a room page exists: the public room
     // list in src/lib/room-visibility.ts. Checked before any product query, so a
