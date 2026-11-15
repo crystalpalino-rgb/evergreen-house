@@ -16,6 +16,10 @@ import pinsManifest from "../src/data/pins/manifest.json";
 // The public room list is shared with the site routes, so a hidden room can
 // never be listed here even though its products are active in the database.
 import { publicRoomSlugs } from "../src/lib/room-visibility";
+// Retired collection pages answer a permanent redirect (src/lib/legacy-redirects.ts),
+// so they must not be advertised in a sitemap: a sitemap is a list of pages we
+// want indexed, and a URL that 301s is not one of them.
+import { RETIRED_COLLECTION_SLUGS } from "../src/lib/legacy-redirects";
 
 const SITE_URL = "https://evergreenhouse.co";
 
@@ -105,6 +109,15 @@ async function main() {
   ` as unknown as CollectionRow[];
 
   console.log(`Found ${collectionRows.length} active collections`);
+
+  // A collection whose page redirects is not a page we want indexed.
+  const retiredSlugs = new Set(RETIRED_COLLECTION_SLUGS);
+  const liveCollectionRows = collectionRows.filter(
+    (c) => !retiredSlugs.has(c.slug),
+  );
+  console.log(
+    `  ${liveCollectionRows.length} listed, ${collectionRows.length - liveCollectionRows.length} retired and redirecting`,
+  );
 
   console.log("Fetching published edits...");
   const editRows = await db`
@@ -307,7 +320,7 @@ ${rooms.map((room) => `  <url>
   // ── 5. Collections Sitemap ──
   const collectionsXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${collectionRows.map((c) => {
+${liveCollectionRows.map((c) => {
     const lastmod = formatDate(c.updated_at);
     return `  <url>
     <loc>${SITE_URL}/collection/${xmlEscape(c.slug)}</loc>

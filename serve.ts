@@ -11,7 +11,7 @@
 // the takeover works across user boundaries.
 import handler from "./dist/server/server.js";
 import { isAuthenticatedCookieHeader } from "./src/lib/admin-auth.ts";
-import { LEGACY_COLLECTION_REDIRECTS, MERGED_COLLECTION_REDIRECTS, RETIRED_STYLE_REDIRECTS } from "./src/lib/legacy-redirects.ts";
+import { LEGACY_COLLECTION_REDIRECTS, MERGED_COLLECTION_REDIRECTS, RETIRED_EDIT_REDIRECTS, RETIRED_STYLE_REDIRECTS } from "./src/lib/legacy-redirects.ts";
 
 // Pinned, NOT read from the environment. The published preview URL
 // (<label>.<PUBLIC_SITE_DOMAIN>) is reverse-proxied to 0.0.0.0:3000 inside the
@@ -43,6 +43,9 @@ const LEGACY_REDIRECTS: Record<string, string> = {
   ...RETIRED_STYLE_REDIRECTS,
   // Outdoor Living folded into Patio & Outdoor, the same 18 products.
   ...MERGED_COLLECTION_REDIRECTS,
+  // A published edit retired as a page: the Thanksgiving Welcome Edit folded
+  // into Entryway on 2026-11-15, so its URL and its short path both land there.
+  ...RETIRED_EDIT_REDIRECTS,
 };
 
 // ── Content-Security-Policy ──

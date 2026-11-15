@@ -173,7 +173,12 @@ cat > .vercel/output/config.json <<'JSON'
     },
     {
       "source": "/collections/thanksgiving-welcome",
-      "destination": "/collections/thanksgiving-welcome-edit",
+      "destination": "/collection/entryway",
+      "statusCode": 301
+    },
+    {
+      "source": "/collections/thanksgiving-welcome-edit",
+      "destination": "/collection/entryway",
       "statusCode": 301
     },
     {

@@ -13,7 +13,10 @@ import { EditProductCard } from "~/components/EditProductCard";
 import { EditCard } from "~/components/EditCard";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { EDIT_STOREFRONT_LISTS } from "~/lib/storefront-lists";
-import { LEGACY_COLLECTION_REDIRECTS } from "~/lib/legacy-redirects";
+import {
+  LEGACY_COLLECTION_REDIRECTS,
+  RETIRED_EDIT_REDIRECTS,
+} from "~/lib/legacy-redirects";
 import {
   artSources,
   getEdit,
@@ -62,11 +65,16 @@ function metaDescription(edit: EditCollection): string {
 export const Route = createFileRoute("/collections/$editSlug")({
   // Retired short paths first, before any lookup: an old pin that lands on
   // /collections/holiday-hosting must reach /collections/holiday-hosting-edit
-  // with a permanent redirect, never a 404. Production and serve.ts answer the
-  // same eight paths from the same map (src/lib/legacy-redirects.ts); this
-  // guard is what makes the dev server answer identically.
+  // with a permanent redirect, never a 404. A retired edit (one that is no
+  // longer published because its set was folded into a room page) answers the
+  // same way, from the map beside it: /collections/thanksgiving-welcome-edit
+  // lands on /collection/entryway. Production and serve.ts answer from the same
+  // maps (src/lib/legacy-redirects.ts); this guard is what makes the dev server
+  // answer identically.
   beforeLoad: ({ params }) => {
-    const legacy = LEGACY_COLLECTION_REDIRECTS[`/collections/${params.editSlug}`];
+    const path = `/collections/${params.editSlug}`;
+    const legacy =
+      LEGACY_COLLECTION_REDIRECTS[path] ?? RETIRED_EDIT_REDIRECTS[path];
     if (legacy) throw redirect({ href: legacy, statusCode: 301 });
   },
   loader: async ({ params }): Promise<EditLoaderData> => {
