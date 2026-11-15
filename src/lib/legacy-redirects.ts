@@ -75,6 +75,19 @@ export const RETIRED_STYLE_REDIRECTS: Record<string, string> = {
 export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
   "/collection/outdoor": "/collection/patio",
   "/room/outdoor": "/room/patio",
+  /* 2026-11-15, shop audit item 4: the Laundry Room and Home Essentials tiles
+     come off /collections, and their pages follow them.
+     Laundry held 3 products and all 3 now list on the pages they belong to (the
+     storage basket on Bathroom, the storage bins and the pedal bin on Kitchen),
+     so the room resolves 0 products. Home Essentials was a room = 'storage'
+     rule over one product, a pantry basket, which now lists on Pantry.
+     Both rows stay in the collections table: nothing is deleted, the tile and
+     the page simply stop being offered, and Bathroom and Kitchen are the pages
+     a shopper looking for a laundry room is actually after. */
+  "/collection/laundry": "/collection/bathroom",
+  "/room/laundry": "/room/bathroom",
+  "/collection/home-essentials": "/collection/kitchen",
+  "/room/home-essentials": "/room/kitchen",
 };
 
 /**

@@ -25,8 +25,10 @@ const NAV_ITEMS = [
 const NAV_LINK_CLASS =
   "text-[0.78rem] font-semibold uppercase tracking-[0.14em] transition-colors";
 
-/* All ten rooms. The dropdown is the only home these need now that BY ROOM is a
-   top level item, so it must stay complete. */
+/* The nine rooms that have a page (shop audit item 4, 2026-11-15: the Laundry
+   Room tile and page retired into Bathroom, so the link goes with it). The
+   dropdown is the only home these need now that BY ROOM is a top level item, so
+   it must stay complete. */
 const ROOM_ITEMS: ShopSubItem[] = [
   { label: "Living Room", href: "/room/living-room" },
   { label: "Bedroom", href: "/room/bedroom" },
@@ -36,7 +38,6 @@ const ROOM_ITEMS: ShopSubItem[] = [
   { label: "Home Office", href: "/room/office" },
   { label: "Entryway", href: "/room/entryway" },
   { label: "Outdoor", href: "/room/patio" },
-  { label: "Laundry Room", href: "/room/laundry" },
   { label: "Pantry", href: "/room/pantry" },
 ];
 
