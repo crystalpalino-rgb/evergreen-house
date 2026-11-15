@@ -4,7 +4,7 @@ import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { EditCard } from "~/components/EditCard";
 import { getEditSummaries, type EditCardData } from "~/lib/edits";
-import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
+import { getAllCollections, getCollectionVisibleProductCount } from "~/lib/intelligence";
 import { collectionPageHref, RETIRED_COLLECTION_SLUGS } from "~/lib/legacy-redirects";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/collections")({
       const withCounts = await Promise.all(
         collections.map(async (col: Collection) => {
           try {
-            const count = await getCollectionProductCount(col.slug);
+            const count = await getCollectionVisibleProductCount(col.slug);
             return { ...col, productCount: count };
           } catch {
             return { ...col, productCount: 0 };

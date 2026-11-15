@@ -183,6 +183,16 @@
       "statusCode": 301
     },
     {
+      "source": "/collection/pantry",
+      "destination": "/room/pantry",
+      "statusCode": 301
+    },
+    {
+      "source": "/room/home-office",
+      "destination": "/room/office",
+      "statusCode": 301
+    },
+    {
       "source": "/room/holiday",
       "destination": "/collection/holiday",
       "statusCode": 301

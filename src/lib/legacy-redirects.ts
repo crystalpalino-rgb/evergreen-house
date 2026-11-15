@@ -114,6 +114,11 @@ export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
   "/room/laundry": "/room/bathroom",
   "/collection/home-essentials": "/room/kitchen",
   "/room/home-essentials": "/room/kitchen",
+  /* 2026-11-15, shop audit item 9: the Home Office room page has always lived at
+     /room/office (the slug every office row carries, and the URL the header, the
+     footer and the homepage Explore tile link). /room/home-office was never a
+     page and answered 404, so the obvious guess redirects to the real one. */
+  "/room/home-office": "/room/office",
 };
 
 /**
@@ -127,7 +132,7 @@ export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
  * and the homepage Explore block already link, it is the one the room sitemap
  * lists, and it is the one the Room Card Standard and the room editorial copy
  * were written for. /collection/<slug> answers a permanent redirect (301) to it
- * for the nine shopping rooms below.
+ * for the ten shopping rooms below.
  *
  * Holiday is the one exception, and it points the other way. /collection/holiday
  * is the Christmas hub every entry point uses (the HOLIDAY nav item, the
@@ -150,10 +155,17 @@ export const ROOM_ROUTE_REDIRECTS: Record<string, string> = {
   "/collection/patio": "/room/patio",
   "/collection/entryway": "/room/entryway",
   "/collection/nursery": "/room/nursery",
+  /* 2026-11-15, shop audit item 9: Pantry becomes the tenth shopping room. Its
+     page has been live at /room/pantry all along, but there was no collections
+     row behind it, so /collection/pantry answered 404 and the room was missing
+     from /collections. The row and its room rule are added by
+     scripts/add-pantry-collection-item9.mjs, and the collection URL answers the
+     same permanent redirect as every other room. */
+  "/collection/pantry": "/room/pantry",
   "/room/holiday": "/collection/holiday",
 };
 
-/** The nine room slugs whose canonical page is /room/<slug>. */
+/** The ten room slugs whose canonical page is /room/<slug>. */
 export const CANONICAL_ROOM_SLUGS: readonly string[] = Object.keys(
   ROOM_ROUTE_REDIRECTS
 )

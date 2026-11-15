@@ -34,6 +34,12 @@ export const HIDDEN_ROOMS: readonly string[] = [
      collection is approved. */
   "books",
   "games",
+  /* 2026-11-15, shop audit item 9: the ingestible supplements that were sitting
+     in Bathroom and Pantry (Force Factor hair growth, Ballerina Farm whey, and
+     BodyHealth PerfectAmino) came off those pages. They stay active and buyable
+     rows, so they park here until a supplements collection is approved. Applied
+     by scripts/park-supplements-item9.mjs. */
+  "held",
 ];
 
 const HIDDEN_ROOM_SET = new Set<string>(HIDDEN_ROOMS);

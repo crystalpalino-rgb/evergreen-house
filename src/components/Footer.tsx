@@ -27,7 +27,11 @@ export function Footer() {
                 { label: "Bedroom", href: "/room/bedroom" },
                 { label: "Kitchen", href: "/room/kitchen" },
                 { label: "Bathroom", href: "/room/bathroom" },
+                { label: "Dining Room", href: "/room/dining-room" },
+                { label: "Home Office", href: "/room/office" },
+                { label: "Entryway", href: "/room/entryway" },
                 { label: "Outdoor", href: "/room/patio" },
+                { label: "Pantry", href: "/room/pantry" },
                 { label: "Apparel", href: "/apparel" },
                 { label: "All Rooms", href: "/rooms" },
               ].map((room) => (
