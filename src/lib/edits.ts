@@ -1,5 +1,6 @@
 import { sql } from "~/db";
 import manifest from "~/data/edits/manifest.json";
+import { orderForLead } from "~/lib/lead-order";
 
 /**
  * "Shop the Edit" collections.
@@ -401,6 +402,7 @@ export interface CuratedItemRef {
  */
 export async function getCuratedProducts(
   items: CuratedItemRef[],
+  pageKey?: string,
 ): Promise<EditProduct[]> {
   const wanted = items.filter((i) => Number.isInteger(i?.id));
   if (wanted.length === 0) return [];
@@ -452,14 +454,18 @@ export async function getCuratedProducts(
       priceSetAt: item.price_override != null ? (item.price_set_at ?? null) : null,
     });
   }
-  return out;
+  // The lead gate (shop audit item 8) runs only for a page that names itself.
+  // The curated order is kept inside each band, so an Edit's editorial sequence
+  // survives; what changes is that no card which fails a gate opens the page.
+  // Pin pages and the homepage sections call without a key and are untouched.
+  return pageKey ? orderForLead(out, pageKey) : out;
 }
 
-/** Live product rows for one edit, in curated order. */
+/** Live product rows for one edit, in lead order. */
 export async function getEditProducts(
   edit: EditCollection,
 ): Promise<EditProduct[]> {
-  return getCuratedProducts(edit.items);
+  return getCuratedProducts(edit.items, edit.slug);
 }
 
 /** Product count per edit, for the cards and the /collections list. */
