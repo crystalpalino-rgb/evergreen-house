@@ -1,11 +1,12 @@
 /**
  * Retired collection URLs: old short paths to their live "-edit" pages.
  *
- * Each of these eight paths was a published collection page before the edits
- * were renamed to `/collections/<slug>-edit`. Live Pinterest pins still point
- * at the short form, so every one of them has to answer a permanent redirect
- * instead of a 404. The mapping is one to one: the short path only ever had one
- * page behind it.
+ * Each of these paths was a published collection page before the edits were
+ * renamed to `/collections/<slug>-edit`. Live Pinterest pins still point at the
+ * short form, so every one of them has to answer a permanent redirect instead of
+ * a 404. The mapping is one to one: the short path only ever had one page
+ * behind it. One short path (thanksgiving-welcome) now lands on Entryway, where
+ * its set was folded in 2026-11-15, rather than on its own edit page.
  *
  * This map is the single source for the two places the app answers from:
  * - `src/routes/collections/$editSlug.tsx` beforeLoad, which covers the vite
@@ -28,8 +29,33 @@ export const LEGACY_COLLECTION_REDIRECTS: Record<string, string> = {
   "/collections/moody-thanksgiving": "/collections/moody-thanksgiving-edit",
   "/collections/thanksgiving-hosting":
     "/collections/thanksgiving-hosting-edit",
-  "/collections/thanksgiving-welcome":
-    "/collections/thanksgiving-welcome-edit",
+  /* 2026-11-15, shop audit item 4: the Welcome set is folded into Entryway, so
+     this short path goes straight to Entryway instead of taking a second hop
+     through the edit page below. */
+  "/collections/thanksgiving-welcome": "/collection/entryway",
+};
+
+/**
+ * A published edit that is retired as a page, with the URL it now lands on.
+ *
+ * Separate from the short-path map above because these are not renames: the
+ * edit itself stops being published, so there is no `-edit` page behind the
+ * URL any more. Every one of them still has a live pin pointing at it, and a
+ * pin that lands on a 404 is worse than no pin, so each answers a permanent
+ * redirect to the page that now carries the same products.
+ *
+ * Read by `src/routes/collections/$editSlug.tsx` beforeLoad (dev server and any
+ * request that reaches the app) and by `LEGACY_REDIRECTS` in `serve.ts`.
+ */
+export const RETIRED_EDIT_REDIRECTS: Record<string, string> = {
+  /* 2026-11-15, shop audit item 4: The Thanksgiving Welcome Edit is folded
+     into Entryway. Its 12 products (wreaths, doormat, urn planters, baskets,
+     dried stems, cattail pumpkins) now list on /collection/entryway and
+     /room/entryway, and the tile comes off Shop the Edits. The live pin on the
+     THANKSGIVING WELCOME board points here, so the URL redirects rather than
+     404s. The edit row stays in the table as a draft, so the fold is
+     reversible. */
+  "/collections/thanksgiving-welcome-edit": "/collection/entryway",
 };
 
 /**
