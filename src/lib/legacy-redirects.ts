@@ -32,7 +32,7 @@ export const LEGACY_COLLECTION_REDIRECTS: Record<string, string> = {
   /* 2026-11-15, shop audit item 4: the Welcome set is folded into Entryway, so
      this short path goes straight to Entryway instead of taking a second hop
      through the edit page below. */
-  "/collections/thanksgiving-welcome": "/collection/entryway",
+  "/collections/thanksgiving-welcome": "/room/entryway",
 };
 
 /**
@@ -50,12 +50,12 @@ export const LEGACY_COLLECTION_REDIRECTS: Record<string, string> = {
 export const RETIRED_EDIT_REDIRECTS: Record<string, string> = {
   /* 2026-11-15, shop audit item 4: The Thanksgiving Welcome Edit is folded
      into Entryway. Its 12 products (wreaths, doormat, urn planters, baskets,
-     dried stems, cattail pumpkins) now list on /collection/entryway and
-     /room/entryway, and the tile comes off Shop the Edits. The live pin on the
+     dried stems, cattail pumpkins) now list on /room/entryway, and the tile
+     comes off Shop the Edits. The live pin on the
      THANKSGIVING WELCOME board points here, so the URL redirects rather than
      404s. The edit row stays in the table as a draft, so the fold is
      reversible. */
-  "/collections/thanksgiving-welcome-edit": "/collection/entryway",
+  "/collections/thanksgiving-welcome-edit": "/room/entryway",
 };
 
 /**
@@ -99,7 +99,7 @@ export const RETIRED_STYLE_REDIRECTS: Record<string, string> = {
  * the empty /room/outdoor page (0 rows carry room = 'outdoor') redirect here.
  */
 export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
-  "/collection/outdoor": "/collection/patio",
+  "/collection/outdoor": "/room/patio",
   "/room/outdoor": "/room/patio",
   /* 2026-11-15, shop audit item 4: the Laundry Room and Home Essentials tiles
      come off /collections, and their pages follow them.
@@ -110,11 +110,67 @@ export const MERGED_COLLECTION_REDIRECTS: Record<string, string> = {
      Both rows stay in the collections table: nothing is deleted, the tile and
      the page simply stop being offered, and Bathroom and Kitchen are the pages
      a shopper looking for a laundry room is actually after. */
-  "/collection/laundry": "/collection/bathroom",
+  "/collection/laundry": "/room/bathroom",
   "/room/laundry": "/room/bathroom",
-  "/collection/home-essentials": "/collection/kitchen",
+  "/collection/home-essentials": "/room/kitchen",
   "/room/home-essentials": "/room/kitchen",
 };
+
+/**
+ * One route per room (shop audit item 5, 2026-11-15).
+ *
+ * Every room used to answer on two URLs, /room/<slug> and /collection/<slug>,
+ * with a different sort on each. That split the room's products, its ranking
+ * and its search signal across two pages that said the same thing.
+ *
+ * The canonical route is /room/<slug>: it is the URL the header nav, the footer
+ * and the homepage Explore block already link, it is the one the room sitemap
+ * lists, and it is the one the Room Card Standard and the room editorial copy
+ * were written for. /collection/<slug> answers a permanent redirect (301) to it
+ * for the nine shopping rooms below.
+ *
+ * Holiday is the one exception, and it points the other way. /collection/holiday
+ * is the Christmas hub every entry point uses (the HOLIDAY nav item, the
+ * homepage banner, the hero button, the four Holiday edit tiles), so it stays
+ * where it is and /room/holiday redirects to it.
+ *
+ * Seasons (fall, spring, summer) keep both routes: this item names the nine
+ * rooms and holiday, and the seasonal pages are a separate question.
+ *
+ * Every target below answers 200. A redirect to a redirect is never written
+ * here: the merged-room entries above already point straight at /room/<slug>.
+ */
+export const ROOM_ROUTE_REDIRECTS: Record<string, string> = {
+  "/collection/bedroom": "/room/bedroom",
+  "/collection/bathroom": "/room/bathroom",
+  "/collection/kitchen": "/room/kitchen",
+  "/collection/dining-room": "/room/dining-room",
+  "/collection/living-room": "/room/living-room",
+  "/collection/office": "/room/office",
+  "/collection/patio": "/room/patio",
+  "/collection/entryway": "/room/entryway",
+  "/collection/nursery": "/room/nursery",
+  "/room/holiday": "/collection/holiday",
+};
+
+/** The nine room slugs whose canonical page is /room/<slug>. */
+export const CANONICAL_ROOM_SLUGS: readonly string[] = Object.keys(
+  ROOM_ROUTE_REDIRECTS
+)
+  .filter((path) => path.startsWith("/collection/"))
+  .map((path) => path.slice("/collection/".length));
+
+/**
+ * The one URL a shopper should be sent to for a collection slug, so a tile, a
+ * card or a related-collection link never points at a page that only redirects.
+ * Rooms go to /room/<slug>, everything else (seasons, holiday) keeps
+ * /collection/<slug>.
+ */
+export function collectionPageHref(slug: string): string {
+  return CANONICAL_ROOM_SLUGS.includes(slug)
+    ? `/room/${slug}`
+    : `/collection/${slug}`;
+}
 
 /**
  * Collection slugs whose /collection/<slug> page is retired and answers a

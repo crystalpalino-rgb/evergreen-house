@@ -79,7 +79,7 @@
     },
     {
       "source": "/collection/outdoor",
-      "destination": "/collection/patio",
+      "destination": "/room/patio",
       "statusCode": 301
     },
     {
@@ -129,12 +129,62 @@
     },
     {
       "source": "/collections/thanksgiving-welcome",
-      "destination": "/collection/entryway",
+      "destination": "/room/entryway",
       "statusCode": 301
     },
     {
       "source": "/collections/thanksgiving-welcome-edit",
-      "destination": "/collection/entryway",
+      "destination": "/room/entryway",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/bedroom",
+      "destination": "/room/bedroom",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/bathroom",
+      "destination": "/room/bathroom",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/kitchen",
+      "destination": "/room/kitchen",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/dining-room",
+      "destination": "/room/dining-room",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/living-room",
+      "destination": "/room/living-room",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/office",
+      "destination": "/room/office",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/patio",
+      "destination": "/room/patio",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/entryway",
+      "destination": "/room/entryway",
+      "statusCode": 301
+    },
+    {
+      "source": "/collection/nursery",
+      "destination": "/room/nursery",
+      "statusCode": 301
+    },
+    {
+      "source": "/room/holiday",
+      "destination": "/collection/holiday",
       "statusCode": 301
     },
     {

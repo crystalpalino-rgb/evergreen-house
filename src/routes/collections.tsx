@@ -5,7 +5,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { EditCard } from "~/components/EditCard";
 import { getEditSummaries, type EditCardData } from "~/lib/edits";
 import { getAllCollections, getCollectionProductCount } from "~/lib/intelligence";
-import { RETIRED_COLLECTION_SLUGS } from "~/lib/legacy-redirects";
+import { collectionPageHref, RETIRED_COLLECTION_SLUGS } from "~/lib/legacy-redirects";
 import { generateStaticMetadata } from "~/lib/seo";
 import type { Collection } from "~/lib/types";
 
@@ -132,7 +132,7 @@ function CollectionCard({
   const label = col.display_name || col.name;
   return (
     <a
-      href={`/collection/${col.slug}`}
+      href={collectionPageHref(col.slug)}
       className="group rounded-2xl border border-beige/20 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:shadow-md overflow-hidden"
     >
       {/* Image placeholder */}
