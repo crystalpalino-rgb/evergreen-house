@@ -1,4 +1,4 @@
-import { createFileRoute, notFound, isNotFound } from "@tanstack/react-router";
+import { createFileRoute, notFound, isNotFound, redirect } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { ProductCard } from "~/components/ProductCard";
@@ -9,6 +9,7 @@ import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { HolidaySets } from "~/components/HolidaySets";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getCollection, getCollectionProducts, getAllCollections } from "~/lib/intelligence";
+import { MERGED_COLLECTION_REDIRECTS, RETIRED_STYLE_REDIRECTS } from "~/lib/legacy-redirects";
 import { isRoomPublic } from "~/lib/room-visibility";
 import { generateCollectionMetadata } from "~/lib/seo";
 import { getCollectionPageSchema, getFAQSchema, SITE_URL } from "~/lib/schema";
@@ -55,6 +56,18 @@ function getCollectionFAQs(
 }
 
 export const Route = createFileRoute("/collection/$collection")({
+  // Retired collection URLs first, before any lookup: By Style is gone and
+  // Outdoor Living is folded into Patio & Outdoor (owner decision 37,
+  // 2026-11-14), so those paths answer a permanent redirect instead of a 404 or
+  // a page the owner has retired. serve.ts and vercel.json answer the same paths
+  // from the same maps (src/lib/legacy-redirects.ts); this guard is what makes
+  // the dev server answer identically.
+  beforeLoad: ({ params }) => {
+    const path = `/collection/${params.collection}`;
+    const target =
+      RETIRED_STYLE_REDIRECTS[path] || MERGED_COLLECTION_REDIRECTS[path];
+    if (target) throw redirect({ href: target, statusCode: 301 });
+  },
   loader: async ({ params }) => {
     const slug = params.collection;
     // A collection slug can be the same string as a room slug, so the same public

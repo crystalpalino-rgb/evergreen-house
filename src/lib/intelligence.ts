@@ -7,6 +7,7 @@
 
 import { sql } from "~/db";
 import { canonicalProductSlug } from "~/lib/product-slug";
+import { dedupeProductsByListing } from "~/lib/product-dedupe";
 import type { Product, Collection, CollectionRule, FilterOptions, FilterOption } from "~/lib/types";
 
 // ── Filter types ──
@@ -336,7 +337,11 @@ export async function getCollectionProducts(slug: string): Promise<Product[]> {
     products = products.filter((p) => idSet.has(p.id));
   }
 
-  return products;
+  // 5. One entry per product per page. Duplicate rows of the same Amazon
+  // listing (a season import of an item already in the catalog) collapse here,
+  // in the resolver, so no collection page can render the same product twice
+  // and the counts on /collections match the cards on the page.
+  return dedupeProductsByListing(products);
 }
 
 /** Get product count for a collection (used by collections index) */

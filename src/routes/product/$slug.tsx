@@ -311,7 +311,8 @@ function ProductPage() {
                   </>
                 )}
 
-                {/* Room & style tags */}
+                {/* Room tag. No style tags: By Style is retired (owner decision
+                    37, 2026-11-14), so a product never links into a style page. */}
                 <div className="mt-4 flex flex-wrap gap-2">
                   {p.room && isRoomPublic(p.room) && (
                     <a
@@ -321,15 +322,6 @@ function ProductPage() {
                       {roomLabel}
                     </a>
                   )}
-                  {p.style?.map((s: string) => (
-                    <a
-                      key={s}
-                      href={`/style/${s}`}
-                      className="inline-block rounded-full bg-cream px-3 py-1 text-xs font-medium text-taupe transition-colors hover:bg-cream-dark"
-                    >
-                      {s.charAt(0).toUpperCase() + s.slice(1)}
-                    </a>
-                  ))}
                 </div>
 
                 {/* Editor note */}

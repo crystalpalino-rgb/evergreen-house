@@ -152,17 +152,11 @@ function EditorsPicksPage() {
               Looking for something specific?
             </h2>
             <p className="mt-3 text-warm-gray">
-              Browse by room or style to find exactly what your home needs.
+              Browse by room or collection to find exactly what your home needs.
             </p>
             <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="/styles"
-                className="inline-flex items-center gap-2 rounded-full border border-beige bg-white px-5 py-2.5 text-sm font-medium text-warm-dark transition-all hover:border-terracotta hover:text-terracotta hover:shadow-sm"
-              >
-                Shop by Style
-              </a>
-              <a
-                href="/#collections"
+                href="/collections"
                 className="inline-flex items-center gap-2 rounded-full border border-beige bg-white px-5 py-2.5 text-sm font-medium text-warm-dark transition-all hover:border-terracotta hover:text-terracotta hover:shadow-sm"
               >
                 Browse Collections
