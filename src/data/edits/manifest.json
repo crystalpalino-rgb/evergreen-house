@@ -311,14 +311,6 @@
           "raw_name": false
         },
         {
-          "id": 42,
-          "slug": "safavieh-lighting-collection-acer-modern-rustic",
-          "name": "SAFAVIEH Lighting Collection Acer Modern Rustic",
-          "display_title": "SAFAVIEH Lighting Collection Acer Modern Rustic",
-          "hook": "Quiet farmhouse bedside lamp that lights a book without glare.",
-          "raw_name": false
-        },
-        {
           "id": 52,
           "slug": "industrial-table-lamp-for-bedroom",
           "name": "Industrial Table Lamp for Bedroom",
@@ -364,22 +356,6 @@
           "name": "Amelie Home Chenille Knit Throw Blanket, Christmas Red",
           "display_title": "Amelie Home Red Chenille Knit Throw",
           "hook": "A red chenille throw sized to cover a whole lap.",
-          "raw_name": false
-        },
-        {
-          "id": 525,
-          "slug": "hofdeco-merino-wool-tartan-lumbar-pillow-cover-beige-red",
-          "name": "Hofdeco Merino Wool Tartan Lumbar Pillow Cover, Beige Red",
-          "display_title": "Hofdeco Merino Wool Tartan Lumbar Cover",
-          "hook": "Wool tartan that is warm to the touch, not just to look at.",
-          "raw_name": false
-        },
-        {
-          "id": 526,
-          "slug": "hofdeco-merino-wool-tartan-throw-pillow-cover-navy-red",
-          "name": "Hofdeco Merino Wool Tartan Throw Pillow Cover, Navy Red",
-          "display_title": "Hofdeco Merino Wool Tartan Pillow Cover",
-          "hook": "A navy wool tartan cover for the chair you read in.",
           "raw_name": false
         },
         {
@@ -530,14 +506,6 @@
           "raw_name": false
         },
         {
-          "id": 514,
-          "slug": "cluster-of-10-round-serving-bowls-gold",
-          "name": "Cluster of 10 Round Serving Bowls, Gold",
-          "display_title": "Cluster of 10 Round Serving Bowls, Gold",
-          "hook": "Ten small gold bowls so no one passes a dish.",
-          "raw_name": false
-        },
-        {
           "id": 515,
           "slug": "marquis-by-waterford-markham-old-fashioned-glasses-set-of-4",
           "name": "Marquis by Waterford Markham Old Fashioned Glasses, Set of 4",
@@ -570,14 +538,6 @@
           "raw_name": false
         },
         {
-          "id": 519,
-          "slug": "solino-home-linen-napkins-blue-and-green-plaid-set-of-4",
-          "name": "Solino Home Linen Napkins, Blue and Green Plaid, Set of 4",
-          "display_title": "Solino Home Plaid Linen Napkins, Set of 4",
-          "hook": "Washed linen napkins in plaid you can use past December.",
-          "raw_name": false
-        },
-        {
           "id": 520,
           "slug": "solino-home-linen-table-cloth-blue-and-green-plaid",
           "name": "Solino Home Linen Table Cloth, Blue and Green Plaid",
@@ -592,14 +552,6 @@
           "display_title": "DII Farmhouse Plaid Placemats, Set of 6",
           "hook": "Six red and green plaid placemats that set a whole table.",
           "raw_name": false
-        },
-        {
-          "id": 549,
-          "slug": "xph-christmas-bell-kitchen-towels-set-of-2",
-          "name": "XPH Christmas Bell Kitchen Towels, Set of 2",
-          "display_title": "XPH Christmas Bell Kitchen Towels, Set of 2",
-          "hook": "Two crisp microfiber towels printed with vintage Christmas bells.",
-          "raw_name": false
         }
       ]
     },
@@ -612,14 +564,6 @@
       "hero_image": "/images/edit-luxe-christmas-tree-edit-hero-bright",
       "card_image": "/images/edit-luxe-christmas-tree-edit-card-bright",
       "items": [
-        {
-          "id": 434,
-          "slug": "cypress-christmas-tree-in-wicker-basket",
-          "name": "Cypress Christmas Tree in Wicker Basket",
-          "display_title": "Cypress Christmas Tree in Wicker Basket",
-          "hook": "Four foot cypress already sitting in a woven wicker basket.",
-          "raw_name": false
-        },
         {
           "id": 627,
           "slug": "white-glass-christmas-ball-ornaments-set-of-9",
@@ -770,14 +714,6 @@
           "name": "Canlierr Christmas Velvet Ball Garland, 2 Pcs",
           "display_title": "Canlierr Velvet Ball Garland, Set of 2",
           "hook": "Two velvet ball garlands that dress a mantel in one pass.",
-          "raw_name": false
-        },
-        {
-          "id": 541,
-          "slug": "yunlly-neutral-copper-christmas-ornaments-set-of-9",
-          "name": "Yunlly Neutral Copper Christmas Ornaments, Set of 9",
-          "display_title": "Yunlly Copper Christmas Ornaments, Set of 9",
-          "hook": "Nine textured bronze ornaments that fill a tree evenly.",
           "raw_name": false
         },
         {
