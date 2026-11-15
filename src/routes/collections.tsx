@@ -15,9 +15,9 @@ import type { Collection } from "~/lib/types";
 
    - By Style is retired (one point of view, not five styles), so the index
      never renders a style group or a style collection.
-   - Autumn Warmth, Spring Refresh, Summer Living and Winter Nesting are
-     seasons, not rooms, so they get their own "By Season" group. The order is
-     the order the owner listed them in.
+   - Autumn Warmth, Spring Refresh, Summer Living and the Christmas & Holiday
+     hub are seasons, not rooms, so they get their own "By Season" group. The
+     order is the order the owner listed them in.
    - Home Essentials is neither a room nor a season: it gets its own group.
    - A collection with 0 products gets no tile (the empty Nursery tile), and
      neither does one whose page is retired and redirects (Outdoor Living). */

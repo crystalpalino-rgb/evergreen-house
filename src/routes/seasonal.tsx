@@ -6,9 +6,9 @@ import { generateStaticMetadata } from "~/lib/seo";
 
 const seasonalCollections = [
   {
-    name: "Holiday",
+    name: "Christmas",
     slug: "holiday",
-    description: "Plush throws, candlelight, and pieces that make home feel like a sanctuary",
+    description: "Tartan, garland and candlelight for a Christmas worth gathering at.",
     gradient: "linear-gradient(135deg, #8a8a8a 0%, #6b5e55 50%, #3d322c 100%)",
     light: true,
   },
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/seasonal")({
   head: () => {
     const seo = generateStaticMetadata(
       "Shop by Season",
-      "Curated seasonal collections throughout the year - spring refresh, summer living, autumn warmth, and winter nesting.",
+      "Curated seasonal collections throughout the year - spring refresh, summer living, autumn warmth, and the Christmas shop.",
       "/seasonal"
     );
     return { meta: seo.meta, links: seo.links };
