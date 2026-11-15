@@ -8,6 +8,7 @@
 import { sql } from "~/db";
 import { canonicalProductSlug } from "~/lib/product-slug";
 import { dedupeProductsByListing } from "~/lib/product-dedupe";
+import { orderForLead } from "~/lib/lead-order";
 import type { Product, Collection, CollectionRule, FilterOptions, FilterOption } from "~/lib/types";
 
 // ── Filter types ──
@@ -233,7 +234,9 @@ export async function getProductsByRoom(room: string): Promise<Product[]> {
   // keep the order stable between requests instead of leaving it to the plan.
   const rows =
     await db`SELECT * FROM products WHERE room = ${room} AND is_active = true ORDER BY pin_rank NULLS LAST, quality_score DESC NULLS LAST, id DESC`;
-  return rows as unknown as Product[];
+  // Then the lead gate (shop audit item 8): no page opens on a price outlier,
+  // an unreviewed card or an off-brief one. Pin rank still outranks it.
+  return orderForLead(rows as unknown as Product[], room);
 }
 
 export async function getProductsByStyle(style: string): Promise<Product[]> {
@@ -341,7 +344,9 @@ export async function getCollectionProducts(slug: string): Promise<Product[]> {
   // listing (a season import of an item already in the catalog) collapse here,
   // in the resolver, so no collection page can render the same product twice
   // and the counts on /collections match the cards on the page.
-  return dedupeProductsByListing(products);
+  // Then the lead gate (shop audit item 8): a collection page opens on its
+  // best-fit, best-reviewed card, never on a price outlier or an off-brief one.
+  return orderForLead(dedupeProductsByListing(products), slug);
 }
 
 /** Get product count for a collection (used by collections index) */
