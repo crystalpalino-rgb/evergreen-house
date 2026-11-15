@@ -17,7 +17,7 @@ import {
  * Crystal Costa. Copy is hardcoded here on purpose: the page is static
  * editorial content and must not depend on catalog state. This post carries no
  * Amazon links, so it has no affiliate disclosure; the only outbound link is
- * the owner's own Etsy kit, which is her own product.
+ * the owner's own Beacons kit page, which is her own product.
  *
  * The two "[AFFILIATE OPPORTUNITY: ...]" notes in the draft are notes-to-self,
  * not content, so they are not published here.
@@ -43,14 +43,14 @@ const CONFIG: JournalArticleConfig = {
   cta: {
     actions: [
       {
-        url: "https://www.etsy.com/listing/4594961400/stretch-the-cart-budget-meal-planning",
+        url: "https://shop.beacons.ai/clevermom/6a576ae8-4900-4144-b212-9a30ae97e536",
         label: "Get Instant Access: Stretch the Cart Budget Meal Planning Kit",
       },
     ],
     supporting: (
       <>
         Want the whole system as a printable? Our $8{" "}
-        <KitLink href="https://www.etsy.com/listing/4594961400/stretch-the-cart-budget-meal-planning">
+        <KitLink href="https://shop.beacons.ai/clevermom/6a576ae8-4900-4144-b212-9a30ae97e536">
           Budget Meal Planning Kit
         </KitLink>{" "}
         includes the 4-week rotating meal plan, grocery list templates, pantry

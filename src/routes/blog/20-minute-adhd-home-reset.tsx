@@ -23,7 +23,7 @@ import {
  * the site tag (tag=crystalcost09-20), each reporting one affiliate_click
  * through the single push point in ~/lib/analytics, so this post carries the
  * Amazon disclosure once before the first shoppable link. The only other
- * outbound link is the owner's own Etsy kit.
+ * outbound link is the owner's own Beacons kit page.
  */
 
 const AMAZON_KITCHEN_TIMER =
@@ -50,14 +50,14 @@ const CONFIG: JournalArticleConfig = {
   cta: {
     actions: [
       {
-        url: "https://www.etsy.com/listing/4594943279/adhd-home-reset-kit-adhd-cleaning",
+        url: "https://shop.beacons.ai/clevermom/ff1d1173-67b6-471b-8997-ccb02555737a",
         label: "Get Instant Access: ADHD Home Reset Kit",
       },
     ],
     supporting: (
       <>
         Want the full system printable? Our $8{" "}
-        <KitLink href="https://www.etsy.com/listing/4594943279/adhd-home-reset-kit-adhd-cleaning">
+        <KitLink href="https://shop.beacons.ai/clevermom/ff1d1173-67b6-471b-8997-ccb02555737a">
           ADHD Home Reset Kit
         </KitLink>{" "}
         includes the 20-minute reset cards, the doom-pile triage system,

@@ -177,7 +177,7 @@ export function AmazonLink({
   );
 }
 
-/** Owner-product (Etsy) link: her own shop, so no affiliate disclosure. */
+/** Owner-product (Beacons) link: her own shop page, so no affiliate disclosure. */
 export function KitLink({ href, children }: { href: string; children: ReactNode }) {
   return (
     <a

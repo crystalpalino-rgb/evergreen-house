@@ -19,7 +19,7 @@ import {
  * editorial content and must not depend on catalog state.
  *
  * This post carries no Amazon links, so it has no affiliate disclosure; both
- * outbound links are the owner's own Etsy kits. The "(Full system in our
+ * outbound links are the owner's own Beacons kit pages. The "(Full system in our
  * 20-minute reset guide.)" line links on-site to the ADHD reset post, which is
  * the only internal cross-link the draft asks for. The two
  * "[AFFILIATE OPPORTUNITY: ...]" notes in the draft are notes-to-self, not
@@ -27,9 +27,9 @@ import {
  */
 
 const KIT_MEAL_PLAN =
-  "https://www.etsy.com/listing/4594961400/stretch-the-cart-budget-meal-planning";
+  "https://shop.beacons.ai/clevermom/6a576ae8-4900-4144-b212-9a30ae97e536";
 const KIT_ADHD_RESET =
-  "https://www.etsy.com/listing/4594943279/adhd-home-reset-kit-adhd-cleaning";
+  "https://shop.beacons.ai/clevermom/ff1d1173-67b6-471b-8997-ccb02555737a";
 
 const CONFIG: JournalArticleConfig = {
   slug: "sunday-reset-meal-plan-tidy",
