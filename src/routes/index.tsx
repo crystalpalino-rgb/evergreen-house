@@ -119,7 +119,9 @@ function Home() {
           dangerouslySetInnerHTML={{ __html: homeSchema }}
         />
         {/* Seasonal announcement strip - owner palette: midnight navy band,
-            antique gold links */}
+            antique gold links. One link only: the fall link came off on
+            2026-11-15 (shop audit item 7) so the strip points at the season the
+            shop is actually selling. */}
         <div className="w-full border-b border-soft-white/10 bg-midnight">
           <p className="mx-auto max-w-7xl px-4 py-2.5 text-center text-xs leading-relaxed text-soft-white/80 sm:px-6 sm:text-sm">
             The Holiday Shop is live. Warm, curated finds for the season.{" "}
@@ -128,15 +130,6 @@ function Home() {
               className="font-semibold uppercase tracking-[0.1em] text-antique-gold underline-offset-2 transition-colors hover:text-soft-white hover:underline"
             >
               Shop Holiday
-            </a>
-            <span className="mx-2 text-soft-white/40" aria-hidden="true">
-              /
-            </span>
-            <a
-              href="/collection/fall"
-              className="font-semibold uppercase tracking-[0.1em] text-antique-gold underline-offset-2 transition-colors hover:text-soft-white hover:underline"
-            >
-              Shop Fall
             </a>
           </p>
         </div>

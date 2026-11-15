@@ -18,7 +18,7 @@ import { getCuratedProducts, type EditProduct } from "~/lib/edits";
  * Rules the curated set already satisfies (verified at generation time and
  * re-checked by the proof script): every item is is_active in the DB, no item is
  * off-niche, no price/rating/urgency language, no em-dash, and the two sections
- * share no product (12 distinct ids).
+ * share no product (11 distinct ids).
  */
 
 export interface HomepageItem {
@@ -94,8 +94,13 @@ export const SHOP_THE_LOOK: HomepageSection = {
 };
 
 /**
- * THE CURRENT EDIT: the pieces we would buy again, six of them, spanning the
+ * THE CURRENT EDIT: the pieces we would buy again, five of them, spanning the
  * seasonal collections by design. Replaces the auto-picked Trending Finds row.
+ *
+ * The 6 ft fall garland that used to lead this row came off on 2026-11-15 (shop
+ * audit item 7: fall and Halloween out), so the row now opens on the strongest
+ * Christmas piece in it: the knit tree skirt, first on pin rank and then on
+ * rating (4.8 with 1,503 reviews, ahead of the ceramic trees at 4.8 with 101).
  *
  * Kicker: the curation file names "The Current Edit" as both the h2 and the
  * kicker, and explicitly allows a separate kicker from its alternatives list so
@@ -109,12 +114,6 @@ export const CURRENT_EDIT: HomepageSection = {
   subcopy:
     "Warm light, quiet texture and a little evergreen: the pieces we would buy again, chosen to sit well past December.",
   items: [
-    {
-      id: 427,
-      slug: "6-ft-fall-garland-with-lights-timer-thanksgiving-fireplace-mantel-decor",
-      display_title: "6 Ft Fall Garland with 30 Warm Lights",
-      hook: "Comes on at dusk, off by bedtime, all season long.",
-    },
     {
       id: 421,
       slug: "knit-christmas-tree-skirts-neutral-tree-skirt-cozy-christmas-decorations",
