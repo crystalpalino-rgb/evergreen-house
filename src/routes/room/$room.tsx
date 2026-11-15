@@ -419,7 +419,7 @@ function RoomPage() {
             ) : (
               <div className="py-10 text-center">
                 <p className="text-lg text-warm-gray">No products found for this room yet.</p>
-                <a href="/" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all products →</a>
+                <a href="/search" className="mt-4 inline-block text-sm font-medium text-terracotta transition-colors hover:text-terracotta-dark">Browse all products →</a>
               </div>
             )}
           </div>

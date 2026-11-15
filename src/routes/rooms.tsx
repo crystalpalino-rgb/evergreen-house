@@ -42,6 +42,27 @@ const roomCards = [
     description: "Tablescapes, lighting, and serveware for everyday meals and special gatherings",
     image: "/images/dining-room.jpg",
   },
+  /* 2026-11-15, shop audit item 9: Home Office, Entryway and Pantry were missing
+     from this index while the header, the homepage Explore block and the footer
+     all listed them. One room list everywhere. */
+  {
+    name: "Home Office",
+    slug: "office",
+    description: "A workspace that inspires focus and feels like part of the home",
+    image: "/images/home-office.jpg",
+  },
+  {
+    name: "Entryway",
+    slug: "entryway",
+    description: "First impressions matter - a collected, welcoming way in",
+    image: "/images/living-room.jpg",
+  },
+  {
+    name: "Pantry",
+    slug: "pantry",
+    description: "Clear containers, calm shelves, and a system you can keep",
+    image: "/images/kitchen.jpg",
+  },
   /* Seasonal rooms. These are the pages the Pinterest pins point at, so they
      need a link from the rooms index, not only from the nav (2026-11-04). */
   {

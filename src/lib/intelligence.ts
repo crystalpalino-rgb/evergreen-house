@@ -9,6 +9,7 @@ import { sql } from "~/db";
 import { canonicalProductSlug } from "~/lib/product-slug";
 import { dedupeProductsByListing } from "~/lib/product-dedupe";
 import { orderForLead } from "~/lib/lead-order";
+import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import type { Product, Collection, CollectionRule, FilterOptions, FilterOption } from "~/lib/types";
 
 // ── Filter types ──
@@ -353,6 +354,21 @@ export async function getCollectionProducts(slug: string): Promise<Product[]> {
 export async function getCollectionProductCount(slug: string): Promise<number> {
   const products = await getCollectionProducts(slug);
   return products.length;
+}
+
+/**
+ * The count the collection's own page prints, so the index and the page never
+ * disagree (shop audit item 9: the Christmas hub read 97 on /collections and 90
+ * on the page). The holiday page drops the products Amazon cannot currently
+ * sell, so its tile counts the same visible list the page renders.
+ */
+export async function getCollectionVisibleProductCount(
+  slug: string
+): Promise<number> {
+  const products = await getCollectionProducts(slug);
+  return slug === "holiday"
+    ? hideUnbuyableHolidayProducts(products).length
+    : products.length;
 }
 
 // ── Full-Text Search ──

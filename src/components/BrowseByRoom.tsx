@@ -1,15 +1,15 @@
 const rooms = [
   {
-    name: "Bedroom",
-    href: "/room/bedroom",
-    description: "Restful retreats and cozy layers",
-    image: "/images/bedroom.jpg",
-  },
-  {
     name: "Living Room",
     href: "/room/living-room",
     description: "Gathered spaces for everyday living",
     image: "/images/living-room.jpg",
+  },
+  {
+    name: "Bedroom",
+    href: "/room/bedroom",
+    description: "Restful retreats and cozy layers",
+    image: "/images/bedroom.jpg",
   },
   {
     name: "Kitchen",
@@ -24,16 +24,34 @@ const rooms = [
     image: "/images/bathroom.jpg",
   },
   {
+    name: "Dining Room",
+    href: "/room/dining-room",
+    description: "Tablescapes for everyday and gatherings",
+    image: "/images/dining-room.jpg",
+  },
+  {
     name: "Home Office",
     href: "/room/office",
     description: "Thoughtful setups for focused work",
     image: "/images/home-office.jpg",
   },
   {
+    name: "Entryway",
+    href: "/room/entryway",
+    description: "A first impression that feels like home",
+    image: "/images/living-room.jpg",
+  },
+  {
     name: "Outdoor",
     href: "/room/patio",
     description: "Alfresco living and garden moments",
     image: "/images/patio.jpg",
+  },
+  {
+    name: "Pantry",
+    href: "/room/pantry",
+    description: "Clear containers and calm shelves",
+    image: "/images/kitchen.jpg",
   },
 ];
 
