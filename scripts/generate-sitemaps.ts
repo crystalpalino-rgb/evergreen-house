@@ -19,7 +19,10 @@ import { publicRoomSlugs } from "../src/lib/room-visibility";
 // Retired collection pages answer a permanent redirect (src/lib/legacy-redirects.ts),
 // so they must not be advertised in a sitemap: a sitemap is a list of pages we
 // want indexed, and a URL that 301s is not one of them.
-import { RETIRED_COLLECTION_SLUGS } from "../src/lib/legacy-redirects";
+import {
+  CANONICAL_ROOM_SLUGS,
+  RETIRED_COLLECTION_SLUGS,
+} from "../src/lib/legacy-redirects";
 
 const SITE_URL = "https://evergreenhouse.co";
 
@@ -110,8 +113,13 @@ async function main() {
 
   console.log(`Found ${collectionRows.length} active collections`);
 
-  // A collection whose page redirects is not a page we want indexed.
-  const retiredSlugs = new Set(RETIRED_COLLECTION_SLUGS);
+  // A collection whose page redirects is not a page we want indexed. The nine
+  // shopping rooms answer 301 to /room/<slug> (shop audit item 5) and are
+  // already listed in sitemap-rooms.xml, so they come out of this one.
+  const retiredSlugs = new Set([
+    ...RETIRED_COLLECTION_SLUGS,
+    ...CANONICAL_ROOM_SLUGS,
+  ]);
   const liveCollectionRows = collectionRows.filter(
     (c) => !retiredSlugs.has(c.slug),
   );

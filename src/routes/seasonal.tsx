@@ -3,6 +3,7 @@ import { Header } from "~/components/Header";
 import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { generateStaticMetadata } from "~/lib/seo";
+import { collectionPageHref } from "~/lib/legacy-redirects";
 
 const seasonalCollections = [
   {
@@ -103,7 +104,7 @@ function SeasonalPage() {
               {seasonalCollections.map((season) => (
                 <a
                   key={season.name}
-                  href={`/collection/${season.slug}`}
+                  href={collectionPageHref(season.slug)}
                   className="group relative overflow-hidden rounded-2xl shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md"
                   style={{ background: season.gradient }}
                 >

@@ -11,11 +11,16 @@ import { HolidaySets } from "~/components/HolidaySets";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { hideUnbuyableHolidayProducts } from "~/lib/holiday";
 import { getProductsByRoom } from "~/lib/intelligence";
-import { MERGED_COLLECTION_REDIRECTS } from "~/lib/legacy-redirects";
+import {
+  MERGED_COLLECTION_REDIRECTS,
+  ROOM_ROUTE_REDIRECTS,
+} from "~/lib/legacy-redirects";
+import { getCollectionFAQs } from "~/lib/collection-faqs";
 import { isRoomPublic } from "~/lib/room-visibility";
 import { generateRoomMetadata } from "~/lib/seo";
 import {
   getCollectionPageSchema,
+  getFAQSchema,
   SITE_URL,
 } from "~/lib/schema";
 import { getRelatedRooms, ROOM_LABELS } from "~/lib/related";
@@ -164,12 +169,15 @@ const roomEditorial: Record<string, { intro: string; whatToLookFor: string[] }> 
 };
 
 export const Route = createFileRoute("/room/$room")({
-  /* A room that has been merged into another answers a permanent redirect here,
-     from the same map /collection/<slug> and serve.ts read, so the dev server
-     and the published server agree instead of one redirecting and the other
-     rendering an empty page (shop audit item 4: Laundry into Bathroom). */
+  /* Permanent redirects off this route, from the same maps /collection/<slug>
+     and serve.ts read, so the dev server and the published server agree instead
+     of one redirecting and the other rendering an empty page.
+     - A room merged into another (shop audit item 4: Laundry into Bathroom).
+     - Holiday, which is the one room whose canonical page is /collection/holiday
+       because that is the Christmas hub every entry point uses (item 5). */
   beforeLoad: ({ params }) => {
-    const target = MERGED_COLLECTION_REDIRECTS[`/room/${params.room}`];
+    const path = `/room/${params.room}`;
+    const target = MERGED_COLLECTION_REDIRECTS[path] || ROOM_ROUTE_REDIRECTS[path];
     if (target) throw redirect({ href: target, statusCode: 301 });
   },
   loader: async ({ params }) => {
@@ -250,6 +258,13 @@ function RoomPage() {
   /* Product JSON-LD, built from the cards this page actually renders: a card
      with no price on it is left unmarked (Pinterest brief, item 4). Nothing
      here changes a card, a price or a layout. */
+  /* The room FAQ copy the /collection template used to carry. Item 5 makes
+     /room/<slug> the one page per room, so the FAQ block and its FAQPage markup
+     moved here with the cards. A room with no true answers of its own (nursery)
+     renders no block and marks up no FAQPage. */
+  const faqItems = getCollectionFAQs(room);
+  const faqSchema = faqItems.length > 0 ? getFAQSchema(faqItems) : null;
+
   const productSchema = getProductGraphSchema(
     products.map((product) => ({
       name: product.name,
@@ -304,6 +319,14 @@ function RoomPage() {
             __html: JSON.stringify(collectionSchema),
           }}
         />
+        {faqSchema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(faqSchema),
+            }}
+          />
+        )}
         {productSchema && (
           <script
             type="application/ld+json"
@@ -401,6 +424,35 @@ function RoomPage() {
             )}
           </div>
         </section>
+
+        {/* FAQ. Moved here with the cards when /room/<slug> became the one
+            canonical page per room (shop audit item 5). Only a room with true
+            copy of its own gets a block, and the same items feed the FAQPage
+            markup above. */}
+        {faqItems.length > 0 && (
+          <section aria-labelledby="faq-heading" className="border-t border-beige/20 bg-cream/30 py-8 sm:py-12">
+            <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+              <h2 id="faq-heading" className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+                Frequently Asked Questions
+              </h2>
+              <p className="mt-2 text-warm-gray">
+                Straight answers about {roomName}.
+              </p>
+              <dl className="mt-8 space-y-6">
+                {faqItems.map((faq, i) => (
+                  <div key={i} className="rounded-xl border border-beige/20 bg-white p-5 shadow-sm">
+                    <dt className="font-serif text-base font-semibold text-warm-dark">
+                      {faq.question}
+                    </dt>
+                    <dd className="mt-2 text-sm leading-relaxed text-warm-gray">
+                      {faq.answer}
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </section>
+        )}
 
         {/* Browse More Rooms */}
         {relatedRooms.length > 0 && (
