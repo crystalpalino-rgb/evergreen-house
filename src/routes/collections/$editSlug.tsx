@@ -24,6 +24,7 @@ import {
   type EditProduct,
   type EditSummary,
 } from "~/lib/edits";
+import { EDIT_HERO_LQIP } from "~/lib/edit-hero-lqip";
 import { generateStaticMetadata, SITE_URL } from "~/lib/seo";
 import { CARD_DATA_CHECKED_AT } from "~/components/AmazonDisclosure";
 import { cardVerifiedMonth } from "~/lib/card-copy";
@@ -125,6 +126,11 @@ export const Route = createFileRoute("/collections/$editSlug")({
 function EditPage() {
   const { edit, products, related } = Route.useLoaderData();
   const hero = artSources(edit.hero_image);
+  /* Inlined 24px blur of this edit's own hero art. The band's only paint until
+     the full art decodes used to be the flat midnight panel, which is what a
+     cold-cache or slow first paint showed. Now the photo is there on frame one
+     and the full-resolution image covers it. */
+  const heroLqip = EDIT_HERO_LQIP[edit.hero_image] ?? null;
   const url = `${SITE_URL}/collections/${edit.slug}`;
 
   const schema = JSON.stringify({
@@ -203,20 +209,33 @@ function EditPage() {
         )}
         {/* Compact editorial header. Mobile gets a 16:9 band; the desktop band is
             taller, and the copy stays in the quiet left third of the art. */}
-        <section className="relative isolate overflow-hidden bg-midnight">
-          <picture>
-            <source srcSet={hero.webp} type="image/webp" />
-            <img
-              src={hero.jpg}
-              alt={`${edit.title} - a curated edit from Evergreen House`}
-              width={1600}
-              height={900}
-              fetchpriority="high"
-              loading="eager"
-              decoding="sync"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          </picture>
+        <section
+          className="relative isolate overflow-hidden bg-midnight"
+          style={
+            heroLqip
+              ? {
+                  backgroundImage: `url("${heroLqip}")`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                }
+              : undefined
+          }
+        >
+          {edit.hero_image ? (
+            <picture>
+              <source srcSet={hero.webp} type="image/webp" />
+              <img
+                src={hero.jpg}
+                alt={`${edit.title} - a curated edit from Evergreen House`}
+                width={1600}
+                height={900}
+                fetchpriority="high"
+                loading="eager"
+                decoding="sync"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            </picture>
+          ) : null}
           <div className="absolute inset-0 bg-gradient-to-r from-midnight/85 via-midnight/50 to-midnight/15" />
           <div className="relative mx-auto flex min-h-[264px] max-w-7xl flex-col justify-center px-4 py-6 sm:min-h-[340px] sm:px-6 sm:py-10 lg:min-h-[420px] lg:px-8">
             <p className="text-[0.7rem] font-semibold uppercase tracking-[0.28em] text-antique-gold">
