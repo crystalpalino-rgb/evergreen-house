@@ -6,7 +6,7 @@ import { SITE_NAME, SITE_URL } from "~/lib/schema";
 import { trackAffiliateClick } from "~/lib/analytics";
 
 /**
- * Blog post: "15 Cheap Things That Make Your Home Look Expensive"
+ * Blog post: "14 Cheap Things That Make Your Home Look Expensive"
  *
  * Copy is owner-approved (draft: /home/team/shared/blog-drafts/cheap-things-home-looks-expensive.md).
  * Product facts (ids, prices, ratings, product-page URLs, amazon_urls, image_urls)
@@ -17,14 +17,14 @@ import { trackAffiliateClick } from "~/lib/analytics";
 const BLOG_SLUG = "cheap-things-that-make-your-home-look-expensive";
 const BLOG_PATH = `/blog/${BLOG_SLUG}`;
 const BLOG_TITLE = "Cheap Things That Make Your Home Look Expensive";
-const BLOG_H1 = "15 Cheap Things That Make Your Home Look Expensive";
+const BLOG_H1 = "14 Cheap Things That Make Your Home Look Expensive";
 const BLOG_DESCRIPTION =
-  "Fifteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.";
+  "Fourteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.";
 const DATE_PUBLISHED = "2026-10-03";
 const DATE_PUBLISHED_LABEL = "October 3, 2026";
 
 const INTRO =
-  "There's a particular kind of room that reads expensive without a single expensive thing in it. It's usually the light - a mirror placed where the window light lands, a lamp at the right height, the weight of wood and linen and stone doing work that a bigger budget normally does. Here are fifteen pieces we'd buy again, all under $85, chosen because each one changes how a room feels rather than how much it cost.";
+  "There's a particular kind of room that reads expensive without a single expensive thing in it. It's usually the light - a mirror placed where the window light lands, a lamp at the right height, the weight of wood and linen and stone doing work that a bigger budget normally does. Here are fourteen pieces we'd buy again, all under $85, chosen because each one changes how a room feels rather than how much it cost.";
 
 const CLOSING =
   "None of this is about buying more. Pick the room you use most, fix the light and the surface first, and the rest of it starts to take care of itself.";
@@ -55,16 +55,6 @@ const SECTIONS: BlogSection[] = [
   {
     heading: "Light and reflection (the two-minute fix)",
     products: [
-      {
-        id: 12,
-        name: "30-Inch Round Mirror with Slim Gold Frame",
-        price: 62.99,
-        rating: 4.8,
-        productUrl: "/product/30-inch-round-bathroom-mirror-wall",
-        amazonUrl: "https://www.amazon.com/dp/B0C85XTX4D?tag=crystalcost09-20",
-        imageUrl: "https://m.media-amazon.com/images/I/7159Bk2NBJL._AC_SL1500_.jpg",
-        note: "Thirty inches is the size where a round mirror stops being decoration and starts changing the light in a room: it catches a window and throws it back across the wall. It works over a bathroom vanity, above an entryway console, or at the end of a hallway that never had a focal point. The frame is slim, gold and unornamented, which is exactly why it reads far more expensive than it is.",
-      },
       {
         id: 30,
         name: "71-Inch Arched Gold Floor Mirror",

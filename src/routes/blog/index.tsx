@@ -159,7 +159,7 @@ const EDITOR_PICKS: Array<{
   {
     title: "Cheap Things That Make Your Home Look Expensive",
     description:
-      "Fifteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.",
+      "Fourteen budget home decor finds - mirrors, lamps, trays, candlelight - that make a room look considered, not costly. Editor-picked, all under $85.",
     href: "/blog/cheap-things-that-make-your-home-look-expensive",
     date: "October 3, 2026",
   },
