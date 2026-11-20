@@ -45,7 +45,7 @@ const VERIFIED_DATE_LABEL = "November 14, 2026";
 const INTRO_PARAGRAPHS = [
   "There is a specific Sunday night feeling I have come to recognize. The week has not started yet and it already feels behind. Nobody has a clean uniform, I do not know what is for dinner on Wednesday, and there is a pile of paper on the counter that I have been walking past for a week.",
   "I used to answer that feeling with a whole house reset, and I would get about four rooms in before I ran out of steam. What actually works, for me, is smaller. One list that resets the systems instead of the house: the calendar, the meals, the drawers, the keys. The rooms look after themselves once those four things work.",
-  "This is that list, all seventeen finds of it, on my own Amazon storefront. January is when I go through it, but there is no rule that says you have to wait.",
+  "This is that list, all seventeen finds of it, on my own Amazon storefront. It starts with the magnetic menu board on my fridge, because that board is the one piece that makes the week visible before it gets busy. January is when I go through it, but there is no rule that says you have to wait.",
 ];
 
 type ResetFind = {
@@ -63,6 +63,20 @@ type ResetSection = {
   heading: string;
   intro?: string;
   finds: ResetFind[];
+};
+
+/**
+ * The Kitchen Reset pin promises the Magnetic Menu Board, so the board is the
+ * first card on the page, ahead of the three sections. It is one of the 17
+ * finds and appears here only, not inside a section as well.
+ */
+const LEAD_FIND: ResetFind = {
+  asin: "B07XCRZ56Z",
+  title: "Magnetic Menu Board",
+  rating: 4.6,
+  reviews: 9017,
+  price: 9.99,
+  note: "It goes on the fridge where everyone can see it, and that visibility is most of the work. Dinners go up on Sunday. The question I used to answer six times a day answers itself now.",
 };
 
 const PLAN_IT: ResetSection = {
@@ -124,7 +138,7 @@ const PLAN_IT: ResetSection = {
 const FEED_YOURSELVES: ResetSection = {
   heading: "Feed yourselves",
   intro:
-    "Feeding a family is a system too, and mine used to fail at the same time every week: a quarter to six on a Tuesday, everyone hungry, nothing planned. These five are what stopped that.",
+    "Feeding a family is a system too, and mine used to fail at the same time every week: a quarter to six on a Tuesday, everyone hungry, nothing planned. These four are what stopped that.",
   finds: [
     {
       asin: "B0B9S5HZ26",
@@ -133,14 +147,6 @@ const FEED_YOURSELVES: ResetSection = {
       reviews: 16288,
       price: 20.89,
       note: "Glass with lids that seal, in sizes that stack. I cook one big thing on Sunday and portion it into these, so Tuesday's dinner is already made and I am not negotiating with myself in front of the fridge. Glass means I reheat in the same container I stored it in.",
-    },
-    {
-      asin: "B07XCRZ56Z",
-      title: "Magnetic Menu Board",
-      rating: 4.6,
-      reviews: 9017,
-      price: 9.99,
-      note: "It goes on the fridge where everyone can see it, and that visibility is most of the work. Dinners go up on Sunday. The question I used to answer six times a day answers itself now.",
     },
     {
       asin: "B0BX9QKX8K",
@@ -433,6 +439,11 @@ function BlogPost() {
 
           <div className="mt-8">
             <StorefrontListCard list={RESET_LIST} level={2} />
+          </div>
+
+          {/* The board the Kitchen Reset pin promises, ahead of the sections. */}
+          <div className="mt-10">
+            <FindCard find={LEAD_FIND} />
           </div>
 
           {SECTIONS.map((section) => (
