@@ -58,16 +58,15 @@ const SECTIONS: BlogSection[] = [
     heading: "Light on the mantel",
     products: [
       {
-        id: 427,
-        name: "6 Ft Fall Garland with Lights and Timer",
-        price: 20.97,
-        rating: 4.5,
-        productUrl:
-          "/product/6-ft-fall-garland-with-lights-timer-thanksgiving-fireplace-mantel-decor",
-        amazonUrl: "https://www.amazon.com/dp/B0H4L95SHP?tag=crystalcost09-20",
-        imageUrl:
-          "https://m.media-amazon.com/images/I/81Abg-pnlfL._AC_SL1500_.jpg",
-        note: "The quickest way to make a room feel like autumn is to lower the light slowly. This is six feet of garland with thirty warm LEDs already woven through and a built-in timer, so it comes on at dusk and switches itself off. Drape it along a mantel, a shelf or a stair rail: the garland does the styling for you. No outlet hunting, no cord across the floor.",
+        id: 567,
+        name: "Gold Glass Hurricane Candle Holders, Set of 3",
+        price: 28.99,
+        rating: 4.7,
+        verifiedOn: "2026-11-20",
+        productUrl: "/product/romadedi-gold-hurricane-candlesticks-set-of-3",
+        amazonUrl: "https://www.amazon.com/dp/B0DB1S56Q4?tag=crystalcost09-20",
+        imageUrl: "https://m.media-amazon.com/images/I/61+mCajVrAL._AC_SL1500_.jpg",
+        note: "Three matte gold candlesticks with clear hurricane glass, at 17.7, 15.7 and 13.6 inches, which is the detail that makes a mantel read lit rather than decorated: a taper at three heights instead of one lamp. The glass shields the flame, so they hold up beside a door or on a porch, and they are just as at home on a table, a sideboard or a coffee table. Warm metal, clear glass, nothing trendy to date them.",
       },
       {
         id: 455,
