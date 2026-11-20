@@ -40,6 +40,8 @@ type BlogProduct = {
   name: string;
   price: number;
   rating: number;
+  /** Date the rating was read from the listing (products.price_checked_at). */
+  verifiedOn?: string;
   /** Internal product page - keeps readers on-site. */
   productUrl: string;
   /** Affiliate link, tag=crystalcost09-20. */
@@ -143,7 +145,8 @@ const SECTIONS: BlogSection[] = [
         id: 197,
         name: "Foindtower Textured Boucle Covers, Camel 12 x 20, Set of 2",
         price: 15.27,
-        rating: 4.6,
+        rating: 4.5,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/foindtower-pack-of-2-textured-boucle-78oc",
         amazonUrl: "https://www.amazon.com/dp/B0BYMDX598?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/816IeEq0eDL._AC_SL1500_.jpg",
@@ -184,7 +187,8 @@ const SECTIONS: BlogSection[] = [
         id: 44,
         name: "Nathan James Mina Rattan Nightstand, Oak and Black",
         price: 69.99,
-        rating: 4.4,
+        rating: 4.3,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/nathan-james-mina-rattan-wood",
         amazonUrl: "https://www.amazon.com/dp/B084HCTYZ7?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/81ftxS+z5kL._AC_SL1500_.jpg",
@@ -272,6 +276,16 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
+/** Dated verification stamp - "Verified Nov 15, 2026". */
+function formatVerified(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
+
 /** Rating stars - same markup/styling as ProductCard. */
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -334,6 +348,11 @@ function ProductEntry({ product, index }: { product: BlogProduct; index: number 
           </h3>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
             <RatingStars rating={product.rating} />
+            {product.verifiedOn ? (
+              <span className="text-xs text-taupe">
+                Verified {formatVerified(product.verifiedOn)}
+              </span>
+            ) : null}
             <span className="text-sm font-semibold text-terracotta">
               {priceLabel}
             </span>
