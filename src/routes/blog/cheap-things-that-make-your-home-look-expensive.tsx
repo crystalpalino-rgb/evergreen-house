@@ -38,6 +38,8 @@ type BlogProduct = {
   name: string;
   price: number;
   rating: number;
+  /** Date the rating was read from the listing (products.price_checked_at). */
+  verifiedOn?: string;
   /** Internal product page - keeps readers on-site. */
   productUrl: string;
   /** Affiliate link, tag=crystalcost09-20. */
@@ -59,7 +61,8 @@ const SECTIONS: BlogSection[] = [
         id: 30,
         name: "71-Inch Arched Gold Floor Mirror",
         price: 69.55,
-        rating: 4.6,
+        rating: 4.5,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/mirror-full-length-71-x",
         amazonUrl: "https://www.amazon.com/dp/B0GR5BK6XR?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/813vqaSMlCL._AC_SL1500_.jpg",
@@ -130,7 +133,8 @@ const SECTIONS: BlogSection[] = [
         id: 24,
         name: "StorageWorks Scalloped Wicker Basket, Woven Baskets (2 Pack)",
         price: 38.99,
-        rating: 4.7,
+        rating: 4.8,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/storageworks-scalloped-wicker-basket-woven-baskets",
         amazonUrl: "https://www.amazon.com/dp/B0CM9F8171?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/71nW-MRvloL._AC_SL1500_.jpg",
@@ -155,7 +159,8 @@ const SECTIONS: BlogSection[] = [
         id: 272,
         name: "Brass Hurricane Candle Holders with Glass Domes, Set of 2",
         price: 29.99,
-        rating: 4.7,
+        rating: 4.6,
+        verifiedOn: "2026-11-15",
         productUrl:
           "/product/5-4-metal-candle-holder-with-handmade-glass-dome-in-brass-2-timer-candles-set-of-2-versatile-hurricane-glass-candle-hold",
         amazonUrl: "https://www.amazon.com/dp/B0F52BN9SB?tag=crystalcost09-20",
@@ -176,7 +181,8 @@ const SECTIONS: BlogSection[] = [
         id: 64,
         name: "Real Natural Travertine Tray for Bathroom",
         price: 34.99,
-        rating: 4.8,
+        rating: 4.7,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/real-natural-travertine-tray-for-bathroom",
         amazonUrl: "https://www.amazon.com/dp/B0D4F49TZV?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/61LJj74Qz1L._AC_SL1500_.jpg",
@@ -186,7 +192,8 @@ const SECTIONS: BlogSection[] = [
         id: 307,
         name: "Luxury Leather Tray Organizer Valet Tray",
         price: 22.99,
-        rating: 4.7,
+        rating: 4.6,
+        verifiedOn: "2026-11-15",
         productUrl:
           "/product/luxury-leather-tray-organizer-valet-tray-key-tray-for-entryway-table-desktop-storage-catchall-tray-decorative-tray-for-j",
         amazonUrl: "https://www.amazon.com/dp/B0922F9F5Z?tag=crystalcost09-20",
@@ -197,7 +204,8 @@ const SECTIONS: BlogSection[] = [
         id: 28,
         name: "HOMESPHERE Acacia Wood Cake Stand with Lid",
         price: 59.9,
-        rating: 4.8,
+        rating: 4.6,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/homesphere-acacia-wood-cake-stand",
         amazonUrl: "https://www.amazon.com/dp/B0BQNCXSRX?tag=crystalcost09-20",
         imageUrl: "https://m.media-amazon.com/images/I/91QM5EfD+1L._AC_SL1500_.jpg",
@@ -272,6 +280,16 @@ function formatPrice(price: number): string {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(price);
 }
 
+/** Dated verification stamp - "Verified Nov 15, 2026". */
+function formatVerified(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
+
 /** Rating stars - same markup/styling as ProductCard. */
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -331,6 +349,11 @@ function ProductEntry({ product, index }: { product: BlogProduct; index: number 
           </h3>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
             <RatingStars rating={product.rating} />
+            {product.verifiedOn ? (
+              <span className="text-xs text-taupe">
+                Verified {formatVerified(product.verifiedOn)}
+              </span>
+            ) : null}
             <span className="text-sm font-semibold text-terracotta">{priceLabel}</span>
           </div>
           <p className="mt-3 text-sm leading-relaxed text-warm-gray sm:text-base">

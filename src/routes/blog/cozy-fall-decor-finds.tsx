@@ -38,6 +38,8 @@ type BlogProduct = {
   name: string;
   price: number;
   rating: number;
+  /** Date the rating was read from the listing (products.price_checked_at). */
+  verifiedOn?: string;
   /** Internal product page - keeps readers on-site. */
   productUrl: string;
   /** Affiliate link, tag=crystalcost09-20. */
@@ -162,7 +164,8 @@ const SECTIONS: BlogSection[] = [
         id: 197,
         name: "Textured Boucle Pillow Covers, Set of 2 (Camel, 12 x 20)",
         price: 15.27,
-        rating: 4.6,
+        rating: 4.5,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/foindtower-pack-of-2-textured-boucle-78oc",
         amazonUrl: "https://www.amazon.com/dp/B0BYMDX598?tag=crystalcost09-20",
         imageUrl:
@@ -205,12 +208,13 @@ const SECTIONS: BlogSection[] = [
         id: 65,
         name: "Hyde Lane Faux Rabbit Fur Throw, 60 x 80",
         price: 54.99,
-        rating: 4.2,
+        rating: 4.3,
+        verifiedOn: "2026-11-15",
         productUrl: "/product/hyde-lane-soft-faux-rabbit",
         amazonUrl: "https://www.amazon.com/dp/B0CDJS8CZG?tag=crystalcost09-20",
         imageUrl:
           "https://m.media-amazon.com/images/I/91LwQXjmW0L._AC_SL1500_.jpg",
-        note: "Faux rabbit has the closest pile to the real thing, dense and short, and it stays soft after washing. At 60 by 80 inches it covers a lap and still falls over the back of a chair, which is what makes a corner look lived in rather than staged. In Brun rabbit, it warms a pale room without introducing a single new color. Note the 4.2 rating: this is the pick for pure texture, not the highest-rated item in the room.",
+        note: "Faux rabbit has the closest pile to the real thing, dense and short, and it stays soft after washing. At 60 by 80 inches it covers a lap and still falls over the back of a chair, which is what makes a corner look lived in rather than staged. In Brun rabbit, it warms a pale room without introducing a single new color. Note the 4.3 rating: this is the pick for pure texture, not the highest-rated item in the room.",
       },
     ],
   },
@@ -289,6 +293,16 @@ function formatPrice(price: number): string {
   }).format(price);
 }
 
+/** Dated verification stamp - "Verified Nov 15, 2026". */
+function formatVerified(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
+}
+
 /** Rating stars - same markup/styling as ProductCard. */
 function RatingStars({ rating }: { rating: number }) {
   return (
@@ -357,6 +371,11 @@ function ProductEntry({
           </h3>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
             <RatingStars rating={product.rating} />
+            {product.verifiedOn ? (
+              <span className="text-xs text-taupe">
+                Verified {formatVerified(product.verifiedOn)}
+              </span>
+            ) : null}
             <span className="text-sm font-semibold text-terracotta">
               {priceLabel}
             </span>

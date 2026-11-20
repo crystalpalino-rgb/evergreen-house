@@ -38,6 +38,8 @@ type BlogProduct = {
   name: string;
   price: number;
   rating: number;
+  /** Date the rating was read from the listing (products.price_checked_at). */
+  verifiedOn?: string;
   /** Internal product page - keeps readers on-site. */
   productUrl: string;
   /** Affiliate link, tag=crystalcost09-20. */
@@ -59,7 +61,8 @@ const SECTIONS: BlogSection[] = [
         id: 429,
         name: "24 Inch Pine Christmas Wreath",
         price: 29.99,
-        rating: 4.6,
+        rating: 4.5,
+        verifiedOn: "2026-11-04",
         productUrl:
           "/product/24-inch-christmas-wreaths-for-front-door-pine-artificial-christmas-wreath",
         amazonUrl: "https://www.amazon.com/dp/B0FKBT525F?tag=crystalcost09-20",
@@ -99,7 +102,8 @@ const SECTIONS: BlogSection[] = [
         id: 436,
         name: "Lifelike Cedar Mantel Garland, 6 Ft",
         price: 59.99,
-        rating: 4.8,
+        rating: 4.5,
+        verifiedOn: "2026-11-04",
         productUrl: "/product/lifelike-cedar-mantel-garland-6ft",
         amazonUrl: "https://www.amazon.com/dp/B0H4V8JLH3?tag=crystalcost09-20",
         imageUrl:
@@ -110,7 +114,8 @@ const SECTIONS: BlogSection[] = [
         id: 438,
         name: "Norfolk Pine Branches for Vase, 16 Pieces",
         price: 29.99,
-        rating: 4.6,
+        rating: 4.7,
+        verifiedOn: "2026-11-04",
         productUrl: "/product/norfolk-pine-branches-for-vase-16-pcs",
         amazonUrl: "https://www.amazon.com/dp/B0D763QFF3?tag=crystalcost09-20",
         imageUrl:
@@ -137,7 +142,8 @@ const SECTIONS: BlogSection[] = [
         id: 421,
         name: "Knit Christmas Tree Skirt, Cream, 48 Inches",
         price: 24.99,
-        rating: 4.9,
+        rating: 4.8,
+        verifiedOn: "2026-11-04",
         productUrl:
           "/product/knit-christmas-tree-skirts-neutral-tree-skirt-cozy-christmas-decorations",
         amazonUrl: "https://www.amazon.com/dp/B07RT4GT8W?tag=crystalcost09-20",
@@ -165,7 +171,8 @@ const SECTIONS: BlogSection[] = [
         id: 447,
         name: "Wondise Flameless Window Candles with Timer",
         price: 25.99,
-        rating: 4.6,
+        rating: 4.5,
+        verifiedOn: "2026-11-04",
         productUrl: "/product/wondise-flameless-window-candles-with-timer",
         amazonUrl: "https://www.amazon.com/dp/B07SN3Y7LZ?tag=crystalcost09-20",
         imageUrl:
@@ -236,7 +243,8 @@ const SECTIONS: BlogSection[] = [
         id: 450,
         name: "Vintage Gold Framed Reindeer Wall Art, 12 x 9.5",
         price: 17.49,
-        rating: 4.7,
+        rating: 4.6,
+        verifiedOn: "2026-11-04",
         productUrl: "/product/vintage-gold-framed-reindeer-wall-art",
         amazonUrl: "https://www.amazon.com/dp/B0FMJYJVH1?tag=crystalcost09-20",
         imageUrl:
@@ -302,6 +310,16 @@ function formatPrice(price: number): string {
     style: "currency",
     currency: "USD",
   }).format(price);
+}
+
+/** Dated verification stamp - "Verified Nov 15, 2026". */
+function formatVerified(date: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(`${date}T00:00:00Z`));
 }
 
 /** Rating stars - same markup/styling as ProductCard. */
@@ -372,6 +390,11 @@ function ProductEntry({
           </h3>
           <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
             <RatingStars rating={product.rating} />
+            {product.verifiedOn ? (
+              <span className="text-xs text-taupe">
+                Verified {formatVerified(product.verifiedOn)}
+              </span>
+            ) : null}
             <span className="text-sm font-semibold text-terracotta">
               {priceLabel}
             </span>
