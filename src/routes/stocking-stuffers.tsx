@@ -7,7 +7,12 @@ import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
 import { SITE_URL } from "~/lib/schema";
 import { generateStaticMetadata } from "~/lib/seo";
-import { UNDER19_LIST } from "~/lib/storefront-lists";
+import {
+  MEN_STOCKING_LIST,
+  TEEN_BOYS_STOCKING_LIST,
+  TEEN_GIRLS_STOCKING_LIST,
+  UNDER19_LIST,
+} from "~/lib/storefront-lists";
 import listManifest from "~/data/stocking-stuffers/list-manifest.json";
 import cardCopy from "~/data/stocking-stuffers/card-copy.json";
 
@@ -85,6 +90,13 @@ const CARDS = manifest.items.filter(
 
 /** The list card on this page still links out to Amazon. */
 const LIST_CARD = { ...UNDER19_LIST, line: copy.list_card_line };
+
+/** The three lists that have their own pages (owner decision 48, 2026-11-22). */
+const MORE_LISTS = [
+  MEN_STOCKING_LIST,
+  TEEN_BOYS_STOCKING_LIST,
+  TEEN_GIRLS_STOCKING_LIST,
+];
 
 const breadcrumbItems = [
   { label: "Home", href: "/" },
@@ -279,6 +291,23 @@ function StockingStuffersPage() {
             </p>
             <div className="mt-8">
               <StorefrontListCard list={LIST_CARD} toPage={false} />
+            </div>
+          </section>
+
+          {/* The three list pages added 2026-11-22 (owner decision 48). */}
+          <section className="mt-12">
+            <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+              More stocking lists
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-warm-gray">
+              Three more lists, each on its own page: the man who needs
+              nothing, a teen boy, a teen girl. Every piece on them is under
+              twenty five dollars.
+            </p>
+            <div className="mt-8 grid gap-6 md:grid-cols-3">
+              {MORE_LISTS.map((list) => (
+                <StorefrontListCard key={list.key} list={list} />
+              ))}
             </div>
           </section>
 

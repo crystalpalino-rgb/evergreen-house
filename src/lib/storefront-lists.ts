@@ -46,6 +46,37 @@ export const UNDER19_LIST: StorefrontList = {
   pageHref: "/stocking-stuffers",
 };
 
+/**
+ * The three stocking lists that got their own pages on 2026-11-22
+ * (owner decision 48). Each page leads with its own list card, which is the one
+ * link out to the storefront; the hub and the other pages open the page.
+ */
+export const MEN_STOCKING_LIST: StorefrontList = {
+  key: "stocking-men",
+  name: "Stocking Stuffers for Men He Will Actually Use (All Under $25)",
+  line: "Fourteen small gifts for the man who needs nothing, all under $25 and all of them things he will actually use.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/36P8XO4LU4JFW?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/stocking-men",
+};
+
+/** Stocking Stuffers for Teen Boys. */
+export const TEEN_BOYS_STOCKING_LIST: StorefrontList = {
+  key: "stocking-teen-boys",
+  name: "Stocking Stuffers for Teen Boys: Tech, Games and Gear Under $25",
+  line: "Twenty things for a teen boy's stocking, all under $25: earbuds, gear and the card games that actually get played.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/1FOFL50K23O31?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/stocking-teen-boys",
+};
+
+/** Stocking Stuffers for Teen Girls. */
+export const TEEN_GIRLS_STOCKING_LIST: StorefrontList = {
+  key: "stocking-teen-girls",
+  name: "Stocking Stuffers for Teen Girls: Beauty, Jewelry and Hair Favorites Under $25",
+  line: "Twenty small things for a teen girl's stocking, all under $25, and all of it beauty, hair and jewelry she will use.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/2FOMRFZ0JOQHZ?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/stocking-teen-girls",
+};
+
 /** Heritage Nativity and Mantel Gifts. */
 export const HERITAGE_NATIVITY_LIST: StorefrontList = {
   key: "heritage-nativity",
