@@ -39,7 +39,9 @@
       "url": "https://www.amazon.com/dp/B077CSKYV3?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81uyukKGJ7L._AC_SL1500_.jpg",
+      "image_alt": "Buffway Slim Minimalist Leather Wallet, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B0DHWBYF49",
@@ -57,7 +59,9 @@
       "url": "https://www.amazon.com/dp/B0DHWBYF49?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/61ULtwhxSXL._SL1200_.jpg",
+      "image_alt": "Melinda's Fire Roasted Garlic and Habanero Sauce, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B002BQ9340",
@@ -77,7 +81,9 @@
       "flags": [
         "low stock: only a few left on the page"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B002BQ9340.01._SL1500_.jpg",
+      "image_alt": "Ghirardelli Milk Chocolate Caramel Squares, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B014ABUQVC",
@@ -95,7 +101,9 @@
       "url": "https://www.amazon.com/dp/B014ABUQVC?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B014ABUQVC.01._SL1500_.jpg",
+      "image_alt": "Jack Link's Beef Jerky Variety Pack, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B077926SLG",
@@ -113,7 +121,9 @@
       "url": "https://www.amazon.com/dp/B077926SLG?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B077926SLG.01._SCLZZZZZZZ_.jpg",
+      "image_alt": "Gerber Shard 7-in-1 Keychain Multitool, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B088NRLMPV",
@@ -131,7 +141,9 @@
       "url": "https://www.amazon.com/dp/B088NRLMPV?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71k0d1eTetL._AC_SL1500_.jpg",
+      "image_alt": "Anker USB-C to USB-C Cable, 2 Pack, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B09HZZNNVN",
@@ -149,7 +161,9 @@
       "url": "https://www.amazon.com/dp/B09HZZNNVN?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/712eQib+yHL._AC_SL1500_.jpg",
+      "image_alt": "Etsfmoa Beanie with Light, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B07DLRK7Q5",
@@ -187,7 +201,9 @@
       "url": "https://www.amazon.com/dp/B01HRCU3SW?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/91v-qotxdLL._AC_SL1500_.jpg",
+      "image_alt": "RAK Magnetic Wristband for Tools, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B0070XAL0E",
@@ -197,7 +213,7 @@
       "star_rating": 4.6,
       "review_count": 25594,
       "price": "$10.00",
-      "price_usd": 10.0,
+      "price_usd": 10,
       "currency": "USD",
       "buy_box": true,
       "stock_note": "In Stock",
@@ -205,7 +221,9 @@
       "url": "https://www.amazon.com/dp/B0070XAL0E?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0070XAL0E.01._SCLZZZZZZZ_.jpg",
+      "image_alt": "Jack Black Sunscreen Lip Balm, SPF 25, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B08TKSWG2P",
@@ -243,7 +261,9 @@
       "url": "https://www.amazon.com/dp/B009NNFB0O?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71vL2xNJ1+L._SL1254_.jpg",
+      "image_alt": "Honest Amish Beard Balm, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B07F8S18D5",
@@ -261,7 +281,9 @@
       "url": "https://www.amazon.com/dp/B07F8S18D5?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/61srjyM7TFL._AC_SL1500_.jpg",
+      "image_alt": "Nulaxy Aluminum Folding Phone Stand, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B0015SBILG",
@@ -279,7 +301,9 @@
       "url": "https://www.amazon.com/dp/B0015SBILG?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/615zirukHuL._AC_SL1500_.jpg",
+      "image_alt": "Klein Tools 11-in-1 Screwdriver and Nut Driver, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B00121UVU0",
@@ -297,7 +321,9 @@
       "url": "https://www.amazon.com/dp/B00121UVU0?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71sSJSKcTjL._AC_SL1500_.jpg",
+      "image_alt": "O'Keeffe's Working Hands Hand Cream, from our Stocking Stuffers for Men list at Evergreen House"
     },
     {
       "asin": "B002G9UDYG",
@@ -315,7 +341,9 @@
       "url": "https://www.amazon.com/dp/B002G9UDYG?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81W5UTTEaYL._AC_SL1500_.jpg",
+      "image_alt": "Carhartt A18 Watch Cap Beanie, from our Stocking Stuffers for Men list at Evergreen House"
     }
   ]
 }

@@ -41,7 +41,9 @@
       "url": "https://www.amazon.com/dp/B07JK1LGHQ?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71VXTE2vspL._AC_SL1254_.jpg",
+      "image_alt": "Prep Naturals Glass Meal Prep Containers, 5 Pack, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B00004OCIU",
@@ -59,7 +61,9 @@
       "url": "https://www.amazon.com/dp/B00004OCIU?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81CHftbzWnL._AC_SL1500_.jpg",
+      "image_alt": "OXO Good Grips Y-Peeler, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B081PQTKSZ",
@@ -77,7 +81,9 @@
       "url": "https://www.amazon.com/dp/B081PQTKSZ?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71fuW8+KfrL._AC_SL1500_.jpg",
+      "image_alt": "Bentgo Classic Stackable Bento Lunch Box, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B09K7CVJ89",
@@ -95,7 +101,9 @@
       "url": "https://www.amazon.com/dp/B09K7CVJ89?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81Suk1+IkzL._AC_SL1500_.jpg",
+      "image_alt": "Clear Spice Drawer Organizer, 4 Tier, Set of 2, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B00TO8X0BA",
@@ -113,7 +121,9 @@
       "url": "https://www.amazon.com/dp/B00TO8X0BA?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71qYuiNAqdL._AC_SL1500_.jpg",
+      "image_alt": "OXO Good Grips GreenSaver Produce Keeper, Large, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B0GQGBTPCT",
@@ -133,7 +143,9 @@
       "flags": [
         "thin review base: 46 ratings, under the 100 review bar"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71nrTE2Tj8L._AC_SL1500_.jpg",
+      "image_alt": "Vtopmart Clear Pantry Storage Bins with Lids, 8 Pack, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B0CN9PPZCJ",
@@ -151,7 +163,9 @@
       "url": "https://www.amazon.com/dp/B0CN9PPZCJ?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81HNshTsF0L._AC_SL1500_.jpg",
+      "image_alt": "Fullstar Pro Vegetable Chopper and Spiralizer, from our Meal Prep Kitchen Reset list at Evergreen House"
     },
     {
       "asin": "B08B7GLYZC",
@@ -169,7 +183,9 @@
       "url": "https://www.amazon.com/dp/B08B7GLYZC?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81Q3B2FEhFL._AC_SL1500_.jpg",
+      "image_alt": "Rubbermaid Brilliance Glass Food Storage Containers, 4 Count, from our Meal Prep Kitchen Reset list at Evergreen House"
     }
   ]
 }

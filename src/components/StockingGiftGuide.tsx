@@ -40,6 +40,10 @@ export type ManifestItem = {
   gate_status: string;
   flags: string[];
   appears_on_page: boolean;
+  /** The listing's own main photo, read from the live Amazon page. */
+  image_url?: string | null;
+  /** Alt text for that photo: the product, then the list it belongs to. */
+  image_alt?: string;
 };
 
 export type StockingManifest = {
@@ -148,71 +152,91 @@ function GiftCard({
   return (
     <div
       id={`gift-${item.asin}`}
-      className="rounded-2xl border border-beige/20 bg-white p-5 shadow-sm ring-1 ring-beige/10 sm:p-6"
+      className="flex flex-col overflow-hidden rounded-2xl border border-beige/20 bg-white shadow-sm ring-1 ring-beige/10"
     >
-      <h2 className="font-serif text-lg font-semibold leading-snug text-warm-dark">
-        {item.title}
-      </h2>
-      <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-        {item.star_rating !== null ? (
-          <>
-            <RatingStars rating={item.star_rating} />
-            <span className="text-sm text-warm-gray">
-              {item.review_count === null
-                ? "Review count not shown on the listing"
-                : item.review_count === 1
-                  ? "1 rating"
-                  : `${item.review_count.toLocaleString("en-US")} ratings`}
+      {/* The product photo, same treatment as the edit cards
+          (src/components/EditProductCard.tsx): square frame on soft white, the
+          listing image contained inside it, sized for the layout and lazily
+          loaded. The photo is not a second outbound link: "Shop on Amazon"
+          stays the card's only affiliate anchor. */}
+      {item.image_url && (
+        <div className="aspect-square w-full shrink-0 bg-soft-white">
+          <img
+            src={item.image_url}
+            alt={item.image_alt ?? item.title}
+            width={1000}
+            height={1000}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-contain p-3"
+          />
+        </div>
+      )}
+      <div className="flex flex-1 flex-col p-5 sm:p-6">
+        <h2 className="font-serif text-lg font-semibold leading-snug text-warm-dark">
+          {item.title}
+        </h2>
+        <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
+          {item.star_rating !== null ? (
+            <>
+              <RatingStars rating={item.star_rating} />
+              <span className="text-sm text-warm-gray">
+                {item.review_count === null
+                  ? "Review count not shown on the listing"
+                  : item.review_count === 1
+                    ? "1 rating"
+                    : `${item.review_count.toLocaleString("en-US")} ratings`}
+              </span>
+            </>
+          ) : (
+            <span className="text-sm italic text-warm-gray">
+              No star rating on the listing yet
             </span>
-          </>
-        ) : (
-          <span className="text-sm italic text-warm-gray">
-            No star rating on the listing yet
+          )}
+          <span className="text-sm font-semibold text-terracotta">
+            {item.price}
           </span>
-        )}
-        <span className="text-sm font-semibold text-terracotta">
-          {item.price}
-        </span>
-      </div>
-      <p className="mt-1 text-xs text-taupe">
-        {`Verified ${guide.verifiedDateLabel}`}
-      </p>
-      <p className="mt-3 text-sm leading-relaxed text-warm-gray sm:text-base">
-        {note}
-      </p>
-      <a
-        href={item.url}
-        target="_blank"
-        rel="noopener noreferrer sponsored"
-        className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sage transition-colors hover:text-sage-dark"
-        onClick={() =>
-          trackAffiliateClick({
-            productId: item.asin,
-            name: item.title,
-            price: item.price_usd,
-            context: guide.analyticsContext,
-            destinationUrl: item.url,
-            eventId: `amz-click-${guide.analyticsPrefix}-${item.asin}`,
-          })
-        }
-      >
-        Shop on Amazon
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width={13}
-          height={13}
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          aria-hidden="true"
+        </div>
+        <p className="mt-1 text-xs text-taupe">
+          {`Verified ${guide.verifiedDateLabel}`}
+        </p>
+        <p className="mt-3 text-sm leading-relaxed text-warm-gray sm:text-base">
+          {note}
+        </p>
+        <a
+          href={item.url}
+          target="_blank"
+          rel="noopener noreferrer sponsored"
+          className="mt-4 inline-flex items-center gap-1.5 text-sm font-medium text-sage transition-colors hover:text-sage-dark"
+          onClick={() =>
+            trackAffiliateClick({
+              productId: item.asin,
+              name: item.title,
+              price: item.price_usd,
+              context: guide.analyticsContext,
+              destinationUrl: item.url,
+              eventId: `amz-click-${guide.analyticsPrefix}-${item.asin}`,
+            })
+          }
         >
-          <line x1="5" y1="12" x2="19" y2="12" />
-          <polyline points="12 5 19 12 12 19" />
-        </svg>
-      </a>
+          Shop on Amazon
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={13}
+            height={13}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <line x1="5" y1="12" x2="19" y2="12" />
+            <polyline points="12 5 19 12 12 19" />
+          </svg>
+        </a>
+      </div>
     </div>
   );
 }

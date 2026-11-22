@@ -41,7 +41,9 @@
       "url": "https://www.amazon.com/dp/B0F999PHLV?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/718mamZhbDL._AC_SL1500_.jpg",
+      "image_alt": "InnoGear Ceramic Essential Oil Diffuser, 150ml, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B09S2ZGMKZ",
@@ -59,7 +61,9 @@
       "url": "https://www.amazon.com/dp/B09S2ZGMKZ?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71m2GVn5RKL._AC_SL1500_.jpg",
+      "image_alt": "YnM Cooling Weighted Blanket, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B081CHLF46",
@@ -77,7 +81,9 @@
       "url": "https://www.amazon.com/dp/B081CHLF46?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/61Hx5h-nysL._AC_SL1500_.jpg",
+      "image_alt": "JALL Sunrise Alarm Clock, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B0095FFUM4",
@@ -95,7 +101,9 @@
       "url": "https://www.amazon.com/dp/B0095FFUM4?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/512HJgPlChL._AC_SL1181_.jpg",
+      "image_alt": "LEUCHTTURM1917 Medium A5 Hardcover Notebook, Dotted, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B000I68NCS",
@@ -113,7 +121,9 @@
       "url": "https://www.amazon.com/dp/B000I68NCS?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81O6nc5B4qL._AC_SL1500_.jpg",
+      "image_alt": "Finum Reusable Stainless Steel Tea and Coffee Basket, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B08PP48979",
@@ -131,7 +141,9 @@
       "url": "https://www.amazon.com/dp/B08PP48979?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81bgn8np84L._AC_SL1500_.jpg",
+      "image_alt": "Cosori Electric Kettle, 1.7L, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B00S5Q826U",
@@ -149,7 +161,9 @@
       "url": "https://www.amazon.com/dp/B00S5Q826U?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/617MzvDu2iL._AC_SL1500_.jpg",
+      "image_alt": "Alaska Bear Mulberry Silk Sleep Mask, from our Wellness at Home list at Evergreen House"
     },
     {
       "asin": "B0C2C9NHZW",
@@ -167,7 +181,9 @@
       "url": "https://www.amazon.com/dp/B0C2C9NHZW?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71xIgTqSN6L._AC_SL1500_.jpg",
+      "image_alt": "Levoit Top Fill Humidifier, 2.5L, from our Wellness at Home list at Evergreen House"
     }
   ]
 }
