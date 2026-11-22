@@ -1229,6 +1229,97 @@
           "raw_name": false
         }
       ]
+    },
+    {
+      "slug": "timeless-bedroom-edit",
+      "title": "The Timeless Bedroom Edit",
+      "headline": "Washed linen, dark charcoal and warm wood, layered the way a bedroom should feel",
+      "intro": "A bed built in layers: white washed linen underneath, a dark charcoal coverlet from mid bed to the foot, camel chunky knit over the end, and cream pillows stacked in front. Everything else is quiet enough to let that bed be the room.",
+      "art_note": "Bedroom in late morning light, king bed with a white washed linen duvet, a charcoal cotton coverlet folded from the middle of the bed to the foot, a camel chunky knit throw across the foot, two large white linen shams against a charcoal upholstered headboard, cream textured pillow covers and a long cream lumbar in front, a ceramic table lamp with a cream shade on one walnut nightstand, framed neutral abstract art above the bed, a faded beige vintage rug on a wood floor, linen and wool textures, warm neutral palette, real lived-in room, no people, no text.",
+      "hero_image": "/images/timeless-bedroom-hero",
+      "card_image": "/images/timeless-bedroom-hero",
+      "items": [
+        {
+          "id": 629,
+          "slug": "simple-opulence-washed-french-flax-linen-duvet-cover-set-king-white",
+          "name": "Simple&Opulence 100% French Flax Linen Duvet Cover Set with Embroidery Washed - 3 Pieces (1 Duvet Cover with 2 Pillow Shams) with Button Closure Soft Breathable Farmhouse - White, King Size",
+          "display_title": "Simple and Opulence Washed French Flax Linen Duvet Cover Set, King, White",
+          "hook": "Washed white linen for the bed, soft from the first night.",
+          "raw_name": false
+        },
+        {
+          "id": 630,
+          "slug": "horimote-home-100-percent-cotton-quilt-set-king-charcoal",
+          "name": "HORIMOTE HOME 100% Cotton Quilt Set King Size, Charcoal Pre-Washed Bedspreads Coverlet Set in Geometric Pattern, Cozy Lightweight Stitching Decorative",
+          "display_title": "HORIMOTE HOME 100 Percent Cotton Quilt Set, King, Charcoal",
+          "hook": "A dark charcoal cotton coverlet folded from mid bed to foot.",
+          "raw_name": false
+        },
+        {
+          "id": 631,
+          "slug": "evergracehome-chunky-chenille-knit-throw-blanket-camel-brown",
+          "name": "EVERGRACEHOME Chunky Chenille Knit Throw Blanket, 50 x 60, Camel Brown",
+          "display_title": "EVERGRACEHOME Chunky Chenille Knit Throw Blanket, Camel Brown, 50 x 60",
+          "hook": "Camel chunky knit thrown across the foot for weight and warmth.",
+          "raw_name": false
+        },
+        {
+          "id": 632,
+          "slug": "simple-opulence-washed-linen-euro-shams-white-26x26-set-of-2",
+          "name": "Simple&Opulence 100% Washed Linen Euro Shams 26'' x 26'' Pack of 2, Basic Style Solid Color Natural Flax Farmhouse Decorative Square Throw Pillow Covers for Bed, White",
+          "display_title": "Simple and Opulence Washed Linen Euro Shams, White, 26 x 26, Set of 2",
+          "hook": "Two large white linen shams propped behind the sleeping pillows.",
+          "raw_name": false
+        },
+        {
+          "id": 433,
+          "slug": "foindtower-textured-chenille-pillow-covers-cream-20x20",
+          "name": "Foindtower Textured Chenille Pillow Covers - Cream, 20x20",
+          "display_title": "Foindtower Textured Chenille Pillow Covers - Cream, 20x20",
+          "hook": "Cream chenille covers that add texture without adding colour.",
+          "raw_name": false
+        },
+        {
+          "id": 251,
+          "slug": "miulee-decorative-long-lumbar-throw-pillow-cover-for-bed-14x36-natural-beige-boho-farmhouse-neutral-couch-pillowcase-pac",
+          "name": "MIULEE Decorative Long Lumbar Throw Pillow Cover for Bed 14x36 Natural Beige Boho Farmhouse Neutral Couch Pillowcase Pack of 1 Accent Modern Sofa Cushion Livingroom Home Decor (Covers Only)",
+          "display_title": "MIULEE Decorative Long Lumbar Throw Pillow Cover for Bed 14x36 Natural Beige Boho Farmhouse Neutral Couch Pillowcase Pack of 1 Accent Modern Sofa Cushion Livingroom Home Decor (Covers Only)",
+          "hook": "A long cream lumbar that finishes the pillow stack.",
+          "raw_name": true
+        },
+        {
+          "id": 633,
+          "slug": "signature-design-by-ashley-rainermen-ceramic-table-lamp-off-white",
+          "name": "Signature Design by Ashley Rainermen Ceramic Table Lamp, 21\", Off White",
+          "display_title": "Signature Design by Ashley Rainermen Ceramic Table Lamp, 21 Inch, Off White",
+          "hook": "A ceramic lamp with a cream shade for warm bedside light.",
+          "raw_name": false
+        },
+        {
+          "id": 258,
+          "slug": "large-framed-boho-modern-neutral-abstract-wall-art-for-living-room-3-piece-black-and-white-canvas-prints-paintings-artwo",
+          "name": "Large Framed Boho Modern Neutral Abstract Wall Art for Living Room, 3 Piece Black and White Canvas Prints Paintings Artwork for Walls, Geometric Pictures for Office Bedroom Dining Room Decor, 24x36 In",
+          "display_title": "Large Framed Boho Modern Neutral Abstract Wall Art for Living Room, 3 Piece Black and White Canvas Prints Paintings Artwork for Walls, Geometric Pictures for Office Bedroom Dining Room Decor, 24x36 In",
+          "hook": "Framed neutral abstracts that calm the wall above the bed.",
+          "raw_name": true
+        },
+        {
+          "id": 634,
+          "slug": "washable-vintage-floral-area-rug-8x10-beige",
+          "name": "8x10 Area Rugs for Living Room: Washable Large Vintage Floral Rug Low Pile Non-Slip Boho Carpet for Bedroom Dining Home Office (Beige, 8'x10')",
+          "display_title": "Washable Vintage Floral Area Rug, 8 x 10, Beige",
+          "hook": "A faded vintage rug in soft beige to ground the room.",
+          "raw_name": false
+        },
+        {
+          "id": 635,
+          "slug": "decofy-farmhouse-nightstand-set-of-2-two-drawers-walnut",
+          "name": "Decofy Farmhouse Nightstand Set of 2 with Charging Station, 2 Drawers",
+          "display_title": "Decofy Farmhouse Nightstand Set of 2, Two Drawers, Walnut",
+          "hook": "Walnut nightstands that bring warmth to either side.",
+          "raw_name": false
+        }
+      ]
     }
   ]
 }
