@@ -16,7 +16,7 @@
   "summary": {
     "verified": 20,
     "meets_star_and_buy_box_gates": 20,
-    "usable_on_page": 20,
+    "usable_on_page": 18,
     "no_rating_on_listing": 0,
     "below_4_3_stars": 0,
     "no_buy_box": 0,
@@ -96,9 +96,10 @@
       "url": "https://www.amazon.com/dp/B0FLQPY3V7?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [
-        "review count is the shared pool with the other Kitsch scrunchie in this list"
+        "review count is the shared pool with the other Kitsch scrunchie in this list",
+        "off this page by owner decision 2026-11-22: quotes the same shared review pool as its pair; stays on the Amazon list"
       ],
-      "appears_on_page": true
+      "appears_on_page": false
     },
     {
       "asin": "B0F259D7MF",
@@ -334,9 +335,10 @@
       "url": "https://www.amazon.com/dp/B09XMYFTB7?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [
-        "review count is the shared pool with the mini e.l.f. primer in this list"
+        "review count is the shared pool with the mini e.l.f. primer in this list",
+        "off this page by owner decision 2026-11-22: quotes the same shared review pool as its pair; stays on the Amazon list"
       ],
-      "appears_on_page": true
+      "appears_on_page": false
     },
     {
       "asin": "B085ZZT4NG",
