@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "~/components/Header";
 import {
-  DEFAULT_HERO_CONCEPT,
   Hero,
   heroArtPreloadLinks,
 } from "~/components/Hero";
@@ -22,24 +21,17 @@ import { generateHomeMetadata } from "~/lib/seo";
 import { getOrganizationSchema, getWebSiteSchema, SITE_URL } from "~/lib/schema";
 import { getEditSummaries, type EditCardData, type EditProduct } from "~/lib/edits";
 import {
-  RESET_LIST,
-  SHOW_RESET_LIST,
-  SHOW_UNDER19_ON_HOMEPAGE,
-  UNDER19_LIST,
-  type StorefrontList,
-} from "~/lib/storefront-lists";
+  orderFeaturedEdits,
+  resolveHomepage,
+  type HomepageSeason,
+} from "~/lib/homepage-season";
+import { getListsByKey, type StorefrontList } from "~/lib/storefront-lists";
 
 type HomeSearch = { hero?: "b" | "c" };
 
-/* Edits that are live on /collections but deliberately carry no homepage card
-   yet (owner, 2026-11-20: the Timeless Bedroom Edit is listed on the collections
-   index only). The homepage row renders every published edit, so the hold has to
-   be named here; delete a slug from this set to give it its homepage card. */
-const HOMEPAGE_HELD_EDITS = new Set<string>(["timeless-bedroom-edit"]);
-
 export const Route = createFileRoute("/")({
   /* ?hero=a|b|c selects one of the three owner-reviewable hero directions.
-     Anything else (including no param) falls back to concept A. */
+     Anything else (including no param) falls back to the season's own art. */
   validateSearch: (search: Record<string, unknown>): HomeSearch => {
     const raw = typeof search.hero === "string" ? search.hero.toLowerCase() : "";
     if (raw === "b" || raw === "c") return { hero: raw };
@@ -49,23 +41,37 @@ export const Route = createFileRoute("/")({
     const seo = generateHomeMetadata();
     /* LCP: the hero photograph is the first paint element, so the art the page
        actually renders is preloaded, media scoped to the same 768px breakpoint
-       the <picture> switches on. The preload used to sit in the root head and
+       the <picture> switches on. Which art that is comes from the same dated
+       season table the loader reads, so the preload never points at the season
+       the page has already left. The preload used to sit in the root head and
        pointed at retired art nothing rendered. */
     const hero = (match.search as HomeSearch | undefined)?.hero;
+    const season = resolveHomepage();
     return {
       meta: seo.meta,
-      links: [...seo.links, ...heroArtPreloadLinks(hero ?? DEFAULT_HERO_CONCEPT)],
+      links: [
+        ...seo.links,
+        ...heroArtPreloadLinks(hero ?? season.hero.concept),
+      ],
     };
   },
   loader: async () => {
-    /* The SHOP THE EDITS row is now database-backed (collection admin, phase 1),
-       so the list is loaded here and handed to the component rather than read
-       from a module-level constant. A failed edits read degrades to an empty row
-       the way the two curated grids below already do. */
+    /* What the homepage looks like today, decided here on the server from the
+       checked-in dated table (~/data/homepage-schedule). The component renders
+       this answer, so the first paint is already the season's hero and row and
+       there is no flash of the previous one. */
+    const season: HomepageSeason = resolveHomepage();
+
+    /* The SHOP THE EDITS row is database-backed (collection admin, phase 1).
+       The season decides its order and what is off it; a failed edits read
+       degrades to an empty row the way the two curated grids below already
+       do. */
     let edits: EditCardData[] = [];
     try {
-      edits = (await getEditSummaries()).filter(
-        (edit) => !HOMEPAGE_HELD_EDITS.has(edit.slug),
+      edits = orderFeaturedEdits(
+        await getEditSummaries(),
+        season.leadEdits,
+        season.excludedEdits,
       );
     } catch (err) {
       console.error("Edits loader error:", err);
@@ -78,13 +84,14 @@ export const Route = createFileRoute("/")({
         getSectionProducts(SHOP_THE_LOOK),
         getSectionProducts(CURRENT_EDIT),
       ]);
-      return { edits, shopTheLook, currentEdit };
+      return { edits, shopTheLook, currentEdit, season };
     } catch (err) {
       console.error("Loader error:", err);
       return {
         edits,
         shopTheLook: [] as EditProduct[],
         currentEdit: [] as EditProduct[],
+        season,
       };
     }
   },
@@ -92,17 +99,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-  const { edits, shopTheLook, currentEdit } = Route.useLoaderData();
+  const { edits, shopTheLook, currentEdit, season } = Route.useLoaderData();
   const { hero } = Route.useSearch();
-  const heroConcept = hero ?? "a";
+  const heroConcept = hero ?? season.hero.concept;
 
-  /* Storefront list cards under THE CURRENT EDIT. Not products, so they never
-     enter the view_item_list payload. The Under $19 card is seasonal; The
-     Reset List is not. */
-  const currentEditLists: StorefrontList[] = [
-    ...(SHOW_UNDER19_ON_HOMEPAGE ? [UNDER19_LIST] : []),
-    ...(SHOW_RESET_LIST ? [RESET_LIST] : []),
-  ];
+  /* Storefront list cards under THE CURRENT EDIT, named by the season. Not
+     products, so they never enter the view_item_list payload. A season can name
+     a list that does not exist yet; that key is skipped, never rendered empty. */
+  const currentEditLists: StorefrontList[] = getListsByKey(season.featuredLists);
 
   // Homepage-specific JSON-LD
   const homeSchema = JSON.stringify(
@@ -129,24 +133,28 @@ function Home() {
         {/* Seasonal announcement strip - owner palette: midnight navy band,
             antique gold links. One link only: the fall link came off on
             2026-11-15 (shop audit item 7) so the strip points at the season the
-            shop is actually selling. */}
-        <div className="w-full border-b border-soft-white/10 bg-midnight">
-          <p className="mx-auto max-w-7xl px-4 py-2.5 text-center text-xs leading-relaxed text-soft-white/80 sm:px-6 sm:text-sm">
-            The Holiday Shop is live. Warm, curated finds for the season.{" "}
-            <a
-              href="/collection/holiday"
-              className="font-semibold uppercase tracking-[0.1em] text-antique-gold underline-offset-2 transition-colors hover:text-soft-white hover:underline"
-            >
-              Shop Holiday
-            </a>
-          </p>
-        </div>
+            shop is actually selling. The season table owns the words and the
+            link, so the strip flips with the hero on the same day; a season
+            with no strip set renders none. */}
+        {season.announcement && (
+          <div className="w-full border-b border-soft-white/10 bg-midnight">
+            <p className="mx-auto max-w-7xl px-4 py-2.5 text-center text-xs leading-relaxed text-soft-white/80 sm:px-6 sm:text-sm">
+              {season.announcement.text}{" "}
+              <a
+                href={season.announcement.href}
+                className="font-semibold uppercase tracking-[0.1em] text-antique-gold underline-offset-2 transition-colors hover:text-soft-white hover:underline"
+              >
+                {season.announcement.label}
+              </a>
+            </p>
+          </div>
+        )}
         {/* Owner-approved homepage hierarchy, top to bottom:
             1 hero, 2 shop the edits, 3 shop the look (the holiday hosting
             table), 4 the current edit, 5 explore by room, 6 from the journal,
             7 email signup. Sections 3 and 4 are curated from the checked-in
             homepage merchandising file, so no row on this page is query-picked. */}
-        <Hero concept={heroConcept} />
+        <Hero concept={heroConcept} copy={season.hero} />
         <ShopTheEdits edits={edits} />
         <ShopTheLook products={shopTheLook} />
         <TheCurrentEdit
