@@ -186,3 +186,40 @@ export function getListsByKey(keys: string[]): StorefrontList[] {
 export const EDIT_STOREFRONT_LISTS: Record<string, StorefrontList> = {
   "heritage-christmas-edit": HERITAGE_NATIVITY_LIST,
 };
+
+/**
+ * One editorial scene per list, for the placements that show one
+ * (owner, 2026-11-22).
+ *
+ * The scene belongs to the LIST, never to a product on it: it is the same art
+ * the list's own page or post opens on, reused so a card cannot invent a look
+ * the page does not have. It lives here rather than on the list object so a
+ * placement asks for it by key: every placement that does not ask stays
+ * text-only, exactly as it was.
+ */
+export interface StorefrontListImage {
+  /** The jpg, which is what every browser can read. */
+  src: string;
+  /** The webp the same scene was exported to, served first where supported. */
+  webp?: string;
+  /** Describes the scene itself, not the list. */
+  alt: string;
+}
+
+export const LIST_IMAGES: Record<string, StorefrontListImage> = {
+  [UNDER19_LIST.key]: {
+    src: "/images/stocking-stuffers-hero.jpg",
+    webp: "/images/stocking-stuffers-hero.webp",
+    alt: "Kraft wrapped gifts tied with red velvet ribbon and twine beside a cream cable knit stocking on a marble counter, with a lit Christmas tree and a candle behind them",
+  },
+  [RESET_LIST.key]: {
+    src: "/images/blog-reset-list-v2.jpg",
+    webp: "/images/blog-reset-list-v2.webp",
+    alt: "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight",
+  },
+};
+
+/** The scene for a list, when one has been exported. Undefined renders no image. */
+export function getListImage(key: string): StorefrontListImage | undefined {
+  return LIST_IMAGES[key];
+}
