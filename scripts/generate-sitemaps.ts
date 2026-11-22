@@ -205,6 +205,26 @@ async function main() {
       changefreq: "weekly",
     },
     {
+      loc: "/new-year-organized-home",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: "/meal-prep-kitchen-reset",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: "/small-space-home-fitness",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: "/wellness-at-home",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
       loc: "/blog/the-reset-list-17-finds",
       priority: "0.7",
       changefreq: "monthly",

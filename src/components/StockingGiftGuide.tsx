@@ -7,8 +7,9 @@ import { SITE_URL } from "~/lib/schema";
 import type { StorefrontList } from "~/lib/storefront-lists";
 
 /**
- * The stocking gift guide template, one page per storefront list
- * (owner decision 48, 2026-11-22).
+ * The storefront-list page template, one page per storefront list: the three
+ * stocking lists (owner decision 48) and the four January lists (decisions 48
+ * and 49). One component for all seven, so the pages cannot drift.
  *
  * Same shape as /stocking-stuffers, which is the page this follows: the list
  * card comes first, then one card per product in the merchandiser's manifest
@@ -19,6 +20,10 @@ import type { StorefrontList } from "~/lib/storefront-lists";
  *
  * The list card is not a product card: the list name, one line, one link out to
  * the owner's own storefront list, and no rating, count or price.
+ *
+ * The eyebrow, the breadcrumb parent and the links block under the cards are
+ * the only per-page differences; their defaults keep the stocking pages exactly
+ * as they shipped.
  */
 
 export type ManifestItem = {
@@ -55,9 +60,28 @@ export type StockingCardCopy = {
   cards: Record<string, string>;
 };
 
+/** The page's own crumb, between Home and this page. */
+export type GuideCrumb = { label: string; href: string };
+
+/** Where a guide sends readers next, when it is not the stocking hub. */
+export type GuideRelated = {
+  heading: string;
+  body: string;
+  links: { label: string; href: string; line: string }[];
+};
+
 export type StockingGuide = {
   /** The page's own path, for the canonical and the schema. */
   pagePath: string;
+  /** Small caps line above the h1. Defaults to "Gift Guide". */
+  eyebrow?: string;
+  /** The crumb above this page. Defaults to the Stocking Stuffers hub. */
+  breadcrumbParent?: GuideCrumb;
+  /**
+   * The links block under the cards. Defaults to the line pointing at the
+   * Stocking Stuffers hub; a page outside the stocking set passes its own.
+   */
+  related?: GuideRelated;
   /** Hero art, one filename per page so distinct art can drop in later. */
   heroJpg: string;
   heroWebp: string;
@@ -197,9 +221,14 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
   const { copy, manifest } = guide;
   const cards = cardsFor(manifest);
 
+  const parent: GuideCrumb = guide.breadcrumbParent ?? {
+    label: "Stocking Stuffers",
+    href: "/stocking-stuffers",
+  };
+
   const breadcrumbItems = [
     { label: "Home", href: "/" },
-    { label: "Stocking Stuffers", href: "/stocking-stuffers" },
+    { label: parent.label, href: parent.href },
     { label: copy.h1 },
   ];
 
@@ -226,7 +255,7 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
         <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
           <header>
             <p className="font-sans text-xs font-medium uppercase tracking-[0.25em] text-taupe sm:text-sm">
-              Gift Guide
+              {guide.eyebrow ?? "Gift Guide"}
             </p>
             <h1 className="mt-5 font-serif text-3xl font-bold leading-tight text-warm-dark sm:text-4xl lg:text-5xl">
               {copy.h1}
@@ -275,16 +304,45 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
             {`Prices and ratings above were read on Amazon on ${guide.verifiedDateLabel} and can change.`}
           </p>
 
-          <p className="mt-6 text-sm leading-relaxed text-warm-gray">
-            The other stocking lists, and the Under $19 guide, are all on the{" "}
-            <a
-              href="/stocking-stuffers"
-              className="font-medium text-burgundy underline-offset-4 hover:text-burgundy-deep hover:underline"
-            >
-              Stocking Stuffers hub
-            </a>
-            .
-          </p>
+          {guide.related ? (
+            <section className="mt-12 border-t border-beige/30 pt-8">
+              <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+                {guide.related.heading}
+              </h2>
+              <p className="mt-4 text-sm leading-relaxed text-warm-gray sm:text-base">
+                {guide.related.body}
+              </p>
+              <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+                {guide.related.links.map((link) => (
+                  <li
+                    key={link.href}
+                    className="rounded-2xl border border-beige/20 bg-white p-5 shadow-sm ring-1 ring-beige/10"
+                  >
+                    <a
+                      href={link.href}
+                      className="font-serif text-lg font-semibold text-warm-dark underline-offset-4 hover:text-burgundy hover:underline"
+                    >
+                      {link.label}
+                    </a>
+                    <p className="mt-1 text-sm leading-relaxed text-warm-gray">
+                      {link.line}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          ) : (
+            <p className="mt-6 text-sm leading-relaxed text-warm-gray">
+              The other stocking lists, and the Under $19 guide, are all on the{" "}
+              <a
+                href="/stocking-stuffers"
+                className="font-medium text-burgundy underline-offset-4 hover:text-burgundy-deep hover:underline"
+              >
+                Stocking Stuffers hub
+              </a>
+              .
+            </p>
+          )}
 
           <script
             type="application/ld+json"
