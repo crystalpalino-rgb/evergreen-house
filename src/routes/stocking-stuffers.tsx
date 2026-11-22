@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 
 import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { DeepSections } from "~/components/DeepSections";
 import { EmailSignup } from "~/components/EmailSignup";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
@@ -85,7 +86,7 @@ const CARDS = manifest.items.filter(
   (item) =>
     item.appears_on_page &&
     item.buy_box &&
-    (item.star_rating === null || item.star_rating >= MIN_STARS)
+    (item.star_rating === null || item.star_rating >= MIN_STARS),
 );
 
 /** The list card on this page still links out to Amazon. */
@@ -98,10 +99,7 @@ const MORE_LISTS = [
   TEEN_GIRLS_STOCKING_LIST,
 ];
 
-const breadcrumbItems = [
-  { label: "Home", href: "/" },
-  { label: copy.h1 },
-];
+const breadcrumbItems = [{ label: "Home", href: "/" }, { label: copy.h1 }];
 
 const pageSchema = {
   "@context": "https://schema.org",
@@ -129,7 +127,7 @@ export const Route = createFileRoute("/stocking-stuffers")({
         image: HERO_JPG,
         imageWidth: 2000,
         imageHeight: 667,
-      }
+      },
     );
     return { meta: seo.meta, links: seo.links };
   },
@@ -318,9 +316,9 @@ function StockingStuffersPage() {
               More stocking lists
             </h2>
             <p className="mt-5 text-lg leading-relaxed text-warm-gray">
-              Three more lists, each on its own page: the man who needs
-              nothing, a teen boy, a teen girl. Every piece on them is under
-              twenty five dollars.
+              Three more lists, each on its own page: the man who needs nothing,
+              a teen boy, a teen girl. Every piece on them is under twenty five
+              dollars.
             </p>
             <div className="mt-8 grid gap-6 md:grid-cols-3">
               {MORE_LISTS.map((list) => (
@@ -328,6 +326,15 @@ function StockingStuffersPage() {
               ))}
             </div>
           </section>
+
+          {/* Long-form editorial sections, keyed by page path in
+              src/data/deep-sections.json: below the card grid, in the order
+              they were written, in the Reset List post rhythm. The page's one
+              disclosure stays in the header and this block carries no links. */}
+          <DeepSections
+            page={PAGE_PATH}
+            className="border-t border-beige/30 pt-8"
+          />
 
           <p className="mt-12 border-t border-beige/30 pt-6 text-xs italic leading-relaxed text-taupe">
             {`Prices and ratings above were read on Amazon on ${VERIFIED_DATE_LABEL} and can change.`}

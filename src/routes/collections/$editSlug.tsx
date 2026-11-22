@@ -9,6 +9,7 @@ import { Footer } from "~/components/Footer";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { AnalyticsList } from "~/components/AnalyticsList";
 import { PinterestViewContent } from "~/components/PinterestViewContent";
+import { DeepSections } from "~/components/DeepSections";
 import { EditProductCard } from "~/components/EditProductCard";
 import { EditCard } from "~/components/EditCard";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
@@ -195,7 +196,10 @@ function EditPage() {
   return (
     <>
       {/* Pinterest ViewContent: one event per view of this edit. */}
-      <PinterestViewContent contentName={edit.slug} contentCategory="collection" />
+      <PinterestViewContent
+        contentName={edit.slug}
+        contentCategory="collection"
+      />
       <Header />
       <main>
         <Breadcrumbs
@@ -315,6 +319,15 @@ function EditPage() {
             )}
           </div>
         </section>
+
+        {/* Long-form editorial sections, keyed by page path in
+            src/data/deep-sections.json: below the card grid, in the order they
+            were written, in the Reset List post rhythm. A page with no entry
+            renders nothing. The page's single disclosure stays in the hero. */}
+        <DeepSections
+          page={`/collections/${edit.slug}`}
+          className="border-t border-beige/20 bg-cream"
+        />
 
         {/* Related edits: the other three, small. */}
         {related.length > 0 && (
