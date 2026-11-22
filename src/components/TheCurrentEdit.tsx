@@ -1,6 +1,6 @@
 import type { EditProduct } from "~/lib/edits";
 import { CURRENT_EDIT, type HomepageSection } from "~/lib/homepage-sections";
-import type { StorefrontList } from "~/lib/storefront-lists";
+import { getListImage, type StorefrontList } from "~/lib/storefront-lists";
 import { AnalyticsList } from "./AnalyticsList";
 import { EditProductCard } from "./EditProductCard";
 import { StorefrontListCard } from "./StorefrontListCard";
@@ -67,6 +67,7 @@ export function TheCurrentEdit({
             key={list.key}
             list={list}
             level={3}
+            image={getListImage(list.key)}
             className="mt-6 sm:mt-8"
           />
         ))}
