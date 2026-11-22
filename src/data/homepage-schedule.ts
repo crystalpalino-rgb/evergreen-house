@@ -99,8 +99,9 @@ export const HOMEPAGE_SCHEDULE: HomepageChange[] = [
     },
     featuredEdits: {
       /* The Timeless Bedroom Edit is live in /collections with no homepage card
-         yet (owner, 2026-11-20). Taking it off this list gives it its card. */
-      exclude: ["timeless-bedroom-edit"],
+         yet (owner, 2026-11-20), and the Vintage Christmas Edit is the same
+         (owner, 2026-11-22). Taking a slug off this list gives it its card. */
+      exclude: ["timeless-bedroom-edit", "vintage-christmas-edit"],
     },
     featuredLists: ["under19", "reset-list"],
   },

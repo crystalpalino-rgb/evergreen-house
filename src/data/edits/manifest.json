@@ -1320,6 +1320,89 @@
           "raw_name": false
         }
       ]
+    },
+    {
+      "slug": "vintage-christmas-edit",
+      "title": "The Vintage Christmas Edit",
+      "headline": "The pieces that look like they came down from the attic, not off a shelf",
+      "intro": "Vintage Christmas is not a color scheme. It is glass that catches the light, tin that has already lived a few decades and paper that smells faintly of an old book. These nine pieces carry that feeling, chosen to sit together on a tree, a table and a hallway without one thing looking new.",
+      "art_note": "Christmas tree corner in late afternoon light, an old fashioned tree with warm white lights and vintage glass ornaments in gold and green, a small framed nutcracker print and a framed vintage stamp village print on the wall behind, a weathered green tin bowl on a dark wood side table holding keys and candy canes, a green tree print runner rug on the wood floor, two cotton tea towels folded over a chair back, an open illustrated Christmas book on the table, warm neutral and evergreen palette, real lived-in room, no people, no text.",
+      "hero_image": "/images/vintage-christmas-hero",
+      "card_image": "/images/vintage-christmas-hero-card",
+      "items": [
+        {
+          "id": 636,
+          "slug": "a-christmas-carol-illustrated-1843-edition",
+          "name": "A Christmas Carol (Illustrated): Classic 1843 Edition with Original Illustrations",
+          "display_title": "A Christmas Carol, Illustrated 1843 Edition",
+          "hook": "The original ghost story of the season, with the 1843 illustrations still in place.",
+          "raw_name": false
+        },
+        {
+          "id": 637,
+          "slug": "a-classic-christmas-stories-and-seasonal-poetry",
+          "name": "A Classic Christmas: A Giftable Collection of Classic Christmas Stories and Seasonal Poetry",
+          "display_title": "A Classic Christmas: Classic Stories and Seasonal Poetry",
+          "hook": "Stories and poems meant to be read aloud by lamplight while the tree stands lit.",
+          "raw_name": false
+        },
+        {
+          "id": 638,
+          "slug": "old-world-christmas-rudolph-glass-ornament",
+          "name": "Old World Christmas Christmas Classic Glass Ornament for Tree",
+          "display_title": "Old World Christmas Rudolph Glass Ornament",
+          "hook": "The reindeer from the 1964 special, blown glass and painted by hand, boxed.",
+          "raw_name": false
+        },
+        {
+          "id": 639,
+          "slug": "bcuangd-vintage-christmas-kitchen-towels-set-of-2",
+          "name": "Vintage Christmas Kitchen Towels Decor Set of 2 - Retro Xmas Holiday Hand Tea Towels, Rustic Neutral Antique Christmas Tree Snowman Dish Towel Dishcloths Decorations for Home Kitchen, 16\"x24\"",
+          "display_title": "BCUANGD Vintage Christmas Kitchen Towels, Set of 2",
+          "hook": "Two cotton towels printed with an old-fashioned tree and snowman, hung on the oven.",
+          "raw_name": false
+        },
+        {
+          "id": 640,
+          "slug": "cwi-gifts-starlight-sleigh-rides-vintage-tin-bowl",
+          "name": "CWI Gifts 4\" X 6.5\" Starlight Sleigh Rides Vintage Tin Bowl",
+          "display_title": "CWI Gifts Starlight Sleigh Rides Vintage Tin Bowl",
+          "hook": "A weathered green tin bowl with a vintage sleigh ride advert, for keys or candy.",
+          "raw_name": false
+        },
+        {
+          "id": 641,
+          "slug": "rustic-golden-bell-ornaments-with-velvet-bows-set-of-10",
+          "name": "Rustic Golden Christmas Bell Ornaments & Velvet Bows - Set of 10",
+          "display_title": "Rustic Golden Bell Ornaments with Velvet Bows, Set of 10",
+          "hook": "Ten golden bells on velvet bows, the sound of the season with no tinsel in sight.",
+          "raw_name": false
+        },
+        {
+          "id": 642,
+          "slug": "cazlouc-winter-village-stamp-wall-art-framed-12x16",
+          "name": "CAZLOUC Winter Village Christmas Stamp Wall Art, Neutral Christmas Tree Decor, Vintage Postage Stamp Poster Print, Rustic Holiday Village Artwork for Living Room Entryway Wood Framed 12x16 Inch",
+          "display_title": "CAZLOUC Winter Village Stamp Wall Art, Framed 12 x 16",
+          "hook": "A village scene printed like an old postage stamp, framed in wood for the entryway.",
+          "raw_name": false
+        },
+        {
+          "id": 643,
+          "slug": "lorwer-christmas-tree-runner-rug-2x6-green",
+          "name": "2x6 Christmas Runner Rug for Hallways Non Slip, Washable Christmas Tree Print Rugs for Entryway, Low Pile Soft Green Holiday Decor Carpet for Kitchen Bathroom",
+          "display_title": "LORWER Christmas Tree Runner Rug, 2 x 6, Green",
+          "hook": "A low pile green runner for the hallway, so the tree greets you at the door.",
+          "raw_name": false
+        },
+        {
+          "id": 644,
+          "slug": "yubojia-framed-christmas-nutcracker-canvas-8x10",
+          "name": "Framed Christmas Nutcracker Canvas Wall Art 8x10 in",
+          "display_title": "YUBOJIA Framed Christmas Nutcracker Canvas, 8 x 10",
+          "hook": "A small framed nutcracker, the print that finishes a narrow wall above a bench.",
+          "raw_name": false
+        }
+      ]
     }
   ]
 }
