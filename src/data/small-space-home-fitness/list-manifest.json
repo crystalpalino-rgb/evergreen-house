@@ -48,7 +48,9 @@
       "url": "https://www.amazon.com/dp/B0CRYZBNV3?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/713bThzX4WL._AC_SL1500_.jpg",
+      "image_alt": "Adjustable Pilates Wrist and Ankle Weight Set, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B0C8MVXKN2",
@@ -66,7 +68,9 @@
       "url": "https://www.amazon.com/dp/B0C8MVXKN2?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71G3i0bdIfL._AC_SL1500_.jpg",
+      "image_alt": "RENPHO Smart Cordless Jump Rope, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B07H9PZ42P",
@@ -84,7 +88,9 @@
       "url": "https://www.amazon.com/dp/B07H9PZ42P?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71IvGy2iCjL._AC_SL1500_.jpg",
+      "image_alt": "Gaiam Thick Yoga Mat with Carrying Strap, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B0040EGNIU",
@@ -102,7 +108,9 @@
       "url": "https://www.amazon.com/dp/B0040EGNIU?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71-MhWa5jWL._AC_SL1500_.jpg",
+      "image_alt": "TriggerPoint GRID Foam Roller, 13 Inch, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B0D3VGRW7T",
@@ -140,7 +148,9 @@
       "url": "https://www.amazon.com/dp/B071D6SX9K?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/51D3LiUTLSL._AC_SL1000_.jpg",
+      "image_alt": "Synergee Core Sliders, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B07DWSPQQY",
@@ -158,7 +168,9 @@
       "url": "https://www.amazon.com/dp/B07DWSPQQY?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/716FpX+hctL._AC_SL1200_.jpg",
+      "image_alt": "Resistance Bands with Handles, Set of 5, from our Small-Space Home Fitness list at Evergreen House"
     },
     {
       "asin": "B01AVDVHTI",
@@ -176,7 +188,9 @@
       "url": "https://www.amazon.com/dp/B01AVDVHTI?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71S4-NjoTDL._AC_SL1500_.jpg",
+      "image_alt": "Fit Simplify Resistance Loop Bands, from our Small-Space Home Fitness list at Evergreen House"
     }
   ]
 }

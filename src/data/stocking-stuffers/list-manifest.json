@@ -38,7 +38,9 @@
       "url": "https://www.amazon.com/dp/B0FK4QL751?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/71F2PreXwBL._AC_SL1500_.jpg",
+      "image_alt": "Jumper Cables Wooden Christmas Ornament, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0DXRKW3KY",
@@ -56,7 +58,9 @@
       "url": "https://www.amazon.com/dp/B0DXRKW3KY?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0DXRKW3KY.01._SCLZZZZZZZ_.jpg",
+      "image_alt": "eos Flavor Lab Lip Balm Gift Set, 4 Pack, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B09ZVNM5TP",
@@ -76,7 +80,9 @@
       "flags": [
         "ships in 1-2 days, not same day"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B09ZVNM5TP.01._SL1500_.jpg",
+      "image_alt": "Burt's Bees Hand Cream Trio Gift Set, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0F3DPXQP1",
@@ -94,7 +100,9 @@
       "url": "https://www.amazon.com/dp/B0F3DPXQP1?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0F3DPXQP1.01._SCLZZZZZZZ_.jpg",
+      "image_alt": "Yankee Candle Balsam & Cedar 22 oz Jar, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B09BJ8ZSN1",
@@ -112,7 +120,9 @@
       "url": "https://www.amazon.com/dp/B09BJ8ZSN1?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81LouSdQ6vL._AC_SL1500_.jpg",
+      "image_alt": "Ginmewrae Cat Paw Fuzzy Slipper Socks, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0D96YNNMP",
@@ -132,7 +142,9 @@
       "flags": [
         "thin review base: 91 reviews, under the 100-review bar"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0D96YNNMP.01._SL1500_.jpg",
+      "image_alt": "Enesco Dumpster Fire Coffee Mug, 16 oz, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B07XXM6G7Q",
@@ -150,7 +162,9 @@
       "url": "https://www.amazon.com/dp/B07XXM6G7Q?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/614qWD4QGUL._AC_SL1059_.jpg",
+      "image_alt": "Mecai Funny Office Mug, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0GT4WF7QP",
@@ -168,7 +182,9 @@
       "url": "https://www.amazon.com/dp/B0GT4WF7QP?tag=crystalcost09-20",
       "gate_status": "pass",
       "flags": [],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/81dpdAzlW9L._AC_SL1500_.jpg",
+      "image_alt": "FanVean 24 Colored Pencils Set, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0HNHPCRM8",
@@ -188,14 +204,16 @@
       "flags": [
         "no rating on the listing, says so in words"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0HNHPCRM8.01._SL1500_.jpg",
+      "image_alt": "Today's Nope Christmas Edition Coloring Book, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0HGGLTY4C",
       "title": "Today's Nope Workplace Edition Coloring Book",
       "title_length": 44,
       "listing_title": "Today's Nope Workplace Edition: An Adult Coloring Book for Surviving Meetings",
-      "star_rating": 5.0,
+      "star_rating": 5,
       "review_count": 1,
       "price": "$13.99",
       "price_usd": 13.99,
@@ -208,7 +226,9 @@
       "flags": [
         "thin review base: 1 rating, under the 100-review bar"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0HGGLTY4C.01._SL1500_.jpg",
+      "image_alt": "Today's Nope Workplace Edition Coloring Book, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0HNPKQLYZ",
@@ -228,14 +248,16 @@
       "flags": [
         "no rating on the listing, says so in words"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0HNPKQLYZ.01._SL1500_.jpg",
+      "image_alt": "Today's Nope Perimenopause Edition Coloring Book, from our Stocking Stuffers list at Evergreen House"
     },
     {
       "asin": "B0HHQRST9V",
       "title": "Today's Nope Adult Coloring Book",
       "title_length": 32,
       "listing_title": "Today's Nope: An Adult Coloring Book for Venting, Manifesting & Getting Over It",
-      "star_rating": 5.0,
+      "star_rating": 5,
       "review_count": 1,
       "price": "$12.99",
       "price_usd": 12.99,
@@ -248,7 +270,9 @@
       "flags": [
         "thin review base: 1 rating, under the 100-review bar"
       ],
-      "appears_on_page": true
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/P/B0HHQRST9V.01._SL1500_.jpg",
+      "image_alt": "Today's Nope Adult Coloring Book, from our Stocking Stuffers list at Evergreen House"
     }
   ]
 }
