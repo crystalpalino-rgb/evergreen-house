@@ -10,9 +10,11 @@
  * The links below are the owner's own, byte for byte, including the storefront
  * tag `crystalpalino-20`. Do not rewrite, shorten or re-tag them.
  *
- * Seasonal placements are each ONE flag:
- *   SHOW_UNDER19_ON_HOMEPAGE      flip to false at the Christmas flip, 2026-12-26
- *   SHOW_UNDER19_ON_HOLIDAY_ROOM  flip to false in January
+ * Seasonal placements:
+ *   homepage THE CURRENT EDIT       the dated table in ~/data/homepage-schedule
+ *                                   decides which cards show, and from which day
+ *                                   (the Under $19 card comes off 2026-12-26)
+ *   SHOW_UNDER19_ON_HOLIDAY_ROOM    one flag, flipped by hand in January
  * The Heritage edit card has no switch-off date (owner, 2026-11-13).
  */
 
@@ -68,16 +70,35 @@ export const RESET_LIST: StorefrontList = {
 export const SHOW_RESET_LIST = true;
 
 /**
- * Placement 1, homepage THE CURRENT EDIT. Seasonal: de-featured at the
- * Christmas flip, 2026-12-26. One edit turns it off.
- */
-export const SHOW_UNDER19_ON_HOMEPAGE = true;
-
-/**
  * Placement 1, the gifting area on /room/holiday. Seasonal: de-featured in
  * January. One edit turns it off.
  */
 export const SHOW_UNDER19_ON_HOLIDAY_ROOM = true;
+
+/** Every list defined above, by key. The registry the season table reads. */
+const LISTS_BY_KEY: Record<string, StorefrontList> = {
+  [UNDER19_LIST.key]: UNDER19_LIST,
+  [HERITAGE_NATIVITY_LIST.key]: HERITAGE_NATIVITY_LIST,
+  [RESET_LIST.key]: RESET_LIST,
+};
+
+/**
+ * The list cards a season names, in its order.
+ *
+ * A key with no definition yet is skipped rather than rendered empty: the
+ * January list pages are a separate build, so the 2026-12-28 row in the
+ * homepage schedule names a list that does not exist until that build lands.
+ * Until then the slot is filled from the lists that do exist, so the homepage
+ * never renders a hole, and the card appears the day the list is defined.
+ */
+export function getListsByKey(keys: string[]): StorefrontList[] {
+  const out: StorefrontList[] = [];
+  for (const key of keys) {
+    const list = LISTS_BY_KEY[key];
+    if (list) out.push(list);
+  }
+  return out;
+}
 
 /**
  * Placement 2, inside a Shop the Edit collection, keyed by collection slug.

@@ -12,6 +12,8 @@
      C Timeless Lifestyle dark warm charcoal text over a very light scrim, left
                           third upper 2/3 desktop, upper wall mobile. */
 
+import type { HeroCopy } from "~/data/homepage-schedule";
+
 type HeroTone = "light" | "dark";
 type HeroScrim = "light" | "none";
 
@@ -91,7 +93,16 @@ export function heroArtPreloadLinks(concept: string = DEFAULT_HERO_CONCEPT) {
   ];
 }
 
-export function Hero({ concept = DEFAULT_HERO_CONCEPT }: { concept?: string }) {
+export function Hero({
+  concept = DEFAULT_HERO_CONCEPT,
+  copy,
+}: {
+  concept?: string;
+  /* The four lines of copy belong to the season, not to this component: the
+     homepage loader resolves them from the dated schedule table and passes them
+     in, so a seasonal flip changes the words and the art in one place. */
+  copy: HeroCopy;
+}) {
   const art = HERO_CONCEPTS[concept] ?? HERO_CONCEPTS[DEFAULT_HERO_CONCEPT];
   const light = art.tone === "light";
   const scrim = art.scrim === "light";
@@ -165,28 +176,28 @@ export function Hero({ concept = DEFAULT_HERO_CONCEPT }: { concept?: string }) {
             <span
               className={`text-[0.7rem] font-semibold uppercase tracking-[0.28em] sm:text-xs ${eyebrowClass}`}
             >
-              THE HOLIDAY EDIT {"\u00B7"} 2026
+              {copy.eyebrow}
             </span>
           </p>
 
           <h1
             className={`mt-3 font-serif text-[2.1rem] font-semibold leading-[1.08] sm:mt-5 sm:text-5xl lg:text-[3.4rem] ${headlineClass}`}
           >
-            A Season, Beautifully Collected.
+            {copy.headline}
           </h1>
 
           <p
             className={`mt-3 text-base leading-relaxed sm:mt-5 sm:text-lg ${subClass}`}
           >
-            Timeless finds for a home worth coming back to.
+            {copy.sub}
           </p>
 
           <div className="mt-5 sm:mt-7">
             <a
-              href="/collection/holiday"
+              href={copy.ctaHref}
               className="inline-block w-full rounded-full bg-burgundy px-8 py-3.5 text-center text-sm font-semibold uppercase tracking-[0.12em] text-soft-white shadow-sm transition-colors hover:bg-burgundy-deep focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-antique-gold focus-visible:ring-offset-2 focus-visible:ring-offset-midnight sm:w-auto"
             >
-              SHOP THE HOLIDAY EDIT
+              {copy.ctaLabel}
             </a>
           </div>
         </div>
