@@ -31,6 +31,12 @@ import {
 
 type HomeSearch = { hero?: "b" | "c" };
 
+/* Edits that are live on /collections but deliberately carry no homepage card
+   yet (owner, 2026-11-20: the Timeless Bedroom Edit is listed on the collections
+   index only). The homepage row renders every published edit, so the hold has to
+   be named here; delete a slug from this set to give it its homepage card. */
+const HOMEPAGE_HELD_EDITS = new Set<string>(["timeless-bedroom-edit"]);
+
 export const Route = createFileRoute("/")({
   /* ?hero=a|b|c selects one of the three owner-reviewable hero directions.
      Anything else (including no param) falls back to concept A. */
@@ -58,7 +64,9 @@ export const Route = createFileRoute("/")({
        the way the two curated grids below already do. */
     let edits: EditCardData[] = [];
     try {
-      edits = await getEditSummaries();
+      edits = (await getEditSummaries()).filter(
+        (edit) => !HOMEPAGE_HELD_EDITS.has(edit.slug),
+      );
     } catch (err) {
       console.error("Edits loader error:", err);
     }
