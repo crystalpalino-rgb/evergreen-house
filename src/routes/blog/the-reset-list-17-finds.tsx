@@ -42,6 +42,34 @@ const HERO_ALT =
 const VERIFIED_DATE = "2026-11-14";
 const VERIFIED_DATE_LABEL = "November 14, 2026";
 
+/**
+ * The four January lists, each with its own page on this site (owner decisions
+ * 48 and 49, 2026-11-22). Links only: the pages carry the list cards and the
+ * verified pieces. New Year, Organized Home is the featured one for January.
+ */
+const JANUARY_LISTS = [
+  {
+    label: "New Year, Organized Home",
+    href: "/new-year-organized-home",
+    line: "Containers, labels and drawers that make the shelves finally make sense.",
+  },
+  {
+    label: "Meal Prep Kitchen Reset",
+    href: "/meal-prep-kitchen-reset",
+    line: "The glass, the tools and the chopper that make the good weeknight the easier one.",
+  },
+  {
+    label: "Small-Space Home Fitness",
+    href: "/small-space-home-fitness",
+    line: "Gear that stores away, for the room that has to be a living room the rest of the day.",
+  },
+  {
+    label: "Wellness at Home",
+    href: "/wellness-at-home",
+    line: "The quiet pieces for the part of January that is not about doing more.",
+  },
+];
+
 const INTRO_PARAGRAPHS = [
   "There is a specific Sunday night feeling I have come to recognize. The week has not started yet and it already feels behind. Nobody has a clean uniform, I do not know what is for dinner on Wednesday, and there is a pile of paper on the counter that I have been walking past for a week.",
   "I used to answer that feeling with a whole house reset, and I would get about four rooms in before I ran out of steam. What actually works, for me, is smaller. One list that resets the systems instead of the house: the calendar, the meals, the drawers, the keys. The rooms look after themselves once those four things work.",
@@ -511,6 +539,39 @@ function BlogPost() {
             <div className="mt-8">
               <StorefrontListCard list={RESET_LIST} level={3} />
             </div>
+          </section>
+
+          {/* The four January lists, one page each (owner decisions 48 and 49).
+              Each page leads with its own list card and the verified pieces
+              from that list. */}
+          <section className="mt-12">
+            <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
+              The four January lists
+            </h2>
+            <p className="mt-5 text-lg leading-relaxed text-warm-gray">
+              The one list above is the whole system. For January I broke it
+              into four, one for each part of the month, and each of those has a
+              page of its own with the pieces I actually use, checked and priced
+              on the day I checked them.
+            </p>
+            <ul className="mt-6 grid gap-4 sm:grid-cols-2">
+              {JANUARY_LISTS.map((list) => (
+                <li
+                  key={list.href}
+                  className="rounded-2xl border border-beige/20 bg-white p-5 shadow-sm ring-1 ring-beige/10"
+                >
+                  <a
+                    href={list.href}
+                    className="font-serif text-lg font-semibold text-warm-dark underline-offset-4 hover:text-burgundy hover:underline"
+                  >
+                    {list.label}
+                  </a>
+                  <p className="mt-1 text-sm leading-relaxed text-warm-gray">
+                    {list.line}
+                  </p>
+                </li>
+              ))}
+            </ul>
           </section>
 
           <p className="mt-12 border-t border-beige/30 pt-6 text-xs italic leading-relaxed text-taupe">

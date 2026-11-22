@@ -77,6 +77,48 @@ export const TEEN_GIRLS_STOCKING_LIST: StorefrontList = {
   pageHref: "/stocking-teen-girls",
 };
 
+/**
+ * The four January lists, one page each (owner decisions 48 and 49, 2026-11-22).
+ * The list URLs and names are the merchandiser's live read of the four lists on
+ * 2026-11-22 (curation/january-reset-lists-four-2026-11-22); the tag is the
+ * storefront tag, byte for byte. New Year, Organized Home is the featured one
+ * for January: the homepage schedule names it from 2026-12-28.
+ */
+export const NEW_YEAR_ORGANIZED_HOME_LIST: StorefrontList = {
+  key: "new-year-organized-home",
+  name: "New Year, Organized Home: Home Organization Finds for a Fresh Start",
+  line: "Eight pieces for the January reset: containers, labels and drawers that make the shelves finally make sense.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/1C0RC9SUR9SST?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/new-year-organized-home",
+};
+
+/** Meal Prep Kitchen Reset. */
+export const MEAL_PREP_KITCHEN_RESET_LIST: StorefrontList = {
+  key: "meal-prep-kitchen-reset",
+  name: "Meal Prep Kitchen Reset: Containers, Tools and Gadgets That Make Weeknights Easier",
+  line: "Eight kitchen pieces that shorten the distance between getting home and eating something good.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/1BOWI8N1Q76O4?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/meal-prep-kitchen-reset",
+};
+
+/** Small-Space Home Fitness. */
+export const SMALL_SPACE_HOME_FITNESS_LIST: StorefrontList = {
+  key: "small-space-home-fitness",
+  name: "Small-Space Home Fitness: Apartment Friendly Workout Gear That Stores Away",
+  line: "Seven pieces of workout gear that store away, for the room that has to be a living room the rest of the day.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/1MXA4U6MM1SQH?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/small-space-home-fitness",
+};
+
+/** Wellness at Home. */
+export const WELLNESS_AT_HOME_LIST: StorefrontList = {
+  key: "wellness-at-home",
+  name: "Wellness at Home: Sleep, Calm and Self-Care Favorites for a Softer New Year",
+  line: "Eight quiet pieces for the part of January that is not about doing more.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/32XY2XVINP1G7?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
+  pageHref: "/wellness-at-home",
+};
+
 /** Heritage Nativity and Mantel Gifts. */
 export const HERITAGE_NATIVITY_LIST: StorefrontList = {
   key: "heritage-nativity",
@@ -111,6 +153,10 @@ const LISTS_BY_KEY: Record<string, StorefrontList> = {
   [UNDER19_LIST.key]: UNDER19_LIST,
   [HERITAGE_NATIVITY_LIST.key]: HERITAGE_NATIVITY_LIST,
   [RESET_LIST.key]: RESET_LIST,
+  [NEW_YEAR_ORGANIZED_HOME_LIST.key]: NEW_YEAR_ORGANIZED_HOME_LIST,
+  [MEAL_PREP_KITCHEN_RESET_LIST.key]: MEAL_PREP_KITCHEN_RESET_LIST,
+  [SMALL_SPACE_HOME_FITNESS_LIST.key]: SMALL_SPACE_HOME_FITNESS_LIST,
+  [WELLNESS_AT_HOME_LIST.key]: WELLNESS_AT_HOME_LIST,
 };
 
 /**
