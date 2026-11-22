@@ -23,10 +23,10 @@ import cardCopy from "~/data/stocking-teen-boys/card-copy.json";
  */
 
 const PAGE_PATH = "/stocking-teen-boys";
-const HERO_JPG = "/images/stocking-teen-boys-hero.jpg";
-const HERO_WEBP = "/images/stocking-teen-boys-hero.webp";
+const HERO_JPG = "/images/stocking-teen-boys-hero-v2.jpg";
+const HERO_WEBP = "/images/stocking-teen-boys-hero-v2.webp";
 const HERO_ALT =
-  "Kraft wrapped gifts tied with red velvet ribbon and twine beside a cream cable knit stocking on a marble counter, with a lit Christmas tree and a candle behind them";
+  "Flat lay of stocking gifts for teen boys: a Wilson football, wireless earbuds, a light strip, patterned socks, a power bank, card games and hand warmers under a lit tree";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 

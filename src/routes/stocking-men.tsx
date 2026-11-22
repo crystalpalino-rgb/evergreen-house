@@ -23,10 +23,10 @@ import cardCopy from "~/data/stocking-men/card-copy.json";
  */
 
 const PAGE_PATH = "/stocking-men";
-const HERO_JPG = "/images/stocking-men-hero.jpg";
-const HERO_WEBP = "/images/stocking-men-hero.webp";
+const HERO_JPG = "/images/stocking-men-hero-v2.jpg";
+const HERO_WEBP = "/images/stocking-men-hero-v2.webp";
 const HERO_ALT =
-  "Kraft wrapped gifts tied with red velvet ribbon and twine beside a cream cable knit stocking on a marble counter, with a lit Christmas tree and a candle behind them";
+  "Flat lay of stocking gifts for men on a wood board: a leather card wallet, hot sauce, beard balm, a Carhartt beanie, braided charging cables, a Gerber multi tool and chocolates, with spruce and a candle behind";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 

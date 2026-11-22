@@ -21,10 +21,10 @@ import cardCopy from "~/data/stocking-teen-girls/card-copy.json";
  */
 
 const PAGE_PATH = "/stocking-teen-girls";
-const HERO_JPG = "/images/stocking-teen-girls-hero.jpg";
-const HERO_WEBP = "/images/stocking-teen-girls-hero.webp";
+const HERO_JPG = "/images/stocking-teen-girls-hero-v2.jpg";
+const HERO_WEBP = "/images/stocking-teen-girls-hero-v2.webp";
 const HERO_ALT =
-  "Kraft wrapped gifts tied with red velvet ribbon and twine beside a cream cable knit stocking on a marble counter, with a lit Christmas tree and a candle behind them";
+  "Flat lay of stocking gifts for teen girls: a power grip primer, a Burt's Bees lip balm set, Tree Hut sugar scrub, a Burt's Bees hand cream duo, Aquaphor ointment, a Laneige lip mask, claw clips, a pink hair brush and makeup brushes";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
