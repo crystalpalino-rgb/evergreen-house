@@ -72,7 +72,7 @@ export const TEEN_BOYS_STOCKING_LIST: StorefrontList = {
 export const TEEN_GIRLS_STOCKING_LIST: StorefrontList = {
   key: "stocking-teen-girls",
   name: "Stocking Stuffers for Teen Girls: Beauty, Jewelry and Hair Favorites Under $25",
-  line: "Twenty small things for a teen girl's stocking, all under $25, and all of it beauty, hair and jewelry she will use.",
+  line: "Eighteen small things for a teen girl's stocking, all under $25, and all of it beauty, hair and jewelry she will use.",
   href: "https://www.amazon.com/shop/evergreenhouseco/list/2FOMRFZ0JOQHZ?ref_=aipsflist&tag=crystalpalino-20&originMarketplaceId=ATVPDKIKX0DER",
   pageHref: "/stocking-teen-girls",
 };
