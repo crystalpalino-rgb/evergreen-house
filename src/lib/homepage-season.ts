@@ -77,7 +77,13 @@ export function resolveHomepage(now: Date = new Date()): HomepageSeason {
   for (const row of active) {
     if (row.announcement !== undefined) announcement = row.announcement;
     if (row.hero) hero = row.hero;
-    if (row.featuredEdits?.lead) leadEdits = row.featuredEdits.lead;
+    if (row.featuredEdits?.lead) {
+      leadEdits = row.featuredEdits.lead;
+      /* Naming an edit in `lead` puts it back on the row, so a later season can
+         always restore a card an earlier row took off. A row that both leads
+         and excludes the same slug still excludes it: the loop below runs last. */
+      for (const slug of leadEdits) excluded.delete(slug);
+    }
     /* Exclusions accumulate: once an edit is off the featured row it stays off
        until a later row puts it back by naming it in `lead`. */
     for (const slug of row.featuredEdits?.exclude ?? []) excluded.add(slug);
@@ -117,7 +123,9 @@ export function orderFeaturedEdits(
   const seen = new Set<string>();
 
   for (const slug of leadEdits) {
-    if (excluded.has(slug) || seen.has(slug)) continue;
+    /* A slug the season leads with is on the row by definition: `exclude` is
+       for the edits that fill the row behind it. */
+    if (seen.has(slug)) continue;
     const edit = bySlug.get(slug);
     if (!edit) continue;
     out.push(edit);

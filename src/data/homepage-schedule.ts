@@ -20,7 +20,9 @@
  *   hero           replaced whole (art direction plus the four lines of copy)
  *   featuredEdits  `lead` replaces the leading order, `exclude` ACCUMULATES:
  *                  an edit taken off the featured row stays off, because the
- *                  later rows in the calendar have no reason to restate it
+ *                  later rows in the calendar have no reason to restate it.
+ *                  A slug a later row names in `lead` is put back on the row,
+ *                  so no exclusion can hold a card off for good.
  *   featuredLists  replaced whole (the storefront list cards under THE CURRENT
  *                  EDIT), by list key
  *
@@ -99,9 +101,12 @@ export const HOMEPAGE_SCHEDULE: HomepageChange[] = [
     },
     featuredEdits: {
       /* The Timeless Bedroom Edit is live in /collections with no homepage card
-         yet (owner, 2026-11-20), and the Vintage Christmas Edit is the same
-         (owner, 2026-11-22). Taking a slug off this list gives it its card. */
-      exclude: ["timeless-bedroom-edit", "vintage-christmas-edit"],
+         yet (owner, 2026-11-20). Taking it off this list gives it its card. */
+      exclude: ["timeless-bedroom-edit"],
+      /* The Vintage Christmas Edit is never excluded, on this row or any row
+         after it (owner, 2026-11-22): it keeps its card in SHOP THE EDITS
+         beside the Heritage Christmas Edit, through the November and December
+         flips. Nothing in this table takes it off. */
     },
     featuredLists: ["under19", "reset-list"],
   },
