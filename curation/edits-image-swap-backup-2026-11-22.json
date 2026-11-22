@@ -1,0 +1,22 @@
+{
+  "taken_at": "2026-11-22T18:30:25.974Z",
+  "script": "scripts/place-crystal-hero-swap-2026-11-22.mjs",
+  "rows": [
+    {
+      "slug": "timeless-bedroom-edit",
+      "hero_image": "/images/timeless-bedroom-hero",
+      "card_image": "/images/timeless-bedroom-hero",
+      "snapshot_hero_image": "/images/timeless-bedroom-hero",
+      "snapshot_card_image": "/images/timeless-bedroom-hero",
+      "published_at": "2026-11-22T01:39:57.680Z"
+    },
+    {
+      "slug": "vintage-christmas-edit",
+      "hero_image": "/images/vintage-christmas-hero",
+      "card_image": "/images/vintage-christmas-hero-card",
+      "snapshot_hero_image": "/images/vintage-christmas-hero",
+      "snapshot_card_image": "/images/vintage-christmas-hero-card",
+      "published_at": "2026-11-22T04:09:26.128Z"
+    }
+  ]
+}
