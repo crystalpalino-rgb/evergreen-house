@@ -23,10 +23,10 @@ import cardCopy from "~/data/small-space-home-fitness/card-copy.json";
  */
 
 const PAGE_PATH = "/small-space-home-fitness";
-const HERO_JPG = "/images/blog-reset-list-v2.jpg";
-const HERO_WEBP = "/images/blog-reset-list-v2.webp";
+const HERO_JPG = "/images/january-small-space-home-fitness-hero.jpg";
+const HERO_WEBP = "/images/january-small-space-home-fitness-hero.webp";
 const HERO_ALT =
-  "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight";
+  "A rolled cork mat, small green weights and a resistance band in the corner of a living room, with a folded linen towel, an olive tree and a linen sofa in soft afternoon light.";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
@@ -83,8 +83,8 @@ export const Route = createFileRoute("/small-space-home-fitness")({
       PAGE_PATH,
       {
         image: HERO_JPG,
-        imageWidth: 2000,
-        imageHeight: 667,
+        imageWidth: 1600,
+        imageHeight: 1100,
       }
     );
     return { meta: seo.meta, links: seo.links };

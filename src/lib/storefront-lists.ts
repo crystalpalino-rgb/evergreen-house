@@ -250,6 +250,36 @@ export const LIST_IMAGES: Record<string, StorefrontListImage> = {
     alt: "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight",
   },
   /*
+   * The four January lists' own 4:5 card crops, cut from the same art each
+   * page opens on (owner decision 64, the January heroes). A card that links to
+   * one of these pages shows that page's own scene, so cards and pages agree
+   * (Site Standard rule 5). Portrait: the crop is 1000x1250 and is held whole.
+   */
+  [NEW_YEAR_ORGANIZED_HOME_LIST.key]: {
+    src: "/images/january-new-year-organized-home-hero-card.jpg",
+    webp: "/images/january-new-year-organized-home-hero-card.webp",
+    alt: "A linen file organizer, an open planner and small oak trays on a light wood desk in a corner office, with a brass lamp and a trailing plant beside a sunlit window.",
+    aspect: "portrait",
+  },
+  [MEAL_PREP_KITCHEN_RESET_LIST.key]: {
+    src: "/images/january-meal-prep-kitchen-reset-hero-card.jpg",
+    webp: "/images/january-meal-prep-kitchen-reset-hero-card.webp",
+    alt: "Glass storage jars of grains and pasta, a wooden board and a bowl of fruit on a pale stone kitchen counter, with a folded linen towel and morning light from a side window.",
+    aspect: "portrait",
+  },
+  [SMALL_SPACE_HOME_FITNESS_LIST.key]: {
+    src: "/images/january-small-space-home-fitness-hero-card.jpg",
+    webp: "/images/january-small-space-home-fitness-hero-card.webp",
+    alt: "A rolled cork mat, small green weights and a resistance band in the corner of a living room, with a folded linen towel, an olive tree and a linen sofa in soft afternoon light.",
+    aspect: "portrait",
+  },
+  [WELLNESS_AT_HOME_LIST.key]: {
+    src: "/images/january-wellness-at-home-hero-card.jpg",
+    webp: "/images/january-wellness-at-home-hero-card.webp",
+    alt: "A lit candle, a stoneware mug and eucalyptus in a small vase on an oak nightstand beside rumpled linen bedding, in warm late afternoon light.",
+    aspect: "portrait",
+  },
+  /*
    * The three stocking lists' own portrait flat lays, the art Crystal supplied
    * on 2026-11-22 (owner decision 60). Each is the same scene its own page's
    * list card carries, registered here so any placement asks for it by key and

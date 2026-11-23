@@ -23,10 +23,10 @@ import cardCopy from "~/data/wellness-at-home/card-copy.json";
  */
 
 const PAGE_PATH = "/wellness-at-home";
-const HERO_JPG = "/images/blog-reset-list-v2.jpg";
-const HERO_WEBP = "/images/blog-reset-list-v2.webp";
+const HERO_JPG = "/images/january-wellness-at-home-hero.jpg";
+const HERO_WEBP = "/images/january-wellness-at-home-hero.webp";
 const HERO_ALT =
-  "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight";
+  "A lit candle, a stoneware mug and eucalyptus in a small vase on an oak nightstand beside rumpled linen bedding, in warm late afternoon light.";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
@@ -83,8 +83,8 @@ export const Route = createFileRoute("/wellness-at-home")({
       PAGE_PATH,
       {
         image: HERO_JPG,
-        imageWidth: 2000,
-        imageHeight: 667,
+        imageWidth: 1600,
+        imageHeight: 1100,
       }
     );
     return { meta: seo.meta, links: seo.links };
