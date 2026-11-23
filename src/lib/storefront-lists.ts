@@ -236,6 +236,30 @@ export const LIST_IMAGES: Record<string, StorefrontListImage> = {
     webp: "/images/blog-reset-list-v2.webp",
     alt: "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight",
   },
+  /*
+   * The three stocking lists' own portrait flat lays, the art Crystal supplied
+   * on 2026-11-22 (owner decision 60). Each is the same scene its own page's
+   * list card carries, registered here so any placement asks for it by key and
+   * the hub shows the art of the page it links to (owner fix, 2026-11-23).
+   */
+  [MEN_STOCKING_LIST.key]: {
+    src: "/images/stocking-men-card-v2.jpg",
+    webp: "/images/stocking-men-card-v2.webp",
+    alt: "Flat lay of stocking gifts for men with a leather card wallet, hot sauce, beard balm and a Carhartt beanie",
+    aspect: "portrait",
+  },
+  [TEEN_BOYS_STOCKING_LIST.key]: {
+    src: "/images/stocking-teen-boys-card-v2.jpg",
+    webp: "/images/stocking-teen-boys-card-v2.webp",
+    alt: "Flat lay of teen stocking gifts with a Wilson football, patterned socks, a power bank, card games and hand warmers",
+    aspect: "portrait",
+  },
+  [TEEN_GIRLS_STOCKING_LIST.key]: {
+    src: "/images/stocking-teen-girls-card-v2.jpg",
+    webp: "/images/stocking-teen-girls-card-v2.webp",
+    alt: "Flat lay of teen stocking gifts with Burt's Bees sets, Tree Hut sugar scrub, a Laneige lip mask, claw clips and a pink hair brush",
+    aspect: "portrait",
+  },
 };
 
 /** The scene for a list, when one has been exported. Undefined renders no image. */
