@@ -24,10 +24,10 @@ import cardCopy from "~/data/pantry-organization/card-copy.json";
  */
 
 const PAGE_PATH = "/pantry-organization";
-const HERO_JPG = "/images/january-pantry-organization-hero.jpg";
-const HERO_WEBP = "/images/january-pantry-organization-hero.webp";
+const HERO_JPG = "/images/january-pantry-organization-hero-wide.jpg";
+const HERO_WEBP = "/images/january-pantry-organization-hero-wide.webp";
 const HERO_ALT =
-  "Plain glass jars of rice, oats, beans and pasta on pale oak pantry shelves, with a lazy susan of tins, a stack of clear containers and a woven basket of root vegetables below, in warm daylight.";
+  "Glass jars of spices and preserves on a wooden turntable beside stacked clear containers of grains on pale oak pantry shelves, with a woven basket of potatoes and carrots on the shelf below, in warm daylight.";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
@@ -41,8 +41,6 @@ const guide: StockingGuide = {
   heroJpg: HERO_JPG,
   heroWebp: HERO_WEBP,
   heroAlt: HERO_ALT,
-  heroWidth: 1600,
-  heroHeight: 1100,
   verifiedDate: "2026-11-23",
   verifiedDateLabel: "November 23, 2026",
   analyticsContext: "guide:pantry-organization",

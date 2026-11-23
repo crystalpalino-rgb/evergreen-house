@@ -22,15 +22,15 @@ import cardCopy from "~/data/closet-organization/card-copy.json";
  *
  * The page opens on its own Amazon list card, which carries the list name, one
  * line, its own 4:5 scene and one crystalpalino-20 link, and no rating, count or
- * price. The hero is the designer's 1600x1100 scene, so the frame holds 16:11
- * rather than the 3:1 banner the older pages use.
+ * price. The hero is the designer's 1600x533 wide scene, so the frame holds the
+ * site's standard 3:1 band like every other page, with no crop.
  */
 
 const PAGE_PATH = "/closet-organization";
-const HERO_JPG = "/images/january-closet-organization-hero.jpg";
-const HERO_WEBP = "/images/january-closet-organization-hero.webp";
+const HERO_JPG = "/images/january-closet-organization-hero-wide.jpg";
+const HERO_WEBP = "/images/january-closet-organization-hero-wide.webp";
 const HERO_ALT =
-  "Two woven baskets and folded oatmeal linens on the top shelf of a pale oak closet, with a row of matching wooden hangers, a stack of sweaters and a shoe rack below, in warm morning light.";
+  "A row of matching wooden hangers holding a cream sweater and linen shirts in a pale oak closet, with a stack of folded oatmeal linens on the shelf beside them and soft daylight through a sheer curtain.";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
@@ -44,8 +44,6 @@ const guide: StockingGuide = {
   heroJpg: HERO_JPG,
   heroWebp: HERO_WEBP,
   heroAlt: HERO_ALT,
-  heroWidth: 1600,
-  heroHeight: 1100,
   verifiedDate: "2026-11-23",
   verifiedDateLabel: "November 23, 2026",
   analyticsContext: "guide:closet-organization",
