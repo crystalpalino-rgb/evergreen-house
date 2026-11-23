@@ -59,6 +59,19 @@ export const MEN_STOCKING_LIST: StorefrontList = {
   pageHref: "/stocking-men",
 };
 
+/**
+ * Secret Santa Gifts They Will Actually Want, the eighth storefront list to get
+ * a page of its own (owner decision 61, 2026-11-22). The list URL and its tag
+ * come from the merchandiser's manifest for that list, byte for byte.
+ */
+export const SECRET_SANTA_LIST: StorefrontList = {
+  key: "secret-santa",
+  name: "Secret Santa Gifts They Will Actually Want (All Under $25)",
+  line: "Eight Secret Santa gifts under $25, chosen so the person who opens one actually uses it.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/3FUPDWOF4IBK3?tag=crystalpalino-20",
+  pageHref: "/secret-santa",
+};
+
 /** Stocking Stuffers for Teen Boys. */
 export const TEEN_BOYS_STOCKING_LIST: StorefrontList = {
   key: "stocking-teen-boys",

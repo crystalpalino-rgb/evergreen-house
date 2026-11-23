@@ -62,6 +62,13 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title: "Secret Santa Gifts They Will Actually Want: Eight Finds Under $25",
+    description:
+      "Eight Secret Santa gifts under $25, all read on their live listings on November 22, 2026: the waffle iron, the power bank, the throw and five more that get used.",
+    href: "/blog/secret-santa-gifts-under-25",
+    date: "November 22, 2026",
+  },
+  {
     title: "The Reset List: 17 Finds for a Home That Runs Itself",
     description:
       "One list that resets the systems instead of the house: 16 planners, meal prep pieces and small organizers that make a home run itself.",
