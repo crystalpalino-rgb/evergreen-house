@@ -40,6 +40,8 @@ export function StorefrontListCard({
   const href = onSite ? (list.pageHref as string) : list.href;
   const label = onSite ? "See the gift guide" : "See the list on Amazon";
 
+  const portrait = image?.aspect === "portrait";
+
   const text = (
     <div className="min-w-0">
       <Heading className="font-serif text-xl font-semibold leading-snug text-warm-dark sm:text-2xl">
@@ -82,7 +84,13 @@ export function StorefrontListCard({
     >
       {image ? (
         <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:gap-8">
-          <div className="overflow-hidden rounded-xl bg-beige/20 sm:w-[38%] sm:shrink-0">
+          <div
+            className={`overflow-hidden rounded-xl bg-beige/20 ${
+              portrait
+                ? "sm:w-[30%] sm:shrink-0"
+                : "sm:w-[38%] sm:shrink-0"
+            }`}
+          >
             <picture>
               {image.webp ? (
                 <source srcSet={image.webp} type="image/webp" />
@@ -90,11 +98,15 @@ export function StorefrontListCard({
               <img
                 src={image.src}
                 alt={image.alt}
-                width={1200}
-                height={900}
+                width={portrait ? 1000 : 1200}
+                height={portrait ? 1250 : 900}
                 loading="lazy"
                 decoding="async"
-                className="aspect-[16/10] w-full object-cover sm:aspect-[4/3]"
+                className={`w-full object-cover ${
+                  portrait
+                    ? "aspect-[4/5]"
+                    : "aspect-[16/10] sm:aspect-[4/3]"
+                }`}
               />
             </picture>
           </div>

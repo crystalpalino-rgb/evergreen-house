@@ -5,7 +5,10 @@ import { EmailSignup } from "~/components/EmailSignup";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
 import { SITE_URL } from "~/lib/schema";
-import type { StorefrontList } from "~/lib/storefront-lists";
+import type {
+  StorefrontList,
+  StorefrontListImage,
+} from "~/lib/storefront-lists";
 
 /**
  * The storefront-list page template, one page per storefront list: the three
@@ -98,6 +101,12 @@ export type StockingGuide = {
   analyticsContext: string;
   analyticsPrefix: string;
   list: StorefrontList;
+  /**
+   * The list's own art for the list card at the top of the page, when the page
+   * has one (owner, 2026-11-22). Left off, the card stays text-only exactly as
+   * it shipped.
+   */
+  listImage?: StorefrontListImage;
   manifest: StockingManifest;
   copy: StockingCardCopy;
 };
@@ -309,7 +318,12 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
 
           {/* The list card comes first: one name, one line, one link out. */}
           <section className="mt-10">
-            <StorefrontListCard list={guide.list} level={2} toPage={false} />
+            <StorefrontListCard
+              list={guide.list}
+              level={2}
+              toPage={false}
+              image={guide.listImage}
+            />
           </section>
 
           <section className="mt-10">
