@@ -150,7 +150,7 @@ export function ProductCard({ product }: { product: Product }) {
   );
 
   return (
-    <article className="group flex h-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:border-antique-gold/50 hover:shadow-md">
+    <article className="group mx-auto flex h-full w-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:-translate-y-1 hover:border-antique-gold/50 hover:shadow-md lg:max-w-[320px]">
       {/* Photo plate - consistent 1:1 frame on every renderer, image contained.
           Primary outbound target when the row has a real Amazon URL. */}
       <div className="pin-image-wrapper aspect-square w-full shrink-0 bg-soft-white">

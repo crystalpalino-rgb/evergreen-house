@@ -166,7 +166,7 @@ function GiftCard({ item }: { item: ManifestItem }) {
   return (
     <div
       id={`gift-${item.asin}`}
-      className="flex flex-col overflow-hidden rounded-2xl border border-beige/20 bg-white shadow-sm ring-1 ring-beige/10"
+      className="mx-auto flex w-full flex-col overflow-hidden rounded-2xl border border-beige/20 bg-white shadow-sm ring-1 ring-beige/10 lg:max-w-[320px]"
     >
       {/* The product photo, same treatment as the edit cards: square frame on
           soft white, the listing image contained inside it, sized for the
@@ -289,7 +289,7 @@ function StockingStuffersPage() {
           </div>
 
           <section className="mt-10">
-            <div className="grid gap-6 md:grid-cols-2">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {CARDS.map((item) => (
                 <GiftCard key={item.asin} item={item} />
               ))}
