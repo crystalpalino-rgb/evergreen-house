@@ -4,6 +4,7 @@ import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { DeepSections } from "~/components/DeepSections";
 import { EmailSignup } from "~/components/EmailSignup";
+import { PrintableDownload } from "~/components/PrintableDownload";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
 import { SITE_URL } from "~/lib/schema";
@@ -331,6 +332,11 @@ function StockingStuffersPage() {
               ))}
             </div>
           </section>
+
+          {/* The free Christmas Gift List printable (owner, 2026-11-23),
+              below the card grid in the editorial area. One plain link, no
+              email field, no gate. */}
+          <PrintableDownload className="mt-12" />
 
           {/* Long-form editorial sections, keyed by page path in
               src/data/deep-sections.json: below the card grid, in the order
