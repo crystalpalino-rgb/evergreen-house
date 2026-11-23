@@ -11,7 +11,7 @@ import { NEW_YEARS_EVE_LIST } from "~/lib/storefront-lists";
 import listManifest from "~/data/new-years-eve/list-manifest.json";
 
 /**
- * Blog post: "A Grown-Up Countdown at Home: Nine Black and Gold Pieces for
+ * Blog post: "A Grown-Up Countdown at Home: Eleven Black and Gold Pieces for
  * 2027"
  *
  * Companion post to the gift guide at /new-years-eve (owner decision 64,
@@ -21,7 +21,9 @@ import listManifest from "~/data/new-years-eve/list-manifest.json";
  *
  * Every product fact (title, stars, review count, price, URL) is read from
  * src/data/new-years-eve/list-manifest.json, the merchandiser's live read of
- * the list on 2026-11-23, so no number is retyped here. The per-piece editorial
+ * the list on 2026-11-23, so no number is retyped here. The prose numbers in
+ * the "Why eleven" paragraphs are interpolated from the same rows, including
+ * the champagne bucket that replaced the 4.0 star tub. The per-piece editorial
  * lines below are the draft's own paragraphs, keyed by ASIN, in the draft's
  * order.
  *
@@ -33,9 +35,9 @@ import listManifest from "~/data/new-years-eve/list-manifest.json";
 const BLOG_SLUG = "new-years-eve-at-home";
 const BLOG_PATH = `/blog/${BLOG_SLUG}`;
 const BLOG_TITLE =
-  "A Grown-Up Countdown at Home: Nine Black and Gold Pieces for 2027";
+  "A Grown-Up Countdown at Home: Eleven Black and Gold Pieces for 2027";
 const BLOG_DESCRIPTION =
-  "Nine pieces, all read on their live listings on November 23, 2026, for the one night of the year when black and gold is the right answer.";
+  "Eleven pieces, all read on their live listings on November 23, 2026, for the one night of the year when black and gold is the right answer. The list held eleven and eleven are on the page, the champagne bucket included.";
 const DATE_PUBLISHED = "2026-11-23";
 const DATE_PUBLISHED_LABEL = "November 23, 2026";
 const AUTHOR_NAME = "Crystal Costa";
@@ -52,26 +54,84 @@ const VERIFIED_DATE_LABEL = "November 23, 2026";
 const GUIDE_PATH = "/new-years-eve";
 const LIST_URL = NEW_YEARS_EVE_LIST.href;
 
+type ManifestItem = {
+  asin: string;
+  title: string;
+  star_rating: number | null;
+  review_count: number | null;
+  price: string;
+  price_usd: number;
+  buy_box: boolean;
+  appears_on_page: boolean;
+  url: string;
+};
+
+const MANIFEST_ITEMS = (listManifest as unknown as { items: ManifestItem[] })
+  .items;
+
+/** The eleven, in the page's order, gated as the page gates them. */
+const FINDS = MANIFEST_ITEMS.filter(
+  (item) =>
+    item.appears_on_page &&
+    item.buy_box &&
+    (item.star_rating === null || item.star_rating >= 4.3),
+);
+
+function itemByAsin(asin: string): ManifestItem {
+  const found = MANIFEST_ITEMS.find((item) => item.asin === asin);
+  if (!found) {
+    throw new Error(`New Year's Eve post: no manifest row for ${asin}`);
+  }
+  return found;
+}
+
+/** The bucket that takes the tub's place, and the tub it replaced. */
+const BUCKET = itemByAsin("B073JBVBT5");
+const TUB = itemByAsin("B07GH6C9LJ");
+
+const countLabel = (count: number | null) =>
+  count === null
+    ? "a count the listing does not show"
+    : count.toLocaleString("en-US");
+const starLabel = (stars: number | null) =>
+  stars === null ? "no rating shown" : stars.toFixed(1);
+
+const REVIEW_COUNTS = FINDS.map((find) => find.review_count).filter(
+  (count): count is number => count !== null,
+);
+const COUNT_RANGE = `${countLabel(Math.min(...REVIEW_COUNTS))} to ${countLabel(
+  Math.max(...REVIEW_COUNTS),
+)}`;
+
 const INTRO_PARAGRAPHS = [
   "There is a version of New Year's Eve at home that looks wonderful in a photograph and feels like a party shop in the room. Plastic hats, a bag of glitter, a balloon arch that takes forty minutes and looks like a balloon arch. I have done that version. What I want now is quieter: a warm room, one place where the year is written, and a table that looks like someone thought about it.",
-  "So this is nine pieces, and the number is the point. The black and gold is a departure from everything else on this site, and it is allowed for this one night only, because one night a year a room can be darker and shinier than the rest of the house and still feel like a home.",
+  "So this is eleven pieces, and the number is the point. The black and gold is a departure from everything else on this site, and it is allowed for this one night only, because one night a year a room can be darker and shinier than the rest of the house and still feel like a home.",
 ];
 
-const WHY_NINE_PARAGRAPHS = [
-  "The list I started from had eleven things on it. Nine survived.",
-  "One piece reads the outgoing year on its own listing, in the product bullets rather than on the artwork, and a page about welcoming 2027 cannot carry that. It does not matter that the photograph is clean. If the listing says the old year, the piece is off.",
-  "Everything below was read on its live Amazon listing on November 23, 2026: star rating, review count, price, buy box. Nothing is rounded, nothing is estimated, and the review counts on this page run from 276 to 45,499. Where the sample behind a rating is smaller, I say the smaller number.",
+const WHY_ELEVEN_PARAGRAPHS = [
+  "The list I started from had eleven things on it, and eleven are on the page.",
+  `The first pass did not carry a champagne bucket. The tub the list began with came back at ${starLabel(
+    TUB.star_rating,
+  )} stars, under the 4.3 line every page here holds, so it came off. A replacement was chosen and read the same way as everything else: the ${
+    BUCKET.title
+  }, ${starLabel(BUCKET.star_rating)} stars from ${countLabel(
+    BUCKET.review_count,
+  )} ratings, ${
+    BUCKET.price
+  }, live buy box, in stock on ${VERIFIED_DATE_LABEL}. It takes the tub's place, which is the whole story.`,
+  "The black and gold balloon arch stays on the page by decision, even though one bullet on its listing still reads 2026. The arch itself has no year on it, and its card carries a one line note saying exactly that.",
+  `Everything below was read on its live Amazon listing on ${VERIFIED_DATE_LABEL}: star rating, review count, price, buy box. Nothing is rounded, nothing is estimated, and the review counts on this page run from ${COUNT_RANGE}. Where the sample behind a rating is smaller, I say the smaller number.`,
 ];
 
 const THE_YEAR_PARAGRAPHS = [
-  "A page about welcoming a year has one job above all the others: the year has to be right, and it has to be visible. So the year is on the balloons and on the backdrop, both confirmed 2027 on the artwork and in the listing, and it is nowhere else. Everything else on the page carries no date at all, which means the light, the tray, the stand, the flutes and the fringe all come back out next December.",
-  "The banner is the one that proves the point. No digits, so it works for any year you want to use it.",
+  "A page about welcoming a year has one job above all the others: the year has to be right, and it has to be visible. So the year is on the balloons and on the backdrop, both confirmed 2027 on the artwork and in the listing, and it is nowhere else. Everything else on the page carries no date at all, which means the light, the tray, the stand, the flutes, the bucket and the fringe all come back out next December.",
+  "The banner is the one that proves the point. No digits, so it works for any year you want to use it. The arch is the one piece with a note attached, and the note is on its card: the arch itself has no year on it.",
 ];
 
 const SET_OUT_PARAGRAPHS = [
-  "Hang the backdrop and the balloons the evening before, not the hour before. Foil digits are forgiving but they are not fast, and anything above head height done in a hurry is how a good night starts badly.",
+  "Hang the backdrop, the balloons and the arch the evening before, not the hour before. Foil digits are forgiving but they are not fast, a hundred and forty balloons take longer than they look, and anything above head height done in a hurry is how a good night starts badly.",
   "The afternoon is for the table. Run the fairy lights along the back edge and leave them on while you set everything else, so you are judging the room by the light it will actually be seen in. Build the tiered stand as the centerpiece, put the gold tray beside it for the flutes and candles, and hold the confetti until the last five minutes.",
-  "Then leave it alone until half past eleven. The one thing worth doing late is bringing the flutes out and turning the overhead light off, so the room drops to the fairy lights. That single switch is the whole difference between a room that is decorated and a room that is waiting for midnight.",
+  "Then leave it alone until half past eleven. The one thing worth doing late is bringing the flutes out, filling the bucket with ice and the bottle, and turning the overhead light off, so the room drops to the fairy lights. That single switch is the whole difference between a room that is decorated and a room that is waiting for midnight.",
 ];
 
 /**
@@ -97,27 +157,11 @@ const FIND_NOTES: Record<string, string> = {
     "A plain brushed gold tray that gathers the candles, the flutes and the confetti into one place, which is the difference between a table with things on it and a table that looks composed. One thing to know: the listing showed only 3 left in stock when it was verified, so if you want it, order it early.",
   B07R9NJWLM:
     "The largest sample on the page and the least editorial piece on it, and I am keeping it anyway. Gold foil fringe behind the table, or behind the photograph, turns a corner of a room into a set for about six dollars. It reads closer to a party shop than anything else here, and it earns its place on the picture.",
+  B073JBVBT5:
+    "Hammered stainless that picks up the gold and the glass on the table, holding a bottle on ice where everyone can reach it. This is the piece that makes the table read as a bar rather than a decorated table. It is plain steel rather than black or gold, which is deliberate: a bucket that echoes the gold around it reads warmer than one that competes with it. Fill it at half past eleven, not at four, and the ice is still ice at midnight.",
+  B0D62LR5DW:
+    "A hundred and forty black and gold balloons for the wall behind the photograph, which is where most of the night gets recorded. It is the piece closest to a party shop on this page, and it stays because a wall of balloons is what makes a room read as an occasion at midnight. The listing still says 2026 on one bullet, the arch itself carries no year on it, and it stays on the page on that plain understanding. Give it an evening, not an hour.",
 };
-
-type ManifestItem = {
-  asin: string;
-  title: string;
-  star_rating: number | null;
-  review_count: number | null;
-  price: string;
-  price_usd: number;
-  buy_box: boolean;
-  appears_on_page: boolean;
-  url: string;
-};
-
-/** The nine finds, in the merchandiser's order, gated as the page gates them. */
-const FINDS = (listManifest as unknown as { items: ManifestItem[] }).items.filter(
-  (item) =>
-    item.appears_on_page &&
-    item.buy_box &&
-    (item.star_rating === null || item.star_rating >= 4.3)
-);
 
 const breadcrumbItems = [
   { label: "Home", href: "/" },
@@ -152,14 +196,19 @@ const articleSchema = {
 
 export const Route = createFileRoute("/blog/new-years-eve-at-home")({
   head: () => {
-    const seo = generateStaticMetadata(BLOG_TITLE, BLOG_DESCRIPTION, BLOG_PATH, {
-      image: HERO_JPG,
-      imageWidth: 2000,
-      imageHeight: 667,
-      ogType: "article",
-      publishedTime: DATE_PUBLISHED,
-      author: AUTHOR_NAME,
-    });
+    const seo = generateStaticMetadata(
+      BLOG_TITLE,
+      BLOG_DESCRIPTION,
+      BLOG_PATH,
+      {
+        image: HERO_JPG,
+        imageWidth: 2000,
+        imageHeight: 667,
+        ogType: "article",
+        publishedTime: DATE_PUBLISHED,
+        author: AUTHOR_NAME,
+      },
+    );
     return { meta: seo.meta, links: seo.links };
   },
   component: BlogPost,
@@ -328,8 +377,8 @@ function BlogPost() {
               New Year&apos;s Eve at Home, Black and Gold Party Finds for a
               Grown-Up Countdown
             </a>
-            . If you want the version with the notes on each piece, that is the
-            page:{" "}
+            . If you want the notes on each piece and how I would set the room,
+            that is the page:{" "}
             <a
               href={GUIDE_PATH}
               className="text-terracotta underline decoration-beige/40 underline-offset-2 transition-colors hover:text-terracotta-dark"
@@ -341,9 +390,9 @@ function BlogPost() {
 
           <section className="mt-12">
             <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
-              Why nine, and what came off
+              Why eleven, and what changed
             </h2>
-            {WHY_NINE_PARAGRAPHS.map((paragraph) => (
+            {WHY_ELEVEN_PARAGRAPHS.map((paragraph) => (
               <p
                 key={paragraph.slice(0, 40)}
                 className="mt-5 text-lg leading-relaxed text-warm-gray"
@@ -355,7 +404,7 @@ function BlogPost() {
 
           <section className="mt-12">
             <h2 className="font-serif text-2xl font-semibold text-warm-dark sm:text-3xl">
-              The nine, in the order I would set them out
+              The eleven, in the order they sit on the page
             </h2>
             <div className="mt-6 space-y-8">
               {FINDS.map((find) => (
@@ -408,7 +457,7 @@ function BlogPost() {
                 New Year&apos;s Eve at Home, Black and Gold Party Finds for a
                 Grown-Up Countdown
               </a>
-              . Both carry the same nine pieces, read on the same day.
+              . Both carry the same eleven pieces, read on the same day.
             </p>
           </section>
 
