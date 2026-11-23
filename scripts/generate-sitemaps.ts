@@ -235,7 +235,27 @@ async function main() {
       changefreq: "weekly",
     },
     {
+      loc: "/closet-organization",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
+      loc: "/pantry-organization",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
       loc: "/blog/the-reset-list-17-finds",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/closet-organization-ideas",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/pantry-organization-ideas",
       priority: "0.7",
       changefreq: "monthly",
     },
