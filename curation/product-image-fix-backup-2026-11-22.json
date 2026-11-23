@@ -1,0 +1,153 @@
+{
+  "taken": "2026-11-23T04:13:35.493Z",
+  "reason": "product photo size repair (owner decision 62)",
+  "products": [
+    {
+      "id": 35,
+      "asin": "B00AYUMB4O",
+      "image_url": "https://m.media-amazon.com/images/I/51vFeflmvKL._AC_SL1000_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 224,
+      "asin": "B0B4D8S5XL",
+      "image_url": "https://m.media-amazon.com/images/I/41x9j6SaoxL._AC_SL1000_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 290,
+      "asin": "B07DR3N3W3",
+      "image_url": "https://m.media-amazon.com/images/I/51rRupMEKQL._AC_SL1000_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 295,
+      "asin": "B07BFFC8ST",
+      "image_url": "https://m.media-amazon.com/images/I/51XJIBN2moL._AC_SL1024_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 450,
+      "asin": "B0FMJYJVH1",
+      "image_url": "https://m.media-amazon.com/images/I/61mas0X5e7L._AC_SL1500_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 491,
+      "asin": "B00YPP2LBM",
+      "image_url": "https://m.media-amazon.com/images/I/61rj1n74esL._AC_SL1500_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 512,
+      "asin": "B09SBMQ5NG",
+      "image_url": "https://m.media-amazon.com/images/I/51XfEWYec8L._AC_SL1500_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 547,
+      "asin": "B0FN7KGWP7",
+      "image_url": "https://m.media-amazon.com/images/I/71EkNTclRtL._AC_SL1500_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 556,
+      "asin": "B0DG5DHNXH",
+      "image_url": "https://m.media-amazon.com/images/I/71+poCDjFlL._AC_SL1000_.jpg",
+      "image_width": null,
+      "image_height": null
+    },
+    {
+      "id": 619,
+      "asin": "B006GK6VME",
+      "image_url": "https://m.media-amazon.com/images/I/41a2TwbSV9L._AC_SL1000_.jpg",
+      "image_width": null,
+      "image_height": null
+    }
+  ],
+  "manifests": [
+    {
+      "page": "stocking-men",
+      "asin": "B002BQ9340",
+      "image_url": "https://m.media-amazon.com/images/P/B002BQ9340.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-men",
+      "asin": "B014ABUQVC",
+      "image_url": "https://m.media-amazon.com/images/P/B014ABUQVC.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B09ZVNM5TP",
+      "image_url": "https://m.media-amazon.com/images/P/B09ZVNM5TP.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0D96YNNMP",
+      "image_url": "https://m.media-amazon.com/images/P/B0D96YNNMP.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0HNHPCRM8",
+      "image_url": "https://m.media-amazon.com/images/P/B0HNHPCRM8.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0HGGLTY4C",
+      "image_url": "https://m.media-amazon.com/images/P/B0HGGLTY4C.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0HNPKQLYZ",
+      "image_url": "https://m.media-amazon.com/images/P/B0HNPKQLYZ.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0HHQRST9V",
+      "image_url": "https://m.media-amazon.com/images/P/B0HHQRST9V.01._SL1500_.jpg"
+    },
+    {
+      "page": "stocking-teen-girls",
+      "asin": "B07QW1H1D6",
+      "image_url": "https://m.media-amazon.com/images/I/31M4dgLZw3L._AC_.jpg"
+    },
+    {
+      "page": "small-space-home-fitness",
+      "asin": "B071D6SX9K",
+      "image_url": "https://m.media-amazon.com/images/I/51D3LiUTLSL._AC_SL1000_.jpg"
+    },
+    {
+      "page": "stocking-men",
+      "asin": "B077926SLG",
+      "image_url": "https://m.media-amazon.com/images/P/B077926SLG.01._SCLZZZZZZZ_.jpg"
+    },
+    {
+      "page": "stocking-men",
+      "asin": "B0070XAL0E",
+      "image_url": "https://m.media-amazon.com/images/P/B0070XAL0E.01._SCLZZZZZZZ_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0DXRKW3KY",
+      "image_url": "https://m.media-amazon.com/images/P/B0DXRKW3KY.01._SCLZZZZZZZ_.jpg"
+    },
+    {
+      "page": "stocking-stuffers",
+      "asin": "B0F3DPXQP1",
+      "image_url": "https://m.media-amazon.com/images/P/B0F3DPXQP1.01._SCLZZZZZZZ_.jpg"
+    },
+    {
+      "page": "wellness-at-home",
+      "asin": "B0095FFUM4",
+      "image_url": "https://m.media-amazon.com/images/I/512HJgPlChL._AC_SL1181_.jpg"
+    }
+  ]
+}

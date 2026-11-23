@@ -109,7 +109,7 @@ export function EditProductCard({
   return (
     <article
       id={number ? `item-${number}` : undefined}
-      className={`group flex h-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:border-antique-gold/50 hover:shadow-md${
+      className={`group mx-auto flex h-full w-full flex-col overflow-hidden rounded-2xl border border-beige/25 bg-white shadow-sm ring-1 ring-beige/10 transition-all duration-300 hover:border-antique-gold/50 hover:shadow-md lg:max-w-[320px]${
         number ? " scroll-mt-24" : ""
       }`}
     >
