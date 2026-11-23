@@ -62,6 +62,14 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title:
+      "A Grown-Up Countdown at Home: Nine Black and Gold Pieces for 2027",
+    description:
+      "Nine black and gold pieces, all read on their live listings on November 23, 2026, for a quieter New Year's Eve at home, with the year in the two places it belongs.",
+    href: "/blog/new-years-eve-at-home",
+    date: "November 23, 2026",
+  },
+  {
     title: "Secret Santa Gifts They Will Actually Want: Eight Finds Under $25",
     description:
       "Eight Secret Santa gifts under $25, all read on their live listings on November 22, 2026: the waffle iron, the power bank, the throw and five more that get used.",

@@ -72,6 +72,19 @@ export const SECRET_SANTA_LIST: StorefrontList = {
   pageHref: "/secret-santa",
 };
 
+/**
+ * New Year's Eve at Home, the ninth storefront list to get a page of its own
+ * (owner decision 64, 2026-11-23). The list URL and its tag come from the
+ * merchandiser's manifest for that list, byte for byte.
+ */
+export const NEW_YEARS_EVE_LIST: StorefrontList = {
+  key: "new-years-eve",
+  name: "New Year's Eve at Home: Black and Gold Party Finds for a Grown-Up Countdown",
+  line: "Nine black and gold pieces for a grown-up countdown at home, with the year where you can see it.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/26YM6D7RDM1CD?tag=crystalpalino-20",
+  pageHref: "/new-years-eve",
+};
+
 /** Stocking Stuffers for Teen Boys. */
 export const TEEN_BOYS_STOCKING_LIST: StorefrontList = {
   key: "stocking-teen-boys",
@@ -253,6 +266,16 @@ export const LIST_IMAGES: Record<string, StorefrontListImage> = {
     webp: "/images/stocking-teen-boys-card-v2.webp",
     alt: "Flat lay of teen stocking gifts with a Wilson football, patterned socks, a power bank, card games and hand warmers",
     aspect: "portrait",
+  },
+  /*
+   * New Year's Eve at Home: the list's own scene is the page's 3:1 hero, which
+   * is Crystal's crop of her own pin art (owner decision 64, 2026-11-23). The
+   * list card carries no rating, count or price.
+   */
+  [NEW_YEARS_EVE_LIST.key]: {
+    src: "/images/new-years-eve-hero.jpg",
+    webp: "/images/new-years-eve-hero.webp",
+    alt: "Black and gold New Year's Eve table with a champagne bucket of bottles on ice, gold foil fringe, black and gold balloons, white hydrangea and canapes",
   },
   [TEEN_GIRLS_STOCKING_LIST.key]: {
     src: "/images/stocking-teen-girls-card-v2.jpg",
