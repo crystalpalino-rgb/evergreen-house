@@ -13,6 +13,7 @@ import {
   TEEN_BOYS_STOCKING_LIST,
   TEEN_GIRLS_STOCKING_LIST,
   UNDER19_LIST,
+  getListImage,
 } from "~/lib/storefront-lists";
 import listManifest from "~/data/stocking-stuffers/list-manifest.json";
 import cardCopy from "~/data/stocking-stuffers/card-copy.json";
@@ -320,9 +321,13 @@ function StockingStuffersPage() {
               a teen boy, a teen girl. Every piece on them is under twenty five
               dollars.
             </p>
-            <div className="mt-8 grid gap-6 md:grid-cols-3">
+            <div className="mt-8 grid gap-6">
               {MORE_LISTS.map((list) => (
-                <StorefrontListCard key={list.key} list={list} />
+                <StorefrontListCard
+                  key={list.key}
+                  list={list}
+                  image={getListImage(list.key)}
+                />
               ))}
             </div>
           </section>
