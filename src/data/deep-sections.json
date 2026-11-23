@@ -490,5 +490,82 @@
         ]
       }
     ]
+  },
+  "/secret-santa": {
+    "page_title": "Secret Santa Gifts They Will Actually Want",
+    "verified_label": "November 22, 2026",
+    "sections": [
+      {
+        "id": "how-the-picks-were-chosen",
+        "heading": "How these eight gifts were chosen",
+        "paragraphs": [
+          "This list is eight pieces, and eight is the whole of it. It is not a short edit waiting to be filled in, and nothing was added to make the number look bigger. Eight is how many survived the two questions I ask of any gift for an exchange: would a person use this, and would they be glad it was this one.",
+          "The starting point was the ceiling. The list says under twenty five dollars, and the eight prices run from $7.94 to $20.80, so the promise in the name holds today. That leaves room for wrapping and a card, which is what the last five dollars of a Secret Santa budget usually goes on anyway.",
+          "Then the gates, the same ones every page here runs on. Every piece was read on its live listing on November 22, 2026: the star rating, the review count, the price and the buy box. All eight came back at 4.3 stars or better with a live buy box, and the review counts run from 988 to 158,199. Nothing was rounded, and the number on the card is the number that was on the page that day.",
+          "What I did not do is pretend the list is all one note. A bright red waffle iron and a plain black power bank are not heritage pieces and I would not put either of them on a room page. They are here because a gift list answers a different question than a room edit does. The person opening the box cares whether the thing works and whether they wanted it, and the four pieces that sit slightly outside our palette are the four that most reliably get used."
+        ]
+      },
+      {
+        "id": "what-to-look-for",
+        "heading": "What to look for when you buy",
+        "paragraphs": [
+          "Find out the cap before you spend anything. Office exchanges usually set one, and some set a theme with it. Every price here sits under twenty five dollars, which clears most of them, but the number that matters is the one on the invitation and not the one in the list name.",
+          "Buy things that get used up or get switched on. A hot chocolate set, a tea sampler and a lip serum disappear into ordinary life, which is why they are the safest gifts on the page. A waffle iron and a power bank get used weekly. Nothing here needs a size, a fit or a scent guessed on someone else's behalf, and that is deliberate.",
+          "Read the review count behind the star, not only the star. A 4.7 from 98,625 people on the throw is a settled fact. A 4.6 from 988 on the candle is a good number from a smaller room, and the card says 988 rather than rounding it up into something it is not. Both belong on the page, but you should know which is which before you order eleven of them.",
+          "Check the delivery estimate on the day you buy, not the day you browse. Seven of the eight were in stock when they were verified, and the Yankee Candle was listed as available to ship in 1 to 2 days rather than same day. In the first week of December that is fine. In the last week it is the difference between a gift and an apology.",
+          "Watch the power bank. At $19.84 it is a deal price, and it is the one piece here that could climb past the twenty five dollar ceiling between now and the exchange. The card price is dated for that reason. Prices and stock move through December, and the date on the card is the only honest claim we can make about them."
+        ],
+        "checklist": [
+          "Check the exchange cap and any theme before you order.",
+          "Buy consumables and useful things for people you do not know well.",
+          "Read the review count behind the star, and the plain number where it is small.",
+          "Avoid sizes and scent guesses unless you know the recipient.",
+          "Check the delivery date on the day you order, not the day you browse.",
+          "Watch the power bank price, the one piece near the ceiling.",
+          "Nothing here is over $25, and the highest price on the page is $20.80."
+        ]
+      },
+      {
+        "id": "who-each-piece-suits",
+        "heading": "Who each piece suits",
+        "paragraphs": [
+          "A gift list is really eight different people, so here is the honest version of who each piece is for, in the order they appear on the page."
+        ],
+        "pieces": [
+          {
+            "product": "DASH Mini Waffle Maker in Red",
+            "suits": "The person who will actually make waffles on a Sunday, and the exchange where a useful small appliance beats another candle. Bright red, so it earns its place on a counter rather than in a cupboard."
+          },
+          {
+            "product": "Anker 10,000mAh USB-C Power Bank",
+            "suits": "The commuter, the traveler, the teenager who never charges anything. The least decorative piece here and the one most likely to be in a bag a year from now."
+          },
+          {
+            "product": "Bedsure Sherpa Fleece Throw, Grey, 50x60",
+            "suits": "The person who is always cold, and the household where the good blanket has already been claimed. Grey, so it works with whatever sofa it lands on."
+          },
+          {
+            "product": "BomBombs Hot Chocolate Gift Set of 6 Mini Cups",
+            "suits": "A family with children, a colleague with a sweet tooth, or a host who would rather be given something to drink than something to display. Six cups, so it splits."
+          },
+          {
+            "product": "Taylors of Harrogate Tea Sampler Gift Box",
+            "suits": "The tea drinker who is quietly particular, and anyone whose desk drawer is the real kitchen. Forty eight bags across the blends, which is a month of ordinary mornings."
+          },
+          {
+            "product": "Yankee Candle Balsam & Cedar 3-Wick Jar",
+            "suits": "The person who wants the house to smell like a tree lot in the best way. A safe gift for someone you do not know well, as long as you know they burn candles."
+          },
+          {
+            "product": "LANEIGE Glaze Craze Tinted Lip Serum",
+            "suits": "The friend who would buy it for herself and keeps not doing it. The one piece here that is beauty rather than home, and the one that feels most like a small treat."
+          },
+          {
+            "product": "Burt's Bees Tips and Toes Gift Set",
+            "suits": "The teacher, the neighbor, the person you need a small thank you for. The lowest price here at $7.94, so it is the one to buy three of."
+          }
+        ]
+      }
+    ]
   }
 }

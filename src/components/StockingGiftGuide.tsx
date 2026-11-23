@@ -1,5 +1,6 @@
 import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { DeepSections } from "~/components/DeepSections";
 import { EmailSignup } from "~/components/EmailSignup";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
@@ -323,6 +324,17 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
               ))}
             </div>
           </section>
+
+          {/* Long-form editorial sections, keyed by page path in
+              src/data/deep-sections.json: below the card grid, in the order
+              they were written. A page with no entry renders nothing, so the
+              three stocking pages and the January pages are untouched. The
+              page's one disclosure stays in the header and this block carries
+              no links. */}
+          <DeepSections
+            page={guide.pagePath}
+            className="border-t border-beige/30 pt-8"
+          />
 
           <p className="mt-12 border-t border-beige/30 pt-6 text-xs italic leading-relaxed text-taupe">
             {`Prices and ratings above were read on Amazon on ${guide.verifiedDateLabel} and can change.`}
