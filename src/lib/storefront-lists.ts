@@ -80,7 +80,7 @@ export const SECRET_SANTA_LIST: StorefrontList = {
 export const NEW_YEARS_EVE_LIST: StorefrontList = {
   key: "new-years-eve",
   name: "New Year's Eve at Home: Black and Gold Party Finds for a Grown-Up Countdown",
-  line: "Nine black and gold pieces for a grown-up countdown at home, with the year where you can see it.",
+  line: "Eleven black and gold pieces for a grown-up countdown at home, with the year where you can see it.",
   href: "https://www.amazon.com/shop/evergreenhouseco/list/26YM6D7RDM1CD?tag=crystalpalino-20",
   pageHref: "/new-years-eve",
 };

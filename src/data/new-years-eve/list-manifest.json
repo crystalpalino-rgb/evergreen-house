@@ -15,16 +15,16 @@
     "price_source": "buy box price, cross-checked against the page display price on the same fetch"
   },
   "summary": {
-    "verified": 11,
-    "meets_star_and_buy_box_gates": 10,
-    "usable_on_page": 9,
+    "verified": 12,
+    "meets_star_and_buy_box_gates": 11,
+    "usable_on_page": 11,
     "no_rating_on_listing": 0,
     "below_4_3_stars": 1,
     "no_buy_box": 0,
     "under_100_reviews": 0,
     "year_gate_failures": 1,
     "year_confirmed_2027": 2,
-    "year_free": 8
+    "year_free": 9
   },
   "items": [
     {
@@ -93,51 +93,6 @@
       "year_finding": "No year. Title and all five bullets carry no year. Artwork: the pennants read 'HAPPY NEW YEAR!' with an exclamation mark and no digits, so nothing dates the piece. Clean."
     },
     {
-      "asin": "B0D62LR5DW",
-      "title": "Black and Gold Balloon Arch Kit, 140 Pieces",
-      "title_length": 43,
-      "listing_title": "RUBFAC Black and Gold Balloons Arch Kit 140pcs",
-      "star_rating": 4.5,
-      "review_count": 1217,
-      "price": "$8.39",
-      "price_usd": 8.39,
-      "currency": "USD",
-      "buy_box": true,
-      "stock_note": "In Stock",
-      "verified": "2026-11-23",
-      "url": "https://www.amazon.com/dp/B0D62LR5DW?tag=crystalcost09-20",
-      "gate_status": "fail",
-      "flags": [
-        "2026 read on the listing: fails the year gate",
-        "look: balloon arch reads party store rather than grown up"
-      ],
-      "appears_on_page": false,
-      "image_url": "https://m.media-amazon.com/images/I/914D9VHrskL._AC_SL1500_.jpg",
-      "image_alt": "Black and Gold Balloon Arch Kit, 140 Pieces, from our New Year's Eve at Home list at Evergreen House",
-      "year_finding": "FAILS ON THE YEAR. Artwork carries no year, but bullet 3 of the listing reads 'Party Balloons for 2026 Graduations Decor' and 'your 2026 graduation party decorations'. That is a 2026 read on the listing, so the piece is off the page."
-    },
-    {
-      "asin": "B0FQ5F85W7",
-      "title": "Gold, Black and Silver Round Table Confetti, 200 Pieces",
-      "title_length": 55,
-      "listing_title": "MOWO Gold Black and Silver Confetti Table Decoration, 1.2'', 200pc",
-      "star_rating": 4.7,
-      "review_count": 3072,
-      "price": "$6.99",
-      "price_usd": 6.99,
-      "currency": "USD",
-      "buy_box": true,
-      "stock_note": "In Stock",
-      "verified": "2026-11-23",
-      "url": "https://www.amazon.com/dp/B0FQ5F85W7?tag=crystalcost09-20",
-      "gate_status": "pass",
-      "flags": [],
-      "appears_on_page": true,
-      "image_url": "https://m.media-amazon.com/images/I/817SdALat6L._AC_SL1500_.jpg",
-      "image_alt": "Gold, Black and Silver Round Table Confetti, 200 Pieces, from our New Year's Eve at Home list at Evergreen House",
-      "year_finding": "No year. Title and all six bullets carry no year. Artwork: plain black, white and silver paper dots with no printing. Clean."
-    },
-    {
       "asin": "B00JR5N0JM",
       "title": "Warm White Plug In Fairy Lights, 33 Feet",
       "title_length": 40,
@@ -159,6 +114,27 @@
       "image_url": "https://m.media-amazon.com/images/I/81pRoKX4eML._AC_SL1500_.jpg",
       "image_alt": "Warm White Plug In Fairy Lights, 33 Feet, from our New Year's Eve at Home list at Evergreen House",
       "year_finding": "No year. Title and all five bullets carry no year. Artwork: coiled warm white wire light and plug, no printing. Clean."
+    },
+    {
+      "asin": "B0FQ5F85W7",
+      "title": "Gold, Black and Silver Round Table Confetti, 200 Pieces",
+      "title_length": 55,
+      "listing_title": "MOWO Gold Black and Silver Confetti Table Decoration, 1.2'', 200pc",
+      "star_rating": 4.7,
+      "review_count": 3072,
+      "price": "$6.99",
+      "price_usd": 6.99,
+      "currency": "USD",
+      "buy_box": true,
+      "stock_note": "In Stock",
+      "verified": "2026-11-23",
+      "url": "https://www.amazon.com/dp/B0FQ5F85W7?tag=crystalcost09-20",
+      "gate_status": "pass",
+      "flags": [],
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/817SdALat6L._AC_SL1500_.jpg",
+      "image_alt": "Gold, Black and Silver Round Table Confetti, 200 Pieces, from our New Year's Eve at Home list at Evergreen House",
+      "year_finding": "No year. Title and all six bullets carry no year. Artwork: plain black, white and silver paper dots with no printing. Clean."
     },
     {
       "asin": "B0CVSC4M9T",
@@ -249,6 +225,55 @@
       "year_finding": "No year. Title and all five bullets carry no year. Artwork: gold foil fringe with no printing. Clean."
     },
     {
+      "asin": "B073JBVBT5",
+      "title": "Hammered Stainless Champagne Bucket, 4 Quart",
+      "title_length": 44,
+      "listing_title": "Chef Craft Hammered Champagne Bucket. 4 Quart. Stainless Steel",
+      "star_rating": 4.5,
+      "review_count": 514,
+      "price": "$30.07",
+      "price_usd": 30.07,
+      "currency": "USD",
+      "buy_box": true,
+      "stock_note": "In Stock",
+      "verified": "2026-11-23",
+      "url": "https://www.amazon.com/dp/B073JBVBT5?tag=crystalcost09-20",
+      "gate_status": "pass",
+      "flags": [
+        "capacity: the listing bullet reads \"Fits one bottle of champagne with room for ice\", so the page line says one bottle on ice and no higher count",
+        "look: white ground packshot, plain stainless rather than black or gold, but it reads as the bar piece on the table"
+      ],
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/61mTQdlE1wL._AC_SL1500_.jpg",
+      "image_alt": "Hammered Stainless Champagne Bucket, 4 Quart, from our New Year's Eve at Home list at Evergreen House",
+      "year_finding": "No year. Title and all five bullets carry no year. Artwork: plain hammered stainless bucket on white, no printing. Clean."
+    },
+    {
+      "asin": "B0D62LR5DW",
+      "title": "Black and Gold Balloon Arch Kit, 140 Pieces",
+      "title_length": 43,
+      "listing_title": "RUBFAC Black and Gold Balloons Arch Kit 140pcs",
+      "star_rating": 4.5,
+      "review_count": 1217,
+      "price": "$8.39",
+      "price_usd": 8.39,
+      "currency": "USD",
+      "buy_box": true,
+      "stock_note": "In Stock",
+      "verified": "2026-11-23",
+      "url": "https://www.amazon.com/dp/B0D62LR5DW?tag=crystalcost09-20",
+      "gate_status": "fail",
+      "flags": [
+        "2026 read on the listing: fails the year gate",
+        "look: balloon arch reads party store rather than grown up",
+        "owner decision 2026-11-23: stays on the page despite the 2026 read on bullet 3, the row keeps this note"
+      ],
+      "appears_on_page": true,
+      "image_url": "https://m.media-amazon.com/images/I/914D9VHrskL._AC_SL1500_.jpg",
+      "image_alt": "Black and Gold Balloon Arch Kit, 140 Pieces, from our New Year's Eve at Home list at Evergreen House",
+      "year_finding": "FAILS ON THE YEAR. Artwork carries no year, but bullet 3 of the listing reads 'Party Balloons for 2026 Graduations Decor' and 'your 2026 graduation party decorations'. That is a 2026 read on the listing, so the piece is off the page."
+    },
+    {
       "asin": "B07GH6C9LJ",
       "title": "Hammered Stainless Steel Beverage Tub, 4 Gallon",
       "title_length": 47,
@@ -265,12 +290,14 @@
       "gate_status": "fail",
       "flags": [
         "below 4.3 stars (4.0)",
-        "look: silver steel, not black or gold"
+        "look: silver steel, not black or gold",
+        "replaced 2026-11-23 by B073JBVBT5 on owner decision"
       ],
       "appears_on_page": false,
       "image_url": "https://m.media-amazon.com/images/I/71qOvEFJX3L._AC_SL1500_.jpg",
       "image_alt": "Hammered Stainless Steel Beverage Tub, 4 Gallon, from our New Year's Eve at Home list at Evergreen House",
       "year_finding": "No year. Title and all five bullets carry no year. Artwork: hammered steel tub of bottles on ice, no printing. It fails on stars, not on the year."
     }
-  ]
+  ],
+  "findings_note": "Addendum 2026-11-23. The owner put Chef Craft Hammered Champagne Bucket, 4 Quart (B073JBVBT5) in place of the 4.0 star beverage tub. Live read on the day: 4.5 stars, 514 ratings, $30.07, In Stock, buy box present, Amazon as seller, no year anywhere in the title, the bullets or the artwork. It passes the gate and goes on the page as piece ten. The 4.0 tub row is kept here as the record of the replacement and stays off the page. Arch B0D62LR5DW re-read the same day: 4.5 stars, 1,217 ratings, $8.39 (16 percent off $9.99), In Stock, buy box present, and bullet 3 still reads \"Party Balloons for 2026 Graduations Decor\". Nothing on the numbers changed. By owner decision it stays on the page as piece eleven and the row keeps its year note. So eleven pieces go on the page. Capacity: this is a 4 quart bucket and the listing itself says it fits one bottle of champagne with room for ice, so no copy may print a count above one bottle. Card line: \"Hammered stainless that picks up the gold and the glass on the table, holding a bottle on ice where everyone can reach it. This is the piece that makes the table read as a bar rather than a decorated table.\" List check: amazon.com/shop/evergreenhouseco/list/26YM6D7RDM1CD still shows the original eleven pieces as of today and B073JBVBT5 is not on it yet, so the owner has not saved it to the list on her side. That is her step, not a defect. The link in this row works today."
 }

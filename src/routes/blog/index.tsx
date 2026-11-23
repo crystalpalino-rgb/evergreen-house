@@ -11,7 +11,7 @@ export const Route = createFileRoute("/blog/")({
     const seo = generateStaticMetadata(
       "Blog",
       "Curated home inspiration, styling guides, and editor finds from Evergreen House.",
-      "/blog"
+      "/blog",
     );
     return { meta: seo.meta, links: seo.links };
   },
@@ -63,9 +63,9 @@ const EDITOR_PICKS: Array<{
 }> = [
   {
     title:
-      "A Grown-Up Countdown at Home: Nine Black and Gold Pieces for 2027",
+      "A Grown-Up Countdown at Home: Eleven Black and Gold Pieces for 2027",
     description:
-      "Nine black and gold pieces, all read on their live listings on November 23, 2026, for a quieter New Year's Eve at home, with the year in the two places it belongs.",
+      "Eleven black and gold pieces, all read on their live listings on November 23, 2026, for a quieter New Year's Eve at home, the champagne bucket included.",
     href: "/blog/new-years-eve-at-home",
     date: "November 23, 2026",
   },
@@ -201,10 +201,7 @@ function BlogIndex() {
     <>
       <main>
         <Breadcrumbs
-          items={[
-            { label: "Home", href: "/" },
-            { label: "Blog" },
-          ]}
+          items={[{ label: "Home", href: "/" }, { label: "Blog" }]}
         />
         {/* Hero */}
         <section className="relative overflow-hidden">

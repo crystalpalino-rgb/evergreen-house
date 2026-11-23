@@ -23,7 +23,9 @@ import cardCopy from "~/data/new-years-eve/card-copy.json";
  * are keyed by "/new-years-eve" in src/data/deep-sections.json.
  *
  * The year gate is this page's own: the two pieces that read 2027 are the foil
- * balloons and the backdrop, and nothing on the page reads 2026.
+ * balloons and the backdrop. The arch keeps its one line year note on its card
+ * (owner decision, 2026-11-23): the listing still reads 2026 on one bullet and
+ * the arch itself carries no year.
  */
 
 const PAGE_PATH = "/new-years-eve";
@@ -51,13 +53,13 @@ const guide: StockingGuide = {
   copy,
   related: {
     heading: "The notes behind this page",
-    body: "The companion post walks the same nine pieces in the order I would set them out, with what came off the list and why.",
+    body: "The companion post walks the same eleven pieces in the order I would set them out, with what came off the list and why.",
     links: [
       {
         label:
-          "A Grown-Up Countdown at Home: Nine Black and Gold Pieces for 2027",
+          "A Grown-Up Countdown at Home: Eleven Black and Gold Pieces for 2027",
         href: "/blog/new-years-eve-at-home",
-        line: "The same nine pieces, the year in the two places it belongs, and the order to set the room out in.",
+        line: "The same eleven pieces, the year in the two places it belongs, and the order to set the room out in.",
       },
     ],
   },
@@ -73,7 +75,7 @@ export const Route = createFileRoute("/new-years-eve")({
         image: HERO_JPG,
         imageWidth: 2000,
         imageHeight: 667,
-      }
+      },
     );
     return { meta: seo.meta, links: seo.links };
   },
