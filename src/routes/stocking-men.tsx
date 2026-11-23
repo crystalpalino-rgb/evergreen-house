@@ -7,7 +7,7 @@ import {
   type StockingManifest,
 } from "~/components/StockingGiftGuide";
 import { generateStaticMetadata } from "~/lib/seo";
-import { MEN_STOCKING_LIST } from "~/lib/storefront-lists";
+import { MEN_STOCKING_LIST, type StorefrontListImage } from "~/lib/storefront-lists";
 import listManifest from "~/data/stocking-men/list-manifest.json";
 import cardCopy from "~/data/stocking-men/card-copy.json";
 
@@ -28,6 +28,20 @@ const HERO_WEBP = "/images/stocking-men-hero-v2.webp";
 const HERO_ALT =
   "Flat lay of stocking gifts for men on a wood board: a leather card wallet, hot sauce, beard balm, a Carhartt beanie, braided charging cables, a Gerber multi tool and chocolates, with spruce and a candle behind";
 
+/**
+ * The list card at the top of this page carries the list's own flat lay of
+ * its gifts, the portrait art Crystal supplied (owner, 2026-11-22). Portrait,
+ * so the scene is held whole instead of cropped to a landscape slot. It is
+ * the list's scene, never a product photo, and the card still carries no
+ * rating, count or price.
+ */
+const LIST_IMAGE: StorefrontListImage = {
+  src: "/images/stocking-men-card-v2.jpg",
+  webp: "/images/stocking-men-card-v2.webp",
+  alt: "Flat lay of stocking gifts for men with a leather card wallet, hot sauce, beard balm and a Carhartt beanie",
+  aspect: "portrait",
+};
+
 const copy = cardCopy as unknown as StockingCardCopy;
 
 const guide: StockingGuide = {
@@ -39,6 +53,7 @@ const guide: StockingGuide = {
   verifiedDateLabel: "November 22, 2026",
   analyticsContext: "guide:stocking-men",
   analyticsPrefix: "stocking-men",
+  listImage: LIST_IMAGE,
   list: { ...MEN_STOCKING_LIST, line: copy.list_card_line },
   manifest: listManifest as unknown as StockingManifest,
   copy,

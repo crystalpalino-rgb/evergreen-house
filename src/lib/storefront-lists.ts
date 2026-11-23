@@ -217,6 +217,12 @@ export interface StorefrontListImage {
   webp?: string;
   /** Describes the scene itself, not the list. */
   alt: string;
+  /**
+   * The art's own shape. Landscape is the default and the shipped behaviour;
+   * portrait tells the card to hold a 4:5 scene whole rather than crop a flat
+   * lay of products down to a landscape slot (owner, 2026-11-22).
+   */
+  aspect?: "landscape" | "portrait";
 }
 
 export const LIST_IMAGES: Record<string, StorefrontListImage> = {
