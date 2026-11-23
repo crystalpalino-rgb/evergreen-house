@@ -2,6 +2,7 @@ import { AmazonDisclosure } from "~/components/AmazonDisclosure";
 import { Breadcrumbs } from "~/components/Breadcrumbs";
 import { DeepSections } from "~/components/DeepSections";
 import { EmailSignup } from "~/components/EmailSignup";
+import { PrintableDownload } from "~/components/PrintableDownload";
 import { StorefrontListCard } from "~/components/StorefrontListCard";
 import { trackAffiliateClick } from "~/lib/analytics";
 import { SITE_URL } from "~/lib/schema";
@@ -109,6 +110,12 @@ export type StockingGuide = {
   listImage?: StorefrontListImage;
   manifest: StockingManifest;
   copy: StockingCardCopy;
+  /**
+   * The free Christmas Gift List printable (owner, 2026-11-23): below the card
+   * grid, in the editorial area. Only the pages that carry it pass this, so
+   * every other page renders exactly as it shipped.
+   */
+  printable?: boolean;
 };
 
 /** House gates: 4.3 stars or better, a live buy box, no padding. */
@@ -338,6 +345,10 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
               ))}
             </div>
           </section>
+
+          {guide.printable ? (
+            <PrintableDownload className="mt-12" />
+          ) : null}
 
           {/* Long-form editorial sections, keyed by page path in
               src/data/deep-sections.json: below the card grid, in the order

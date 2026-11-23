@@ -43,6 +43,7 @@ const guide: StockingGuide = {
   list: { ...SECRET_SANTA_LIST, line: copy.list_card_line },
   manifest: listManifest as unknown as StockingManifest,
   copy,
+  printable: true,
 };
 
 export const Route = createFileRoute("/secret-santa")({
