@@ -195,6 +195,11 @@ async function main() {
       changefreq: "weekly",
     },
     {
+      loc: "/new-years-eve",
+      priority: "0.8",
+      changefreq: "weekly",
+    },
+    {
       loc: "/stocking-men",
       priority: "0.8",
       changefreq: "weekly",
@@ -231,6 +236,11 @@ async function main() {
     },
     {
       loc: "/blog/the-reset-list-17-finds",
+      priority: "0.7",
+      changefreq: "monthly",
+    },
+    {
+      loc: "/blog/new-years-eve-at-home",
       priority: "0.7",
       changefreq: "monthly",
     },
