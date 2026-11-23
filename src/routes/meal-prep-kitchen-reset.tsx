@@ -23,10 +23,10 @@ import cardCopy from "~/data/meal-prep-kitchen-reset/card-copy.json";
  */
 
 const PAGE_PATH = "/meal-prep-kitchen-reset";
-const HERO_JPG = "/images/blog-reset-list-v2.jpg";
-const HERO_WEBP = "/images/blog-reset-list-v2.webp";
+const HERO_JPG = "/images/january-meal-prep-kitchen-reset-hero.jpg";
+const HERO_WEBP = "/images/january-meal-prep-kitchen-reset-hero.webp";
 const HERO_ALT =
-  "A bright home office desk holding the Reset List finds: a paper file organizer, an open planner, a memory journal, a sunrise alarm clock and drawer organizers, with a plant at the edge of the desk in soft daylight";
+  "Glass storage jars of grains and pasta, a wooden board and a bowl of fruit on a pale stone kitchen counter, with a folded linen towel and morning light from a side window.";
 
 const copy = cardCopy as unknown as StockingCardCopy;
 
@@ -83,8 +83,8 @@ export const Route = createFileRoute("/meal-prep-kitchen-reset")({
       PAGE_PATH,
       {
         image: HERO_JPG,
-        imageWidth: 2000,
-        imageHeight: 667,
+        imageWidth: 1600,
+        imageHeight: 1100,
       }
     );
     return { meta: seo.meta, links: seo.links };
