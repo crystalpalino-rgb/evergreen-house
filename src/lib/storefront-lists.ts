@@ -145,6 +145,29 @@ export const WELLNESS_AT_HOME_LIST: StorefrontList = {
   pageHref: "/wellness-at-home",
 };
 
+/**
+ * Closet Organization Ideas, the tenth storefront list to get a page of its own
+ * (owner decision 54, 2026-11-22). The list URL and its tag come from the
+ * merchandiser's manifest for that list
+ * (curation/closet-pantry-2026-11-23/closet-list-manifest.json), byte for byte.
+ */
+export const CLOSET_ORGANIZATION_LIST: StorefrontList = {
+  key: "closet-organization",
+  name: "Closet Organization Ideas",
+  line: "Eight closet organizers chosen to keep a closet visible and easy to put back, all read and dated on November 23, 2026.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/4VIW04EDDKTP?tag=crystalpalino-20",
+  pageHref: "/closet-organization",
+};
+
+/** Pantry Organization Ideas, built in the same pass. */
+export const PANTRY_ORGANIZATION_LIST: StorefrontList = {
+  key: "pantry-organization",
+  name: "Pantry Organization Ideas",
+  line: "Seven pantry organizers chosen to make a shelf legible, all read and dated on November 23, 2026.",
+  href: "https://www.amazon.com/shop/evergreenhouseco/list/56861249GMTD?tag=crystalpalino-20",
+  pageHref: "/pantry-organization",
+};
+
 /** Heritage Nativity and Mantel Gifts. */
 export const HERITAGE_NATIVITY_LIST: StorefrontList = {
   key: "heritage-nativity",
@@ -183,6 +206,8 @@ const LISTS_BY_KEY: Record<string, StorefrontList> = {
   [MEAL_PREP_KITCHEN_RESET_LIST.key]: MEAL_PREP_KITCHEN_RESET_LIST,
   [SMALL_SPACE_HOME_FITNESS_LIST.key]: SMALL_SPACE_HOME_FITNESS_LIST,
   [WELLNESS_AT_HOME_LIST.key]: WELLNESS_AT_HOME_LIST,
+  [CLOSET_ORGANIZATION_LIST.key]: CLOSET_ORGANIZATION_LIST,
+  [PANTRY_ORGANIZATION_LIST.key]: PANTRY_ORGANIZATION_LIST,
 };
 
 /**
@@ -311,6 +336,24 @@ export const LIST_IMAGES: Record<string, StorefrontListImage> = {
     src: "/images/stocking-teen-girls-card-v2.jpg",
     webp: "/images/stocking-teen-girls-card-v2.webp",
     alt: "Flat lay of teen stocking gifts with Burt's Bees sets, Tree Hut sugar scrub, a Laneige lip mask, claw clips and a pink hair brush",
+    aspect: "portrait",
+  },
+  /*
+   * Closet and Pantry Organization Ideas (owner decision 54, 2026-11-23): each
+   * page's list card carries the 4:5 scene the designer exported for that page,
+   * the same art its Journal card uses. It is the list's scene, not a product
+   * photo, and the card carries no rating, count or price.
+   */
+  [CLOSET_ORGANIZATION_LIST.key]: {
+    src: "/images/january-closet-organization-hero-card.jpg",
+    webp: "/images/january-closet-organization-hero-card.webp",
+    alt: "Two woven baskets and folded oatmeal linens on the top shelf of a pale oak closet, with a row of matching wooden hangers, a stack of sweaters and a shoe rack below, in warm morning light.",
+    aspect: "portrait",
+  },
+  [PANTRY_ORGANIZATION_LIST.key]: {
+    src: "/images/january-pantry-organization-hero-card.jpg",
+    webp: "/images/january-pantry-organization-hero-card.webp",
+    alt: "Plain glass jars of rice, oats, beans and pasta on pale oak pantry shelves, with a lazy susan of tins, a stack of clear containers and a woven basket of root vegetables below, in warm daylight.",
     aspect: "portrait",
   },
 };

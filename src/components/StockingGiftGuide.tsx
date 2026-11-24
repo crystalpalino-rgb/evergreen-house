@@ -95,6 +95,13 @@ export type StockingGuide = {
   heroJpg: string;
   heroWebp: string;
   heroAlt: string;
+  /**
+   * The hero art's own shape. Defaults to the 3:1 banner every page before the
+   * Closet and Pantry pages ships; a page whose art is a different ratio passes
+   * its own and the frame holds that ratio instead of cropping to 3:1.
+   */
+  heroWidth?: number;
+  heroHeight?: number;
   /** The date the manifest was read, in ISO and in words. */
   verifiedDate: string;
   verifiedDateLabel: string;
@@ -262,6 +269,12 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
   const { copy, manifest } = guide;
   const cards = cardsFor(manifest);
 
+  /** The hero frame: the 3:1 banner unless the page's own art is another shape. */
+  const customHero =
+    guide.heroWidth !== undefined || guide.heroHeight !== undefined;
+  const heroWidth = guide.heroWidth ?? 2000;
+  const heroHeight = guide.heroHeight ?? 667;
+
   const parent: GuideCrumb = guide.breadcrumbParent ?? {
     label: "Stocking Stuffers",
     href: "/stocking-stuffers",
@@ -306,11 +319,20 @@ export function StockingGiftGuide({ guide }: { guide: StockingGuide }) {
               <img
                 src={guide.heroJpg}
                 alt={guide.heroAlt}
-                width={2000}
-                height={667}
+                width={heroWidth}
+                height={heroHeight}
                 loading="eager"
                 decoding="async"
-                className="mt-8 aspect-[3/1] w-full rounded-2xl object-cover"
+                className={
+                  customHero
+                    ? "mt-8 w-full rounded-2xl object-cover"
+                    : "mt-8 aspect-[3/1] w-full rounded-2xl object-cover"
+                }
+                style={
+                  customHero
+                    ? { aspectRatio: `${heroWidth} / ${heroHeight}` }
+                    : undefined
+                }
               />
             </picture>
             <p className="mt-7 text-lg leading-relaxed text-warm-gray">

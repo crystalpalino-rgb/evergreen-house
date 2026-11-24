@@ -62,6 +62,20 @@ const EDITOR_PICKS: Array<{
   date: string;
 }> = [
   {
+    title: "Closet Organization Ideas: Eight Finds That Keep a Closet Tidy",
+    description:
+      "Eight pieces from my own closet list, read on their live listings on November 23, 2026. Not one of them is decorative, and that is exactly why the closet still looks right in February.",
+    href: "/blog/closet-organization-ideas",
+    date: "November 23, 2026",
+  },
+  {
+    title: "Pantry Organization Ideas: Seven Finds That Make a Shelf Legible",
+    description:
+      "Seven pieces from my own pantry list, read on their live listings on November 23, 2026. It is a short list on purpose: once you can see everything you own, the eighth organizer is just another thing to move.",
+    href: "/blog/pantry-organization-ideas",
+    date: "November 23, 2026",
+  },
+  {
     title:
       "A Grown-Up Countdown at Home: Eleven Black and Gold Pieces for 2027",
     description:
