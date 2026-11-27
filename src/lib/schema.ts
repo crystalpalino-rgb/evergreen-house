@@ -193,11 +193,20 @@ export function getProductSchema(
       schema.offers.sku = product.sku;
     }
   }
-  if (product.rating) {
+  // Google rejects an AggregateRating whose reviewCount is not a positive
+  // integer ("Value in property reviewCount must be positive"), so a rating
+  // with no review count behind it ships no rating block at all rather than a
+  // rating with a zero. The count printed is the one the row actually read.
+  const reviewCount = Number(product.review_count);
+  if (
+    product.rating &&
+    Number.isFinite(reviewCount) &&
+    reviewCount >= 1
+  ) {
     schema.aggregateRating = {
       "@type": "AggregateRating",
       ratingValue: product.rating,
-      reviewCount: product.review_count || 0,
+      reviewCount: Math.round(reviewCount),
     };
   }
   return schema;
